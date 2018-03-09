@@ -19,4 +19,4 @@ Route::view('/restaurants/profile','restaurants.profile')->name('restaurant.prof
 Route::view('/contact','contact')->name('contact');
 Route::view('/registration','registration')->name('registration');
 Route::view('/checkout','checkout')->name('checkout');
-Route::view('/admin','admin.index')->name('admin.index');
+//Route::view('/admin','admin.index')->name('admin.index');
