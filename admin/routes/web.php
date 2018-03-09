@@ -11,7 +11,13 @@
 |
 */
 
-//Route::get('/','HomeController@index')->name('home');
 
-//Route::get('/dashboard','AdminController@index')->name('admin.index');
-Route::view('/','admin.index')->name('admin.index');
+Route::get('/home','AdminController@index')->name('admin.index');
+Auth::routes();
+
+Route::get('/','Auth\LoginController@showLoginForm')->name('home');
+
+//Restaurant
+Route::get('/restaurant/add','RestaurantController@add')->name('restaurant.add');
+Route::post('/restaurant/add','RestaurantController@insert')->name('restaurant.insert');
+

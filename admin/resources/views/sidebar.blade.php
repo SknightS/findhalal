@@ -39,6 +39,12 @@
                 </a>
 
             </li>
+
+            <li>
+               <a href="{{route('restaurant.add')}}"><span class="title">Add Restaurant</span></a>
+
+            </li>
+
             <li class="has-sub">
                 <a href="layout-api.html">
                     <i class="entypo-layout"></i>
