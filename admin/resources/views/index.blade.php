@@ -23,7 +23,7 @@
                 "hideMethod": "fadeOut"
             };
 
-            toastr.success("You have been awarded with 1 year free subscription. Enjoy it!", "Account Subcription Updated", opts);
+            toastr.success("Welcome {{Auth::user()->firstName}}", opts);
         }, 3000);
 
 

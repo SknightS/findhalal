@@ -20,4 +20,7 @@ Route::get('/','Auth\LoginController@showLoginForm')->name('home');
 //Restaurant
 Route::get('/restaurant/add','RestaurantController@add')->name('restaurant.add');
 Route::post('/restaurant/add','RestaurantController@insert')->name('restaurant.insert');
+Route::get('/restaurant/show','RestaurantController@show')->name('restaurant.show');
+Route::post('/restaurant/show','RestaurantController@get')->name('restaurant.get');
+
 

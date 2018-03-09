@@ -37,12 +37,14 @@
                     <i class="entypo-gauge"></i>
                     <span class="title">Dashboard</span>
                 </a>
-
             </li>
 
             <li>
                <a href="{{route('restaurant.add')}}"><span class="title"><i class="fa fa-plus"></i>Add Restaurant</span></a>
+            </li>
 
+            <li>
+               <a href="{{route('restaurant.show')}}"><span class="title"><i class="fa fa-plus"></i>Show Restaurants</span></a>
             </li>
 
         </ul>
