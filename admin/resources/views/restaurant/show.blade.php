@@ -77,7 +77,9 @@
         { data: 'status', name: 'status' },
             { "data": function(data){
                     {{--var url='{{url("product/edit/", ":id") }}';--}}
-                    return '<a class="btn btn-default btn-sm" data-panel-id="'+data.resturantId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a><a class="btn" data-panel-id="'+data.resturantId+'"onclick="deleteProduct(this)"><i class="fa fa-trash"></i></a>';},
+                    return '<a class="btn btn-default btn-sm" data-panel-id="'+data.resturantId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a>' +
+                        '<form method="post" action="{{route('restaurant.delete')}}">{{csrf_field()}} <input type="hidden" name="id" value="'+data.resturantId+'">'+
+                        '<button class="btn"><i class="fa fa-trash"></i></button><form>';},
                 "orderable": false, "searchable":false },
 
         ],

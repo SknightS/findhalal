@@ -44,7 +44,7 @@
             </li>
 
             <li>
-               <a href="{{route('restaurant.show')}}"><span class="title"><i class="fa fa-plus"></i>Show Restaurants</span></a>
+               <a href="{{route('restaurant.show')}}"><span class="title"><i class="fa fa-clipboard-list"></i>Show Restaurants</span></a>
             </li>
 
         </ul>
