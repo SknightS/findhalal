@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
-use Yajra\DataTables\DataTables;
+use DataTables;
 use App\Resturant;
 
 class RestaurantController extends Controller
@@ -42,7 +42,7 @@ class RestaurantController extends Controller
     public function get(Request $r){
         $resturants=Resturant::select('name','details','address','city','zip','country','minOrder','delfee','status')->get();
 
-        $datatables = DataTable::of($resturants);
+        $datatables = DataTables::of($resturants);
 
         return $datatables->make(true);
 
