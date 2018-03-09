@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
-use DataTables;
+//use DataTables;
+use Yajra\DataTables\DataTables;
 use App\Resturant;
 
 class RestaurantController extends Controller

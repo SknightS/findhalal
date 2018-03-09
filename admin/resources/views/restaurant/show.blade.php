@@ -48,6 +48,7 @@
 
         $(document).ready(function() {
 
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         table = $('#allProductList').DataTable({
         processing: true,
         serverSide: true,
