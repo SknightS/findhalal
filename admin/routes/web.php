@@ -13,4 +13,5 @@
 
 //Route::get('/','HomeController@index')->name('home');
 
-Route::get('/','AdminController@index')->name('admin.index');
+//Route::get('/dashboard','AdminController@index')->name('admin.index');
+Route::view('/','admin.index')->name('admin.index');
