@@ -308,9 +308,7 @@
     <script src="{{url('assets/js/bootstrap-timepicker.min.js')}}"></script>
 
     <script>
-        $(document).ready(function(){
-            $('.timepicker').val(null);
-        });
+        // $('#basicExample').timepicker();
 
     </script>
 
