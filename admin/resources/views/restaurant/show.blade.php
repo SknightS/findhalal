@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('header')
-    {{--<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">--}}
+
 @endsection
 
 
@@ -20,6 +20,7 @@
                 <th >min order</th>
                 <th >delivery fee</th>
                 <th >status</th>
+                <th >action</th>
             </tr>
             </thead>
 
@@ -34,14 +35,17 @@
 @endsection
 
 @section('foot-js')
-    <script src="{{url('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <link rel="stylesheet" href="{{url('assets/js/datatables/datatables.css')}}">
+    {{--<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">--}}
+    {{--<link rel="stylesheet" href="{{url('assets/js/datatables/datatables.css')}}">--}}
+    {{--<link rel="stylesheet" href="{{url('assets/js/select2/select2-bootstrap.css')}}">--}}
+    {{--<link rel="stylesheet" href="{{url('assets/js/select2/select2.css')}}">--}}
+
+    <script src="{{url('assets/js/datatables/datatables.js')}}"></script>
+    {{--<script src="{{url('assets/js/select2/select2.min.js')}}"></script>--}}
+    {{--<script src="{{url('assets/js/neon-chat.js')}}"></script>--}}
 
 
-    {{--    <script src="{{url('cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js')}}"></script>--}}
-    {{--<script src="{{url('cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js')}}"></script>--}}
-
-
-    {{--<script src="{{url('cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js')}}"></script>--}}
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script>
@@ -72,11 +76,33 @@
         { data: 'minOrder', name: 'minOrder' },
         { data: 'delfee', name: 'delfee' },
         { data: 'status', name: 'status' },
+            { "data": function(data){
+                    {{--var url='{{url("product/edit/", ":id") }}';--}}
+                    return '<a class="btn btn-default btn-sm" data-panel-id="'+data.resturantId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a>' +
+                        '<form method="post" action="{{route('restaurant.delete')}}">{{csrf_field()}} <input type="hidden" name="id" value="'+data.resturantId+'">'+
+                        '<button class="btn"><i class="fa fa-trash"></i></button><form>';},
+                "orderable": false, "searchable":false },
 
         ],
         });
 
         });
+
+        function editProduct(x) {
+            btn = $(x).data('panel-id');
+            var url = '{{route("restaurant.edit", ":id") }}';
+            //alert(url);
+            var newUrl=url.replace(':id', btn);
+            window.location.href = newUrl;
+        }
+
+        function deleteProduct(x) {
+            {{--btn = $(x).data('panel-id');--}}
+            {{--var url = '{{route("product.edit", ":id") }}';--}}
+            {{--//alert(url);--}}
+            {{--var newUrl=url.replace(':id', btn);--}}
+            {{--window.location.href = newUrl;--}}
+        }
 
 
     </script>
