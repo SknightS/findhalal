@@ -33,6 +33,6 @@ Route::post('/Items/allCategoryByResturant','ItemController@getItemCatByResId')-
 Route::post('/Items/insert','ItemController@insert')->name('item.insert');
 Route::get('/Items/show','ItemController@show')->name('item.show');
 Route::post('/Items/show','ItemController@get')->name('item.get');
-//Route::get('/restaurant/edit/{id}','RestaurantController@edit')->name('restaurant.edit');
+Route::get('/Items/edit/{id}','ItemController@edit')->name('item.edit');
 
 

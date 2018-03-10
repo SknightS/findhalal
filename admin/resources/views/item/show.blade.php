@@ -8,7 +8,7 @@
 @section('content')
 
     <div class="row">
-    <div class="col-md-6 dropdown">
+    <div class="form-group col-md-6">
         <label class="col-sm-3 control-label">Resturant Name<span style="color: red" class="required">*</span></label>
         <div class="col-sm-4">
             <select class="form-control" name="resturantName" id="resturantName" required>
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="col-md-6 dropdown">
+    <div class="form-group col-md-6">
         <label class="col-sm-2 control-label">Item Type<span style="color: red" class="required">*</span></label>
         <div class="col-sm-4">
             <select class="form-control" name="itemCategory" id="itemCategory" required>
@@ -117,8 +117,8 @@
                     { data: 'status', name: 'status' },
 
                     { "data": function(data){
-                        return '<a class="btn btn-info btn-sm" data-panel-id="'+data.itemId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a>' +
-                            '<a class="btn btn-danger btn-sm" data-panel-id="'+data.itemId+'"onclick="deleteProduct(this)"><i class="fa fa-trash"></i></a>';},
+                        return '<a class="btn btn-info btn-sm"  data-panel-id="'+data.itemId+'"onclick="editItem(this)"><i class="fa fa-edit"></i></a>' +
+                            '<a class="btn btn-danger btn-sm" data-panel-id="'+data.itemId+'"onclick="deleteItem(this)"><i class="fa fa-trash"></i></a>';},
                         "orderable": false, "searchable":false
                     },
 
@@ -150,6 +150,27 @@
                 }
             });
         });
+
+        function editItem(x) {
+            btn = $(x).data('panel-id');
+
+
+
+                    var url = '{{route("item.edit", ":id") }}';
+                    //alert(url);
+                    var newUrl=url.replace(':id', btn);
+                    window.location.href = newUrl;
+
+
+        }
+
+        function deleteItem(x) {
+            {{--btn = $(x).data('panel-id');--}}
+            {{--var url = '{{route("product.edit", ":id") }}';--}}
+            {{--//alert(url);--}}
+            {{--var newUrl=url.replace(':id', btn);--}}
+            {{--window.location.href = newUrl;--}}
+        }
 
 
 
