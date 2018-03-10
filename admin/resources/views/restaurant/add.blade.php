@@ -172,8 +172,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="satOpen" id="timepicker" class="form-control timepicker" />
-                                                    <input type="text" name="satClose" class="form-control timepicker" />
+                                                    <input type="time" name="satOpen"  class="form-control " />
+                                                    <input type="time" name="satClose"  class="form-control " />
                                                 </div>
                                             </div>
                                         </div>
@@ -185,8 +185,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="sunOpen" value="" class="form-control timepicker" />
-                                                    <input type="text" name="sunClose" class="form-control timepicker" />
+                                                    <input type="text" name="sunOpen" id="timepicker" value="" class="form-control timepicker" />
+                                                    <input type="text" name="sunClose" id="timepicker2" class="form-control timepicker" />
                                                 </div>
                                             </div>
                                         </div>
@@ -307,20 +307,34 @@
 @endsection
 @section('foot-js')
     <script src="{{url('assets/js/bootstrap-timepicker.min.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
 
-    <script>
-        function mainPic(input) {
-            if (input.files && input.files[0]) {
+    $(function () {
+        $(":file").change(function () {
+            if (this.files && this.files[0]) {
                 var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#imgMainPic').attr('src', e.target.result);}
-                reader.readAsDataURL(input.files[0]);}
-        }
-        $("#mainPic").change(function(){
-           // mainPic(this);
+                reader.onload = imageIsLoaded;
+                reader.readAsDataURL(this.files[0]);
+            }
         });
-
+    });
+    function imageIsLoaded(e) {
+        $('#imgMainPic').attr('src', e.target.result);
+    };
+//    function mainPic(input) {
+//            if (input.files && input.files[0]) {
+//                var reader = new FileReader();
+//
+//                reader.onload = function (e) {
+//                    $('#imgMainPic').attr('src', e.target.result);}
+//                reader.readAsDataURL(input.files[0]);}
+//        }
+//        $("#mainPic").change(function(){
+//            mainPic(this);
+//        });
+//        $('#timepicker').timepicker();
+//        $('#timepicker2').timepicker();
 
     </script>
 
