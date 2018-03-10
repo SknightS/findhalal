@@ -148,9 +148,12 @@
                             <label class="col-sm-3 control-label">Status <span style="color: red" class="required">*</span> </label>
                             <div class="col-sm-5">
                                 <select class="form-control" name="itemStatus" required>
-                                    <option selected value="">Select Status</option>
-                                    <option>Active</option>
-                                    <option>Inactive</option>
+                                    {{--<option selected value="">Select Status</option>--}}
+                                    {{--<option>Active</option>--}}
+                                    {{--<option>Inactive</option>--}}
+                                    @foreach(Status as $s)
+                                        <option >{{$s}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
