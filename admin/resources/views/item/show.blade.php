@@ -7,6 +7,35 @@
 
 @section('content')
 
+    <div class="row">
+    <div class="col-md-6 dropdown">
+        <label class="col-sm-2 control-label">Resturant Name<span style="color: red" class="required">*</span></label>
+        <div class="col-sm-4">
+            <select class="form-control" name="resturantName" id="resturantName" required>
+
+                <option value="">Select Resturant Name</option>
+                @foreach($resName as $rName)
+                    <option @if(old('resturantName')==$rName->resturantId )selected @endif value="{{$rName->resturantId}}">{{$rName->name}}</option>
+                @endforeach
+
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Item Type<span style="color: red" class="required">*</span></label>
+        <div class="col-sm-4">
+            <select class="form-control" name="itemCategory" id="itemCategory" required>
+
+                <option value="">Select Item Type</option>
+
+            </select>
+        </div>
+    </div>
+
+    </div>
+
+
     <div class="table table-responsive" style="margin-top: 20px">
         <table id="allItemList" class="table table-bordered table-striped">
             <thead>
@@ -63,7 +92,11 @@
                 "ajax":{
                     "url": "{!! route('item.get') !!}",
                     "type": "POST",
-                    data:function (d){},
+                    data:function (d){
+
+                        d.resId=$('#resturantName').val();
+                        d.itemCategory=$('#itemCategory').val();
+                    },
                 },
                 columns: [
 
@@ -82,8 +115,10 @@
                     { data: 'itemName', name: 'itemName' },
                     { data: 'action', name: 'action', "orderable": false, "searchable":false },
                     { data: 'status', name: 'status' },
+
                     { "data": function(data){
-                        return '<a class="btn btn-default btn-sm" data-panel-id="'+data.itemId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a><a class="btn" data-panel-id="'+data.itemId+'"onclick="deleteProduct(this)"><i class="fa fa-trash"></i></a>';},
+                        return '<a class="btn btn-info btn-sm" data-panel-id="'+data.itemId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a>' +
+                            '<a class="btn btn-danger btn-sm" data-panel-id="'+data.itemId+'"onclick="deleteProduct(this)"><i class="fa fa-trash"></i></a>';},
                         "orderable": false, "searchable":false
                     },
 
@@ -91,6 +126,23 @@
             });
 
         });
+
+        $("#resturantName").change(function() {
+
+            var resId=$(this).val();
+
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('item.categoryByRes')}}',
+                data : {'resId':resId} ,
+                success : function(data){
+                    document.getElementById("itemCategory").innerHTML = data;
+
+                }
+            });
+        });
+
+
 
 
     </script>
