@@ -73,7 +73,7 @@
                         "name": "image",
                         "data": "image",
                         "render": function (data, type, full, meta) {
-                            return "<img src=\""+ data + "\" height=\"50\"/>";
+                            return "<img src=\"{{url('public/ItemImages')}}"+"/"+ data + "\" height=\"50\"/>";
                         },
                         "title": "Image",
                         "orderable": false,
