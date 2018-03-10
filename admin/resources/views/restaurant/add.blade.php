@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Picture</label>
                             <div class="col-sm-5">
-                                <input type="file" name="image"  value="upload Image" accept=".jpg, .jpeg" id="mainPic" required>
+                                <input type="file" name="image"  value="upload Image" accept=".jpg, .jpeg" id="mainPic" >
                                 @if ($errors->has('image'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('image') }}</strong>
@@ -172,8 +172,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="satOpen" id="timepicker" class="form-control timepicker" />
-                                                    <input type="text" name="satClose" class="form-control timepicker" />
+                                                    <input type="time" name="satOpen"  class="form-control" />
+                                                    <input type="time" name="satClose" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
@@ -185,8 +185,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="sunOpen" value="" class="form-control timepicker" />
-                                                    <input type="text" name="sunClose" class="form-control timepicker" />
+                                                    <input type="time" name="sunOpen" value="" class="form-control" />
+                                                    <input type="time" name="sunClose" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
@@ -198,8 +198,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="monOpen" class="form-control timepicker" />
-                                                    <input type="text" name="monClose" class="form-control timepicker" />
+                                                    <input type="time" name="monOpen" class="form-control " />
+                                                    <input type="time" name="monClose" class="form-control " />
                                                 </div>
                                             </div>
                                         </div>
@@ -212,8 +212,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="tueOpen" class="form-control timepicker" />
-                                                    <input type="text" name="tueClose" class="form-control timepicker" />
+                                                    <input type="time" name="tueOpen" class="form-control " />
+                                                    <input type="time" name="tueClose" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
@@ -226,8 +226,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="wedOpen" class="form-control timepicker" />
-                                                    <input type="text" name="wedClose" class="form-control timepicker" />
+                                                    <input type="time" name="wedOpen" class="form-control" />
+                                                    <input type="time" name="wedClose" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
@@ -240,8 +240,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="thuOpen" class="form-control timepicker" />
-                                                    <input type="text" name="thuClose" class="form-control timepicker" />
+                                                    <input type="time" name="thuOpen" class="form-control " />
+                                                    <input type="time" name="thuClose" class="form-control " />
                                                 </div>
                                             </div>
                                         </div>
@@ -254,8 +254,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="friOpen" class="form-control timepicker" />
-                                                    <input type="text" name="friClose" class="form-control timepicker" />
+                                                    <input type="time" name="friOpen" class="form-control " />
+                                                    <input type="time" name="friClose" class="form-control " />
                                                 </div>
                                             </div>
                                         </div>
@@ -320,6 +320,8 @@
         $("#mainPic").change(function(){
             mainPic(this);
         });
+
+        $('.timepicker').timepicker();
 
 
     </script>
