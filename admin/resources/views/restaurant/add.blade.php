@@ -171,8 +171,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="entypo-clock"></i>
                                                     </div>
-                                                    <input type="text" name="satOpen" id="timepicker" class="form-control timepicker" />
-                                                    <input type="text" name="satClose" class="form-control timepicker" />
+                                                    <input type="time" name="satOpen" id="timepicker" class="form-control timepicker" />
+                                                    <input type="time" name="satClose" class="form-control timepicker" />
                                                 </div>
                                             </div>
                                         </div>
