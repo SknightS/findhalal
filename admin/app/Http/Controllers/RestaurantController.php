@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 //use DataTables;
 use Yajra\DataTables\DataTables;
+use Image;
 use App\Resturant;
 
 class RestaurantController extends Controller
