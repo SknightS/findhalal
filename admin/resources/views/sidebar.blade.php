@@ -40,11 +40,11 @@
             </li>
 
             <li>
-               <a href="{{route('restaurant.add')}}"><span class="title"><i class="fa fa-plus"></i>Add Restaurant</span></a>
+               <a href="{{route('restaurant.add')}}"><i class="fa fa-plus"></i><span class="title">Add Restaurant</span></a>
             </li>
 
             <li>
-               <a href="{{route('restaurant.show')}}"><span class="title"><i class="fa fa-plus"></i>Show Restaurants</span></a>
+               <a href="{{route('restaurant.show')}}"><i class="fa fa-list"></i><span class="title">Show Restaurants</span></a>
             </li>
 
             <li>

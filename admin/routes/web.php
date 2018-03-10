@@ -23,6 +23,8 @@ Route::post('/restaurant/add','RestaurantController@insert')->name('restaurant.i
 Route::get('/restaurant/show','RestaurantController@show')->name('restaurant.show');
 Route::post('/restaurant/show','RestaurantController@get')->name('restaurant.get');
 Route::get('/restaurant/edit/{id}','RestaurantController@edit')->name('restaurant.edit');
+Route::post('/restaurant/update','RestaurantController@update')->name('restaurant.update');
+Route::post('/restaurant/delete','RestaurantController@destroy')->name('restaurant.delete');
 
 
 //Item

@@ -11,7 +11,7 @@
 
                 <div class="panel-heading">
                     <div class="panel-title">
-                       Add Restaurant
+                       Edit Restaurant
                     </div>
 
                     <div class="panel-options">
@@ -24,13 +24,14 @@
 
                 <div class="panel-body">
 
-                    <form role="form" class="form-horizontal form-groups-bordered" method="post" action="{{route('restaurant.insert')}}">
-                        @csrf
+                    <form role="form" class="form-horizontal form-groups-bordered" method="post" action="{{route('restaurant.update')}}">
 
+                        @csrf
+                    <input type="hidden" value="{{$restaurant->resturantId}}" name="id">
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Name</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="field-1" name="name" placeholder="Enter Restaurant Name">
+                                <input type="text" class="form-control" id="field-1" name="name" placeholder="Enter Restaurant Name" value="{{$restaurant->name}}">
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -44,7 +45,7 @@
                             <label for="field-ta" class="col-sm-3 control-label">Details</label>
 
                             <div class="col-sm-5">
-                                <textarea class="form-control" id="field-ta" name="details" placeholder="Textarea"></textarea>
+                                <textarea class="form-control" id="field-ta" name="details" placeholder="Textarea">{{$restaurant->details}}</textarea>
                                 @if ($errors->has('details'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('details') }}</strong>
@@ -57,7 +58,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Min Order</label>
                             <div class="col-sm-5">
-                                <input type="number" min="0" class="form-control" id="field-1" name="minOrder" placeholder="min order">
+                                <input type="number" min="0" class="form-control" id="field-1" name="minOrder" value="{{$restaurant->minOrder}}" placeholder="min order">
                                 @if ($errors->has('minOrder'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('minOrder') }}</strong>
@@ -70,7 +71,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Delivery Fee</label>
                             <div class="col-sm-5">
-                                <input type="number" min="0" class="form-control" id="field-1" name="delfee" placeholder="insert fee">
+                                <input type="number" min="0" class="form-control" id="field-1" name="delfee" value="{{$restaurant->delfee}}" placeholder="insert fee">
                                 @if ($errors->has('delfee'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('delfee') }}</strong>
@@ -95,7 +96,7 @@
                         <div class="form-group">
                             <label for="field-ta" class="col-sm-3 control-label">Address</label>
                             <div class="col-sm-5">
-                                <textarea class="form-control" id="field-ta" name="address" placeholder="Textarea"></textarea>
+                                <textarea class="form-control" id="field-ta" name="address" placeholder="Textarea">{{$restaurant->address}}</textarea>
                                 @if ($errors->has('address'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -108,7 +109,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">City</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="field-1" name="city" placeholder="Enter Restaurant Name">
+                                <input type="text" class="form-control" id="field-1" name="city" value="{{$restaurant->city}}" placeholder="Enter Restaurant Name">
                                 @if ($errors->has('city'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('city') }}</strong>
@@ -121,7 +122,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Zip</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="field-1" name="zip" placeholder="Enter Restaurant Name">
+                                <input type="text" class="form-control" id="field-1" value="{{$restaurant->zip}}" name="zip" placeholder="Enter Restaurant Name">
                                 @if ($errors->has('zip'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('zip') }}</strong>
@@ -286,7 +287,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-5">
-                                <button type="submit" class="btn btn-default">Create</button>
+                                <button type="submit" class="btn btn-default">Update</button>
                             </div>
                         </div>
                     </form>
@@ -308,9 +309,11 @@
     <script src="{{url('assets/js/bootstrap-timepicker.min.js')}}"></script>
 
     <script>
-        // $('#basicExample').timepicker();
+        $(document).ready(function(){
+            $('.timepicker').val(null);
+        });
 
     </script>
 
 
-    @endsection
+@endsection
