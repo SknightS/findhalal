@@ -22,6 +22,23 @@ class ItemController extends Controller
             ->with('resName',$resName);
     }
 
+    public function edit($itemId){
+
+
+
+        $items=Item::select('image','itemName','itemId','item.status')
+
+            ->where('itemId',$itemId)->get();
+
+
+
+        $resName=Resturant::select('resturantId','name')->orderBy('name','ASC')->get();
+
+        return view('item.edit')
+            ->with('resName',$resName)
+            ->with('items',$items);
+    }
+
     public function getItemCatByResId(Request $r){
         $resId=$r->resId;
         $this->data['category']=Category::select('categoryId','name')->where('fkresturantId',$resId)->orderBy('name','ASC')->get();
@@ -45,6 +62,7 @@ class ItemController extends Controller
         $item->fkcategoryId=$r->itemCategory;
         $item->fkresturantId=$r->resturantName;
         $item->status=$r->itemStatus;
+        $item->itemDetails=$r->itemDetails;
 
         $item->save();
 
