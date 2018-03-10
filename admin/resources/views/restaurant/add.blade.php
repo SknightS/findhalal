@@ -24,7 +24,7 @@
 
                 <div class="panel-body">
 
-                    <form role="form" class="form-horizontal form-groups-bordered" method="post" action="{{route('restaurant.insert')}}">
+                    <form role="form" class="form-horizontal form-groups-bordered" enctype="multipart/form-data"  method="post" action="{{route('restaurant.insert')}}">
                         @csrf
 
                         <div class="form-group">
@@ -83,12 +83,13 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Picture</label>
                             <div class="col-sm-5">
-                                <input type="file" class="form-control" name="image" id="field-file" placeholder="Placeholder">
+                                <input type="file" name="image"  value="upload Image" accept=".jpg, .jpeg" id="mainPic" required>
                                 @if ($errors->has('image'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('image') }}</strong>
                                     </span>
                                 @endif
+                                <img height="50px" width="50px" id="imgMainPic">
                             </div>
                         </div>
 
@@ -308,7 +309,18 @@
     <script src="{{url('assets/js/bootstrap-timepicker.min.js')}}"></script>
 
     <script>
-        // $('#basicExample').timepicker();
+        function mainPic(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgMainPic').attr('src', e.target.result);}
+                reader.readAsDataURL(input.files[0]);}
+        }
+        $("#mainPic").change(function(){
+            mainPic(this);
+        });
+
 
     </script>
 
