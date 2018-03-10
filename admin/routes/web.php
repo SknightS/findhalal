@@ -25,3 +25,12 @@ Route::post('/restaurant/show','RestaurantController@get')->name('restaurant.get
 Route::get('/restaurant/edit/{id}','RestaurantController@edit')->name('restaurant.edit');
 
 
+//Item
+Route::get('/Items/addItems','ItemController@add')->name('item.add');
+Route::post('/Items/allCategoryByResturant','ItemController@getItemCatByResId')->name('item.categoryByRes');
+Route::post('/Items/insert','ItemController@insert')->name('item.insert');
+Route::get('/Items/show','ItemController@show')->name('item.show');
+Route::post('/Items/show','ItemController@get')->name('item.get');
+//Route::get('/restaurant/edit/{id}','RestaurantController@edit')->name('restaurant.edit');
+
+

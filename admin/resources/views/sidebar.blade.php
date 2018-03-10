@@ -47,6 +47,13 @@
                <a href="{{route('restaurant.show')}}"><span class="title"><i class="fa fa-plus"></i>Show Restaurants</span></a>
             </li>
 
+            <li>
+                <a href="{{route('item.add')}}"><span class="title"><i class="fa fa-plus"></i>Add Item</span></a>
+            </li>
+            <li>
+                <a href="{{route('item.show')}}"><span class="title"><i class="fa fa-plus"></i>Show Item</span></a>
+            </li>
+
         </ul>
     </div>
 
