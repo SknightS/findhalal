@@ -24,6 +24,19 @@ class RestaurantController extends Controller
 
 
     public function insert(Request $r){
+        $this->validate($r,[
+            'name' => 'required|max:45',
+            'status' => 'required|max:10',
+            'details' => 'required|max:1100',
+            'minOrder' => 'required|max:11|number',
+            'delfee'=>'required|max:20|10',
+            'address'=>'required|max:1000',
+            'city'=>'required|max:45',
+            'zip'=>'required|max:45',
+            'country'=>'required|max:45',
+//            'image'=>'max:13',
+
+        ]);
 
         $restaurant=new Resturant;
         $restaurant->name=$r->name;
