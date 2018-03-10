@@ -15,11 +15,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RestaurantController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RestaurantController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/RestaurantController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="533">
-              <caret line="163" column="8" lean-forward="false" selection-start-line="163" selection-start-column="8" selection-end-line="163" selection-end-column="8" />
+            <state relative-caret-position="176">
+              <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
               <folding>
                 <element signature="e#40#68#0#PHP" expanded="true" />
               </folding>
@@ -37,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="add.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/restaurant/add.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="538">
-              <caret line="262" column="0" lean-forward="true" selection-start-line="167" selection-start-column="38" selection-end-line="262" selection-end-column="0" />
+            <state relative-caret-position="215">
+              <caret line="316" column="0" lean-forward="false" selection-start-line="316" selection-start-column="2" selection-end-line="332" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -84,7 +84,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1520681544235" expanded="true" signature="1736:1750" ph="..." />
+                <marker date="1520681544235" expanded="true" signature="1827:1963" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -116,10 +119,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/resources/views/main.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/restaurant/add.blade.php" />
         <option value="$PROJECT_DIR$/app/Resturanttime.php" />
         <option value="$PROJECT_DIR$/resources/views/restaurant/edit.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/RestaurantController.php" />
+        <option value="$PROJECT_DIR$/resources/views/restaurant/add.blade.php" />
       </list>
     </option>
   </component>
@@ -315,15 +318,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1520669391797</updated>
-      <workItem from="1520669393339" duration="8219000" />
+      <workItem from="1520669393339" duration="8386000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8219000" />
+    <option name="totallyTimeSpent" value="8386000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -385,7 +388,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1520681544235" expanded="true" signature="1736:1750" ph="..." />
+            <marker date="1520681544235" expanded="true" signature="1827:1963" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -415,14 +421,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/restaurant/add.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="262" column="0" lean-forward="true" selection-start-line="167" selection-start-column="38" selection-end-line="262" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/restaurant/edit.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
@@ -433,11 +431,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/RestaurantController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="163" column="8" lean-forward="false" selection-start-line="163" selection-start-column="8" selection-end-line="163" selection-end-column="8" />
+        <state relative-caret-position="176">
+          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
           <folding>
             <element signature="e#40#68#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/restaurant/add.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="316" column="0" lean-forward="false" selection-start-line="316" selection-start-column="2" selection-end-line="332" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>

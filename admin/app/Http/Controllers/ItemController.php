@@ -93,15 +93,25 @@ class ItemController extends Controller
     public function show(){
 
         $itemSizes=Itemsize::select('itemsizeId','itemsizeName','price','status','item_itemId')->orderBy('itemsizeName','ASC')->get();
+        $resName=Resturant::select('resturantId','name')->orderBy('name','ASC')->get();
 
-        return view('item.show')->with('itemSizes',$itemSizes);
+        return view('item.show')
+            ->with('itemSizes',$itemSizes)
+            ->with('resName',$resName);
     }
 
     public function get(Request $r){
 
-        $items=Item::select('image','itemName','itemId','status')->orderBy('itemName','ASC')->get();
+        $items=Item::select('image','itemName','itemId','status');
 
-//        $itemSize=Itemsize::where('item_itemId',$item->itemId);
+        if ($resId=$r->resId){
+            $items->where('item.fkresturantId',$resId);
+        }
+        if ($itemCat=$r->itemCategory){
+            $items->where('item.fkcategoryId',$itemCat);
+        }
+        $items->orderBy('itemName','ASC')->get();
+
 
         $datatables = DataTables::of($items);
 
@@ -110,13 +120,23 @@ class ItemController extends Controller
             $test='<table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle orderexmple">';
             foreach ($itemSize as $size){
                 $test.='<tr>';
-                $test.='<td>'.$size->itemsizeName.'</td>';
-                $test.='<td>'.$size->price.'</td>';
-                $test.='<td>'.$size->status.'</td>';
-                $test.='<td>'.'<a class="btn btn-default btn-sm" data-panel-id="'.$size->itemsizeId.'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a><a class="btn" data-panel-id="'.$size->itemsizeId.'"onclick="deleteProduct(this)"><i class="fa fa-trash"></i></a>'.'</td>';
+                $test.='<td class="center">'.$size->itemsizeName.'</td>';
+                $test.='<td class="center">'.$size->price.'</td>';
+                $test.='<td class="center">'.$size->status.'</td>';
+                $test.='<td class="center">'.
+                    '<button  class="btn btn-info btn-xs"  data-panel-id="'.$size->itemsizeId.'" onclick="selectid1(this)">
+                     <i class="fa fa-edit"></i>
+                     </button>
+                        <button type="button" data-panel-id="'.$size->itemsizeId.'" onclick="selectid4(this)"class="btn btn-danger btn-xs">
+
+                            <i class="fa fa-trash "></i>
+                        </button>'.
+                    '</td>';
+
                 $test.='</tr>';
             }
             $test.='</table>';
+            $test.='<button data-panel-id="'.$item->itemId.'" onclick="selectid5(this)" style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px; margin-top: 1px;" class="fa fa-plus-circle"></i></button>';
             return $test;
 
         })->make(true);

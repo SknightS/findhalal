@@ -161,7 +161,7 @@ class RestaurantController extends Controller
         $restaurant->country=$r->country;
         $restaurant->save();
 
-        
+
 
         Session::flash('message', 'Restaurant Updated Successfully');
         return back();
