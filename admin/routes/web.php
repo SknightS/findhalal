@@ -35,4 +35,15 @@ Route::get('/Items/show','ItemController@show')->name('item.show');
 Route::post('/Items/show','ItemController@get')->name('item.get');
 Route::get('/Items/edit/{id}','ItemController@edit')->name('item.edit');
 
+//Category
+Route::get('/category/show','CategoryController@show')->name('category.show');
+Route::get('/category/add','CategoryController@add')->name('category.add');
+Route::post('/category/add','CategoryController@insert')->name('category.insert');
+Route::get('/category/edit/{id}','CategoryController@edit')->name('category.edit');
+Route::post('/category/edit','CategoryController@update')->name('category.update');
+Route::post('/category/show','CategoryController@getCategoryData')->name('category.get');
+Route::post('/category/delete','CategoryController@destroy')->name('category.delete');
+
+
+
 

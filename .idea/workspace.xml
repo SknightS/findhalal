@@ -3,16 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6af2d78a-fd25-439b-ac8c-eefd3777dacf" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/admin/.idea/workspace.xml" afterPath="$PROJECT_DIR$/admin/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/admin/app/Http/Controllers/RestaurantController.php" afterPath="$PROJECT_DIR$/admin/app/Http/Controllers/RestaurantController.php" />
-      <change beforePath="$PROJECT_DIR$/admin/public/RestaurantImages/4RestaurantPicture.jpg" afterPath="$PROJECT_DIR$/admin/public/RestaurantImages/4RestaurantPicture.jpg" />
-      <change beforePath="$PROJECT_DIR$/admin/resources/views/main.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/main.blade.php" />
-      <change beforePath="$PROJECT_DIR$/admin/resources/views/restaurant/add.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/restaurant/add.blade.php" />
-      <change beforePath="$PROJECT_DIR$/admin/resources/views/restaurant/edit.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/restaurant/edit.blade.php" />
-      <change beforePath="$PROJECT_DIR$/admin/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/admin/vendor/composer/autoload_classmap.php" />
-      <change beforePath="$PROJECT_DIR$/admin/vendor/composer/autoload_files.php" afterPath="$PROJECT_DIR$/admin/vendor/composer/autoload_files.php" />
-      <change beforePath="$PROJECT_DIR$/admin/vendor/composer/autoload_psr4.php" afterPath="$PROJECT_DIR$/admin/vendor/composer/autoload_psr4.php" />
-      <change beforePath="$PROJECT_DIR$/admin/vendor/composer/autoload_static.php" afterPath="$PROJECT_DIR$/admin/vendor/composer/autoload_static.php" />
-      <change beforePath="$PROJECT_DIR$/admin/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/admin/vendor/composer/installed.json" />
+      <change beforePath="$PROJECT_DIR$/admin/resources/views/restaurant/show.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/restaurant/show.blade.php" />
+      <change beforePath="$PROJECT_DIR$/admin/resources/views/sidebar.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/sidebar.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-14100">
-              <caret line="3" column="88" lean-forward="true" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="88" />
+              <caret line="3" column="88" lean-forward="false" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="88" />
               <folding>
                 <marker date="1520688785227" expanded="true" signature="10:16" ph="..." />
                 <marker date="1520688785227" expanded="true" signature="27:35" ph="..." />
@@ -323,7 +315,7 @@
     <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-14100">
-          <caret line="3" column="88" lean-forward="true" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="88" />
+          <caret line="3" column="88" lean-forward="false" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="88" />
           <folding>
             <marker date="1520688785227" expanded="true" signature="10:16" ph="..." />
             <marker date="1520688785227" expanded="true" signature="27:35" ph="..." />
