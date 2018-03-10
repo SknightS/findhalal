@@ -123,7 +123,7 @@ class RestaurantController extends Controller
         $saturday=Resturanttime::where('fkresturantId',$id)
                                 ->where('day','saturday')->first();
 
-        $sundayday=Resturanttime::where('fkresturantId',$id)
+        $sunday=Resturanttime::where('fkresturantId',$id)
             ->where('day','sunday')->first();
 
         $monday=Resturanttime::where('fkresturantId',$id)
@@ -144,7 +144,15 @@ class RestaurantController extends Controller
 
 
 
-        return view('restaurant.edit')->with('restaurant',$restaurant);
+        return view('restaurant.edit')
+            ->with('restaurant',$restaurant)
+            ->with('saturday',$saturday)
+            ->with('sunday',$sunday)
+            ->with('monday',$monday)
+            ->with('tuesday',$tuesday)
+            ->with('wednesday',$wednesday)
+            ->with('thursday',$thursday)
+            ->with('friday',$friday);
     }
 
     public function update(Request $r){
@@ -152,14 +160,77 @@ class RestaurantController extends Controller
         $restaurant->name=$r->name;
         $restaurant->details=$r->details;
         $restaurant->minOrder=$r->minOrder;
-//        $restaurant->image=$r->image;
         $restaurant->delfee=$r->delfee;
         $restaurant->status=$r->status;
         $restaurant->address=$r->address;
         $restaurant->city=$r->city;
         $restaurant->zip=$r->zip;
         $restaurant->country=$r->country;
+
+        //Check If the form has Image File
+        if($r->hasFile('image')){
+            $img = $r->file('image');
+            if($restaurant->image !=null){//If there was any image before
+                $filename= $restaurant->image.'.'.$img->getClientOriginalExtension();
+                }
+            else{
+                $filename= $restaurant->resturantId.'RestaurantPicture'.'.'.$img->getClientOriginalExtension();
+            }
+            $restaurant->image=$filename;
+
+            $location = public_path('RestaurantImages/'.$filename);
+//            Image::make($img)->resize(800,600)->save($location);
+            Image::make($img)->save($location);
+        }
         $restaurant->save();
+
+
+
+
+
+        //Updating run time
+        $runTime=Resturanttime::findOrFail($r->satId);
+        $runTime->day='saturday';
+        $runTime->opentime=$r->satOpen;
+        $runTime->closetime=$r->satClose;
+        $runTime->save();
+
+        $runTime=Resturanttime::findOrFail($r->sunId);
+        $runTime->day='sunday';
+        $runTime->opentime=$r->sunOpen;
+        $runTime->closetime=$r->sunClose;
+        $runTime->save();
+
+        $runTime=Resturanttime::findOrFail($r->monId);
+        $runTime->day='monday';
+        $runTime->opentime=$r->monOpen;
+        $runTime->closetime=$r->monClose;
+        $runTime->save();
+
+        $runTime=Resturanttime::findOrFail($r->tueId);
+        $runTime->day='tuesday';
+        $runTime->opentime=$r->tueOpen;
+        $runTime->closetime=$r->tueClose;
+        $runTime->save();
+
+        $runTime=Resturanttime::findOrFail($r->wedId);
+        $runTime->day='wednesday';
+        $runTime->opentime=$r->wedOpen;
+        $runTime->closetime=$r->wedClose;
+        $runTime->save();
+
+        $runTime=Resturanttime::findOrFail($r->thuId);
+        $runTime->day='thursday';
+        $runTime->opentime=$r->thuOpen;
+        $runTime->closetime=$r->thuClose;
+        $runTime->save();
+
+        $runTime=Resturanttime::findOrFail($r->friId);
+        $runTime->day='friday';
+        $runTime->opentime=$r->friOpen;
+        $runTime->closetime=$r->friClose;
+        $runTime->save();
+
 
 
 
@@ -172,8 +243,14 @@ class RestaurantController extends Controller
     public function destroy(Request $r){
 
         DB::table('resturanttime')->where('fkresturantId',$r->id)->delete();
+        DB::table('category')->where('fkresturantId',$r->id)->delete();
+        DB::table('item')->where('fkresturantId',$r->id)->delete();
 
         $restaurant=Resturant::findOrFail($r->id);
+
+        if($restaurant->image!=null){
+            File::delete('RestaurantImages/'.$restaurant->image);
+        }
         $restaurant->delete();
 
         Session::flash('message', 'Restaurant Deleted Successfully');

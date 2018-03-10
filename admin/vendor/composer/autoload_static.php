@@ -379,6 +379,7 @@ class ComposerStaticInitaeafaad8a45bacfd6f51c0e3d3fd0665
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Purchase' => __DIR__ . '/../..' . '/app/Purchase.php',
         'App\\Resturant' => __DIR__ . '/../..' . '/app/Resturant.php',
+        'App\\Resturanttime' => __DIR__ . '/../..' . '/app/Resturanttime.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',

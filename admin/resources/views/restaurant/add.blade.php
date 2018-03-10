@@ -109,7 +109,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">City</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="field-1" name="city" placeholder="Enter Restaurant Name">
+                                <input type="text" class="form-control" id="city" name="city" placeholder="enter your city">
                                 @if ($errors->has('city'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('city') }}</strong>
@@ -122,7 +122,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Zip</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="field-1" name="zip" placeholder="Enter Restaurant Name">
+                                <input type="text" class="form-control" id="zip" name="zip" placeholder="enter your zip code">
                                 @if ($errors->has('zip'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('zip') }}</strong>
@@ -314,36 +314,260 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
 
-//    $(function () {
-//        $(":file").change(function () {
-//            if (this.files && this.files[0]) {
-//                var reader = new FileReader();
-//                reader.onload = imageIsLoaded;
-//                reader.readAsDataURL(this.files[0]);
-//            }
-//        });
-//
-//
-//        $('.timepicker').timepicker();
-//
-//
-//    });
-//    function imageIsLoaded(e) {
-//        $('#imgMainPic').attr('src', e.target.result);
-//    };
-//    function mainPic(input) {
-//            if (input.files && input.files[0]) {
-//                var reader = new FileReader();
-//
-//                reader.onload = function (e) {
-//                    $('#imgMainPic').attr('src', e.target.result);}
-//                reader.readAsDataURL(input.files[0]);}
-//        }
-//        $("#mainPic").change(function(){
-//            mainPic(this);
-//        });
-//        $('#timepicker').timepicker();
-//        $('#timepicker2').timepicker();
+   function mainPic(input) {
+           if (input.files && input.files[0]) {
+               var reader = new FileReader();
+
+               reader.onload = function (e) {
+                   $('#imgMainPic').attr('src', e.target.result);}
+               reader.readAsDataURL(input.files[0]);}
+       }
+       $("#mainPic").change(function(){
+           mainPic(this);
+       });
+
+
+$( function() {
+    var availableCity=[
+        "Altstadt",
+        "Altstadt",
+        "Bahnhofsviertel",
+        "Bergen-Enkheim",
+        "Bergen-Enkheim",
+        "Berkersheim",
+        "Bockenheim",
+        "Bockenheim",
+        "Bockenheim",
+        "Bockenheim",
+        "Bockenheim",
+        "Bonames",
+        "Bonames",
+        "Bornheim",
+        "Bornheim",
+        "Bornheim",
+        "Bornheim",
+        "Dornbusch",
+        "Dornbusch",
+        "Dornbusch",
+        "Dornbusch",
+        "Dornbusch",
+        "Eckenheim",
+        "Eckenheim",
+        "Eschersheim",
+        "Eschersheim",
+        "Fechenheim",
+        "Fechenheim",
+        "Flughafen",
+        "Frankfurter Berg",
+        "Gallus",
+        "Gallus",
+        "Gallus",
+        "Gallus",
+        "Gallus",
+        "Ginnheim",
+        "Griesheim",
+        "Griesheim",
+        "Gutleutviertel",
+        "Gutleutviertel",
+        "Harheim",
+        "Hausen",
+        "Hausen",
+        "Heddernheim",
+        "Höchst",
+        "Höchst",
+        "Innenstadt",
+        "Innenstadt",
+        "Innenstadt",
+        "Innenstadt",
+        "Innenstadt",
+        "Innenstadt",
+        "Kalbach",
+        "Kalbach",
+        "Kalbach-Riedberg",
+        "Nied",
+        "Nied",
+        "Nieder-Erlenbach",
+        "Nieder-Eschbach",
+        "Niederrad",
+        "Niederursel",
+        "Niederursel",
+        "Nordend-Ost",
+        "Nordend-Ost",
+        "Nordend-Ost",
+        "Nordend-Ost",
+        "Nordend-West",
+        "Nordend-West",
+        "Nordend-West",
+        "Nordend-West",
+        "Nordend-West",
+        "Nordend-West",
+        "Oberrad",
+        "Ostend",
+        "Ostend",
+        "Ostend",
+        "Praunheim",
+        "Praunheim",
+        "Praunheim",
+        "Preungesheim",
+        "Preungesheim",
+        "Riederwald",
+        "Rödelheim",
+        "Rödelheim",
+        "Rödelheim",
+        "Rödelheim",
+        "Sachsenhausen",
+        "Sachsenhausen",
+        "Sachsenhausen",
+        "Sachsenhausen",
+        "Sachsenhausen",
+        "Schwanheim",
+        "Schwanheim",
+        "Seckbach",
+        "Seckbach",
+        "Seckbach",
+        "Sindlingen",
+        "Sossenheim",
+        "Unterliederbach",
+        "Westend-Nord",
+        "Westend-Nord",
+        "Westend-Nord",
+        "Westend-Nord",
+        "Westend-Süd",
+        "Westend-Süd",
+        "Westend-Süd",
+        "Westend-Süd",
+        "Westend-Süd",
+        "Westend-Süd",
+        "Westend-Süd",
+        "Westend-Süd",
+        "Westend-Süd",
+        "Zeilsheim",
+    ];
+    var availableZip = [
+        "60311",
+        "60313",
+        "60329",
+        "60388",
+        "60389",
+        "60435",
+        "60320",
+        "60325",
+        "60431",
+        "60486",
+        "60487",
+        "60433",
+        "60437",
+        "60385",
+        "60386",
+        "60389",
+        "60435",
+        "60320",
+        "60322",
+        "60431",
+        "60433",
+        "60435",
+        "60320",
+        "60435",
+        "60431",
+        "60433",
+        "60314",
+        "60386",
+        "60549",
+        "60433",
+        "60325",
+        "60326",
+        "60327",
+        "60329",
+        "60486",
+        "60431",
+        "60326",
+        "65933",
+        "60327",
+        "60329",
+        "60437",
+        "60487",
+        "60488",
+        "60439",
+        "65929",
+        "65934",
+        "60310",
+        "60311",
+        "60313",
+        "60318",
+        "60322",
+        "60329",
+        "60437",
+        "60439",
+        "60438",
+        "65934",
+        "65936",
+        "60437",
+        "60437",
+        "60528",
+        "60437",
+        "60439",
+        "60316",
+        "60318",
+        "60385",
+        "60389",
+        "60316",
+        "60318",
+        "60320",
+        "60322",
+        "60389",
+        "60435",
+        "60599",
+        "60314",
+        "60316",
+        "60385",
+        "60431",
+        "60439",
+        "60488",
+        "60433",
+        "60435",
+        "60386",
+        "60486",
+        "60487",
+        "60488",
+        "60489",
+        "60528",
+        "60594",
+        "60596",
+        "60598",
+        "60599",
+        "60528",
+        "60529",
+        "60386",
+        "60388",
+        "60389",
+        "65931",
+        "65936",
+        "65929",
+        "60320",
+        "60322",
+        "60323",
+        "60431",
+        "60306",
+        "60308",
+        "60320",
+        "60322",
+        "60323",
+        "60325",
+        "60327",
+        "60486",
+        "60487",
+        "65931",
+
+
+    ];
+
+    $( "#zip" ).autocomplete({
+        source: availableZip
+    });
+    $( "#city" ).autocomplete({
+        source: availableCity
+    });
+} );
 
 
     </script>
