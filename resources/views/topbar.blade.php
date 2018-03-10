@@ -17,7 +17,7 @@
     <link href="{{url('css/animate.css')}}" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{{url('css/style.css')}}" rel="stylesheet"> </head>
-
+@yield('header')
 <body class="home">
 <div class="site-wrapper animsition" data-animsition-in="fade-in" data-animsition-out="fade-out">
     <!--header starts-->
@@ -40,3 +40,4 @@
         </nav>
         <!-- /.navbar -->
     </header>
+</div>
