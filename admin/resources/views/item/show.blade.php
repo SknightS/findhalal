@@ -9,7 +9,7 @@
 
     <div class="row">
     <div class="col-md-6 dropdown">
-        <label class="col-sm-2 control-label">Resturant Name<span style="color: red" class="required">*</span></label>
+        <label class="col-sm-3 control-label">Resturant Name<span style="color: red" class="required">*</span></label>
         <div class="col-sm-4">
             <select class="form-control" name="resturantName" id="resturantName" required>
 
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="col-md-6 dropdown">
         <label class="col-sm-2 control-label">Item Type<span style="color: red" class="required">*</span></label>
         <div class="col-sm-4">
             <select class="form-control" name="itemCategory" id="itemCategory" required>
@@ -123,6 +123,15 @@
                     },
 
                 ],
+            });
+
+            $('#resturantName').change(function(){ //button filter event click
+                table.search("").draw(); //just redraw myTableFilter
+                table.ajax.reload();  //just reload table
+            });
+            $('#itemCategory').change(function(){ //button filter event click
+                table.search("").draw(); //just redraw myTableFilter
+                table.ajax.reload();  //just reload table
             });
 
         });

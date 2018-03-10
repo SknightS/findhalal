@@ -318,7 +318,7 @@
                 reader.readAsDataURL(input.files[0]);}
         }
         $("#mainPic").change(function(){
-            mainPic(this);
+           // mainPic(this);
         });
 
 

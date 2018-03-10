@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{url('assets/css/font-icons/entypo/css/entypo.css')}}">
     <link rel="stylesheet" href="{{url('//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic')}}">
     <link rel="stylesheet" href="{{url('assets/css/bootstrap.css')}}">
+    <link type="stylesheet" href="{{url('assets/css/bootstrap-timepicker.min.css')}}" />
     <link rel="stylesheet" href="{{url('assets/css/neon-core.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/neon-theme.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/neon-forms.css')}}">
