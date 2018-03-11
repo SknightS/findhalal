@@ -22,23 +22,6 @@ class ItemController extends Controller
             ->with('resName',$resName);
     }
 
-    public function edit($itemId){
-
-
-
-        $items=Item::select('image','itemName','itemId','item.status')
-
-            ->where('itemId',$itemId)->get();
-
-
-
-        $resName=Resturant::select('resturantId','name')->orderBy('name','ASC')->get();
-
-        return view('item.edit')
-            ->with('resName',$resName)
-            ->with('items',$items);
-    }
-
     public function getItemCatByResId(Request $r){
         $resId=$r->resId;
         $this->data['category']=Category::select('categoryId','name')->where('fkresturantId',$resId)->orderBy('name','ASC')->get();
@@ -142,22 +125,117 @@ class ItemController extends Controller
                 $test.='<td class="center">'.$size->price.'</td>';
                 $test.='<td class="center">'.$size->status.'</td>';
                 $test.='<td class="center">'.
-                    '<button  class="btn btn-info btn-xs"  data-panel-id="'.$size->itemsizeId.'" onclick="selectid1(this)">
+                    '<a  class="btn btn-info btn-xs" href="'. route('itemSize.edit',$size->itemsizeId).'" data-panel-id="'.$size->itemsizeId.'">
                      <i class="fa fa-edit"></i>
-                     </button>
-                        <button type="button" data-panel-id="'.$size->itemsizeId.'" onclick="selectid4(this)"class="btn btn-danger btn-xs">
-
-                            <i class="fa fa-trash "></i>
-                        </button>'.
-                    '</td>';
+                     </a>'. '</td>';
 
                 $test.='</tr>';
             }
             $test.='</table>';
-            $test.='<button data-panel-id="'.$item->itemId.'" onclick="selectid5(this)" style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px; margin-top: 1px;" class="fa fa-plus-circle"></i></button>';
+            $test.='<a data-panel-id="'.$item->itemId.'" href="'. route('itemSize.add',$item->itemId).'"  style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px; margin-top: 1px;" class="fa fa-plus-circle"></i></a>';
             return $test;
 
         })->make(true);
+
+
+    }
+
+    public function edit($itemId){
+
+
+
+        $items=Item::select('item.image','item.itemName','item.itemDetails','item.itemId','item.status','item.fkresturantId','category.name as catName','item.fkcategoryId')
+            ->leftJoin('category', 'category.categoryId', '=', 'item.fkcategoryId')
+            ->where('item.itemId',$itemId)->get();
+
+        $resName=Resturant::select('resturantId','name')->orderBy('name','ASC')->get();
+
+        return view('item.edit')
+            ->with('resName',$resName)
+            ->with('items',$items);
+    }
+
+    public function update($itemId,Request $r){
+
+        $items=Item::findOrFail($itemId);
+
+        $items->itemName=$r->itemName;
+        $items->fkcategoryId=$r->itemCategory;
+        $items->fkresturantId=$r->resturantName;
+        $items->status=$r->itemStatus;
+        $items->itemDetails=$r->itemDetails;
+
+
+        //Check If the form has Image File
+        if($r->hasFile('ItemPicture')){
+            $img = $r->file('ItemPicture');
+
+            $filename= $items->itemId.'ItemPicture'.'.'.$img->getClientOriginalExtension();
+
+            $items->image=$filename;
+
+            $location = public_path('ItemImages/'.$filename);
+//            Image::make($img)->resize(800,600)->save($location);
+            Image::make($img)->save($location);
+        }
+
+        $items->save();
+
+        Session::flash('message', 'Item Updated Successfully');
+        return back();
+
+
+    }
+
+    public function editItemSize($id){
+
+        $itemSizes=Itemsize::findOrFail($id);
+
+
+        return view('item.editItemSize')
+            ->with('itemSize',$itemSizes);
+    }
+
+    public function updateItemSize($itemSizeId,Request $r){
+
+        $itemSize=Itemsize::findOrFail($itemSizeId);
+
+        $itemSize->itemsizeName=$r->itemSizeName;
+        $itemSize->price=$r->itemPrice;
+        $itemSize->status=$r->itemSizeStatus;
+
+
+        $itemSize->save();
+
+        Session::flash('message', 'Item Size Updated Successfully');
+        return back();
+
+
+    }
+
+    public function addItemSize($id){
+
+
+        return view('item.addItemSize')
+            ->with('itemId',$id);
+    }
+
+    public function insertItemSize($itemId,Request $r){
+
+        $itemSize=new Itemsize;
+
+        $itemSize->item_itemId=$itemId;
+        $itemSize->itemsizeName=$r->itemSizeName;
+        $itemSize->price=$r->itemPrice;
+        $itemSize->status=$r->itemSizeStatus;
+
+        
+
+        $itemSize->save();
+
+        Session::flash('message', 'Item Size Insert Successfully');
+        return back();
+
 
     }
 }

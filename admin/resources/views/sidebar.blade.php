@@ -48,10 +48,10 @@
             </li>
 
             <li>
-                <a href="{{route('item.add')}}"><span class="title"><i class="fa fa-plus"></i>Add Item</span></a>
+                <a href="{{route('item.add')}}"><i class="fa fa-plus"></i><span class="title">Add Item</span></a>
             </li>
             <li>
-                <a href="{{route('item.show')}}"><span class="title"><i class="fa fa-plus"></i>Show Item</span></a>
+                <a href="{{route('item.show')}}"><i class="fa fa-plus"></i><span class="title">Show Item</span></a>
             </li>
 
         </ul>

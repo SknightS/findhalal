@@ -117,8 +117,9 @@
                     { data: 'status', name: 'status' },
 
                     { "data": function(data){
-                        return '<a class="btn btn-info btn-sm"  data-panel-id="'+data.itemId+'"onclick="editItem(this)"><i class="fa fa-edit"></i></a>' +
-                            '<a class="btn btn-danger btn-sm" data-panel-id="'+data.itemId+'"onclick="deleteItem(this)"><i class="fa fa-trash"></i></a>';},
+                        return '<a class="btn btn-info btn-sm"  data-panel-id="'+data.itemId+'"onclick="editItem(this)"><i class="fa fa-edit"></i></a>'
+//                            '<a class="btn btn-danger btn-sm" data-panel-id="'+data.itemId+'"onclick="deleteItem(this)"><i class="fa fa-trash"></i></a>'
+                            ;},
                         "orderable": false, "searchable":false
                     },
 
@@ -154,23 +155,30 @@
         function editItem(x) {
             btn = $(x).data('panel-id');
 
-
-
-                    var url = '{{route("item.edit", ":id") }}';
-                    //alert(url);
-                    var newUrl=url.replace(':id', btn);
-                    window.location.href = newUrl;
-
-
+            var url = '{{route("item.edit", ":id") }}';
+            //alert(url);
+            var newUrl=url.replace(':id', btn);
+            window.location.href = newUrl;
         }
 
-        function deleteItem(x) {
+        {{--function editItemSize(x) {--}}
+
+
             {{--btn = $(x).data('panel-id');--}}
-            {{--var url = '{{route("product.edit", ":id") }}';--}}
-            {{--//alert(url);--}}
-            {{--var newUrl=url.replace(':id', btn);--}}
-            {{--window.location.href = newUrl;--}}
-        }
+
+            {{--$.ajax({--}}
+                {{--type: 'post',--}}
+                {{--url: '{{route('itemSize.edit')}}',--}}
+                {{--data: {'itemSizeId': btn},--}}
+                {{--success: function (data) {--}}
+
+                      {{--$('.page-body').html(data);--}}
+                    {{--// $('.page-body').load(document.URL +  ' .page-body');--}}
+                    {{--$('.page-body').fadeOut().html(data).fadeIn();--}}
+                {{--}--}}
+            {{--});--}}
+        {{--}--}}
+
 
 
 
