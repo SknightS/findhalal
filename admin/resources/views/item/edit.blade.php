@@ -94,7 +94,15 @@
                                 @endif
 
                             </div>
-                            <img height="50px" src="{{url('public/ItemImages')."/".$itemInfo->image}}" width="50px" id="ItemPicture">
+                            @if (!empty($itemInfo->image))
+                            <div style="text-align:right;margin-right: 20px">
+                            <img height="80px" width="80px" src="{{url('public/ItemImages')."/".$itemInfo->image}}"  id="ItemPicture"><br>
+                                <a href="{{route('image.show',$itemInfo->image)}}" target="_blank"><span>View Full Image</span></a>
+
+                                <a href="{{route('image.delete',$itemInfo->itemId)}}" onclick='return confirm("Are you sure to Delete This Item Image?")'><i class="fa fa-trash"></i></a>
+
+                            </div>
+                            @endif
                         </div>
 
                         <div class="form-group">

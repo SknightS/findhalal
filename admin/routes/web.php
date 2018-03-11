@@ -41,4 +41,20 @@ Route::post('/Items/updateItemSize/{id}','ItemController@updateItemSize')->name(
 Route::get('/Items/addItemSize/{id}','ItemController@addItemSize')->name('itemSize.add');
 Route::post('/Items/addItemSize/{id}','ItemController@insertItemSize')->name('itemSize.insert');
 
+Route::get('/Items/showImage/{id}','ItemController@fullImageShow')->name('image.show');
+Route::get('/Items/deleteImage/{id}','ItemController@deleteItemImage')->name('image.delete');
+
+//Category
+Route::get('/category/show','CategoryController@show')->name('category.show');
+Route::get('/category/add','CategoryController@add')->name('category.add');
+Route::post('/category/add','CategoryController@insert')->name('category.insert');
+Route::get('/category/edit/{id}','CategoryController@edit')->name('category.edit');
+Route::post('/category/edit','CategoryController@update')->name('category.update');
+Route::post('/category/show','CategoryController@getCategoryData')->name('category.get');
+Route::post('/category/delete','CategoryController@destroy')->name('category.delete');
+
+
+
+
+
 

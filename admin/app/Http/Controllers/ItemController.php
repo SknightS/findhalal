@@ -12,6 +12,7 @@ use Session;
 use Image;
 
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class ItemController extends Controller
 {
@@ -38,6 +39,20 @@ class ItemController extends Controller
     }
 
     public function insert(Request $r){
+
+        $rules=[
+            'itemName' => 'required|max:45',
+            'itemCategory' => 'required|max:11',
+            'resturantName' => 'required|max:11',
+            'itemStatus' => 'required|max:15',
+            'itemDetails'=>'',
+            'ItemPicture'=>'required|image|mimes:jpeg,jpg',
+
+        ];
+        $messages = [
+            // 'dimensions' => 'Image dimention should over 800px',
+        ];
+        $validator = Validator::make($r->all(), $rules,$messages)->validate();
 
 
         $item=new Item;
@@ -157,6 +172,21 @@ class ItemController extends Controller
 
     public function update($itemId,Request $r){
 
+        $rules=[
+            'itemName' => 'required|max:45',
+            'itemCategory' => 'required|max:11',
+            'resturantName' => 'required|max:11',
+            'itemStatus' => 'required|max:15',
+            'itemDetails'=>'',
+            'ItemPicture'=>'image|mimes:jpeg,jpg',
+
+        ];
+        $messages = [
+            // 'dimensions' => 'Image dimention should over 800px',
+        ];
+        $validator = Validator::make($r->all(), $rules,$messages)->validate();
+
+
         $items=Item::findOrFail($itemId);
 
         $items->itemName=$r->itemName;
@@ -198,6 +228,18 @@ class ItemController extends Controller
 
     public function updateItemSize($itemSizeId,Request $r){
 
+        $rules=[
+            'itemSizeName' => 'required|max:45',
+            'itemPrice' => 'required',
+            'itemSizeStatus' => 'required|max:15',
+
+        ];
+        $messages = [
+            // 'dimensions' => 'Image dimention should over 800px',
+        ];
+        $validator = Validator::make($r->all(), $rules,$messages)->validate();
+
+
         $itemSize=Itemsize::findOrFail($itemSizeId);
 
         $itemSize->itemsizeName=$r->itemSizeName;
@@ -220,7 +262,23 @@ class ItemController extends Controller
             ->with('itemId',$id);
     }
 
+    public function fullImageShow($imageName){
+
+        return view('item.showImage')->with('image',$imageName);
+    }
+
     public function insertItemSize($itemId,Request $r){
+
+        $rules=[
+            'itemSizeName' => 'required|max:45',
+            'itemPrice' => 'required',
+            'itemSizeStatus' => 'required|max:15',
+
+        ];
+        $messages = [
+            // 'dimensions' => 'Image dimention should over 800px',
+        ];
+        $validator = Validator::make($r->all(), $rules,$messages)->validate();
 
         $itemSize=new Itemsize;
 
@@ -229,12 +287,34 @@ class ItemController extends Controller
         $itemSize->price=$r->itemPrice;
         $itemSize->status=$r->itemSizeStatus;
 
-        
 
         $itemSize->save();
 
         Session::flash('message', 'Item Size Insert Successfully');
         return back();
+
+
+    }
+
+    public function deleteItemImage($itemId){
+
+
+        $items=Item::findOrFail($itemId);
+
+        if (!empty($items->image)) {
+            $filePath = public_path('ItemImages/' . $items->image);
+
+            if (file_exists($filePath)) {
+                @unlink($filePath);
+            }
+
+            $items->image = null;
+
+            $items->save();
+
+            Session::flash('message', 'Item Image Deleted Successfully');
+            return back();
+        }
 
 
     }

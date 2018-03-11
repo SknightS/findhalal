@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Name</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="field-1" name="name" placeholder="Enter Restaurant Name">
+                                <input type="text" class="form-control" id="field-1" value="{{old('name')}}" name="name" placeholder="Enter Restaurant Name">
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -44,7 +44,7 @@
                             <label for="field-ta" class="col-sm-3 control-label">Details</label>
 
                             <div class="col-sm-5">
-                                <textarea class="form-control" id="field-ta" name="details" placeholder="Textarea"></textarea>
+                                <textarea class="form-control" id="field-ta" name="details" placeholder="Textarea">{{old('details')}}</textarea>
                                 @if ($errors->has('details'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('details') }}</strong>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Min Order</label>
                             <div class="col-sm-5">
-                                <input type="number" min="0" class="form-control" id="field-1" name="minOrder" placeholder="min order">
+                                <input type="number" min="0" class="form-control"  value="{{old('minOrder')}}" name="minOrder" placeholder="min order">
                                 @if ($errors->has('minOrder'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('minOrder') }}</strong>
@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Delivery Fee</label>
                             <div class="col-sm-5">
-                                <input type="number" min="0" class="form-control" id="field-1" name="delfee" placeholder="insert fee">
+                                <input type="number" min="0" class="form-control" value="{{old('delfee')}}" name="delfee" placeholder="insert fee">
                                 @if ($errors->has('delfee'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('delfee') }}</strong>
@@ -96,7 +96,7 @@
                         <div class="form-group">
                             <label for="field-ta" class="col-sm-3 control-label">Address</label>
                             <div class="col-sm-5">
-                                <textarea class="form-control" id="field-ta" name="address" placeholder="Textarea"></textarea>
+                                <textarea class="form-control" id="field-ta" name="address" placeholder="Textarea">{{old('address')}}</textarea>
                                 @if ($errors->has('address'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -109,7 +109,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">City</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="city" name="city" placeholder="enter your city">
+                                <input type="text" class="form-control" id="city" name="city" value="{{old('city')}}" placeholder="enter your city">
                                 @if ($errors->has('city'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('city') }}</strong>
@@ -122,7 +122,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Zip</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="zip" name="zip" placeholder="enter your zip code">
+                                <input type="text" class="form-control" id="zip" value="{{old('zip')}}" name="zip" placeholder="enter your zip code">
                                 @if ($errors->has('zip'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('zip') }}</strong>

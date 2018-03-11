@@ -39,19 +39,16 @@
                 </a>
             </li>
 
+
             <li>
-               <a href="{{route('restaurant.add')}}"><i class="fa fa-plus"></i><span class="title">Add Restaurant</span></a>
+               <a href="{{route('restaurant.show')}}"><i class="fa fa-reddit-square"></i><span class="title">Restaurants</span></a>
             </li>
 
             <li>
-               <a href="{{route('restaurant.show')}}"><i class="fa fa-list"></i><span class="title">Show Restaurants</span></a>
-            </li>
-
-            <li>
-                <a href="{{route('item.add')}}"><i class="fa fa-plus"></i><span class="title">Add Item</span></a>
+                <a href="{{route('category.show')}}"><i class="fa fa-list-alt"></i><span class="title">Categories</span></a>
             </li>
             <li>
-                <a href="{{route('item.show')}}"><i class="fa fa-plus"></i><span class="title">Show Item</span></a>
+                <a href="{{route('item.show')}}"><i class="fa fa-plus"></i><span class="title">Items</span></a>
             </li>
 
         </ul>

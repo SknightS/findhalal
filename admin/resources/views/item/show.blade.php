@@ -7,10 +7,16 @@
 
 @section('content')
 
+    <div style="text-align: right;margin-bottom: 20px">
+        <a href="{{route('item.add')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add Item</span></a>
+    </div>
+
+    <div>
+
     <div class="row">
-    <div class="form-group col-md-6">
+    {{--<div class="form-group col-md-6">--}}
         <label class="col-sm-3 control-label">Resturant Name<span style="color: red" class="required">*</span></label>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <select class="form-control" name="resturantName" id="resturantName" required>
 
                 <option value="">Select Resturant Name</option>
@@ -20,21 +26,20 @@
 
             </select>
         </div>
-    </div>
+    {{--</div>--}}
 
-    <div class="form-group col-md-6">
+    {{--<div class="form-group col-md-6">--}}
         <label class="col-sm-2 control-label">Item Type<span style="color: red" class="required">*</span></label>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <select class="form-control" name="itemCategory" id="itemCategory" required>
 
                 <option value="">Select Item Type</option>
 
             </select>
         </div>
-    </div>
+    {{--</div>--}}
 
     </div>
-
 
     <div class="table table-responsive" style="margin-top: 20px">
         <table id="allItemList" class="table table-bordered table-striped">
@@ -49,6 +54,8 @@
             </thead>
 
         </table>
+
+    </div>
 
     </div>
 
