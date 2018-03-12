@@ -7,10 +7,16 @@
 
 @section('content')
 
+    <div style="text-align: right;margin-bottom: 20px">
+        <a href="{{route('item.add')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add Item</span></a>
+    </div>
+
+    <div>
+
     <div class="row">
-    <div class="col-md-6 dropdown">
+    {{--<div class="form-group col-md-6">--}}
         <label class="col-sm-3 control-label">Resturant Name<span style="color: red" class="required">*</span></label>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <select class="form-control" name="resturantName" id="resturantName" required>
 
                 <option value="">Select Resturant Name</option>
@@ -20,21 +26,20 @@
 
             </select>
         </div>
-    </div>
+    {{--</div>--}}
 
-    <div class="col-md-6 dropdown">
+    {{--<div class="form-group col-md-6">--}}
         <label class="col-sm-2 control-label">Item Type<span style="color: red" class="required">*</span></label>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <select class="form-control" name="itemCategory" id="itemCategory" required>
 
                 <option value="">Select Item Type</option>
 
             </select>
         </div>
-    </div>
+    {{--</div>--}}
 
     </div>
-
 
     <div class="table table-responsive" style="margin-top: 20px">
         <table id="allItemList" class="table table-bordered table-striped">
@@ -49,6 +54,8 @@
             </thead>
 
         </table>
+
+    </div>
 
     </div>
 
@@ -117,8 +124,9 @@
                     { data: 'status', name: 'status' },
 
                     { "data": function(data){
-                        return '<a class="btn btn-info btn-sm" data-panel-id="'+data.itemId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a>' +
-                            '<a class="btn btn-danger btn-sm" data-panel-id="'+data.itemId+'"onclick="deleteProduct(this)"><i class="fa fa-trash"></i></a>';},
+                        return '<a class="btn btn-info btn-sm"  data-panel-id="'+data.itemId+'"onclick="editItem(this)"><i class="fa fa-edit"></i></a>'
+//                            '<a class="btn btn-danger btn-sm" data-panel-id="'+data.itemId+'"onclick="deleteItem(this)"><i class="fa fa-trash"></i></a>'
+                            ;},
                         "orderable": false, "searchable":false
                     },
 
@@ -150,6 +158,34 @@
                 }
             });
         });
+
+        function editItem(x) {
+            btn = $(x).data('panel-id');
+
+            var url = '{{route("item.edit", ":id") }}';
+            //alert(url);
+            var newUrl=url.replace(':id', btn);
+            window.location.href = newUrl;
+        }
+
+        {{--function editItemSize(x) {--}}
+
+
+            {{--btn = $(x).data('panel-id');--}}
+
+            {{--$.ajax({--}}
+                {{--type: 'post',--}}
+                {{--url: '{{route('itemSize.edit')}}',--}}
+                {{--data: {'itemSizeId': btn},--}}
+                {{--success: function (data) {--}}
+
+                      {{--$('.page-body').html(data);--}}
+                    {{--// $('.page-body').load(document.URL +  ' .page-body');--}}
+                    {{--$('.page-body').fadeOut().html(data).fadeIn();--}}
+                {{--}--}}
+            {{--});--}}
+        {{--}--}}
+
 
 
 

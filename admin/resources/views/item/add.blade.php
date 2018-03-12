@@ -68,7 +68,7 @@
                             <label for="field-ta" class="col-sm-3 control-label"> Item Details </label>
 
                             <div class="col-sm-5">
-                                <textarea class="form-control" id="field-ta" name="ItemDetails" placeholder="ItemDetails"></textarea>
+                                <textarea class="form-control" id="field-ta" name="itemDetails" placeholder="ItemDetails"></textarea>
                                 @if ($errors->has('ItemDetails'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('ItemDetails') }}</strong>

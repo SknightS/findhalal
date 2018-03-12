@@ -7,6 +7,10 @@
 
 @section('content')
 
+<div style="text-align: right">
+        <a href="{{route('restaurant.add')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add Restaurant</span></a>
+</div>
+
     <div class="table table-responsive" style="margin-top: 20px">
         <table id="allProductList" class="table table-bordered table-striped">
             <thead>
@@ -36,14 +40,7 @@
 
 @section('foot-js')
     <link rel="stylesheet" href="{{url('assets/js/datatables/datatables.css')}}">
-    {{--<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">--}}
-    {{--<link rel="stylesheet" href="{{url('assets/js/datatables/datatables.css')}}">--}}
-    {{--<link rel="stylesheet" href="{{url('assets/js/select2/select2-bootstrap.css')}}">--}}
-    {{--<link rel="stylesheet" href="{{url('assets/js/select2/select2.css')}}">--}}
-
     <script src="{{url('assets/js/datatables/datatables.js')}}"></script>
-    {{--<script src="{{url('assets/js/select2/select2.min.js')}}"></script>--}}
-    {{--<script src="{{url('assets/js/neon-chat.js')}}"></script>--}}
 
 
 
@@ -78,9 +75,7 @@
         { data: 'status', name: 'status' },
             { "data": function(data){
                     {{--var url='{{url("product/edit/", ":id") }}';--}}
-                    return '<a class="btn btn-default btn-sm" data-panel-id="'+data.resturantId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a>' +
-                        '<form method="post" action="{{route('restaurant.delete')}}">{{csrf_field()}} <input type="hidden" name="id" value="'+data.resturantId+'">'+
-                        '<button class="btn"><i class="fa fa-trash"></i></button><form>';},
+                    return '<a class="btn btn-default btn-sm" data-panel-id="'+data.resturantId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a>';},
                 "orderable": false, "searchable":false },
 
         ],
