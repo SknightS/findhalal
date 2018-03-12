@@ -31,7 +31,7 @@
 
 
             <!-- Raw Links -->
-            <div class="col-md-6 col-sm-4 clearfix hidden-xs">
+            <div class="col-md-6 col-sm-4 clearfix ">
 
                 <ul class="list-inline links-list pull-right">
 

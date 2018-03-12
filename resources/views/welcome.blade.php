@@ -12,13 +12,14 @@
             <h1>Order Delivery & Take-Out </h1>
             <h5 class="font-white space-xs">Find restaurants, specials, and coupons for free</h5>
             <div class="banner-form">
-                <form class="form-inline">
+                <form class="form-inline" method="post" action="{{route('restaurant.result')}}" >
+                    {{csrf_field()}}
                     <div class="form-group">
                         <label class="sr-only" for="exampleInputAmount">I would like to eat....</label>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-lg" id="searchfield" placeholder="I would like to eat...."> </div>
+                            <input type="text" class="form-control form-control-lg" name="searchbox" id="searchfield" placeholder="I would like to eat...."> </div>
                     </div>
-                    <button onclick="location.href='{{route('restaurant.result')}}'" type="button" class="btn theme-btn btn-lg">Search food</button>
+                    <button  type="submit" class="btn theme-btn btn-lg">Search food</button>
                 </form>
             </div>
 
