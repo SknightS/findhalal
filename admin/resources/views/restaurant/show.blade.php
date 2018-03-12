@@ -11,7 +11,7 @@
         <a href="{{route('restaurant.add')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add Restaurant</span></a>
 </div>
 
-    <div class="table table-responsive" style="margin-top: 20px">
+    <div class="table table-responsive " style="margin-top: 20px">
         <table id="allProductList" class="table table-bordered table-striped">
             <thead>
             <tr>
@@ -40,7 +40,10 @@
 
 @section('foot-js')
     <link rel="stylesheet" href="{{url('assets/js/datatables/datatables.css')}}">
+
+
     <script src="{{url('assets/js/datatables/datatables.js')}}"></script>
+
 
 
 
@@ -51,6 +54,10 @@
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         table = $('#allProductList').DataTable({
+            rowReorder: {
+                selector: 'td:nth-child(8)'
+            },
+            responsive: true,
         processing: true,
         serverSide: true,
         stateSave: true,
@@ -91,13 +98,7 @@
             window.location.href = newUrl;
         }
 
-        function deleteProduct(x) {
-            {{--btn = $(x).data('panel-id');--}}
-            {{--var url = '{{route("product.edit", ":id") }}';--}}
-            {{--//alert(url);--}}
-            {{--var newUrl=url.replace(':id', btn);--}}
-            {{--window.location.href = newUrl;--}}
-        }
+
 
 
     </script>
