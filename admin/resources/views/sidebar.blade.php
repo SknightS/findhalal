@@ -32,7 +32,7 @@
         <ul id="main-menu" class="main-menu">
             <!-- add class "multiple-expanded" to allow multiple submenus to open -->
             <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-            <li class="opened  has-sub">
+            <li class="opened">
                 <a href="{{route('admin.index')}}">
                     <i class="entypo-gauge"></i>
                     <span class="title">Dashboard</span>
