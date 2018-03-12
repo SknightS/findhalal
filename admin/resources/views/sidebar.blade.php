@@ -32,7 +32,7 @@
         <ul id="main-menu" class="main-menu">
             <!-- add class "multiple-expanded" to allow multiple submenus to open -->
             <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-            <li class="opened">
+            <li class="opened  @if(Request::url()==route('admin.index')) active @endif">
                 <a href="{{route('admin.index')}}">
                     <i class="entypo-gauge"></i>
                     <span class="title">Dashboard</span>
@@ -40,14 +40,14 @@
             </li>
 
 
-            <li>
+            <li class="@if(Request::url()==route('restaurant.show')) active @endif">
                <a href="{{route('restaurant.show')}}"><i class="fa fa-reddit-square"></i><span class="title">Restaurants</span></a>
             </li>
 
-            <li>
+            <li class="@if(Request::url()==route('category.show')) active @endif">
                 <a href="{{route('category.show')}}"><i class="fa fa-list-alt"></i><span class="title">Categories</span></a>
             </li>
-            <li>
+            <li class="@if(Request::url()==route('item.show')) active @endif">
                 <a href="{{route('item.show')}}"><i class="fa fa-plus"></i><span class="title">Items</span></a>
             </li>
 

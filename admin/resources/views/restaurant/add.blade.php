@@ -188,8 +188,8 @@
                                                         <i class="entypo-clock"></i>
                                                     </div>
 
-                                                    <input type="text" name="sunOpen" id="timepicker" value="" class="form-control timepicker" />
-                                                    <input type="text" name="sunClose" id="timepicker2" class="form-control timepicker" />
+                                                    <input type="time" name="sunOpen" id="timepicker" value="" class="form-control timepicker" />
+                                                    <input type="time" name="sunClose" id="timepicker2" class="form-control timepicker" />
 
                                                 </div>
                                             </div>
