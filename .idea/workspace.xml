@@ -1,32 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="230b751d-51f1-42e6-a4f6-e7882186de02" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Constants/constants.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/bootstrap-timepicker.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/bootstrap-timepicker.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/css/timepicker.less" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/blade.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/findhalal.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/php.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/app/Http/Controllers/ItemController.php" afterPath="$PROJECT_DIR$/admin/app/Http/Controllers/ItemController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/composer.json" afterPath="$PROJECT_DIR$/admin/composer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/config/app.php" afterPath="$PROJECT_DIR$/admin/config/app.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/resources/views/item/add.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/item/add.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/resources/views/item/show.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/item/show.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/resources/views/main.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/main.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/resources/views/restaurant/add.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/restaurant/add.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/vendor/composer/ClassLoader.php" afterPath="$PROJECT_DIR$/admin/vendor/composer/ClassLoader.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/admin/vendor/composer/autoload_classmap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/vendor/composer/autoload_files.php" afterPath="$PROJECT_DIR$/admin/vendor/composer/autoload_files.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/vendor/composer/autoload_psr4.php" afterPath="$PROJECT_DIR$/admin/vendor/composer/autoload_psr4.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/vendor/composer/autoload_static.php" afterPath="$PROJECT_DIR$/admin/vendor/composer/autoload_static.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/admin/vendor/composer/installed.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/topbar.blade.php" afterPath="$PROJECT_DIR$/resources/views/topbar.blade.php" />
-    </list>
+    <list default="true" id="230b751d-51f1-42e6-a4f6-e7882186de02" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -407,7 +382,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tanuki" />
     <property name="js.eslint.eslintPackage" value="" />
   </component>
   <component name="RecentsManager">
@@ -497,12 +472,12 @@
       <workItem from="1520581829456" duration="2230000" />
       <workItem from="1520600918456" duration="2144000" />
       <workItem from="1520660515044" duration="5898000" />
-      <workItem from="1520673631734" duration="3159000" />
+      <workItem from="1520673631734" duration="4372000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36597000" />
+    <option name="totallyTimeSpent" value="37810000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
