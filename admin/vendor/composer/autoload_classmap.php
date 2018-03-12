@@ -37,6 +37,7 @@ return array(
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\Purchase' => $baseDir . '/app/Purchase.php',
     'App\\Resturant' => $baseDir . '/app/Resturant.php',
+    'App\\Resturanttime' => $baseDir . '/app/Resturanttime.php',
     'App\\User' => $baseDir . '/app/User.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'Carbon\\CarbonInterval' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
