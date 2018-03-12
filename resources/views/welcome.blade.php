@@ -2,7 +2,7 @@
 @extends('main')
 @section('header')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    {{--<link rel="stylesheet" href="/resources/demos/style.css">--}}
     @endsection
 @section('content')
 <section class="hero bg-image" data-image-src="{{url('images/fhb.jpg')}}">

@@ -26,7 +26,7 @@
 
                     @foreach($items as $itemInfo)
 
-                    <form role="form" class="form-horizontal form-groups-bordered" enctype="multipart/form-data" method="post" action="{{route('item.insert')}}">
+                    <form role="form" class="form-horizontal form-groups-bordered" enctype="multipart/form-data" method="post" action="{{route('item.update',$itemInfo->itemId)}}">
                         {{csrf_field()}}
 
                         <div class="form-group">
@@ -36,7 +36,7 @@
 
                                     <option value="">Select Resturant Name</option>
                                     @foreach($resName as $rName)
-                                        <option @if($itemInfo->resturantId==$rName->resturantId )selected @endif value="{{$rName->resturantId}}">{{$rName->name}}</option>
+                                        <option @if($itemInfo->fkresturantId == $rName->resturantId )selected @endif value="{{$rName->resturantId}}">{{$rName->name}}</option>
                                     @endforeach
 
                                 </select>
@@ -48,6 +48,7 @@
                                 <select class="form-control" name="itemCategory" id="itemCategory" required>
 
                                     <option value="">Select Item Type</option>
+                                    <option selected value="{{$itemInfo->fkcategoryId}}">{{$itemInfo->catName}}</option>
 
                                 </select>
                             </div>
@@ -70,7 +71,7 @@
                             <label for="field-ta" class="col-sm-3 control-label"> Item Details </label>
 
                             <div class="col-sm-5">
-                                <textarea class="form-control" id="field-ta" name="ItemDetails" placeholder="ItemDetails">{{$itemInfo->itemDetails}}</textarea>
+                                <textarea class="form-control" id="field-ta" name="itemDetails" placeholder="ItemDetails">{{$itemInfo->itemDetails}}</textarea>
                                 @if ($errors->has('ItemDetails'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('ItemDetails') }}</strong>
@@ -81,39 +82,37 @@
 
 
 
-                        <div id = "Item_price" class="form-group">
-                            <label class="control-label col-md-3"> Item Price<span style="color: red" class="required">*</span></label>
-                            <div class="col-md-5">
-                                <input type="text" name="itemPrice" placeholder="Item Price" id="itemPrice" value="{{$itemInfo->price}}" class="form-control input-height" required >
-                            </div>
-
-
-                        </div>
-
 
                         <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Item Picture <span style="color: red" class="required">*</span></label>
+                            <label for="field-1" class="col-sm-3 control-label">Item Picture </label>
                             <div class="col-sm-5">
-                                <input type="file" name="ItemPicture"  value="upload Image" accept=".jpg, .jpeg" id="ItemPicture" required>
+                                <input type="file" name="ItemPicture"  value="upload Image" accept=".jpg, .jpeg" id="ItemPicture">
                                 @if ($errors->has('ItemPicture'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('ItemPicture') }}</strong>
                                     </span>
                                 @endif
-                                <img height="50px" width="50px" id="ItemPicture">
+
                             </div>
+                            @if (!empty($itemInfo->image))
+                            <div style="text-align:right;margin-right: 20px">
+                            <img height="80px" width="80px" src="{{url('public/ItemImages')."/".$itemInfo->image}}"  id="ItemPicture"><br>
+                                <a href="{{route('image.show',$itemInfo->image)}}" target="_blank"><span>View Full Image</span></a>
+
+                                <a href="{{route('image.delete',$itemInfo->itemId)}}" onclick='return confirm("Are you sure to Delete This Item Image?")'><i class="fa fa-trash"></i></a>
+
+                            </div>
+                            @endif
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Status <span style="color: red" class="required">*</span> </label>
                             <div class="col-sm-5">
                                 <select class="form-control" name="itemStatus" required>
-                                    <option selected value="">Select Status</option>
-                                    {{--<option>Active</option>--}}
-                                    {{--<option>Inactive</option>--}}
-                                    @foreach(Status as $s)
-                                        <option>{{$s}}</option>
-                                    @endforeach
+                                    <option  value="">Select Status</option>
+                                    @for($i=0;$i<count(Status);$i++)
+                                        <option @if ($itemInfo->status == Status[$i]) selected @endif value="{{Status[$i]}}">{{Status[$i]}}</option>
+                                    @endfor
                                 </select>
                             </div>
                         </div>
@@ -122,7 +121,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-5">
-                                <button  type="submit" class="btn btn-info">Create</button>
+                                <button  type="submit" class="btn btn-info">Update</button>
                             </div>
                         </div>
                     </form>
