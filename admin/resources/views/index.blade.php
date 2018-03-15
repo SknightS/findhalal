@@ -120,7 +120,7 @@
 
 </div>
  {{--End TAsk--}}
-
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
     // Code used to add Todo Tasks
     jQuery(document).ready(function($)
@@ -135,11 +135,20 @@
 
                 if($.trim($(this).val()).length)
                 {
-                    var test=$(this).val();
-                    alert(test);
+                    var task=$(this).val();
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                    $.ajax({
+                        type : 'post' ,
+                        url : '{{route('task.store')}}',
+                        data : {_token: CSRF_TOKEN,'task':task},
+                        success : function(data) {
+                            console.log(data);
+                        }
+                    });
+
                     var $todo_entry = $('<li><div class="checkbox checkbox-replace color-white"><input type="checkbox" /><label>'+$(this).val()+'</label></div></li>');
                     $(this).val('');
-
                     $todo_entry.appendTo($todo_tasks.find('.todo-list'));
                     $todo_entry.hide().slideDown('fast');
                     replaceCheckboxes();
