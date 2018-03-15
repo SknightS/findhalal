@@ -55,6 +55,11 @@ Route::post('/category/delete','CategoryController@destroy')->name('category.del
 
 
 
+//Settings
+Route::get('settings','AdminController@settings')->name('settings');
+Route::post('settings','AdminController@changePass')->name('changePass');
+
+
 
 
 
