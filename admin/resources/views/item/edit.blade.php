@@ -124,7 +124,13 @@
                                 <button  type="submit" class="btn btn-info">Update</button>
                             </div>
                         </div>
+
                     </form>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-5">
+                                <button onclick="itemShowBack()" class="btn btn-info">Back</button>
+                            </div>
+                        </div>
                         @endforeach
 
                 </div>
@@ -151,6 +157,31 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        function itemShowBack() {
+
+            var resName=$('#resturantName').val();
+            var category=$('#itemCategory').val();
+
+
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('item.showBack')}}',
+                data : {'resId':resName,'cat':category} ,
+                success : function(data){
+                    window.location.href = '{{route('item.show')}}';
+                    //alert('{{route('item.show')}}');
+
+                   // alert('{{ Session::get('resNameFlash') }}');
+
+
+
+                }
+            });
+
+
+
+        }
 
 
         $("#resturantName").change(function() {
