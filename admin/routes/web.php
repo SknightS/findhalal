@@ -59,6 +59,13 @@ Route::post('/category/delete','CategoryController@destroy')->name('category.del
 Route::get('settings','AdminController@settings')->name('settings');
 Route::post('settings','AdminController@changePass')->name('changePass');
 
+//Task
+Route::post('/task/store','TaskController@store')->name('task.store');
+
+
+//Report
+Route::get('/reports','ReportController@index')->name('reports');
+
 
 
 
