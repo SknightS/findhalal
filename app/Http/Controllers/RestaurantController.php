@@ -36,6 +36,21 @@ class RestaurantController extends Controller
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
             ->get();
+
+        return view('restaurants.profile')
+            ->with('category', $catagory)
+            ->with('restaurant', $restaurant)
+            ->with('resid', $resid);
+
+    }
+
+    public function getItem(Request $r){
+
+        $resid = $r->resid;
+
+        $catagory = Category::select('*')
+            ->where('fkresturantId', $resid)
+            ->get();
         $item = Item::select('item.*' ,'itemsize.*' )
             ->leftJoin('itemsize','itemsize.itemsizeId','=','itemsize.item_itemId')
             ->leftJoin('resturant','item.fkresturantId','=','resturant.resturantId')
@@ -46,11 +61,10 @@ class RestaurantController extends Controller
             ->where('status', 'Active')
             ->get();
 
-        return view('restaurants.profile')
+        return view('restaurants.showitem')
             ->with('category', $catagory)
             ->with('item' , $item)
-            ->with ('itemsize', $itemsize)
-            ->with('restaurant', $restaurant);
+            ->with ('itemsize', $itemsize);
 
     }
 }
