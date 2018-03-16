@@ -51,6 +51,10 @@
                 <a href="{{route('item.show')}}"><i class="fa fa-plus"></i><span class="title">Items</span></a>
             </li>
 
+            <li class="@if(Request::url()==route('reports')) active @endif">
+                <a href="{{route('reports')}}"><i class="fa fa-flag"></i><span class="title">Report</span></a>
+            </li>
+
             <li class="@if(Request::url()==route('settings')) active @endif">
                 <a href="{{route('settings')}}"><i class="fa fa-cog"></i><span class="title">Account</span></a>
             </li>
