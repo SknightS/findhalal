@@ -1,6 +1,7 @@
 @extends('main')
 
     @section('content')
+
         <div class="table table-responsive" style="margin-top: 20px">
             <table id="allProductList" class="table table-bordered table-striped">
                 <thead>
@@ -11,11 +12,13 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($report as $r)
                 <tr>
-                    <td>KFC</td>
-                    <td>100</td>
-                    <td>200</td>
+                    <td>{{$r->name}}</td>
+                    <td>{{$r->cash}}</td>
+                    <td>{{$r->card}}</td>
                 </tr>
+                @endforeach
 
 
                 </tbody>
