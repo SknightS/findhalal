@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 12, 2018 at 03:52 AM
+-- Generation Time: Mar 15, 2018 at 05:55 AM
 -- Server version: 5.5.51-38.2
 -- PHP Version: 5.6.30
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `name` varchar(45) DEFAULT NULL,
   `fkresturantId` int(11) NOT NULL,
   `status` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -56,7 +56,8 @@ INSERT INTO `category` (`categoryId`, `name`, `fkresturantId`, `status`) VALUES
 (3, 'fast food', 6, 'Active'),
 (4, 'drinks', 5, 'Active'),
 (5, 'ice cream', 7, 'Active'),
-(6, 'pasta', 7, 'Active');
+(6, 'pasta', 7, 'Active'),
+(7, 'Salat', 6, 'Active');
 
 -- --------------------------------------------------------
 
@@ -87,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `item` (
   `fkcategoryId` int(11) NOT NULL,
   `fkresturantId` int(11) NOT NULL,
   `status` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `item`
@@ -97,7 +98,8 @@ INSERT INTO `item` (`itemId`, `itemName`, `itemDetails`, `image`, `fkcategoryId`
 (1, 'Pizza', 't e te ssdff', '1ItemPicture.jpeg', 2, 4, 'Active'),
 (2, 'pasta', 'Regular', '2ItemPicture.jpg', 3, 6, 'Active'),
 (3, 'vanila ice cream', 'regular', '3ItemPicture.jpeg', 5, 7, 'Active'),
-(4, 'baked pasta', 'Special', '4ItemPicture.jpg', 6, 7, 'Active');
+(4, 'baked pasta', 'Special', '4ItemPicture.jpg', 6, 7, 'Active'),
+(5, 'Rokolla Salat', 'Made by rokolla grass', '5ItemPicture.jpg', 7, 6, 'Active');
 
 -- --------------------------------------------------------
 
@@ -111,19 +113,20 @@ CREATE TABLE IF NOT EXISTS `itemsize` (
   `item_itemId` int(11) NOT NULL,
   `price` double DEFAULT NULL,
   `status` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `itemsize`
 --
 
 INSERT INTO `itemsize` (`itemsizeId`, `itemsizeName`, `item_itemId`, `price`, `status`) VALUES
-(1, 'big', 1, 100, 'Active'),
+(1, 'Big', 1, 80, 'Active'),
 (2, 'small', 1, 50, 'Active'),
 (3, 'Large', 1, 15, 'Active'),
 (4, 'regular', 2, 300, 'Active'),
 (5, 'R', 3, 300, 'Active'),
-(6, NULL, 4, 100, 'Active');
+(6, NULL, 4, 100, 'Active'),
+(7, 'large', 5, 3, 'Active');
 
 -- --------------------------------------------------------
 
@@ -197,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `resturant` (
 INSERT INTO `resturant` (`resturantId`, `name`, `details`, `minOrder`, `image`, `delfee`, `status`, `address`, `city`, `zip`, `country`) VALUES
 (4, 'Music cafe', 'rt t', 2, '4RestaurantPicture.jpg', '5', 'Inactive', 'f sadadf asdf fd af', 'Altstadt', '60311', 'Germany'),
 (5, 'test', 'rt t', 2, NULL, '5', 'Active', 'f sadadf asdf fd af', 'Bonames', '', 'Germany'),
-(6, 'kfc', 'regular', 3, '6RestaurantPicture.jpg', '6', 'Active', 'house-88', 'Fechenheim', '60325', 'Germany'),
+(6, 'KFC', 'Regular', 3, '6RestaurantPicture.jpg', '6', 'Active', 'House-88', 'Fechenheim', '60325', 'Germany'),
 (7, 'Nando''s', 'Al l type of food', 8, '7RestaurantPicture.jpeg', '4', 'Active', 'house-46, road-26', 'Dornbusch', '60389', 'Germany');
 
 -- --------------------------------------------------------
@@ -226,13 +229,13 @@ INSERT INTO `resturanttime` (`resturanttimeId`, `day`, `opentime`, `closetime`, 
 (5, 'wednesday', NULL, NULL, 4),
 (6, 'thursday', NULL, NULL, 4),
 (7, 'friday', NULL, NULL, 4),
-(8, 'saturday', NULL, NULL, 6),
-(9, 'sunday', NULL, NULL, 6),
-(10, 'monday', NULL, NULL, 6),
-(11, 'tuesday', NULL, NULL, 6),
-(12, 'wednesday', NULL, NULL, 6),
-(13, 'thursday', NULL, NULL, 6),
-(14, 'friday', NULL, NULL, 6),
+(8, 'saturday', '10:00', '02:00', 6),
+(9, 'sunday', '10:00', '02:00', 6),
+(10, 'monday', '12:00', '00:00', 6),
+(11, 'tuesday', '12:00', '00:00', 6),
+(12, 'wednesday', '12:00', '00:00', 6),
+(13, 'thursday', '12:00', '00:00', 6),
+(14, 'friday', '12:00', '02:00', 6),
 (15, 'saturday', NULL, NULL, 7),
 (16, 'sunday', NULL, NULL, 7),
 (17, 'monday', NULL, NULL, 7),
@@ -283,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`userId`, `firstName`, `lastName`, `email`, `password`, `phone`, `status`, `fkuserTypeId`, `address`, `city`, `zip`, `country`, `remember_token`) VALUES
-(1, 'Admin', 'Admin', 'admin@findhalal.de', '$2y$10$6uyV1sPMpuqEQR4iFbdFp.HsIxfquF67nk3zdJlYma8U1Mw6ZZ9E6', NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, 'E4swK80naWw7Cz1kviCImNhr9U0A3F0lB1FjQiBe5cjtvZBS3dYVp5ioNTVy');
+(1, 'Admin', 'Admin', 'admin@findhalal.de', '$2y$10$6uyV1sPMpuqEQR4iFbdFp.HsIxfquF67nk3zdJlYma8U1Mw6ZZ9E6', NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, '9dO5bdSnwXUwQXdVcYXbeLlkOCPcy2m8cjFOKBfgN3Dua68OZ0Qj0SEJNeKR');
 
 -- --------------------------------------------------------
 
@@ -393,7 +396,7 @@ ALTER TABLE `usertype`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `customer`
 --
@@ -403,12 +406,12 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `itemId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `itemId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `itemsize`
 --
 ALTER TABLE `itemsize`
-  MODIFY `itemsizeId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `itemsizeId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `order`
 --
