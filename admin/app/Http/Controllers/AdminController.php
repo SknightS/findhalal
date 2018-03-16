@@ -38,11 +38,9 @@ class AdminController extends Controller
         $currentPass= Hash::make($r->oldPass);
         $newPass=Hash::make($r->newPass);
         if(Hash::check($r->oldPass, $user->password)){
-
-           $user->password=$newPass;
-           $user->save();
-
-            Session::flash('message', 'Password changes successfully');
+            $user->password=$newPass;
+            $user->save();
+             Session::flash('message', 'Password changes successfully');
             return back();
         }
         Session::flash('message', 'Password did not match');

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2018 at 09:38 PM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 7.1.7
+-- Generation Time: Mar 16, 2018 at 06:31 PM
+-- Server version: 10.1.29-MariaDB
+-- PHP Version: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -48,6 +48,19 @@ CREATE TABLE `category` (
   `status` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`categoryId`, `name`, `fkresturantId`, `status`) VALUES
+(1, 'test food', 4, 'Active'),
+(2, 'desert', 4, 'Active'),
+(3, 'fast food', 6, 'Active'),
+(4, 'drinks', 5, 'Active'),
+(5, 'ice cream', 7, 'Active'),
+(6, 'pasta', 7, 'Active'),
+(7, 'Salat', 6, 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -63,6 +76,14 @@ CREATE TABLE `customer` (
   `status` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`customerId`, `firstName`, `lastName`, `email`, `phone`, `status`) VALUES
+(1, 'Dummy', 'Customer', 'customer@gmail.com', 131354, 'active'),
+(2, 'customer2', 'customer2', 'customer2@gmail.com', 6464, 'active');
+
 -- --------------------------------------------------------
 
 --
@@ -72,11 +93,23 @@ CREATE TABLE `customer` (
 CREATE TABLE `item` (
   `itemId` int(11) NOT NULL,
   `itemName` varchar(45) DEFAULT NULL,
+  `itemDetails` varchar(1000) NOT NULL,
   `image` varchar(45) DEFAULT NULL,
   `fkcategoryId` int(11) NOT NULL,
   `fkresturantId` int(11) NOT NULL,
   `status` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `item`
+--
+
+INSERT INTO `item` (`itemId`, `itemName`, `itemDetails`, `image`, `fkcategoryId`, `fkresturantId`, `status`) VALUES
+(1, 'Pizza', 't e te ssdff', '1ItemPicture.jpeg', 2, 4, 'Active'),
+(2, 'pasta', 'Regular', '2ItemPicture.jpg', 3, 6, 'Active'),
+(3, 'vanila ice cream', 'regular', '3ItemPicture.jpeg', 5, 7, 'Active'),
+(4, 'baked pasta', 'Special', '4ItemPicture.jpg', 6, 7, 'Active'),
+(5, 'Rokolla Salat', 'Made by rokolla grass', '5ItemPicture.jpg', 7, 6, 'Active');
 
 -- --------------------------------------------------------
 
@@ -91,6 +124,19 @@ CREATE TABLE `itemsize` (
   `price` double DEFAULT NULL,
   `status` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `itemsize`
+--
+
+INSERT INTO `itemsize` (`itemsizeId`, `itemsizeName`, `item_itemId`, `price`, `status`) VALUES
+(1, 'Big', 1, 80, 'Active'),
+(2, 'small', 1, 50, 'Active'),
+(3, 'Large', 1, 15, 'Active'),
+(4, 'regular', 2, 300, 'Active'),
+(5, 'R', 3, 300, 'Active'),
+(6, NULL, 4, 100, 'Active'),
+(7, 'large', 5, 3, 'Active');
 
 -- --------------------------------------------------------
 
@@ -107,6 +153,15 @@ CREATE TABLE `order` (
   `paymentType` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`orderId`, `fkresturantId`, `fkcustomerId`, `orderTime`, `orderStatus`, `paymentType`) VALUES
+(1, 6, 1, '2018-03-16 10:00:00', 'active', 'cash'),
+(2, 6, 2, '2018-03-16 12:00:00', 'active', 'card'),
+(3, 4, 2, '2018-03-16 00:00:00', 'active', 'cash');
+
 -- --------------------------------------------------------
 
 --
@@ -121,6 +176,15 @@ CREATE TABLE `orderitem` (
   `price` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `orderitem`
+--
+
+INSERT INTO `orderitem` (`orderItemId`, `fkorderId`, `fkitemsizeId`, `quantity`, `price`) VALUES
+(1, 1, 2, 1, 50),
+(2, 2, 4, 1, 100),
+(3, 3, 7, 1, 50);
+
 -- --------------------------------------------------------
 
 --
@@ -128,14 +192,23 @@ CREATE TABLE `orderitem` (
 --
 
 CREATE TABLE `purchase` (
-  `purchase` int(11) NOT NULL,
+  `purchaseId` int(11) NOT NULL,
   `fkorderId` int(11) NOT NULL,
   `purchasetime` datetime DEFAULT NULL,
-  `delfee` double DEFAULT NULL,
-  `vat` double DEFAULT NULL,
+  `delFee` double DEFAULT NULL,
+  `orderFee` double DEFAULT NULL,
   `total` double DEFAULT NULL,
-  `purchasecol` varchar(45) DEFAULT NULL
+  `restaurantId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `purchase`
+--
+
+INSERT INTO `purchase` (`purchaseId`, `fkorderId`, `purchasetime`, `delFee`, `orderFee`, `total`, `restaurantId`) VALUES
+(1, 1, '2018-03-16 00:00:00', 5, 25, 30, 6),
+(2, 2, '2018-03-16 00:00:00', 5, 40, 45, 6),
+(3, 3, '2018-03-16 00:00:00', 5, 50, 55, 4);
 
 -- --------------------------------------------------------
 
@@ -147,8 +220,6 @@ CREATE TABLE `resturant` (
   `resturantId` int(11) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `details` mediumtext,
-  `phone` varchar(15) NOT NULL,
-  `email` varchar(50) NOT NULL,
   `minOrder` int(11) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `delfee` varchar(45) DEFAULT NULL,
@@ -158,6 +229,16 @@ CREATE TABLE `resturant` (
   `zip` varchar(45) DEFAULT NULL,
   `country` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `resturant`
+--
+
+INSERT INTO `resturant` (`resturantId`, `name`, `details`, `minOrder`, `image`, `delfee`, `status`, `address`, `city`, `zip`, `country`) VALUES
+(4, 'Music cafe', 'rt t', 2, '4RestaurantPicture.jpg', '5', 'Inactive', 'f sadadf asdf fd af', 'Altstadt', '60311', 'Germany'),
+(5, 'test', 'rt t', 2, NULL, '5', 'Active', 'f sadadf asdf fd af', 'Bonames', '', 'Germany'),
+(6, 'KFC', 'Regular', 3, '6RestaurantPicture.jpg', '6', 'Active', 'House-88', 'Fechenheim', '60325', 'Germany'),
+(7, 'Nando\'s', 'Al l type of food', 8, '7RestaurantPicture.jpeg', '4', 'Active', 'house-46, road-26', 'Dornbusch', '60389', 'Germany');
 
 -- --------------------------------------------------------
 
@@ -172,6 +253,33 @@ CREATE TABLE `resturanttime` (
   `closetime` varchar(45) DEFAULT NULL,
   `fkresturantId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `resturanttime`
+--
+
+INSERT INTO `resturanttime` (`resturanttimeId`, `day`, `opentime`, `closetime`, `fkresturantId`) VALUES
+(1, 'saturday', NULL, NULL, 4),
+(2, 'sunday', NULL, NULL, 4),
+(3, 'monday', NULL, NULL, 4),
+(4, 'tuesday', NULL, NULL, 4),
+(5, 'wednesday', NULL, NULL, 4),
+(6, 'thursday', NULL, NULL, 4),
+(7, 'friday', NULL, NULL, 4),
+(8, 'saturday', '10:00', '02:00', 6),
+(9, 'sunday', '10:00', '02:00', 6),
+(10, 'monday', '12:00', '00:00', 6),
+(11, 'tuesday', '12:00', '00:00', 6),
+(12, 'wednesday', '12:00', '00:00', 6),
+(13, 'thursday', '12:00', '00:00', 6),
+(14, 'friday', '12:00', '02:00', 6),
+(15, 'saturday', NULL, NULL, 7),
+(16, 'sunday', NULL, NULL, 7),
+(17, 'monday', NULL, NULL, 7),
+(18, 'tuesday', NULL, NULL, 7),
+(19, 'wednesday', NULL, NULL, 7),
+(20, 'thursday', NULL, NULL, 7),
+(21, 'friday', NULL, NULL, 7);
 
 -- --------------------------------------------------------
 
@@ -206,8 +314,16 @@ CREATE TABLE `user` (
   `address` varchar(1000) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   `zip` varchar(45) DEFAULT NULL,
-  `country` varchar(45) DEFAULT NULL
+  `country` varchar(45) DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`userId`, `firstName`, `lastName`, `email`, `password`, `phone`, `status`, `fkuserTypeId`, `address`, `city`, `zip`, `country`, `remember_token`) VALUES
+(1, 'Admin', 'Admin', 'admin@findhalal.de', '$2y$10$6uyV1sPMpuqEQR4iFbdFp.HsIxfquF67nk3zdJlYma8U1Mw6ZZ9E6', NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, '9dO5bdSnwXUwQXdVcYXbeLlkOCPcy2m8cjFOKBfgN3Dua68OZ0Qj0SEJNeKR');
 
 -- --------------------------------------------------------
 
@@ -219,6 +335,13 @@ CREATE TABLE `usertype` (
   `userTypeId` varchar(5) NOT NULL,
   `typeName` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usertype`
+--
+
+INSERT INTO `usertype` (`userTypeId`, `typeName`) VALUES
+('ADMIN', 'ADMIN');
 
 --
 -- Indexes for dumped tables
@@ -279,8 +402,9 @@ ALTER TABLE `orderitem`
 -- Indexes for table `purchase`
 --
 ALTER TABLE `purchase`
-  ADD PRIMARY KEY (`purchase`),
-  ADD KEY `fk_purchase_order1_idx` (`fkorderId`);
+  ADD PRIMARY KEY (`purchaseId`),
+  ADD KEY `fk_purchase_order1_idx` (`fkorderId`),
+  ADD KEY `fk_restaurantid_purchase` (`restaurantId`);
 
 --
 -- Indexes for table `resturant`
@@ -323,42 +447,68 @@ ALTER TABLE `usertype`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customerId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `item`
+--
+ALTER TABLE `item`
+  MODIFY `itemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `itemsize`
+--
+ALTER TABLE `itemsize`
+  MODIFY `itemsizeId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `orderitem`
 --
 ALTER TABLE `orderitem`
-  MODIFY `orderItemId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `orderItemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `purchase`
 --
 ALTER TABLE `purchase`
-  MODIFY `purchase` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `purchaseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `resturant`
 --
 ALTER TABLE `resturant`
-  MODIFY `resturantId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `resturantId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `resturanttime`
+--
+ALTER TABLE `resturanttime`
+  MODIFY `resturanttimeId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
 --
 -- AUTO_INCREMENT for table `shipaddress`
 --
 ALTER TABLE `shipaddress`
   MODIFY `shipaddressId` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- Constraints for dumped tables
 --
@@ -386,7 +536,7 @@ ALTER TABLE `item`
 -- Constraints for table `itemsize`
 --
 ALTER TABLE `itemsize`
-  ADD CONSTRAINT `fk_itemsize_item1` FOREIGN KEY (`item_itemId`) REFERENCES `item` (`itemId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_itemsize_item1` FOREIGN KEY (`item_itemId`) REFERENCES `item` (`itemId`);
 
 --
 -- Constraints for table `order`
@@ -399,14 +549,15 @@ ALTER TABLE `order`
 -- Constraints for table `orderitem`
 --
 ALTER TABLE `orderitem`
-  ADD CONSTRAINT `fk_orderItem_itemsize1` FOREIGN KEY (`fkitemsizeId`) REFERENCES `itemsize` (`itemsizeId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_orderItem_itemsize1` FOREIGN KEY (`fkitemsizeId`) REFERENCES `itemsize` (`itemsizeId`),
   ADD CONSTRAINT `fk_orderItem_order1` FOREIGN KEY (`fkorderId`) REFERENCES `order` (`orderId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `purchase`
 --
 ALTER TABLE `purchase`
-  ADD CONSTRAINT `fk_purchase_order1` FOREIGN KEY (`fkorderId`) REFERENCES `order` (`orderId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_purchase_order1` FOREIGN KEY (`fkorderId`) REFERENCES `order` (`orderId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_restaurantid_purchase` FOREIGN KEY (`restaurantId`) REFERENCES `resturant` (`resturantId`) ON DELETE NO ACTION;
 
 --
 -- Constraints for table `resturanttime`
