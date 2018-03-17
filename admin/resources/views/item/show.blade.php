@@ -7,11 +7,13 @@
 
 @section('content')
 
+    <div>
+
     <div style="text-align: right;margin-bottom: 20px">
         <a href="{{route('item.add')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add Item</span></a>
     </div>
 
-    <div>
+
 
     <div class="row">
     {{--<div class="form-group col-md-6">--}}
@@ -34,6 +36,7 @@
             <select class="form-control" name="itemCategory" id="itemCategory" required>
 
                 <option value="">Select Item Type</option>
+
 
             </select>
         </div>
@@ -91,6 +94,26 @@
         });
 
         $(document).ready(function() {
+
+            @if(Session::has('resNameFlash'))
+                var resturantId ='{{ Session::get('resNameFlash') }}';
+                @else
+                var resturantId ='';
+            @endif
+
+
+            if (resturantId != ""){
+
+                $.ajax({
+                    type : 'post' ,
+                    url : '{{route('item.categoryByRes')}}',
+                    data : {'resId':resturantId} ,
+                    success : function(data){
+                        document.getElementById("itemCategory").innerHTML = data;
+
+                    }
+                });
+            }
 
             table = $('#allItemList').DataTable({
                 processing: true,

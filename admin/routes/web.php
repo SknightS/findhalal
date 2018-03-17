@@ -32,6 +32,11 @@ Route::get('/Items/addItems','ItemController@add')->name('item.add');
 Route::post('/Items/allCategoryByResturant','ItemController@getItemCatByResId')->name('item.categoryByRes');
 Route::post('/Items/insert','ItemController@insert')->name('item.insert');
 Route::get('/Items/show','ItemController@show')->name('item.show');
+
+
+Route::post('/Items/showBack/','ItemController@showBack')->name('item.showBack');
+
+
 Route::post('/Items/show','ItemController@get')->name('item.get');
 Route::get('/Items/edit/{id}','ItemController@edit')->name('item.edit');
 Route::post('/Items/update/{id}','ItemController@update')->name('item.update');

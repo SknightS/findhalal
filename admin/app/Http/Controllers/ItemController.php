@@ -137,7 +137,8 @@ class ItemController extends Controller
 
         return $datatables->addColumn('action', function ($item) {
             $itemSize=Itemsize::where('item_itemId',$item->itemId)->get();
-            $test='<table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle orderexmple">';
+            $test='<div class="table table-responsive">';
+            $test.='<table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle orderexmple">';
             foreach ($itemSize as $size){
                 $test.='<tr>';
                 $test.='<td class="center">'.$size->itemsizeName.'</td>';
@@ -151,6 +152,7 @@ class ItemController extends Controller
                 $test.='</tr>';
             }
             $test.='</table>';
+            $test.='</div>';
             $test.='<a data-panel-id="'.$item->itemId.'" href="'. route('itemSize.add',$item->itemId).'"  style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px; margin-top: 1px;" class="fa fa-plus-circle"></i></a>';
             return $test;
 
@@ -268,8 +270,8 @@ class ItemController extends Controller
 
     public function fullImageShow($imageName){
 
-        return view('item.showImage')->with('image',$imageName);
-    }
+    return view('item.showImage')->with('image',$imageName);
+}
 
     public function insertItemSize($itemId,Request $r){
 
@@ -319,6 +321,17 @@ class ItemController extends Controller
             Session::flash('message', 'Item Image Deleted Successfully');
             return back();
         }
+
+
+    }
+
+    public function showBack(Request $r){
+
+        Session::reflash('resNameFlash',$r->resId);
+        Session::reflash('catIdFlash',$r->cat);
+
+        echo $r->resId;
+
 
 
     }
