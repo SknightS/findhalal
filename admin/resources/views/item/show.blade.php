@@ -92,10 +92,10 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
+        var count =0;
         $(document).ready(function() {
 
-            @if(Session::has('resNameFlash'))
+            @if(Session::has('resNameFlash')&& Session::has('catIdFlash'))
                 var resturantId ='{{ Session::get('resNameFlash') }}';
                 var catId ='{{ Session::get('catIdFlash') }}';
                 @else
@@ -121,18 +121,16 @@
                 serverSide: true,
                 stateSave: true,
                 "ajax":{
-                    "url": "{!! route('item.get') !!}",
+                    "url": "{!! route('item.get')!!}",
                     "type": "POST",
                     data:function (d){
-                        var itemCategory=$('#itemCategory').val();
 
-                        if(catId != "" && itemCategory ==""){
+                        d.resId=$('#resturantName').val();
+                        if (count ==0){
                             d.itemCategory=catId;
                         }else {
                             d.itemCategory=$('#itemCategory').val();
                         }
-                        d.resId=$('#resturantName').val();
-
                     },
                 },
                 columns: [
@@ -163,10 +161,10 @@
                 ],
             });
 
-            $('#resturantName').change(function(){ //button filter event click
-                table.search("").draw(); //just redraw myTableFilter
-                table.ajax.reload();  //just reload table
-            });
+//            $('#resturantName').change(function(){ //button filter event click
+//                table.search("").draw(); //just redraw myTableFilter
+//                table.ajax.reload();  //just reload table
+//            });
             $('#itemCategory').change(function(){ //button filter event click
                 table.search("").draw(); //just redraw myTableFilter
                 table.ajax.reload();  //just reload table
@@ -177,17 +175,22 @@
         $("#resturantName").change(function() {
 
             var resId=$(this).val();
-
+            count++;
             $.ajax({
                 type : 'post' ,
                 url : '{{route('item.categoryByRes')}}',
                 data : {'resId':resId} ,
                 success : function(data){
                     document.getElementById("itemCategory").innerHTML = data;
+                    table.search("").draw(); //just redraw myTableFilter
+                    table.ajax.reload();  //just reload table
+
 
                 }
             });
         });
+
+
 
         function editItem(x) {
             btn = $(x).data('panel-id');
