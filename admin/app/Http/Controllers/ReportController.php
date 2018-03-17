@@ -20,12 +20,7 @@ class ReportController extends Controller
 //        SELECT SUM(orderitem.price) FROM `orderitem`
 //        WHERE `fkorderId` in (SELECT orderId FROM `order` where fkresturantId=6 and paymentType='cash')
 
-
-
-
-
         $report =array();
-
 
         foreach ($purchases as $p){
             $cash=DB::table('orderitem')
@@ -35,7 +30,8 @@ class ReportController extends Controller
                     $query->select('orderId')
                         ->from('order')
                         ->where('fkresturantId',$p->restaurantId)
-                        ->where('paymentType','cash');
+                        ->where('paymentType','cash')
+                        ->whereDate('orderTime','2018-03-16');
                 })
                 ->get();
 
@@ -46,7 +42,8 @@ class ReportController extends Controller
                     $query->select('orderId')
                         ->from('order')
                         ->where('fkresturantId',$p->restaurantId)
-                        ->where('paymentType','card');
+                        ->where('paymentType','card')
+                        ->whereDate('orderTime','2018-03-16');
                 })
                 ->get();
             $res=Resturant::findOrFail($p->restaurantId);

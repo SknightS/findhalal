@@ -8,7 +8,9 @@
                 <tr>
                     <th >restaurant name</th>
                     <th >sold in cash</th>
+                    <th >earn from cash</th>
                     <th >sold in card</th>
+                    <th >earn from card</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -16,7 +18,9 @@
                 <tr>
                     <td>{{$r->name}}</td>
                     <td>{{$r->cash}}</td>
+                    <td>{{$r->cash*8/100}}</td>
                     <td>{{$r->card}}</td>
+                    <td>{{$r->card*8/100}}</td>
                 </tr>
                 @endforeach
 

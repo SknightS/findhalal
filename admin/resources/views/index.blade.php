@@ -73,40 +73,16 @@
 
 
                 <ul class="todo-list">
-                    <li>
+                    @foreach($tasks as $task)
+                        <li>
                         <div class="checkbox checkbox-replace color-white">
-                            <input type="checkbox" />
-                            <label>Website Design</label>
+                            <input type="checkbox" id="{{$task->taskId}}" onclick="clicked(this)" @if($task->status == 0)checked @endif/>
+                            <label>{{$task->name}} -by <i>{{$task->user->firstName}}</i></label>
                         </div>
-                    </li>
+                        </li>
 
-                    <li>
-                        <div class="checkbox checkbox-replace color-white">
-                            <input type="checkbox" id="task-2" checked />
-                            <label>Slicing</label>
-                        </div>
-                    </li>
+                    @endforeach
 
-                    <li>
-                        <div class="checkbox checkbox-replace color-white">
-                            <input type="checkbox" id="task-3" />
-                            <label>WordPress Integration</label>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="checkbox checkbox-replace color-white">
-                            <input type="checkbox" id="task-4" />
-                            <label>SEO Optimize</label>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="checkbox checkbox-replace color-white">
-                            <input type="checkbox" id="task-5" checked="" />
-                            <label>Minify &amp; Compress</label>
-                        </div>
-                    </li>
                 </ul>
 
             </div>
@@ -122,6 +98,23 @@
  {{--End TAsk--}}
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
+
+
+    function clicked(value) {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            type : 'post' ,
+            url : '{{route('task.change')}}',
+            data : {_token: CSRF_TOKEN,'id':value.id},
+            success : function(data) {
+                console.log(data);
+
+            }
+        });
+
+    }
+
     // Code used to add Todo Tasks
     jQuery(document).ready(function($)
     {
@@ -144,14 +137,19 @@
                         data : {_token: CSRF_TOKEN,'task':task},
                         success : function(data) {
                             console.log(data);
+                            var $todo_entry = $('<li><div class="checkbox checkbox-replace color-white"><input type="checkbox" /><label>'+data+'</label></div></li>');
+                            $(this).val('');
+                            $todo_entry.appendTo($todo_tasks.find('.todo-list'));
+                            $todo_entry.hide().slideDown('fast');
+                            replaceCheckboxes();
                         }
                     });
 
-                    var $todo_entry = $('<li><div class="checkbox checkbox-replace color-white"><input type="checkbox" /><label>'+$(this).val()+'</label></div></li>');
-                    $(this).val('');
-                    $todo_entry.appendTo($todo_tasks.find('.todo-list'));
-                    $todo_entry.hide().slideDown('fast');
-                    replaceCheckboxes();
+//                    var $todo_entry = $('<li><div class="checkbox checkbox-replace color-white"><input type="checkbox" /><label>'+$(this).val()+'</label></div></li>');
+//                    $(this).val('');
+//                    $todo_entry.appendTo($todo_tasks.find('.todo-list'));
+//                    $todo_entry.hide().slideDown('fast');
+//                    replaceCheckboxes();
                 }
             }
         });

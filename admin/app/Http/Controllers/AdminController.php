@@ -7,6 +7,7 @@ use App\User;
 use Auth;
 use Hash;
 use Session;
+use App\Task;
 
 class AdminController extends Controller
 {
@@ -16,6 +17,7 @@ class AdminController extends Controller
     }
 
     public function index(){
+        $task=Task::get();
         $regiteredUser=10;
         $visitors=10;
         $message=5;
@@ -25,7 +27,8 @@ class AdminController extends Controller
             ->with('regiteredUser',$regiteredUser)
             ->with('visitors',$visitors)
             ->with('subcriber',$subcriber)
-            ->with('message',$message);
+            ->with('message',$message)
+            ->with('tasks',$task);
     }
 
     public function settings(){
