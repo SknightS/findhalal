@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{url('assets/css/neon-forms.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/custom.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/font-icons/font-awesome/css/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{url('assets/css/jquery-ui.css')}}">
 
 
     <script src="{{url('assets/js/jquery-1.11.3.min.js')}}"></script>

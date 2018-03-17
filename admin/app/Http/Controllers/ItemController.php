@@ -29,6 +29,7 @@ class ItemController extends Controller
 
     public function getItemCatByResId(Request $r){
         $resId=$r->resId;
+        $categorys=$r->cat;
         $this->data['category']=Category::select('categoryId','name')->where('fkresturantId',$resId)->orderBy('name','ASC')->get();
 
         if ($this->data['category'] == "") {
@@ -36,9 +37,26 @@ class ItemController extends Controller
         } else {
             echo "<option value='' selected>Select Item Type</option>";
             foreach ($this->data['category'] as $category) {
-                echo "<option value='$category->categoryId'>$category->name</option>";
+
+                if (!empty($categorys) && $categorys == $category->categoryId ){
+
+                    echo "<option selected value='$category->categoryId'>$category->name</option>";
+                }elseif (!empty($categorys)&& $categorys != $category->categoryId){
+
+                    echo "<option  value='$category->categoryId'>$category->name</option>";
+
+                }
+                elseif (empty($categorys)){
+
+                    echo "<option value='$category->categoryId'>$category->name</option>";
+                }
+
+              //  echo "<option if( $categorys==$category->categoryId ){selected } value='$category->categoryId'>$category->name</option>";
+
             }
         }
+
+
 
     }
 
@@ -327,11 +345,26 @@ class ItemController extends Controller
 
     public function showBack(Request $r){
 
-        Session::reflash('resNameFlash',$r->resId);
-        Session::reflash('catIdFlash',$r->cat);
+        if (!empty($r->resId) && !empty($r->cat)) {
 
-        echo $r->resId;
+            Session::flash('resNameFlash', $r->resId);
+            Session::flash('catIdFlash', $r->cat);
+        }elseif(!empty($r->itemSizeId)){
 
+            $itemSizes=Itemsize::select('item.fkcategoryId','item.fkresturantId')
+                ->leftJoin('item', 'item.itemId', '=', 'itemsize.item_itemId')
+                ->where('itemsize.itemsizeId',$r->itemSizeId)->get();
+
+            foreach ($itemSizes as $items){
+
+                Session::flash('resNameFlash', $items->fkresturantId);
+                Session::flash('catIdFlash', $items->fkcategoryId);
+
+            }
+
+
+
+        }
 
 
     }

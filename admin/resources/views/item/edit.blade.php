@@ -118,19 +118,15 @@
                         </div>
 
 
-
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-5">
+                                <a class="btn btn-info" onclick="itemShowBack()">Back</a>
                                 <button  type="submit" class="btn btn-info">Update</button>
                             </div>
                         </div>
 
                     </form>
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-5">
-                                <button onclick="itemShowBack()" class="btn btn-info">Back</button>
-                            </div>
-                        </div>
+
                         @endforeach
 
                 </div>
@@ -170,11 +166,6 @@
                 data : {'resId':resName,'cat':category} ,
                 success : function(data){
                     window.location.href = '{{route('item.show')}}';
-                    //alert('{{route('item.show')}}');
-
-                   // alert('{{ Session::get('resNameFlash') }}');
-
-
 
                 }
             });
