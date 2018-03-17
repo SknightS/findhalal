@@ -69,7 +69,7 @@
                                 <h6>Choose Cusine</h6> <i class="fa fa-cutlery pull-right"></i> </div>
                             <ul id="mydiv">
                                 @foreach($category as $cat)
-                               <div > <li id="{{$cat->categoryId}}"><a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a></li></div>
+                               <div ><li id="{{$cat->categoryId}}"><a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a></li></div>
                                 @endforeach
                             </ul>
                             <div class="clearfix"></div>

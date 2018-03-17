@@ -75,6 +75,7 @@
 
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-5">
+                                    <a class="btn btn-info" onclick="itemShowBack()">Back</a>
                                     <button  type="submit" class="btn btn-info">Update</button>
                                 </div>
                             </div>
@@ -89,3 +90,38 @@
     </div>
 
 @endsection
+
+@section('foot-js')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="{{url('assets/js/bootstrap-timepicker.min.js')}}"></script>
+
+    <script>
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function itemShowBack() {
+
+            var itemSizeId= '{{$itemSize->itemsizeId}}'
+
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('item.showBack')}}',
+                data : {'itemSizeId':itemSizeId,} ,
+                success : function(data){
+                    window.location.href = '{{route('item.show')}}';
+
+                }
+            });
+
+
+
+        }
+    </script>
+
+
+@endsection
+

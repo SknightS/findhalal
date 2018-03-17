@@ -35,6 +35,7 @@ Route::get('/Items/show','ItemController@show')->name('item.show');
 
 
 Route::post('/Items/showBack/','ItemController@showBack')->name('item.showBack');
+//Route::post('/Items/showBack/','ItemController@showBack')->name('item.showBackFromEditItemSize');
 
 
 Route::post('/Items/show','ItemController@get')->name('item.get');

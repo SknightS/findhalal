@@ -38,7 +38,20 @@ class ItemController extends Controller
             echo "<option value='' selected>Select Item Type</option>";
             foreach ($this->data['category'] as $category) {
 
-                echo "<option if( $categorys==$category->categoryId ){selected } value='$category->categoryId'>$category->name</option>";
+                if (!empty($categorys) && $categorys == $category->categoryId ){
+
+                    echo "<option selected value='$category->categoryId'>$category->name</option>";
+                }elseif (!empty($categorys)&& $categorys != $category->categoryId){
+
+                    echo "<option  value='$category->categoryId'>$category->name</option>";
+
+                }
+                elseif (empty($categorys)){
+
+                    echo "<option value='$category->categoryId'>$category->name</option>";
+                }
+
+              //  echo "<option if( $categorys==$category->categoryId ){selected } value='$category->categoryId'>$category->name</option>";
 
             }
         }
@@ -332,11 +345,26 @@ class ItemController extends Controller
 
     public function showBack(Request $r){
 
-        Session::flash('resNameFlash',$r->resId);
-        Session::flash('catIdFlash',$r->cat);
+        if (!empty($r->resId) && !empty($r->cat)) {
 
-       // echo $r->resId;
+            Session::flash('resNameFlash', $r->resId);
+            Session::flash('catIdFlash', $r->cat);
+        }elseif(!empty($r->itemSizeId)){
 
+            $itemSizes=Itemsize::select('item.fkcategoryId','item.fkresturantId')
+                ->leftJoin('item', 'item.itemId', '=', 'itemsize.item_itemId')
+                ->where('itemsize.itemsizeId',$r->itemSizeId)->get();
+
+            foreach ($itemSizes as $items){
+
+                Session::flash('resNameFlash', $items->fkresturantId);
+                Session::flash('catIdFlash', $items->fkcategoryId);
+
+            }
+
+
+
+        }
 
 
     }
