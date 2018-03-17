@@ -29,6 +29,7 @@ class ItemController extends Controller
 
     public function getItemCatByResId(Request $r){
         $resId=$r->resId;
+        $categorys=$r->cat;
         $this->data['category']=Category::select('categoryId','name')->where('fkresturantId',$resId)->orderBy('name','ASC')->get();
 
         if ($this->data['category'] == "") {
@@ -36,9 +37,13 @@ class ItemController extends Controller
         } else {
             echo "<option value='' selected>Select Item Type</option>";
             foreach ($this->data['category'] as $category) {
-                echo "<option value='$category->categoryId'>$category->name</option>";
+
+                echo "<option if( $categorys==$category->categoryId ){selected } value='$category->categoryId'>$category->name</option>";
+
             }
         }
+
+
 
     }
 
@@ -327,10 +332,10 @@ class ItemController extends Controller
 
     public function showBack(Request $r){
 
-        Session::reflash('resNameFlash',$r->resId);
-        Session::reflash('catIdFlash',$r->cat);
+        Session::flash('resNameFlash',$r->resId);
+        Session::flash('catIdFlash',$r->cat);
 
-        echo $r->resId;
+       // echo $r->resId;
 
 
 

@@ -23,7 +23,7 @@
 
                 <option value="">Select Resturant Name</option>
                 @foreach($resName as $rName)
-                    <option @if(old('resturantName')==$rName->resturantId )selected @endif value="{{$rName->resturantId}}">{{$rName->name}}</option>
+                    <option @if((old('resturantName')==$rName->resturantId) ||  Session::get('resNameFlash') == $rName->resturantId )selected @endif value="{{$rName->resturantId}}">{{$rName->name}}</option>
                 @endforeach
 
             </select>
@@ -97,19 +97,20 @@
 
             @if(Session::has('resNameFlash'))
                 var resturantId ='{{ Session::get('resNameFlash') }}';
+                var catId ='{{ Session::get('catIdFlash') }}';
                 @else
                 var resturantId ='';
+                var catId ='';
             @endif
-
-
-            if (resturantId != ""){
+            if (resturantId != "" && catId!=""){
 
                 $.ajax({
                     type : 'post' ,
                     url : '{{route('item.categoryByRes')}}',
-                    data : {'resId':resturantId} ,
+                    data : {'resId':resturantId,'cat':catId} ,
                     success : function(data){
                         document.getElementById("itemCategory").innerHTML = data;
+
 
                     }
                 });
@@ -123,9 +124,15 @@
                     "url": "{!! route('item.get') !!}",
                     "type": "POST",
                     data:function (d){
+                        var itemCategory=$('#itemCategory').val();
 
+                        if(catId != "" && itemCategory ==""){
+                            d.itemCategory=catId;
+                        }else {
+                            d.itemCategory=$('#itemCategory').val();
+                        }
                         d.resId=$('#resturantName').val();
-                        d.itemCategory=$('#itemCategory').val();
+
                     },
                 },
                 columns: [
