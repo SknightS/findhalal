@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d46c32ac-3dce-4ebc-b941-c6cbc16ccacd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/app/Http/Controllers/AdminController.php" afterPath="$PROJECT_DIR$/admin/app/Http/Controllers/AdminController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/app/Http/Controllers/ReportController.php" afterPath="$PROJECT_DIR$/admin/app/Http/Controllers/ReportController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/app/Http/Controllers/TaskController.php" afterPath="$PROJECT_DIR$/admin/app/Http/Controllers/TaskController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/resources/views/index.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/resources/views/report/index.blade.php" afterPath="$PROJECT_DIR$/admin/resources/views/report/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/routes/web.php" afterPath="$PROJECT_DIR$/admin/routes/web.php" />
-    </list>
+    <list default="true" id="d46c32ac-3dce-4ebc-b941-c6cbc16ccacd" name="Default" comment="" />
     <ignored path="findhalal.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -345,7 +337,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="F:/CRM" />
+    <property name="last_opened_file_path" value="F:/AwStock" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -359,12 +351,12 @@
       <option name="presentableId" value="Default" />
       <updated>1521225543682</updated>
       <workItem from="1521225545445" duration="4301000" />
-      <workItem from="1521261277886" duration="3719000" />
+      <workItem from="1521261277886" duration="4454000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8020000" />
+    <option name="totallyTimeSpent" value="8755000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1612" height="876" extended-state="1" />

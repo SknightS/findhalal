@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2018 at 06:31 PM
--- Server version: 10.1.29-MariaDB
--- PHP Version: 7.2.0
+-- Generation Time: Mar 17, 2018 at 07:34 AM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -299,6 +299,28 @@ CREATE TABLE `shipaddress` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `task`
+--
+
+CREATE TABLE `task` (
+  `taskId` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `task`
+--
+
+INSERT INTO `task` (`taskId`, `name`, `userId`, `status`, `created_at`) VALUES
+(1, 'done', 1, 1, '2018-03-17 04:44:26'),
+(2, 'Complete', 1, 1, '2018-03-17 05:00:18');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -427,6 +449,13 @@ ALTER TABLE `shipaddress`
   ADD KEY `fk_shipaddress_customer1_idx` (`fkcustomerId`);
 
 --
+-- Indexes for table `task`
+--
+ALTER TABLE `task`
+  ADD PRIMARY KEY (`taskId`),
+  ADD KEY `fk_task_userId` (`userId`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -504,6 +533,12 @@ ALTER TABLE `shipaddress`
   MODIFY `shipaddressId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `task`
+--
+ALTER TABLE `task`
+  MODIFY `taskId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
@@ -570,6 +605,12 @@ ALTER TABLE `resturanttime`
 --
 ALTER TABLE `shipaddress`
   ADD CONSTRAINT `fk_shipaddress_customer1` FOREIGN KEY (`fkcustomerId`) REFERENCES `customer` (`customerId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `task`
+--
+ALTER TABLE `task`
+  ADD CONSTRAINT `fk_task_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
 
 --
 -- Constraints for table `user`
