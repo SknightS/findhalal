@@ -67,9 +67,9 @@
                         <div class="main-block">
                             <div class="sidebar-title white-txt">
                                 <h6>Choose Cusine</h6> <i class="fa fa-cutlery pull-right"></i> </div>
-                            <ul>
+                            <ul id="mydiv">
                                 @foreach($category as $cat)
-                                <li><a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a></li>
+                               <div > <li id="{{$cat->categoryId}}"><a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a></li></div>
                                 @endforeach
                             </ul>
                             <div class="clearfix"></div>
@@ -177,6 +177,29 @@
             }
         });
 
+        $('#mydiv li').click(function() {
+            //Get the id of list items
+            var ID = $(this).attr('id');
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            var resid = '<?php echo $resid ?>';
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('restaurant.getItemByCategory')}}',
+                data : {_token: CSRF_TOKEN,'resid':resid, 'catid':ID} ,
+                success : function(data){
+                    //   alert(data);
+                    //console.log(data);
+                    document.getElementById("showitem").innerHTML = data;
+
+                }
+            });
+        });
+
     });
+
+
+
+
+
     </script>
 @endsection
