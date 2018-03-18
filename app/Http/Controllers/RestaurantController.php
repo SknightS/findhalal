@@ -8,7 +8,7 @@ use App\Itemsize;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Resturant;
-
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
 {
     //
@@ -37,10 +37,13 @@ class RestaurantController extends Controller
             ->where('fkresturantId', $resid)
             ->get();
 
+        $cartCollection = Cart::getContent();
+
         return view('restaurants.profile')
             ->with('category', $catagory)
             ->with('restaurant', $restaurant)
-            ->with('resid', $resid);
+            ->with('resid', $resid)
+            ->with('cartitem', $cartCollection);
 
     }
 
@@ -92,6 +95,12 @@ class RestaurantController extends Controller
             ->with('category', $catagory)
             ->with('item' , $item)
             ->with ('itemsize', $itemsize);
+    }
+
+    public function addCart(Request $r){
+
+
+
     }
 
 

@@ -30,7 +30,7 @@
                             @foreach($itemsize as  $is)
                                 @if($im->itemId == $is->item_itemId)
                                     <div class="col-xs-12 col-sm-12 col-lg-4 pull-right item-cart-info"> <span class="
-                                     pull-left">€ {{$is->price}}</span> <a href="#" class="btn btn-small btn btn-secondary pull-right" data-toggle="modal" data-target="#order-modal">&#43;</a> </div>
+                                     pull-left">€ {{$is->price}}</span> <a href="#" data-panel-id ="{{$im->itemId}}"  onclick="addcart(this)" class="btn btn-small btn btn-secondary pull-right" data-toggle="modal" data-target="#order-modal">&#43;</a> </div>
                                 @endif
                             @endforeach
                         </div>
@@ -45,3 +45,6 @@
     </div>
     <!-- end:Widget menu -->
 @endforeach
+
+
+
