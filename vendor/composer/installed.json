@@ -4330,5 +4330,66 @@
             "thumbnail",
             "watermark"
         ]
+    },
+    {
+        "name": "darryldecode/cart",
+        "version": "3.0.5",
+        "version_normalized": "3.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/darryldecode/laravelshoppingcart.git",
+            "reference": "bf7399c04a6771fb4572996eadaa00d7bab48554"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/darryldecode/laravelshoppingcart/zipball/bf7399c04a6771fb4572996eadaa00d7bab48554",
+            "reference": "bf7399c04a6771fb4572996eadaa00d7bab48554",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
+            "illuminate/translation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
+            "illuminate/validation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9",
+            "phpunit/phpunit": "~4.0",
+            "symfony/var-dumper": "2.7.*@dev"
+        },
+        "time": "2018-02-13T07:24:24+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Darryldecode\\Cart\\CartServiceProvider"
+                ],
+                "aliases": {
+                    "Cart": "Darryldecode\\Cart\\Facades\\CartFacade"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Darryldecode\\": "src/Darryldecode"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Darryl Fernandez",
+                "email": "engrdarrylfernandez@gmail.com"
+            }
+        ],
+        "description": "Laravel 5 Shopping cart",
+        "keywords": [
+            "cart",
+            "laravel",
+            "shopping cart"
+        ]
     }
 ]
