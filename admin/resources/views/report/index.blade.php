@@ -44,6 +44,10 @@
     <link rel="stylesheet" href="{{url('assets/js/datatables/datatables.css')}}">
     <script src="{{url('assets/js/bootstrap-datepicker.js')}}"></script>
     <script src="{{url('assets/js/datatables/datatables.js')}}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/locale/af.js"></script>
+
+
     <script>
         $(document).ready(function() {
 //        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -54,6 +58,7 @@
         });
 
         // $('.datepicker').datepicker();
+    
 
     </script>
 
