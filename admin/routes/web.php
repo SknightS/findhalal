@@ -79,6 +79,7 @@ Route::post('/Orders/show','OrderController@get')->name('order.get');
 Route::post('/Orders/cancel','OrderController@cancelledOrder')->name('order.cancelled');
 Route::post('/Orders/delivered','OrderController@deliveredOrder')->name('order.delivered');
 Route::post('/Orders/accepted','OrderController@acceptedOrder')->name('order.accepted');
+Route::post('/Orders/info','OrderController@orderInfo')->name('order.info');
 
 
 
