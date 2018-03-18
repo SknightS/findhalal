@@ -126,7 +126,7 @@
                     data:function (d){
 
                         d.resId=$('#resturantName').val();
-                        if (count ==0){
+                        if (count == 0){
                             d.itemCategory=catId;
                         }else {
                             d.itemCategory=$('#itemCategory').val();
