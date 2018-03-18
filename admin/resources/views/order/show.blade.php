@@ -30,6 +30,19 @@
 
     </div>
 
+    <div id="myModal" class="modal">
+        <br/><br/><br/>
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">×</span>
+
+            <div id="txtHint"></div>
+
+        </div>
+
+
+    </div>
+
 
 
 
@@ -74,7 +87,13 @@
                 columns: [
 
                     { data: 'orderId',name:'orderId' },
-                    { data: 'orderId',name:'orderId' },
+
+                    { "data": function(data){
+                        return '<button data-panel-id="' + data.orderId + '" onclick="orderInformation(this)" class="btn btn-success btnorder"><i style="font-size: 20px; " class="fa fa-info-circle"></i></button>'
+                            ;},
+                        "orderable": false, "searchable":false
+                    },
+
                     { data: 'table', name: 'table' },
                     { data: 'paymentType', name: 'paymentType' },
                     { data: 'orderTime', name: 'orderTime' },
@@ -159,6 +178,36 @@
                 }
             });
 
+        }
+        var modal = document.getElementById('myModal');
+        var span = document.getElementsByClassName("close")[0];
+
+        function orderInformation(x) {
+            btn = $(x).data('panel-id');
+
+            $.ajax({
+                type:'POST',
+                url:'{{route('order.info')}}',
+                data:{orderId:btn},
+                cache: false,
+                success:function(data)
+                {
+                    $('#txtHint').html(data);
+                }
+            });
+            modal.style.display = "block";
+
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
         }
 
 
