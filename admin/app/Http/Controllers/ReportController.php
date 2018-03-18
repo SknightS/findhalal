@@ -73,7 +73,7 @@ class ReportController extends Controller
 
             }
 
-          
+
             return view('report.index')
             ->with('report',$report);
 
