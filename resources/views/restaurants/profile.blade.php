@@ -85,7 +85,7 @@
                     <!--/row -->
                 </div>
                 <!-- end:Bar -->
-                <div class="col-xs-12 col-md-12 col-lg-3">
+                <div  class="col-xs-12 col-md-12 col-lg-3">
                     <div class="sidebar-wrap">
                         <div class="widget widget-cart">
                             <div class="widget-heading">
@@ -94,24 +94,28 @@
                                 </h3>
                                 <div class="clearfix"></div>
                             </div>
+                            <span id="cart_table">
                             @foreach($cartitem as $ci)
                             <div class="order-row bg-white">
                                 <div class="widget-body">
                                     <div class="title-row">{{$ci->name}} <a href="#"><i class="fa fa-trash pull-right"></i></a></div>
                                     <div class="form-group row no-gutter">
                                         <div class="col-xs-8">
-                                            <select class="form-control b-r-0" id="exampleSelect1">
-                                                <option>Size SM</option>
-                                                <option>Size LG</option>
-                                                <option>Size XL</option>
+                                            <select class="form-control b-r-0" id="{{$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >
+                                              @foreach($itemsize as $is)
+                                                  @if($ci->id ==$is->item_itemId)
+                                                <option value="{{$is->itemsizeId}}">{{$is->itemsizeName." ".$is->price }}</option>
+                                                    @endif
+                                                  @endforeach
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control" type="number" value="2" id="example-number-input"> </div>
+                                            <input class="form-control" type="number" value="{{$ci->quantity}}" id="example-number-input"> </div>
                                     </div>
                                 </div>
                             </div>
                             @endforeach
+
                             <!-- end:Order row -->
                             <div class="widget-delivery clearfix">
                                 <form>
@@ -128,11 +132,12 @@
                             <div class="widget-body">
                                 <div class="price-wrap text-xs-center">
                                     <p>TOTAL</p>
-                                    <h3 class="value"><strong>$ 25,49</strong></h3>
+                                    <h3 class="value"><strong>{{Cart::getTotal()}}</strong></h3>
                                     <p>Free Shipping</p>
                                     <button onclick="location.href='checkout.html'" type="button" class="btn theme-btn btn-lg">Checkout</button>
                                 </div>
                             </div>
+                                 </span>
                         </div>
                     </div>
                 </div>
@@ -189,10 +194,26 @@
                 url : '{{route('restaurant.addCart')}}',
                 data : {_token: CSRF_TOKEN, 'itemid':id} ,
                 success : function(data){
-                    //   alert(data);
-                    //console.log(data);
-                    document.getElementById("showitem").innerHTML = data;
+
+                    $('#cart_table').load(document.URL +  ' #cart_table');
                 }
+            });
+        }
+
+        function updatesize(x) {
+            var id = $(x).data('panel-id');
+           var  itemsize = document.getElementById(id).value;
+
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+            type : 'post' ,
+            url : '{{route('restaurant.updateitemsize')}}',
+            data : {_token: CSRF_TOKEN, 'itemsize':itemsize, 'cartid':id} ,
+            success : function(data){
+
+            $('#cart_table').load(document.URL +  ' #cart_table');
+
+            }
             });
         }
     </script>

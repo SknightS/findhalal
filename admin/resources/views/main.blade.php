@@ -53,10 +53,11 @@
 <body class="page-body  page-fade" data-url="http://neon.dev">
 
 
-
+<div id="messageDiv">
 @if(Session::has('message'))
     <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
 @endif
+</div>
 
 @yield('content')
 
