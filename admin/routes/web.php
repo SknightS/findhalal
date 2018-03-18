@@ -72,6 +72,7 @@ Route::post('/task/change','TaskController@change')->name('task.change');
 
 //Report
 Route::get('/reports','ReportController@index')->name('reports');
+Route::post('/reports','ReportController@searchByDate')->name('report.searchByDate');
 
 //order
 Route::get('/Orders/show','OrderController@show')->name('order.show');
