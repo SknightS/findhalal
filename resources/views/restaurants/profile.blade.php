@@ -19,33 +19,33 @@
             <div class="profile">
                 <div class="container">
                     <div class="row">
-                     @foreach($restaurant as $rest)
-                        <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4 profile-img">
-                            <div class="image-wrap">
-                                <figure><img src="{{url('admin/public/RestaurantImages/'.$rest->image)}}" alt="Profile Image"></figure>
+                        @foreach($restaurant as $rest)
+                            <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4 profile-img">
+                                <div class="image-wrap">
+                                    <figure><img src="{{url('admin/public/RestaurantImages/'.$rest->image)}}" alt="Profile Image"></figure>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
-                           
-                            <div class="pull-left right-text white-txt">
-                                <h6><a href="#">{{$rest->name}}</a></h6> <a class="btn btn-small btn-green">Open</a>
-                                <p>{{$rest->details}}</p>
-                                <ul class="nav nav-inline">
-                                    <li class="nav-item"> <a class="nav-link active" href="#"><i class="fa fa-check"></i> Min $ {{$rest->minOrder}}</a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="#"><i class="fa fa-motorcycle"></i> 30 min</a> </li>
-                                    <li class="nav-item ratings">
-                                        <a class="nav-link" href="#"> <span>
+                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
+
+                                <div class="pull-left right-text white-txt">
+                                    <h6><a href="#">{{$rest->name}}</a></h6> <a class="btn btn-small btn-green">Open</a>
+                                    <p>{{$rest->details}}</p>
+                                    <ul class="nav nav-inline">
+                                        <li class="nav-item"> <a class="nav-link active" href="#"><i class="fa fa-check"></i> Min $ {{$rest->minOrder}}</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="#"><i class="fa fa-motorcycle"></i> 30 min</a> </li>
+                                        <li class="nav-item ratings">
+                                            <a class="nav-link" href="#"> <span>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
                                     </span> </a>
-                                    </li>
-                                </ul>
-                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                                 @endforeach
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -67,9 +67,9 @@
                         <div class="main-block">
                             <div class="sidebar-title white-txt">
                                 <h6>Choose Cusine</h6> <i class="fa fa-cutlery pull-right"></i> </div>
-                            <ul>
+                            <ul id="mydiv">
                                 @foreach($category as $cat)
-                                <li><a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a></li>
+                                    <div > <li id="{{$cat->categoryId}}"><a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a></li></div>
                                 @endforeach
                             </ul>
                             <div class="clearfix"></div>
@@ -81,7 +81,7 @@
 
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6">
-                   <div id="showitem"></div>
+                    <div id="showitem"></div>
                     <!--/row -->
                 </div>
                 <!-- end:Bar -->
@@ -156,27 +156,41 @@
         </div>
         <!-- end:Container -->
     </div>
-  @endsection
+@endsection
 
 @section('foot-js')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <script>
-    $(document).ready(function(){
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var resid = '<?php echo $resid ?>';
-        $.ajax({
-            type : 'post' ,
-            url : '{{route('restaurant.getItem')}}',
-            data : {_token: CSRF_TOKEN,'resid':resid} ,
-            success : function(data){
-             //   alert(data);
-                //console.log(data);
-               document.getElementById("showitem").innerHTML = data;
-
-            }
+        $(document).ready(function(){
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            var resid = '<?php echo $resid ?>';
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('restaurant.getItem')}}',
+                data : {_token: CSRF_TOKEN,'resid':resid} ,
+                success : function(data){
+                    //   alert(data);
+                    //console.log(data);
+                    document.getElementById("showitem").innerHTML = data;
+                }
+            });
+            $('#mydiv li').click(function() {
+                //Get the id of list items
+                var ID = $(this).attr('id');
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                var resid = '<?php echo $resid ?>';
+                $.ajax({
+                    type : 'post' ,
+                    url : '{{route('restaurant.getItemByCategory')}}',
+                    data : {_token: CSRF_TOKEN,'resid':resid, 'catid':ID} ,
+                    success : function(data){
+                        //   alert(data);
+                        //console.log(data);
+                        document.getElementById("showitem").innerHTML = data;
+                    }
+                });
+            });
         });
-
-    });
     </script>
 @endsection

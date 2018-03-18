@@ -67,4 +67,32 @@ class RestaurantController extends Controller
             ->with ('itemsize', $itemsize);
 
     }
+
+    public function getItemByCategory(Request $r){
+        $resid = $r->resid;
+        $catid = $r->catid;
+
+        $catagory = Category::select('*')
+            ->where('fkresturantId', $resid)
+            ->where('categoryId', $catid)
+
+            ->get();
+        $item = Item::select('item.*' ,'itemsize.*' )
+            ->leftJoin('itemsize','itemsize.itemsizeId','=','itemsize.item_itemId')
+            ->leftJoin('resturant','item.fkresturantId','=','resturant.resturantId')
+            ->where('item.fkresturantId',$resid)
+            ->where('item.fkcategoryId',$catid)
+            ->where('item.status','Active')
+            ->get();
+        $itemsize = Itemsize::select('*')
+            ->where('status', 'Active')
+            ->get();
+
+        return view('restaurants.showitem')
+            ->with('category', $catagory)
+            ->with('item' , $item)
+            ->with ('itemsize', $itemsize);
+    }
+
+
 }

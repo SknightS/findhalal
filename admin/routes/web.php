@@ -35,6 +35,7 @@ Route::get('/Items/show','ItemController@show')->name('item.show');
 
 
 Route::post('/Items/showBack/','ItemController@showBack')->name('item.showBack');
+//Route::post('/Items/showBack/','ItemController@showBack')->name('item.showBackFromEditItemSize');
 
 
 Route::post('/Items/show','ItemController@get')->name('item.get');
@@ -66,10 +67,18 @@ Route::post('settings','AdminController@changePass')->name('changePass');
 
 //Task
 Route::post('/task/store','TaskController@store')->name('task.store');
+Route::post('/task/change','TaskController@change')->name('task.change');
 
 
 //Report
 Route::get('/reports','ReportController@index')->name('reports');
+
+//order
+Route::get('/Orders/show','OrderController@show')->name('order.show');
+Route::post('/Orders/show','OrderController@get')->name('order.get');
+Route::post('/Orders/cancel','OrderController@cancelledOrder')->name('order.cancelled');
+Route::post('/Orders/delivered','OrderController@deliveredOrder')->name('order.delivered');
+Route::post('/Orders/accepted','OrderController@acceptedOrder')->name('order.accepted');
 
 
 

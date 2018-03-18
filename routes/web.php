@@ -24,6 +24,7 @@ Route::post('/restaurants/result','RestaurantController@Restaurants')->name('res
 Route::get('/restaurants/viewmenu/{resid}','RestaurantController@ViewMenu')->name('restaurant.viewmenu');
 
 Route::post('/restaurants/getItem','RestaurantController@getItem')->name('restaurant.getItem');
+Route::post('/restaurants/getItemByCategory','RestaurantController@getItemByCategory')->name('restaurant.getItemByCategory');
 
 
 //Route::view('/admin','admin.index')->name('admin.index');
