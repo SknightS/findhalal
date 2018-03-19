@@ -41,11 +41,12 @@
 @endsection
 
 @section('foot-js')
+    <link rel="stylesheet" href="{{url('assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css')}}">
     <link rel="stylesheet" href="{{url('assets/js/datatables/datatables.css')}}">
     <script src="{{url('assets/js/bootstrap-datepicker.js')}}"></script>
     <script src="{{url('assets/js/datatables/datatables.js')}}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/locale/af.js"></script>
+    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/locale/af.js"></script>--}}
 
 
     <script>
@@ -57,8 +58,8 @@
             });
         });
 
-        // $('.datepicker').datepicker();
-    
+        $('.datepicker').datepicker();
+
 
     </script>
 

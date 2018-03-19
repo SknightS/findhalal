@@ -68,6 +68,7 @@ Route::post('settings','AdminController@changePass')->name('changePass');
 //Task
 Route::post('/task/store','TaskController@store')->name('task.store');
 Route::post('/task/change','TaskController@change')->name('task.change');
+Route::get('/task/show','TaskController@show')->name('task.show');
 
 
 //Report

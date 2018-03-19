@@ -8,6 +8,13 @@ use Auth;
 
 class TaskController extends Controller
 {
+
+   public function show(){
+       $tasks=Task::orderBy('taskId','desc')->get();
+
+       return view('task.show')->with('tasks',$tasks);
+   }
+
     public function store(Request $r){
         $task=new Task;
         $task->name= $r->task;
