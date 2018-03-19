@@ -23,7 +23,7 @@
 
                 <option value="">Select Resturant Name</option>
                 @foreach($resName as $rName)
-                    <option @if(old('resturantName')==$rName->resturantId )selected @endif value="{{$rName->resturantId}}">{{$rName->name}}</option>
+                    <option @if((old('resturantName')==$rName->resturantId) ||  Session::get('resNameFlash') == $rName->resturantId )selected @endif value="{{$rName->resturantId}}">{{$rName->name}}</option>
                 @endforeach
 
             </select>
@@ -92,24 +92,25 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
+        var count =0;
         $(document).ready(function() {
 
-            @if(Session::has('resNameFlash'))
+            @if(Session::has('resNameFlash')&& Session::has('catIdFlash'))
                 var resturantId ='{{ Session::get('resNameFlash') }}';
+                var catId ='{{ Session::get('catIdFlash') }}';
                 @else
                 var resturantId ='';
+                var catId ='';
             @endif
-
-
-            if (resturantId != ""){
+            if (resturantId != "" && catId!=""){
 
                 $.ajax({
                     type : 'post' ,
                     url : '{{route('item.categoryByRes')}}',
-                    data : {'resId':resturantId} ,
+                    data : {'resId':resturantId,'cat':catId} ,
                     success : function(data){
                         document.getElementById("itemCategory").innerHTML = data;
+
 
                     }
                 });
@@ -120,12 +121,16 @@
                 serverSide: true,
                 stateSave: true,
                 "ajax":{
-                    "url": "{!! route('item.get') !!}",
+                    "url": "{!! route('item.get')!!}",
                     "type": "POST",
                     data:function (d){
 
                         d.resId=$('#resturantName').val();
-                        d.itemCategory=$('#itemCategory').val();
+                        if (count == 0){
+                            d.itemCategory=catId;
+                        }else {
+                            d.itemCategory=$('#itemCategory').val();
+                        }
                     },
                 },
                 columns: [
@@ -156,10 +161,10 @@
                 ],
             });
 
-            $('#resturantName').change(function(){ //button filter event click
-                table.search("").draw(); //just redraw myTableFilter
-                table.ajax.reload();  //just reload table
-            });
+//            $('#resturantName').change(function(){ //button filter event click
+//                table.search("").draw(); //just redraw myTableFilter
+//                table.ajax.reload();  //just reload table
+//            });
             $('#itemCategory').change(function(){ //button filter event click
                 table.search("").draw(); //just redraw myTableFilter
                 table.ajax.reload();  //just reload table
@@ -170,17 +175,22 @@
         $("#resturantName").change(function() {
 
             var resId=$(this).val();
-
+            count++;
             $.ajax({
                 type : 'post' ,
                 url : '{{route('item.categoryByRes')}}',
                 data : {'resId':resId} ,
                 success : function(data){
                     document.getElementById("itemCategory").innerHTML = data;
+                    table.search("").draw(); //just redraw myTableFilter
+                    table.ajax.reload();  //just reload table
+
 
                 }
             });
         });
+
+
 
         function editItem(x) {
             btn = $(x).data('panel-id');

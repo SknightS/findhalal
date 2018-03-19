@@ -8,7 +8,7 @@ use App\Itemsize;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Resturant;
-
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
 {
     //
@@ -37,10 +37,18 @@ class RestaurantController extends Controller
             ->where('fkresturantId', $resid)
             ->get();
 
+        $itemsize = Itemsize::select('*')
+            ->where('status', 'Active')
+            ->get();
+
+        $cartCollection = Cart::getContent();
+
         return view('restaurants.profile')
             ->with('category', $catagory)
             ->with('restaurant', $restaurant)
-            ->with('resid', $resid);
+            ->with('resid', $resid)
+            ->with('itemsize', $itemsize)
+            ->with('cartitem', $cartCollection);
 
     }
 
@@ -92,6 +100,46 @@ class RestaurantController extends Controller
             ->with('category', $catagory)
             ->with('item' , $item)
             ->with ('itemsize', $itemsize);
+    }
+
+    public function addCart(Request $r){
+
+
+        $itemid = $r->itemid;
+        $item =  Item::select('item.*', 'itemsize.*')
+            ->leftJoin('itemsize','itemsize.item_itemId','=','item.itemid')
+            ->where('itemid', $itemid)
+            ->limit(1)
+            ->get();
+
+        foreach ($item as $it){
+            Cart::add(array(
+                'id' => $it->itemId,
+                'name' => $it->itemName,
+                'price' => $it->price,
+                'quantity' => 1,
+                'attributes' => array(
+                    'size' =>  $it->itemsizeId
+                )
+            ));
+        }
+
+    }
+
+    //cartid and itemid is same
+    public function updateItemSize(Request $r){
+        $itemsize = $r->itemsize;
+        $cartid = $r->cartid;
+        $itemsize = Itemsize::select('*')
+                    ->where('item_itemId',$cartid)
+                    ->first();
+
+        Cart::update($cartid, array(
+            'price' => $itemsize->price, // new item name
+            'attributes' => array(
+                'size' =>  $itemsize->itemsizeId
+            ) // new item price, price can also be a string format like so: '98.67'
+        ));
     }
 
 

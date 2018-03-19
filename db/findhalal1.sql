@@ -1,4 +1,5 @@
 -- phpMyAdmin SQL Dump
+
 -- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
@@ -6,6 +7,7 @@
 -- Generation Time: Mar 17, 2018 at 07:34 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -532,12 +534,15 @@ ALTER TABLE `resturanttime`
 ALTER TABLE `shipaddress`
   MODIFY `shipaddressId` int(11) NOT NULL AUTO_INCREMENT;
 
+<<<<<<< HEAD
+=======
 --
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
   MODIFY `taskId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
+>>>>>>> 4b50ac1768efafd72c07e5528ff617f9ceae8cd0
 --
 -- AUTO_INCREMENT for table `user`
 --

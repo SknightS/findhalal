@@ -17,13 +17,18 @@
     <link rel="stylesheet" href="{{url('assets/css/font-icons/entypo/css/entypo.css')}}">
     <link rel="stylesheet" href="{{url('//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic')}}">
     <link rel="stylesheet" href="{{url('assets/css/bootstrap.css')}}">
+
+
     <link type="stylesheet" href="{{url('assets/css/bootstrap-timepicker.min.css')}}" />
     <link rel="stylesheet" href="{{url('assets/css/neon-core.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/neon-theme.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/neon-forms.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/custom.css')}}">
+
     <link rel="stylesheet" href="{{url('assets/css/font-icons/font-awesome/css/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{url('assets/css/jquery-ui.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{url('assets/css/modal.css')}}"/>
 
 
     <script src="{{url('assets/js/jquery-1.11.3.min.js')}}"></script>
@@ -53,10 +58,12 @@
 <body class="page-body  page-fade" data-url="http://neon.dev">
 
 
-
+<div id="messageDiv">
 @if(Session::has('message'))
     <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
 @endif
+</div>
+
 
 @yield('content')
 

@@ -19,33 +19,33 @@
             <div class="profile">
                 <div class="container">
                     <div class="row">
-                     @foreach($restaurant as $rest)
-                        <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4 profile-img">
-                            <div class="image-wrap">
-                                <figure><img src="{{url('admin/public/RestaurantImages/'.$rest->image)}}" alt="Profile Image"></figure>
+                        @foreach($restaurant as $rest)
+                            <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4 profile-img">
+                                <div class="image-wrap">
+                                    <figure><img src="{{url('admin/public/RestaurantImages/'.$rest->image)}}" alt="Profile Image"></figure>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
-                           
-                            <div class="pull-left right-text white-txt">
-                                <h6><a href="#">{{$rest->name}}</a></h6> <a class="btn btn-small btn-green">Open</a>
-                                <p>{{$rest->details}}</p>
-                                <ul class="nav nav-inline">
-                                    <li class="nav-item"> <a class="nav-link active" href="#"><i class="fa fa-check"></i> Min $ {{$rest->minOrder}}</a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="#"><i class="fa fa-motorcycle"></i> 30 min</a> </li>
-                                    <li class="nav-item ratings">
-                                        <a class="nav-link" href="#"> <span>
+                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
+
+                                <div class="pull-left right-text white-txt">
+                                    <h6><a href="#">{{$rest->name}}</a></h6> <a class="btn btn-small btn-green">Open</a>
+                                    <p>{{$rest->details}}</p>
+                                    <ul class="nav nav-inline">
+                                        <li class="nav-item"> <a class="nav-link active" href="#"><i class="fa fa-check"></i> Min $ {{$rest->minOrder}}</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="#"><i class="fa fa-motorcycle"></i> 30 min</a> </li>
+                                        <li class="nav-item ratings">
+                                            <a class="nav-link" href="#"> <span>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
                                     </span> </a>
-                                    </li>
-                                </ul>
-                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                                 @endforeach
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                                 <h6>Choose Cusine</h6> <i class="fa fa-cutlery pull-right"></i> </div>
                             <ul id="mydiv">
                                 @foreach($category as $cat)
-                               <div > <li id="{{$cat->categoryId}}"><a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a></li></div>
+                                    <div > <li id="{{$cat->categoryId}}"><a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a></li></div>
                                 @endforeach
                             </ul>
                             <div class="clearfix"></div>
@@ -81,11 +81,11 @@
 
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6">
-                   <div id="showitem"></div>
+                    <div id="showitem"></div>
                     <!--/row -->
                 </div>
                 <!-- end:Bar -->
-                <div class="col-xs-12 col-md-12 col-lg-3">
+                <div  class="col-xs-12 col-md-12 col-lg-3">
                     <div class="sidebar-wrap">
                         <div class="widget widget-cart">
                             <div class="widget-heading">
@@ -94,38 +94,28 @@
                                 </h3>
                                 <div class="clearfix"></div>
                             </div>
+                            <span id="cart_table">
+                            @foreach($cartitem as $ci)
                             <div class="order-row bg-white">
                                 <div class="widget-body">
-                                    <div class="title-row">Pizza Quatro Stagione <a href="#"><i class="fa fa-trash pull-right"></i></a></div>
+                                    <div class="title-row">{{$ci->name}} <a href="#"><i class="fa fa-trash pull-right"></i></a></div>
                                     <div class="form-group row no-gutter">
                                         <div class="col-xs-8">
-                                            <select class="form-control b-r-0" id="exampleSelect1">
-                                                <option>Size SM</option>
-                                                <option>Size LG</option>
-                                                <option>Size XL</option>
+                                            <select class="form-control b-r-0" id="{{$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >
+                                              @foreach($itemsize as $is)
+                                                  @if($ci->id ==$is->item_itemId)
+                                                <option value="{{$is->itemsizeId}}">{{$is->itemsizeName." ".$is->price }}</option>
+                                                    @endif
+                                                  @endforeach
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control" type="number" value="2" id="example-number-input"> </div>
+                                            <input class="form-control" type="number" value="{{$ci->quantity}}" id="example-number-input"> </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="order-row">
-                                <div class="widget-body">
-                                    <div class="title-row">Carlsberg Beer <a href="#"><i class="fa fa-trash pull-right"></i></a></div>
-                                    <div class="form-group row no-gutter">
-                                        <div class="col-xs-8">
-                                            <select class="form-control b-r-0">
-                                                <option>Size SM</option>
-                                                <option>Size LG</option>
-                                                <option>Size XL</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <input class="form-control" value="4" id="quant-input"> </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+
                             <!-- end:Order row -->
                             <div class="widget-delivery clearfix">
                                 <form>
@@ -142,11 +132,12 @@
                             <div class="widget-body">
                                 <div class="price-wrap text-xs-center">
                                     <p>TOTAL</p>
-                                    <h3 class="value"><strong>$ 25,49</strong></h3>
+                                    <h3 class="value"><strong>{{Cart::getTotal()}}</strong></h3>
                                     <p>Free Shipping</p>
                                     <button onclick="location.href='checkout.html'" type="button" class="btn theme-btn btn-lg">Checkout</button>
                                 </div>
                             </div>
+                                 </span>
                         </div>
                     </div>
                 </div>
@@ -156,50 +147,74 @@
         </div>
         <!-- end:Container -->
     </div>
-  @endsection
+@endsection
 
 @section('foot-js')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <script>
-    $(document).ready(function(){
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var resid = '<?php echo $resid ?>';
-        $.ajax({
-            type : 'post' ,
-            url : '{{route('restaurant.getItem')}}',
-            data : {_token: CSRF_TOKEN,'resid':resid} ,
-            success : function(data){
-             //   alert(data);
-                //console.log(data);
-               document.getElementById("showitem").innerHTML = data;
-
-            }
-        });
-
-        $('#mydiv li').click(function() {
-            //Get the id of list items
-            var ID = $(this).attr('id');
+        $(document).ready(function(){
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             var resid = '<?php echo $resid ?>';
             $.ajax({
                 type : 'post' ,
-                url : '{{route('restaurant.getItemByCategory')}}',
-                data : {_token: CSRF_TOKEN,'resid':resid, 'catid':ID} ,
+                url : '{{route('restaurant.getItem')}}',
+                data : {_token: CSRF_TOKEN,'resid':resid} ,
                 success : function(data){
                     //   alert(data);
                     //console.log(data);
                     document.getElementById("showitem").innerHTML = data;
-
                 }
             });
+            $('#mydiv li').click(function() {
+                //Get the id of list items
+                var ID = $(this).attr('id');
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                var resid = '<?php echo $resid ?>';
+                $.ajax({
+                    type : 'post' ,
+                    url : '{{route('restaurant.getItemByCategory')}}',
+                    data : {_token: CSRF_TOKEN,'resid':resid, 'catid':ID} ,
+                    success : function(data){
+                        //   alert(data);
+                        //console.log(data);
+                        document.getElementById("showitem").innerHTML = data;
+                    }
+                });
+            });
         });
+    </script>
 
-    });
+    <script>
+        function addcart(x){
+           var id = $(x).data('panel-id');
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('restaurant.addCart')}}',
+                data : {_token: CSRF_TOKEN, 'itemid':id} ,
+                success : function(data){
 
+                    $('#cart_table').load(document.URL +  ' #cart_table');
+                }
+            });
+        }
 
+        function updatesize(x) {
+            var id = $(x).data('panel-id');
+           var  itemsize = document.getElementById(id).value;
 
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+            type : 'post' ,
+            url : '{{route('restaurant.updateitemsize')}}',
+            data : {_token: CSRF_TOKEN, 'itemsize':itemsize, 'cartid':id} ,
+            success : function(data){
 
+            $('#cart_table').load(document.URL +  ' #cart_table');
 
+            }
+            });
+        }
     </script>
 @endsection
