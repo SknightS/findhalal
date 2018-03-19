@@ -61,6 +61,8 @@ class ReportController extends Controller
     }
 
     public function searchByDate(Request $r){
+         $from= date('Y-m-d',strtotime($r->from));
+         $to=date('Y-m-d',strtotime($r->to));
 
         $purchases=DB::table('purchase')
             ->select('purchase.restaurantId',DB::raw('SUM(purchase.total) as total'),DB::raw('SUM(purchase.orderFee) as totalOrder'))
@@ -72,24 +74,24 @@ class ReportController extends Controller
         foreach ($purchases as $p){
             $cash=DB::table('orderitem')
                 ->select(DB::raw('SUM(orderitem.price) as price'))
-                ->whereIn('fkorderId', function($query) use ($p,$r)
+                ->whereIn('fkorderId', function($query) use ($p,$from,$to)
                 {
                     $query->select('orderId')
                         ->from('order')
                         ->where('fkresturantId',$p->restaurantId)
                         ->where('paymentType','cash')
-                        ->whereBetween(DB::raw('DATE(orderTime)'),[$r->from, $r->to]);
+                        ->whereBetween(DB::raw('DATE(orderTime)'),[$from,$to]);
                 })
                 ->get();
             $card=DB::table('orderitem')
                 ->select(DB::raw('SUM(orderitem.price) as price'))
-                ->whereIn('fkorderId', function($query) use ($p,$r)
+                ->whereIn('fkorderId', function($query) use ($p,$from,$to)
                 {
                     $query->select('orderId')
                         ->from('order')
                         ->where('fkresturantId',$p->restaurantId)
                         ->where('paymentType','card')
-                        ->whereBetween(DB::raw('DATE(orderTime)'),[$r->from, $r->to]);
+                        ->whereBetween(DB::raw('DATE(orderTime)'),[$from,$to]);
 
                 })
                 ->get();
