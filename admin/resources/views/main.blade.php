@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="{{url('assets/css/font-icons/font-awesome/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/jquery-ui.css')}}">
 
-    <link rel="stylesheet" type="text/css" href="{{url('assets/css/modal.css')}}"/>
+    {{--<link rel="stylesheet" type="text/css" href="{{url('assets/css/modal.css')}}"/>--}}
 
 
     <script src="{{url('assets/js/jquery-1.11.3.min.js')}}"></script>

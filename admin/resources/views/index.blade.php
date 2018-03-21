@@ -88,7 +88,7 @@
             </div>
 
             <div class="tile-footer">
-                <a href="#">View all tasks</a>
+                <a href="{{route('task.show')}}">View all tasks</a>
             </div>
 
         </div>

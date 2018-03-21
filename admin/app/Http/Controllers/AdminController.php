@@ -17,7 +17,9 @@ class AdminController extends Controller
     }
 
     public function index(){
-        $task=Task::get();
+        $task=Task::orderBy('taskId','desc')
+                ->limit(6)
+                ->get();
         $regiteredUser=10;
         $visitors=10;
         $message=5;

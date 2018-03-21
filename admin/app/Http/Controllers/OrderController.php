@@ -22,7 +22,7 @@ class OrderController extends Controller
             ->orderBy('orderId','DESC')->get();
         $datatables = DataTables::of($orders);
 
-        return $datatables->addColumn('table', function ($order) {
+        return $datatables->addColumn('action', function ($order) {
 
             $orderItems=Orderitems::select('orderitem.orderItemId','orderitem.fkitemsizeId','orderitem.quantity','orderitem.price','itemsize.itemsizeName','item.itemName')
                 ->where('orderitem.fkorderId',$order->orderId)
