@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Item Type<span style="color: red" class="required">*</span></label>
+                            <label class="col-sm-3 control-label">Item Category<span style="color: red" class="required">*</span></label>
                             <div class="col-sm-5">
                                 <select class="form-control" name="itemCategory" id="itemCategory" required>
 

@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Item Size<span style="color: red" class="required">*</span></label>
+                            <label for="field-1" class="col-sm-3 control-label">Item Size</label>
                             <div style="margin-top: 8px"class="col-sm-5">
                                {{$orderItem->itemsizeName}}
 
@@ -48,10 +48,10 @@
                         <div id = "Item_price" class="form-group">
                             <label class="control-label col-sm-3"> Item Quantity<span style="color: red" class="required">*</span></label>
                             <div class="col-sm-5">
-                                <input type="number" name="itemQuantity" onkeypress="return isNumberKey(event)" placeholder="Item Quantity" id="itemQuantity" value="{{$orderItem->quantity}}" class="form-control input-height" required >
+                                <input type="number" name="itemQuantity" min="1" onkeypress="return isNumberKey(event)" placeholder="Item Quantity" id="itemQuantity" value="{{$orderItem->quantity}}" class="form-control input-height" required >
                                 @if ($errors->has('itemQuantity'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('itemQuantity') }}</strong>
+                                        <strong>{{ $errors->first('itemQuantity')}}</strong>
 
                                     </span>
                                 @endif
@@ -61,7 +61,7 @@
 
 
                         <div id = "Item_price" class="form-group">
-                            <label class="control-label col-sm-3"> Item Price<span style="color: red" class="required">*</span></label>
+                            <label class="control-label col-sm-3"> Item Price</label>
                             <div style="margin-top: 8px" class="col-sm-5">
                                 <span id="itemTotalPrice">{{$orderItem->price}}</span>
 
@@ -69,10 +69,9 @@
 
                         </div>
 
-
-
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-5">
+                                <a class="btn btn-info" href="{{route('order.show')}}">Back</a>
                                 <button  type="submit" class="btn btn-info">Update</button>
                             </div>
                         </div>
@@ -90,18 +89,25 @@
 
 @section('foot-js')
 <script>
+
+    $(document).ready(function(){
+
+        var quantity=$("#itemQuantity").val();
+        var TotalPrice=(quantity*'{{$orderItem->price}}');
+        $("#itemTotalPrice").html(TotalPrice);
+
+        $("#itemQuantity").bind('input',function(){
+            quantity=$(this).val();
+            TotalPrice = ( quantity * '{{$orderItem->price}}');
+            $("#itemTotalPrice").html(TotalPrice);
+        });
+    });
+
     function isNumberKey(evt)
     {
-        var price = document.getElementById("itemQuantity").value;
-
         var charCode = (evt.which) ? evt.which : event.keyCode
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
-        }else {
-
-            alert(price);
-            var TotalPrice = (price * '{{$orderItem->price}}');
-            document.getElementById("itemTotalPrice").innerHTML = TotalPrice;
         }
 
         return true;
