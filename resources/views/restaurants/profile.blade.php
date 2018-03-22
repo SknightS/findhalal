@@ -104,13 +104,13 @@
                                             <select class="form-control b-r-0" id="{{$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >
                                               @foreach($itemsize as $is)
                                                   @if($ci->id ==$is->item_itemId)
-                                                <option value="{{$is->itemsizeId}}">{{$is->itemsizeName." ".$is->price }}</option>
+                                                <option @if($ci->attributes->size == $is->itemsizeId) selected @endif value="{{$is->itemsizeId}}" >{{$is->itemsizeName." €".$is->price }}</option>
                                                     @endif
                                                   @endforeach
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control" type="number" value="{{$ci->quantity}}" id="example-number-input"> </div>
+                                            <input class="form-control myInputField" type="number" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}" id="qty"> </div>
                                     </div>
                                 </div>
                             </div>
@@ -204,6 +204,8 @@
             var id = $(x).data('panel-id');
            var  itemsize = document.getElementById(id).value;
 
+
+
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
             type : 'post' ,
@@ -216,5 +218,23 @@
             }
             });
         }
+
+                var typingTimer;
+                var doneTypingInterval = 1000;
+
+                $('.myInputField').onfocusout(function(){
+                    clearTimeout(typingTimer);
+                    if ($('.myInputField').val) {
+                        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+                    }
+                });
+
+                function doneTyping (x) {
+                    alert('asfd');
+//                    alert('asdfsdf');
+//                    var id = $(x).data('panel-id');
+//                    alert(id);
+                }
+
     </script>
 @endsection
