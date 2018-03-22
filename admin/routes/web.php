@@ -83,6 +83,10 @@ Route::post('/Orders/delivered','OrderController@deliveredOrder')->name('order.d
 Route::post('/Orders/accepted','OrderController@acceptedOrder')->name('order.accepted');
 Route::post('/Orders/info','OrderController@orderInfo')->name('order.info');
 
+//order Item
+Route::get('/OrderItem/show/{id}','OrderController@orderItemEdit')->name('orderItem.edit');
+Route::post('/OrderItem/edit/{id}','OrderController@orderItemUpdate')->name('orderItem.update');
+
 
 
 

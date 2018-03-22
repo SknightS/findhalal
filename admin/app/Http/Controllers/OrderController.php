@@ -38,10 +38,17 @@ class OrderController extends Controller
                 $test.='<td class="center">'.$orderItem->itemsizeName.'</td>';
                 $test.='<td class="center">'.$orderItem->quantity.'</td>';
                 $test.='<td class="center">'.$orderItem->price.'</td>';
+                $test.='<td class="center">'.
+                '<a  class="btn btn-info btn-xs" href="'. route('orderItem.edit',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
+                     <i class="fa fa-edit"></i>
+                     </a>'.'&nbsp <a  class="btn btn-danger btn-xs" href="'. route('itemSize.edit',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
+                     <i class="fa fa-trash"></i>
+                     </a>'. '</td>';
                 $test.='</tr>';
             }
             $test.='</table>';
             $test.='</div>';
+            $test.='<a data-panel-id="'.$order->orderId.'" href="'. route('itemSize.add',$order->orderId).'"  style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px; margin-top: 1px;" class="fa fa-plus-circle"></i></a>';
             return $test;
 
         })->make(true);
@@ -90,6 +97,40 @@ class OrderController extends Controller
             ->where('order.orderId',$orderId)->get();
 
         return view('order.orderInfo')->with('orderinfo',$orders);
+
+    }
+
+    public function orderItemEdit($orderItemId){
+
+
+
+        $orderItem=Orderitems::select('orderitem.orderItemId','orderitem.quantity','orderitem.price','itemsize.itemsizeName','item.itemName')
+            ->where('orderitem.orderItemId',$orderItemId)
+            ->leftJoin('itemsize', 'itemsize.itemsizeId', '=', 'orderitem.fkitemsizeId')
+            ->leftJoin('item', 'item.itemId', '=', 'itemsize.item_itemId')
+            ->get();
+
+       // return $orderItem;
+
+        return view('order.editOrderItem')->with('orderItem',$orderItem);
+
+    }
+
+    public function orderItemUpdate($orderItemId,Request $r){
+
+        $orderItemName=$r->itemName;
+        $orderItemSize=$r->itemSize;
+        $orderItemQuantity=$r->itemQuantity;
+        $orderItemPrice=$r->itemPrice;
+
+
+        $orderItem=Orderitems::select('orderitem.quantity','orderitem.price','itemsize.itemsizeName','item.itemName')
+            ->where('orderitem.orderItemId',$orderItemId)
+            ->leftJoin('itemsize', 'itemsize.itemsizeId', '=', 'orderitem.fkitemsizeId')
+            ->leftJoin('item', 'item.itemId', '=', 'itemsize.item_itemId')
+            ->get();
+
+        return view('order.editOrderItem')->with('orderItem',$orderItem);
 
     }
 }
