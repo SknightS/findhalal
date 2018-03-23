@@ -9,30 +9,6 @@
 
 
 
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="width: 60%;">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-                <div class="modal-body">
-                    <p><div id="txtHint"></div></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    {{--End Modal--}}
-
-
     <div>
         <div class="table table-responsive" style="margin-top: 20px">
             <table id="allOrderList" class="table table-bordered table-striped">
@@ -54,18 +30,18 @@
 
     </div>
 
-    {{--<div id="myModal" class="modal fade" role="dialog">--}}
-        {{--<br/><br/><br/>--}}
-        {{--<!-- Modal content -->--}}
-        {{--<div class="modal-content">--}}
-            {{--<span class="close">×</span>--}}
+    <div id="myModal1" class="modal fade" role="dialog">
+        <br/><br/><br/>
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">×</span>
 
-            {{--<div id="txtHint"></div>--}}
+            <div id="txtHint"></div>
 
-        {{--</div>--}}
+        </div>
 
 
-    {{--</div>--}}
+    </div>
 
 
 
@@ -113,7 +89,7 @@
                     { data: 'orderId',name:'orderId' },
 
                     { "data": function(data){
-                        return '<button data-panel-id="' + data.orderId + '"  type="button" data-toggle="modal" data-target="#myModal" class="btn btn-success btnorder"><i style="font-size: 20px; " class="fa fa-info-circle"></i></button>'
+                        return '<button data-panel-id="' + data.orderId + '" onclick="orderInformation(this)" class="btn btn-success btnorder"><i style="font-size: 20px; " class="fa fa-info-circle"></i></button>'
                             ;},
                         "orderable": false, "searchable":false
                     },
@@ -154,26 +130,26 @@
         });
 
 
-        $('#myModal').on('show.bs.modal', function(e) {
+        {{--$('#myModal').on('show.bs.modal', function(e) {--}}
 
-            var id = $(e.relatedTarget).data('panel-id');
-//            alert(id);
-            $.ajax({
-                type:'POST',
-                url:'{{route('order.info')}}',
-                data:{orderId:id},
-                cache: false,
-                success:function(data)
-                {
-                    $('#txtHint').html(data);
-                }
-            });
-
-
+            {{--var id = $(e.relatedTarget).data('panel-id');--}}
+{{--//            alert(id);--}}
+            {{--$.ajax({--}}
+                {{--type:'POST',--}}
+                {{--url:'{{route('order.info')}}',--}}
+                {{--data:{orderId:id},--}}
+                {{--cache: false,--}}
+                {{--success:function(data)--}}
+                {{--{--}}
+                    {{--$('#txtHint').html(data);--}}
+                {{--}--}}
+            {{--});--}}
 
 
 
-        });
+
+
+        {{--});--}}
 
         function cancel(x) {
             btn = $(x).data('panel-id');
@@ -227,26 +203,23 @@
             });
 
         }
-        var modal = document.getElementById('myModal');
+        var modal = document.getElementById('myModal1');
         var span = document.getElementsByClassName("close")[0];
 
-        {{--function orderInformation(x) {--}}
-            {{--btn = $(x).data('panel-id');--}}
-
-            {{--$.ajax({--}}
-                {{--type:'POST',--}}
-                {{--url:'{{route('order.info')}}',--}}
-                {{--data:{orderId:btn},--}}
-                {{--cache: false,--}}
-                {{--success:function(data)--}}
-                {{--{--}}
-                    {{--$('#txtHint').html(data);--}}
-                {{--}--}}
-            {{--});--}}
-            {{--modal.style.display = "block";--}}
-
-        {{--}--}}
-
+        function orderInformation(x) {
+            btn = $(x).data('panel-id');
+            $.ajax({
+                type:'POST',
+                url:'{{route('order.info')}}',
+                data:{orderId:btn},
+                cache: false,
+                success:function(data)
+                {
+                    $('#txtHint').html(data);
+                }
+            });
+            modal.style.display = "block";
+        }
         span.onclick = function() {
             modal.style.display = "none";
         }

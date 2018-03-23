@@ -11,8 +11,6 @@ use App\Resturant;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
 {
-    //
-
 
     public function Restaurants(Request $r){
 
@@ -132,6 +130,7 @@ class RestaurantController extends Controller
         $cartid = $r->cartid;
         $itemsize = Itemsize::select('*')
                     ->where('item_itemId',$cartid)
+                    ->where('itemsizeId',$itemsize)
                     ->first();
 
         Cart::update($cartid, array(
