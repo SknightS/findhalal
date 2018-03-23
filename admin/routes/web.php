@@ -77,11 +77,16 @@ Route::post('/reports','ReportController@searchByDate')->name('report.searchByDa
 
 //order
 Route::get('/Orders/show','OrderController@show')->name('order.show');
+//Route::get('/Orders/addOrder','OrderController@addNewOrder')->name('order.add');
+Route::get('/Orders/placeOrder','OrderController@placeOrder')->name('order.placeOrder');
+Route::post('/Orders/addOrder','OrderController@insertNewOrder')->name('order.insert');
 Route::post('/Orders/show','OrderController@get')->name('order.get');
 Route::post('/Orders/cancel','OrderController@cancelledOrder')->name('order.cancelled');
 Route::post('/Orders/delivered','OrderController@deliveredOrder')->name('order.delivered');
 Route::post('/Orders/accepted','OrderController@acceptedOrder')->name('order.accepted');
 Route::post('/Orders/info','OrderController@orderInfo')->name('order.info');
+
+Route::post('/Orders/allCategoryByResturant','OrderController@getItemCatByResId')->name('order.categoryByRes');
 
 
 //order Item
