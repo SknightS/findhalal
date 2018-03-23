@@ -10,6 +10,10 @@ use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function show(){
 

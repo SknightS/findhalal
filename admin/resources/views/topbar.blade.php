@@ -17,7 +17,7 @@
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{url('assets/images/thumb-1@2x.png')}}" alt="" class="img-circle" width="44" />
-                            John Henderson
+                            {{Auth::user()->firstName}}
                         </a>
 
 
