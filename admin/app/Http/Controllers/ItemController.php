@@ -51,8 +51,6 @@ class ItemController extends Controller
                     echo "<option value='$category->categoryId'>$category->name</option>";
                 }
 
-              //  echo "<option if( $categorys==$category->categoryId ){selected } value='$category->categoryId'>$category->name</option>";
-
             }
         }
 

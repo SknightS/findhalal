@@ -10,6 +10,11 @@
 
 
     <div>
+        <div style="text-align: right;margin-bottom: 20px">
+            <a href="{{route('order.placeOrder')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add New Order</span></a>
+            {{--<a href="{{route('order.add')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add New Order</span></a>--}}
+        </div>
+
         <div class="table table-responsive" style="margin-top: 20px">
             <table id="allOrderList" class="table table-bordered table-striped">
                 <thead>

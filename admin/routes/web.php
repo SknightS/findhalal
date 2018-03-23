@@ -77,21 +77,30 @@ Route::post('/reports','ReportController@searchByDate')->name('report.searchByDa
 
 //order
 Route::get('/Orders/show','OrderController@show')->name('order.show');
+//Route::get('/Orders/addOrder','OrderController@addNewOrder')->name('order.add');
+Route::get('/Orders/placeOrder','OrderController@placeOrder')->name('order.placeOrder');
+Route::post('/Orders/addOrder','OrderController@insertNewOrder')->name('order.insert');
 Route::post('/Orders/show','OrderController@get')->name('order.get');
 Route::post('/Orders/cancel','OrderController@cancelledOrder')->name('order.cancelled');
 Route::post('/Orders/delivered','OrderController@deliveredOrder')->name('order.delivered');
 Route::post('/Orders/accepted','OrderController@acceptedOrder')->name('order.accepted');
 Route::post('/Orders/info','OrderController@orderInfo')->name('order.info');
 
+Route::post('/Orders/allCategoryByResturant','OrderController@getItemCatByResId')->name('order.categoryByRes');
+
 
 //order Item
 Route::get('/Orders/addOrderItem/{id}','OrderController@addOrderItem')->name('orderItem.add');
-Route::get('/OrderItem/insertOrderItem/{id}','OrderController@insertOrderItem')->name('orderItem.insert');
+Route::post('/OrderItem/insertOrderItem/{id}','OrderController@insertOrderItem')->name('orderItem.insert');
 Route::get('/OrderItem/show/{id}','OrderController@orderItemEdit')->name('orderItem.edit');
 Route::post('/OrderItem/edit/{id}','OrderController@orderItemUpdate')->name('orderItem.update');
 Route::post('/OrderItem/itemByCategory/','OrderController@getItemByCategory')->name('order.itemByCategory');
 Route::post('/OrderItem/itemSizeByCategory/','OrderController@getitemSizeByCategory')->name('order.itemSizeByCategory');
 Route::post('/OrderItem/priceByItemSize/','OrderController@getpriceByItemSize')->name('order.priceByItemSize');
+
+Route::get('/OrderItem/distroy/{id}','OrderController@deleteOrderItem')->name('orderItem.distroy');
+
+
 
 
 

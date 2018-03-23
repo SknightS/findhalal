@@ -11,7 +11,7 @@
 
                 <div class="panel-heading">
                     <div class="panel-title">
-                        Add Items To Order
+                        Add New Order
                     </div>
 
                     <div class="panel-options">
@@ -24,15 +24,19 @@
 
                 <div class="panel-body">
 
-                    <form role="form" class="form-horizontal form-groups-bordered" enctype="multipart/form-data" method="post" action="{{route('orderItem.insert',$orderId)}}">
+                    <form role="form" class="form-horizontal form-groups-bordered" enctype="multipart/form-data" method="post" action="{{route('order.insert')}}">
                         {{csrf_field()}}
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Resturant Name</label>
+                            <label class="col-sm-3 control-label">Resturant Name<span style="color: red" class="required">*</span></label>
                             <div style="margin-top: 8px" class="col-sm-5">
-                                @foreach($orders as $order)
-                                <b>{{$order->resName}}</b>
-                                @endforeach
+                                <select class="form-control" name="resturantName" id="resturantName" required>
+                                    <option selected value="">Select Resturant</option>
+                                    @foreach($resturants as $resturant)
+                                        <option @if(old('resturantName')==$resturant->resturantId )selected @endif value="{{$resturant->resturantId}}">{{$resturant->name}}</option>
+                                    @endforeach
+
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -40,10 +44,7 @@
                             <div class="col-sm-5">
                                 <select class="form-control" name="itemCategory" id="itemCategory" required>
 
-                                    <option selected value="">Select Item Type</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->categoryId}}">{{$category->CategoryName}}</option>
-                                    @endforeach
+                                    <option value="">Select Item Category</option>
 
                                 </select>
                             </div>
@@ -83,6 +84,25 @@
                             <div style="margin-top: 8px" class="col-md-5">
                                 <input type="hidden" name="itemPrice" placeholder="Item Price" id="itemPrice"  class="form-control input-height" required >
                                 <span id="itemPriceTotal"></span>
+                            </div>
+
+
+                        </div>
+
+                        <div id = "customer_id" class="form-group">
+                            <label class="control-label col-md-3"> Customer Id</label>
+                            <div  class="col-md-5">
+                                <input type="text" name="customerId" placeholder="customerId" id="customerId"  class="form-control input-height" >
+
+                            </div>
+
+
+                        </div>
+                        <div id = "paymet_type" class="form-group">
+                            <label class="control-label col-md-3"> Payment Type<span style="color: red" class="required">*</span></label>
+                            <div  class="col-md-5">
+                                <input type="text" disabled name="paymentType" placeholder="Payment" id="paymentType" value="Cash" class="form-control input-height" required >
+
                             </div>
 
 
@@ -149,6 +169,21 @@
             return true;
         }
 
+        $("#resturantName").change(function() {
+
+            var resId=$(this).val();
+
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('order.categoryByRes')}}',
+                data : {'resId':resId} ,
+                success : function(data){
+                    document.getElementById("itemCategory").innerHTML = data;
+
+                }
+            });
+        });
+
         $("#itemCategory").change(function() {
 
             var catId=$(this).val();
@@ -163,6 +198,7 @@
                 }
             });
         });
+
         $("#itemName").change(function() {
 
             var itemId=$(this).val();
@@ -178,6 +214,7 @@
                 }
             });
         });
+
         $("#itemSize").change(function() {
 
             var sizeId=$(this).val();

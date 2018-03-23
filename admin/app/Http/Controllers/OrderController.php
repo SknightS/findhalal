@@ -7,6 +7,7 @@ use App\Item;
 use App\Itemsize;
 use App\Order;
 use App\Orderitems;
+use App\Resturant;
 use Session;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -44,7 +45,7 @@ class OrderController extends Controller
                 $test.='<td class="center">'.
                 '<a  class="btn btn-info btn-xs" href="'. route('orderItem.edit',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
                      <i class="fa fa-edit"></i>
-                     </a>'.'&nbsp <a  class="btn btn-danger btn-xs" href="'. route('itemSize.edit',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
+                     </a>'.'&nbsp <a  class="btn btn-danger btn-xs" href="'. route('orderItem.distroy',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
                      <i class="fa fa-trash"></i>
                      </a>'. '</td>';
                 $test.='</tr>';
@@ -134,7 +135,9 @@ class OrderController extends Controller
                         ->where('order.orderId',$orderId)->get();
         $category=Category::select('category.categoryId','category.name as CategoryName')
                         ->leftJoin('order', 'order.fkresturantId', '=', 'category.fkresturantId')
-                        ->where('order.orderId',$orderId)->get();
+                        ->where('order.orderId',$orderId)
+                        ->where('category.status',Status[0])
+                        ->get();
 
         return view('order.addOrderItem')
             ->with('categories',$category)
@@ -187,6 +190,111 @@ class OrderController extends Controller
         $sizeId=$r->sizeId;
         $Itemsize=Itemsize::findOrFail($sizeId);
         echo $Itemsize->price;
+
+
+    }
+
+    public function insertOrderItem($orderId,Request $r){
+
+        $orderItem=new Orderitems;
+
+        $orderItem->fkorderId=$orderId;
+        $orderItem->fkitemsizeId=$r->itemSize;
+        $orderItem->quantity=$r->itemQuantity;
+        $orderItem->price=$r->itemPrice;
+
+        $orderItem->save();
+
+        Session::flash('message', 'Order Item Inserted Successfully');
+
+        return back();
+
+    }
+    public function deleteOrderItem($orderItemId){
+
+        $orderItem=Orderitems::findOrFail($orderItemId);
+        $orderItem->delete();
+
+        Session::flash('message', 'Order Item Deleted Successfully');
+
+        return back();
+
+
+    }
+
+    public function placeOrder(){
+
+        return redirect('../')->route('name');
+
+
+    }
+
+    /* extra*/
+
+    public function addNewOrder(){
+
+        $resName=Resturant::select('resturantId','name')
+                ->where('status',Status[0])
+                ->orderBy('name','ASC')->get();
+
+        return view('order.addNewOrder')
+            ->with('resturants',$resName);
+
+
+    }
+    public function insertNewOrder(Request $r){
+
+        $order=new Order;
+
+        $order->fkresturantId=$r->resturantName;
+        if ($r->customerId){
+            $order->fkcustomerId=$r->customerId;
+        }else{
+            $order->fkcustomerId=null;
+        }
+
+        $order->orderTime=date(now());
+
+        $order->orderStatus=oderStatus[0];
+        $order->paymentType="Cash";
+
+        $inserted=$order->save();
+        if ($inserted) {
+
+            $orderItems = new Orderitems;
+
+            $orderItems->fkorderId = $order->orderId;
+            $orderItems->fkitemsizeId = $r->itemSize;
+            $orderItems->price = $r->itemPrice;
+            $orderItems->quantity = $r->itemQuantity;
+
+            $orderItems->save();
+            Session::flash('message', 'Order Added Successfully');
+        }else{
+            Session::flash('message', 'Something Went Wrong');
+        }
+
+        return back();
+
+    }
+
+    public function getItemCatByResId(Request $r){
+        $resId=$r->resId;
+
+        $this->data['category']=Category::select('categoryId','name')->where('fkresturantId',$resId)->orderBy('name','ASC')->get();
+
+        if ($this->data['category'] == "") {
+            echo "<option value='' readonly selected>Please Add a Item Category First</option>";
+        } else {
+            echo "<option value='' selected>Select Item Type</option>";
+            foreach ($this->data['category'] as $category) {
+
+                echo "<option value='$category->categoryId'>$category->name</option>";
+
+
+            }
+        }
+
 
 
     }
