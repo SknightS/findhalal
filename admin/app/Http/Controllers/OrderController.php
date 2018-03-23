@@ -228,10 +228,9 @@ class OrderController extends Controller
 
     public function placeOrder(){
 
-        return redirect('../')->route('name');
+        return redirect('../');
 
-
-    }
+        }
 
     /* extra*/
 
