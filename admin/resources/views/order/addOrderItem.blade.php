@@ -92,7 +92,8 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-5">
-                                <button  type="submit" class="btn btn-info">Create</button>
+                                <a class="btn btn-info" href="{{route('order.show')}}">Back</a>
+                                <button  type="submit" class="btn btn-info">Submit</button>
                             </div>
                         </div>
                     </form>

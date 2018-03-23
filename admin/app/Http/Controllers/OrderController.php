@@ -44,7 +44,7 @@ class OrderController extends Controller
                 $test.='<td class="center">'.
                 '<a  class="btn btn-info btn-xs" href="'. route('orderItem.edit',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
                      <i class="fa fa-edit"></i>
-                     </a>'.'&nbsp <a  class="btn btn-danger btn-xs" href="'. route('itemSize.edit',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
+                     </a>'.'&nbsp <a  class="btn btn-danger btn-xs" href="'. route('orderItem.distroy',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
                      <i class="fa fa-trash"></i>
                      </a>'. '</td>';
                 $test.='</tr>';
@@ -187,6 +187,35 @@ class OrderController extends Controller
         $sizeId=$r->sizeId;
         $Itemsize=Itemsize::findOrFail($sizeId);
         echo $Itemsize->price;
+
+
+    }
+
+    public function insertOrderItem($orderId,Request $r){
+
+        $orderItem=new Orderitems;
+
+        $orderItem->fkorderId=$orderId;
+        $orderItem->fkitemsizeId=$r->itemSize;
+        $orderItem->quantity=$r->itemQuantity;
+        $orderItem->price=$r->itemPrice;
+
+        $orderItem->save();
+
+        Session::flash('message', 'Order Item Inserted Successfully');
+
+        return back();
+
+
+    }
+    public function deleteOrderItem($orderItemId){
+
+        $orderItem=Orderitems::findOrFail($orderItemId);
+
+
+        Session::flash('message', 'Order Item Inserted Successfully');
+
+        return back();
 
 
     }

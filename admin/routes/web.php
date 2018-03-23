@@ -86,12 +86,16 @@ Route::post('/Orders/info','OrderController@orderInfo')->name('order.info');
 
 //order Item
 Route::get('/Orders/addOrderItem/{id}','OrderController@addOrderItem')->name('orderItem.add');
-Route::get('/OrderItem/insertOrderItem/{id}','OrderController@insertOrderItem')->name('orderItem.insert');
+Route::post('/OrderItem/insertOrderItem/{id}','OrderController@insertOrderItem')->name('orderItem.insert');
 Route::get('/OrderItem/show/{id}','OrderController@orderItemEdit')->name('orderItem.edit');
 Route::post('/OrderItem/edit/{id}','OrderController@orderItemUpdate')->name('orderItem.update');
 Route::post('/OrderItem/itemByCategory/','OrderController@getItemByCategory')->name('order.itemByCategory');
 Route::post('/OrderItem/itemSizeByCategory/','OrderController@getitemSizeByCategory')->name('order.itemSizeByCategory');
 Route::post('/OrderItem/priceByItemSize/','OrderController@getpriceByItemSize')->name('order.priceByItemSize');
+
+Route::get('/OrderItem/distroy/{id}','OrderController@deleteOrderItem')->name('orderItem.distroy');
+
+
 
 
 
