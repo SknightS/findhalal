@@ -141,5 +141,15 @@ class RestaurantController extends Controller
         ));
     }
 
+    public function updateItemQty(Request $r){
+        $qty = $r->qty;
+        $cartid = $r->cartid;
+
+        Cart::update($cartid, array(
+            'quantity' => $qty,
+
+        ));
+    }
+
 
 }
