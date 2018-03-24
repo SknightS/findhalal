@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Item;
 use App\Itemsize;
+use App\Resturanttime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Resturant;
@@ -15,7 +16,7 @@ class RestaurantController extends Controller
     public function Restaurants(Request $r){
 
 
-        $searchresult = Resturant::where('status', 'Active')
+        $searchresult = Resturant::where('status','Active')
             ->where(function($q) use ($r){
             $q->orWhere('zip', $r->searchbox)
             ->orWhere('city', $r->searchbox);
@@ -31,6 +32,10 @@ class RestaurantController extends Controller
         $restaurant = Resturant::select('*')
         ->where('resturantId',$resid)
             ->get();
+        $resttime = Resturanttime::select('*')
+            ->where('fkresturantId' , $resid)
+            ->get();
+
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
             ->get();
@@ -46,6 +51,7 @@ class RestaurantController extends Controller
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
+            ->with('restime', $resttime)
             ->with('cartitem', $cartCollection);
 
     }
@@ -138,6 +144,19 @@ class RestaurantController extends Controller
             'attributes' => array(
                 'size' =>  $itemsize->itemsizeId
             ) // new item price, price can also be a string format like so: '98.67'
+        ));
+    }
+
+    public function updateItemQty(Request $r){
+        $qty = $r->qty;
+        $cartid = $r->cartid;
+
+        Cart::update($cartid, array(
+            'quantity' => array(
+                'relative' => false,
+                'value' => $qty
+            ),
+
         ));
     }
 

@@ -14,10 +14,6 @@ use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function show(){
 
@@ -39,7 +35,17 @@ class OrderController extends Controller
                 ->get();
 
             $test='<div class="table table-responsive">';
-            $test.='<table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle orderexmple">';
+            $test.='<table class="table table-striped table-bordered table-hover valign-middle">';
+            $test.='<thead>';
+            $test.='<tr>';
+            $test.='<th class="center">Name</th>';
+            $test.='<th class="center">Size</th>';
+            $test.='<th class="center">Quantity</th>';
+            $test.='<th class="center">Price</th>';
+            $test.='<th class="center">Action</th>';
+            $test.='</tr>';
+            $test.='</thead>';
+            $test.='<tbody>';
             foreach ($orderItems as $orderItem){
                 $test.='<tr>';
                 $test.='<td class="center">'.$orderItem->itemName.'</td>';
@@ -47,13 +53,14 @@ class OrderController extends Controller
                 $test.='<td class="center">'.$orderItem->quantity.'</td>';
                 $test.='<td class="center">'.($orderItem->quantity*$orderItem->price).'</td>';
                 $test.='<td class="center">'.
-                '<a  class="btn btn-info btn-xs" href="'. route('orderItem.edit',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
+                    '<a  class="btn btn-info btn-xs" href="'. route('orderItem.edit',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
                      <i class="fa fa-edit"></i>
                      </a>'.'&nbsp <a  class="btn btn-danger btn-xs" href="'. route('orderItem.distroy',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
                      <i class="fa fa-trash"></i>
                      </a>'. '</td>';
                 $test.='</tr>';
             }
+            $test.='<tbody>';
             $test.='</table>';
             $test.='</div>';
             $test.='<a data-panel-id="'.$order->orderId.'" href="'. route('orderItem.add',$order->orderId).'"  style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px;" class="fa fa-plus-circle"></i></a>';
@@ -135,13 +142,13 @@ class OrderController extends Controller
     public function addOrderItem($orderId){
 
         $order=Order::select('resturant.name as resName')
-                        ->leftJoin('resturant', 'resturant.resturantId', '=', 'order.fkresturantId')
-                        ->where('order.orderId',$orderId)->get();
+            ->leftJoin('resturant', 'resturant.resturantId', '=', 'order.fkresturantId')
+            ->where('order.orderId',$orderId)->get();
         $category=Category::select('category.categoryId','category.name as CategoryName')
-                        ->leftJoin('order', 'order.fkresturantId', '=', 'category.fkresturantId')
-                        ->where('order.orderId',$orderId)
-                        ->where('category.status',Status[0])
-                        ->get();
+            ->leftJoin('order', 'order.fkresturantId', '=', 'category.fkresturantId')
+            ->where('order.orderId',$orderId)
+            ->where('category.status',Status[0])
+            ->get();
 
         return view('order.addOrderItem')
             ->with('categories',$category)
@@ -230,15 +237,16 @@ class OrderController extends Controller
 
         return redirect('../');
 
-        }
+
+    }
 
     /* extra*/
 
     public function addNewOrder(){
 
         $resName=Resturant::select('resturantId','name')
-                ->where('status',Status[0])
-                ->orderBy('name','ASC')->get();
+            ->where('status',Status[0])
+            ->orderBy('name','ASC')->get();
 
         return view('order.addNewOrder')
             ->with('resturants',$resName);

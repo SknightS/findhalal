@@ -110,7 +110,7 @@
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control myInputField" type="number" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}" id="qty"> </div>
+                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="number" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onfocusout="updateqty(this)"  > </div>
                                     </div>
                                 </div>
                             </div>
@@ -219,22 +219,26 @@
             });
         }
 
-                var typingTimer;
-                var doneTypingInterval = 1000;
+        function updateqty(x) {
 
-                $('.myInputField').onfocusout(function(){
-                    clearTimeout(typingTimer);
-                    if ($('.myInputField').val) {
-                        typingTimer = setTimeout(doneTyping, doneTypingInterval);
-                    }
-                });
+                var id = $(x).data('panel-id');
+               var qty = document.getElementById("qty"+id).value;
 
-                function doneTyping (x) {
-                    alert('asfd');
-//                    alert('asdfsdf');
-//                    var id = $(x).data('panel-id');
-//                    alert(id);
+
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('restaurant.updateitemqty')}}',
+                data : {_token: CSRF_TOKEN, 'qty':qty, 'cartid':id} ,
+                success : function(data){
+
+                    $('#cart_table').load(document.URL +  ' #cart_table');
+
                 }
+            });
+
+        }
+
 
     </script>
 @endsection
