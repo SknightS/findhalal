@@ -110,7 +110,7 @@
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control myInputField" type="number" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onfocusout="updateqty(this)"  id="{{$ci->id}}"> </div>
+                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="number" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onfocusout="updateqty(this)"  > </div>
                                     </div>
                                 </div>
                             </div>
@@ -222,20 +222,20 @@
         function updateqty(x) {
 
                 var id = $(x).data('panel-id');
-                var qty = document.getElementById(id).value;
-            alert(qty)
+               var qty = document.getElementById("qty"+id).value;
 
-            {{--var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');--}}
-            {{--$.ajax({--}}
-                {{--type : 'post' ,--}}
-                {{--url : '{{route('restaurant.updateitemqty')}}',--}}
-                {{--data : {_token: CSRF_TOKEN, 'qty':qty, 'cartid':id} ,--}}
-                {{--success : function(data){--}}
 
-                    {{--$('#cart_table').load(document.URL +  ' #cart_table');--}}
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('restaurant.updateitemqty')}}',
+                data : {_token: CSRF_TOKEN, 'qty':qty, 'cartid':id} ,
+                success : function(data){
 
-                {{--}--}}
-            {{--});--}}
+                    $('#cart_table').load(document.URL +  ' #cart_table');
+
+                }
+            });
 
         }
 

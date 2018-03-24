@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Item;
 use App\Itemsize;
+use App\Resturanttime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Resturant;
@@ -31,6 +32,10 @@ class RestaurantController extends Controller
         $restaurant = Resturant::select('*')
         ->where('resturantId',$resid)
             ->get();
+        $resttime = Resturanttime::select('*')
+            ->where('fkresturantId' , $resid)
+            ->get();
+
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
             ->get();
@@ -46,6 +51,7 @@ class RestaurantController extends Controller
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
+            ->with('restime', $resttime)
             ->with('cartitem', $cartCollection);
 
     }
@@ -146,7 +152,10 @@ class RestaurantController extends Controller
         $cartid = $r->cartid;
 
         Cart::update($cartid, array(
-            'quantity' => $qty,
+            'quantity' => array(
+                'relative' => false,
+                'value' => $qty
+            ),
 
         ));
     }
