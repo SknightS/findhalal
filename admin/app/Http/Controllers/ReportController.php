@@ -126,6 +126,7 @@ class ReportController extends Controller
 
 
        public function individual($id){
+           $restaurantNAme=Resturant::select('name')->findOrFail($id);
         $reportCash=Purchase::select('purchase.fkorderId','customer.firstName','order.paymentType','order.orderTime')
                         ->leftJoin('order','purchase.fkorderId','order.orderId')
                         ->leftJoin('customer','order.fkcustomerId','customer.customerId')
@@ -137,6 +138,7 @@ class ReportController extends Controller
            $orderCash =array();
            $orderCard =array();
         foreach ($reportCash as $report){
+
             $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price')
                             ->leftJoin('itemsize','orderitem.fkitemsizeId','itemsize.itemsizeId')
                             ->leftJoin('item','itemsize.item_itemId','item.itemId')
@@ -187,7 +189,8 @@ class ReportController extends Controller
 
             return view('report.individual')
                 ->with('orderCard',$orderCard)
-                ->with('orderCash',$orderCash);
+                ->with('orderCash',$orderCash)
+                ->with('restaurantNAme',$restaurantNAme);
 
        }
 

@@ -1,8 +1,9 @@
 @extends('main')
 
 @section('content')
+    <h1 style="color: red;"><b>{{$restaurantNAme->name}}</b></h1>
 
-    <h1 align="center"><b>CASH</b></h1>
+    <h1 align="center" style="color:#1b6d85;"><b>CASH</b></h1>
     <div class="table table-responsive" style="margin-top: 20px">
         <table id="cashTable" class="table table-bordered table-striped">
             <thead>
@@ -58,7 +59,7 @@
     </div>
 
 <br><br>
-    <h1 align="center"><b>CARD</b></h1>
+    <h1 align="center" style="color:#1b6d85;"><b>CARD</b></h1>
 
 
     <div class="table table-responsive" style="margin-top: 20px">
