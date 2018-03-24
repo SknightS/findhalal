@@ -35,7 +35,17 @@ class OrderController extends Controller
                 ->get();
 
             $test='<div class="table table-responsive">';
-            $test.='<table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle orderexmple">';
+            $test.='<table class="table table-striped table-bordered table-hover valign-middle">';
+            $test.='<thead>';
+            $test.='<tr>';
+            $test.='<th class="center">Name</th>';
+            $test.='<th class="center">Size</th>';
+            $test.='<th class="center">Quantity</th>';
+            $test.='<th class="center">Price</th>';
+            $test.='<th class="center">Action</th>';
+            $test.='</tr>';
+            $test.='</thead>';
+            $test.='<tbody>';
             foreach ($orderItems as $orderItem){
                 $test.='<tr>';
                 $test.='<td class="center">'.$orderItem->itemName.'</td>';
@@ -50,6 +60,7 @@ class OrderController extends Controller
                      </a>'. '</td>';
                 $test.='</tr>';
             }
+            $test.='<tbody>';
             $test.='</table>';
             $test.='</div>';
             $test.='<a data-panel-id="'.$order->orderId.'" href="'. route('orderItem.add',$order->orderId).'"  style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px;" class="fa fa-plus-circle"></i></a>';

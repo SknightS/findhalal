@@ -147,6 +147,34 @@
                             </div>
                         </div>
 
+
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">email</label>
+                            <div class="col-sm-5">
+                                <input type="email" class="form-control" id="zip" value="{{old('email')}}" name="email" placeholder="enter email">
+                                @if ($errors->has('email'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">phone</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="phone" value="{{old('phone')}}" name="phone" placeholder="number">
+                                @if ($errors->has('phone'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+
                         <div class="form-group" style="text-align:center">
                             <a class="btn btn-info" data-toggle="modal" data-target="#myModal">Add Time</a>
                         </div>

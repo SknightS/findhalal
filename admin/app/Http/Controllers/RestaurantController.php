@@ -49,6 +49,8 @@ class RestaurantController extends Controller
         $restaurant->city=$r->city;
         $restaurant->zip=$r->zip;
         $restaurant->country=$r->country;
+        $restaurant->email=$r->email;
+        $restaurant->phoneNumber=$r->phone;
         $restaurant->save();
 
         if($r->hasFile('image')){
@@ -183,6 +185,8 @@ class RestaurantController extends Controller
         $restaurant->city=$r->city;
         $restaurant->zip=$r->zip;
         $restaurant->country=$r->country;
+        $restaurant->email=$r->email;
+        $restaurant->phoneNumber=$r->phone;
 
         //Check If the form has Image File
         if($r->hasFile('image')){

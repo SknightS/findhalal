@@ -15,7 +15,7 @@ class RestaurantController extends Controller
     public function Restaurants(Request $r){
 
 
-        $searchresult = Resturant::where('status', 'Active')
+        $searchresult = Resturant::where('status','Active')
             ->where(function($q) use ($r){
             $q->orWhere('zip', $r->searchbox)
             ->orWhere('city', $r->searchbox);
