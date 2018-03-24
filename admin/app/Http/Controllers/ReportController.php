@@ -6,6 +6,7 @@ use DB;
 use App\Purchase;
 use App\Resturant;
 use App\Order;
+use App\Orderitems;
 class ReportController extends Controller
 {
     public function __construct()
@@ -121,11 +122,74 @@ class ReportController extends Controller
         return view('report.index')
             ->with('report',$report);
 
+        }
+
+
+       public function individual($id){
+        $reportCash=Purchase::select('purchase.fkorderId','customer.firstName','order.paymentType','order.orderTime')
+                        ->leftJoin('order','purchase.fkorderId','order.orderId')
+                        ->leftJoin('customer','order.fkcustomerId','customer.customerId')
+                        ->where('order.fkresturantId',$id)
+                        ->where('order.paymentType','cash')
+                        ->orderBy('order.orderTime','desc')
+                        ->get();
+
+           $orderCash =array();
+           $orderCard =array();
+        foreach ($reportCash as $report){
+            $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price')
+                            ->leftJoin('itemsize','orderitem.fkitemsizeId','itemsize.itemsizeId')
+                            ->leftJoin('item','itemsize.item_itemId','item.itemId')
+                            ->where('fkorderId',$report->fkorderId)->get();
+
+            $cash = new stdClass;
+
+            $cash->orderId=$report->fkorderId;
+            $cash->customerName=$report->firstName;
+            $cash->paymentType=$report->paymentType;
+            $cash->date=$report->orderTime;
+            $cash->items=$items;
+
+            array_push($orderCash, $cash);
+
+            }
+
+           $reportCard=Purchase::select('purchase.fkorderId','customer.firstName','order.paymentType','order.orderTime')
+               ->leftJoin('order','purchase.fkorderId','order.orderId')
+               ->leftJoin('customer','order.fkcustomerId','customer.customerId')
+               ->where('order.fkresturantId',$id)
+               ->where('order.paymentType','card')
+               ->orderBy('order.orderTime','desc')
+               ->get();
+
+
+
+           foreach ($reportCard as $report){
+               $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price')
+                   ->leftJoin('itemsize','orderitem.fkitemsizeId','itemsize.itemsizeId')
+                   ->leftJoin('item','itemsize.item_itemId','item.itemId')
+                   ->where('fkorderId',$report->fkorderId)->get();
+
+               $cash = new stdClass;
+
+               $cash->orderId=$report->fkorderId;
+               $cash->customerName=$report->firstName;
+               $cash->paymentType=$report->paymentType;
+               $cash->date=$report->orderTime;
+               $cash->items=$items;
+
+               array_push($orderCard, $cash);
+
+           }
 
 
 
 
-    }
+            return view('report.individual')
+                ->with('orderCard',$orderCard)
+                ->with('orderCash',$orderCash);
+
+       }
 
 
 
