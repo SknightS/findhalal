@@ -106,7 +106,6 @@
 
                     { "data": function(data){
 
-
                         if (data.orderStatus == '<?php echo oderStatus[0] ?>') {
                             return '<a class="btn btn-info btn-sm"  data-panel-id="' + data.orderId + '"onclick="accept(this)"><i class="fa fa-check-circle"></i></a>' +
                                 '<a class="btn btn-danger btn-sm" data-panel-id="' + data.orderId + '"onclick="cancel(this)"><i class="fa fa-times"></i></a>';

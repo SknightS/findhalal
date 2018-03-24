@@ -11,21 +11,59 @@
         <table id="allProductList" class="table table-bordered table-striped">
             <thead>
             <tr>
-                <th >restaurant name</th>
-                <th >sold in cash</th>
-                <th >earn from cash</th>
-                <th >sold in card</th>
-                <th >earn from card</th>
+                <th width="20%">restaurant name</th>
+                <th >Cash</th>
+                <th >Card</th>
+                {{--<th >sold in cash</th>--}}
+                {{--<th >earn from cash</th>--}}
+                {{--<th >sold in card</th>--}}
+                {{--<th >earn from card</th>--}}
             </tr>
             </thead>
             <tbody>
             @foreach($report as $r)
                 <tr>
                     <td>{{$r->name}}</td>
-                    <td>{{$r->cash}}</td>
-                    <td>{{$r->cash*8/100}}</td>
-                    <td>{{$r->card}}</td>
-                    <td>{{$r->card*8/100}}</td>
+                    <td><table class="table table-bordered"><thead><tr>
+                            <th>total</th>
+                            <th>earn</th>
+                            <th>restaurant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{{$r->cash}}</td>
+                                @php($adminCash=$r->cash*8/100)
+                                <td>{{$adminCash}}</td>
+                                <td>{{$r->cash-$adminCash}}</td>
+                            </tr>
+
+                            </tbody>
+
+                        </table></td>
+
+
+                    <td><table class="table table-bordered"><thead><tr>
+                                <th>total</th>
+                                <th>earn</th>
+                                <th>restaurant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{{$r->card}}</td>
+                                @php($adminCard=$r->card*8/100)
+                                <td>{{$adminCard}}</td>
+                                <td>{{$r->card-$adminCard}}</td>
+                            </tr>
+
+                            </tbody>
+
+                        </table></td>
+                    {{--<td>{{$r->cash}}</td>--}}
+                    {{--<td>{{$r->cash*8/100}}</td>--}}
+                    {{--<td>{{$r->card}}</td>--}}
+                    {{--<td>{{$r->card*8/100}}</td>--}}
                 </tr>
             @endforeach
 
