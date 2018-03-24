@@ -36,12 +36,11 @@
     </div>
 
     <div id="myModal1" class="modal fade" role="dialog">
-        <br/><br/><br/>
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">×</span>
 
-            <div id="txtHint"></div>
+            <div id="txtHints"></div>
 
         </div>
 
@@ -134,27 +133,6 @@
         });
 
 
-        {{--$('#myModal').on('show.bs.modal', function(e) {--}}
-
-            {{--var id = $(e.relatedTarget).data('panel-id');--}}
-{{--//            alert(id);--}}
-            {{--$.ajax({--}}
-                {{--type:'POST',--}}
-                {{--url:'{{route('order.info')}}',--}}
-                {{--data:{orderId:id},--}}
-                {{--cache: false,--}}
-                {{--success:function(data)--}}
-                {{--{--}}
-                    {{--$('#txtHint').html(data);--}}
-                {{--}--}}
-            {{--});--}}
-
-
-
-
-
-        {{--});--}}
-
         function cancel(x) {
             btn = $(x).data('panel-id');
 
@@ -219,7 +197,7 @@
                 cache: false,
                 success:function(data)
                 {
-                    $('#txtHint').html(data);
+                    $('#txtHints').html(data);
                 }
             });
             modal.style.display = "block";
