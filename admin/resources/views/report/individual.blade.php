@@ -10,6 +10,7 @@
             <tr>
                 <th width="10%">Order ID</th>
                 <th width="60%">Item</th>
+                <th width="5%">Del Fee</th>
                 <th width="5%">Total</th>
                 <th width="10%">Customer Name</th>
                 <th width="10%">Payment Type</th>
@@ -43,6 +44,8 @@
 
                         </table></td>
 
+                    <td>{{$order->delFee}}</td>
+                    @php($totalCash+=$order->delFee)
                     <td>{{$totalCash}}</td>
                     <td>{{$order->customerName}}</td>
                     <td>{{$order->paymentType}}</td>
@@ -68,9 +71,10 @@
             <tr>
                 <th width="10%">Order ID</th>
                 <th width="60%">Item</th>
+                <th width="5%">Del Fee</th>
                 <th width="5%">Total</th>
                 <th width="10%">Customer Name</th>
-                <th width="10%">Payment Type</th>
+                <th width="5%">Payment Type</th>
                 <th width="15%">Date</th>
 
 
@@ -101,6 +105,8 @@
 
                         </table></td>
 
+                    <td>{{$order->delFee}}</td>
+                    @php($totalCash+=$order->delFee)
                     <td>{{$totalCash}}</td>
                     <td>{{$order->customerName}}</td>
                     <td>{{$order->paymentType}}</td>
