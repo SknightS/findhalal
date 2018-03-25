@@ -11,6 +11,7 @@ use App\Resturant;
 use Session;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -21,12 +22,31 @@ class OrderController extends Controller
     }
     public function get(Request $r){
 
-        $orders=Order::select('orderId','orderTime','orderStatus','paymentType')
-//            ->where('orderStatus',oderStatus[0])
-            ->orderBy('orderId','DESC')->get();
+        $orders=Order::select('orderId','orderTime','orderStatus','delfee','paymentType');
+
+            if($r->dayCount == "full"){
+                Session::flash('message', 'Showing Full Order List');
+
+            }
+            elseif ($r->dayCount=="day30"){
+                Session::flash('message', 'Showing Last 30 Days List');
+                $orders->where('orderTime', '>=', Carbon::now()->subDays(30));
+            }else{
+                $orders->where('orderTime', '>=', Carbon::now()->subDays(30));
+            }
+
+        $orders=$orders->orderBy('orderId','DESC')->get();
+
+
         $datatables = DataTables::of($orders);
 
-        return $datatables->addColumn('action', function ($order) {
+
+        return $datatables->addColumn('action', function ($order)use ($orders) {
+
+            foreach ($orders as $orderss){
+                $status=$orderss->orderStatus;
+                $delfee=$orderss->delfee;
+            }
 
             $orderItems=Orderitems::select('orderitem.orderItemId','orderitem.fkitemsizeId','orderitem.quantity','orderitem.price','itemsize.itemsizeName','item.itemName')
                 ->where('orderitem.fkorderId',$order->orderId)
@@ -42,28 +62,52 @@ class OrderController extends Controller
             $test.='<th class="center">Size</th>';
             $test.='<th class="center">Quantity</th>';
             $test.='<th class="center">Price</th>';
-            $test.='<th class="center">Action</th>';
+            if($status != oderStatus[2] && $status != oderStatus[3]){
+                $test.='<th class="center">Action</th>';
+            }
+
             $test.='</tr>';
             $test.='</thead>';
             $test.='<tbody>';
-            foreach ($orderItems as $orderItem){
-                $test.='<tr>';
-                $test.='<td class="center">'.$orderItem->itemName.'</td>';
-                $test.='<td class="center">'.$orderItem->itemsizeName.'</td>';
-                $test.='<td class="center">'.$orderItem->quantity.'</td>';
-                $test.='<td class="center">'.($orderItem->quantity*$orderItem->price).'</td>';
-                $test.='<td class="center">'.
-                '<a  class="btn btn-info btn-xs" href="'. route('orderItem.edit',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
+            $total=0;
+            $Ftotal=0;
+            foreach ($orderItems as $orderItem) {
+                $test .= '<tr>';
+                $test .= '<td class="center">' . $orderItem->itemName . '</td>';
+                $test .= '<td class="center">' . $orderItem->itemsizeName . '</td>';
+                $test .= '<td class="center">' . $orderItem->quantity . '</td>';
+                $test .= '<td class="center">' . $price=($orderItem->quantity * $orderItem->price) . '</td>';
+                $total=((float)$total+(float)$price);
+                if ($status != oderStatus[2] && $status != oderStatus[3]) {
+                    $test .= '<td class="center">' .
+                        '<a  class="btn btn-info btn-xs" href="' . route('orderItem.edit', $orderItem->orderItemId) . '" data-panel-id="' . $orderItem->orderItemId . '">
                      <i class="fa fa-edit"></i>
-                     </a>'.'&nbsp <a  class="btn btn-danger btn-xs" href="'. route('orderItem.distroy',$orderItem->orderItemId).'" data-panel-id="'.$orderItem->orderItemId.'">
+                     </a>' . '&nbsp <a  class="btn btn-danger btn-xs" href="' . route('orderItem.distroy', $orderItem->orderItemId) . '" data-panel-id="' . $orderItem->orderItemId . '">
                      <i class="fa fa-trash"></i>
-                     </a>'. '</td>';
-                $test.='</tr>';
+                     </a>'.'</td>';
+                }
+
+                $test .= '</tr>';
+                $test .= '<tr>';
+                $delivaryFee=0;
+                if (!empty($delfee)){
+                    $test .='<td style="color: red" colspan="3">'.'Total =( DeliveryFee:'.$delivaryFee=$delfee.')'.'</td>';
+                }else{
+                    $test .='<td style="color: red" colspan="3">'.'Total ='.'</td>';
+                }
+                $test.='<td style="color: red" colspan="1">'.$Ftotal=($total+(float)$delivaryFee).'</td>';
+
+                if ($status != oderStatus[2] && $status != oderStatus[3]) {
+                    $test .= '<td style="color: red" colspan="1">'.'<a data-panel-id="' . $order->orderId . '" href="' . route('orderItem.add', $order->orderId) . '"  style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px;" class="fa fa-plus-circle"></i></a>'.'</td>';
+                }
+
+                $test .= '</tr>';
+
             }
             $test.='<tbody>';
             $test.='</table>';
             $test.='</div>';
-            $test.='<a data-panel-id="'.$order->orderId.'" href="'. route('orderItem.add',$order->orderId).'"  style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px;" class="fa fa-plus-circle"></i></a>';
+
             return $test;
 
         })->make(true);
@@ -103,12 +147,12 @@ class OrderController extends Controller
     public function orderInfo(Request $r){
 
         $orderId=$r->orderId;
-        $orders=Order::Select('order.orderId','resturant.name as resName','resturant.minOrder','resturant.image as resImage','resturant.delfee','resturant.address as resAddress',
+        $orders=Order::Select('order.orderId','order.orderType','resturant.name as resName','resturant.minOrder','resturant.email as resEmail','resturant.phoneNumber as resPhone','resturant.image as resImage','resturant.delfee','resturant.address as resAddress',
             'resturant.city as resCity','resturant.zip as resZip','resturant.country as resCountry','customer.firstName','customer.lastName','customer.email','customer.phone',
             'shipaddress.addressDetails','shipaddress.city as addressCity','shipaddress.zip as addressZip','shipaddress.country as addressCountry')
             ->leftJoin('resturant', 'resturant.resturantId', '=', 'order.fkresturantId')
             ->leftJoin('customer', 'customer.customerId', '=', 'order.fkcustomerId')
-            ->leftJoin('shipaddress', 'shipaddress.fkcustomerId', '=', 'order.fkcustomerId')
+            ->leftJoin('shipaddress', 'shipaddress.fkorderId', '=', 'order.orderId')
             ->where('order.orderId',$orderId)->get();
 
         return view('order.orderInfo')->with('orderinfo',$orders);

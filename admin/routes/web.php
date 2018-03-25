@@ -89,6 +89,9 @@ Route::post('/Orders/info','OrderController@orderInfo')->name('order.info');
 Route::post('/Orders/allCategoryByResturant','OrderController@getItemCatByResId')->name('order.categoryByRes');
 
 
+Route::get('/Orders/FullOrderList','OrderController@getFullOrderList')->name('order.FullOrderList');
+
+
 //order Item
 Route::get('/Orders/addOrderItem/{id}','OrderController@addOrderItem')->name('orderItem.add');
 Route::post('/OrderItem/insertOrderItem/{id}','OrderController@insertOrderItem')->name('orderItem.insert');
