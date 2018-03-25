@@ -66,49 +66,49 @@ class RestaurantController extends Controller
 
         //Adding run time
         $runTime=new Resturanttime;
-        $runTime->day='saturday';
+        $runTime->day='Saturday';
         $runTime->opentime=$r->satOpen;
         $runTime->closetime=$r->satClose;
         $runTime->fkresturantId=$restaurant->resturantId;
         $runTime->save();
 
         $runTime=new Resturanttime;
-        $runTime->day='sunday';
+        $runTime->day='Sunday';
         $runTime->opentime=$r->sunOpen;
         $runTime->closetime=$r->sunClose;
         $runTime->fkresturantId=$restaurant->resturantId;
         $runTime->save();
 
         $runTime=new Resturanttime;
-        $runTime->day='monday';
+        $runTime->day='Monday';
         $runTime->opentime=$r->monOpen;
         $runTime->closetime=$r->monClose;
         $runTime->fkresturantId=$restaurant->resturantId;
         $runTime->save();
 
         $runTime=new Resturanttime;
-        $runTime->day='tuesday';
+        $runTime->day='Tuesday';
         $runTime->opentime=$r->tueOpen;
         $runTime->closetime=$r->tueClose;
         $runTime->fkresturantId=$restaurant->resturantId;
         $runTime->save();
 
         $runTime=new Resturanttime;
-        $runTime->day='wednesday';
+        $runTime->day='Wednesday';
         $runTime->opentime=$r->wedOpen;
         $runTime->closetime=$r->wedClose;
         $runTime->fkresturantId=$restaurant->resturantId;
         $runTime->save();
 
         $runTime=new Resturanttime;
-        $runTime->day='thursday';
+        $runTime->day='Thursday';
         $runTime->opentime=$r->thuOpen;
         $runTime->closetime=$r->thuClose;
         $runTime->fkresturantId=$restaurant->resturantId;
         $runTime->save();
 
         $runTime=new Resturanttime;
-        $runTime->day='friday';
+        $runTime->day='Friday';
         $runTime->opentime=$r->friOpen;
         $runTime->closetime=$r->friClose;
         $runTime->fkresturantId=$restaurant->resturantId;
@@ -140,25 +140,25 @@ class RestaurantController extends Controller
         $restaurant=Resturant::findOrFail($id);
 
         $saturday=Resturanttime::where('fkresturantId',$id)
-                                ->where('day','saturday')->first();
+                                ->where('day','Saturday')->first();
 
         $sunday=Resturanttime::where('fkresturantId',$id)
-            ->where('day','sunday')->first();
+            ->where('day','Sunday')->first();
 
         $monday=Resturanttime::where('fkresturantId',$id)
-            ->where('day','monday')->first();
+            ->where('day','Monday')->first();
 
         $tuesday=Resturanttime::where('fkresturantId',$id)
-            ->where('day','tuesday')->first();
+            ->where('day','Tuesday')->first();
 
         $wednesday=Resturanttime::where('fkresturantId',$id)
-            ->where('day','wednesday')->first();
+            ->where('day','Wednesday')->first();
 
         $thursday=Resturanttime::where('fkresturantId',$id)
-            ->where('day','thursday')->first();
+            ->where('day','Thursday')->first();
 
         $friday=Resturanttime::where('fkresturantId',$id)
-            ->where('day','friday')->first();
+            ->where('day','Friday')->first();
 
 
 
@@ -211,43 +211,43 @@ class RestaurantController extends Controller
 
         //Updating run time
         $runTime=Resturanttime::findOrFail($r->satId);
-        $runTime->day='saturday';
+        $runTime->day='Saturday';
         $runTime->opentime=$r->satOpen;
         $runTime->closetime=$r->satClose;
         $runTime->save();
 
         $runTime=Resturanttime::findOrFail($r->sunId);
-        $runTime->day='sunday';
+        $runTime->day='Sunday';
         $runTime->opentime=$r->sunOpen;
         $runTime->closetime=$r->sunClose;
         $runTime->save();
 
         $runTime=Resturanttime::findOrFail($r->monId);
-        $runTime->day='monday';
+        $runTime->day='Monday';
         $runTime->opentime=$r->monOpen;
         $runTime->closetime=$r->monClose;
         $runTime->save();
 
         $runTime=Resturanttime::findOrFail($r->tueId);
-        $runTime->day='tuesday';
+        $runTime->day='Tuesday';
         $runTime->opentime=$r->tueOpen;
         $runTime->closetime=$r->tueClose;
         $runTime->save();
 
         $runTime=Resturanttime::findOrFail($r->wedId);
-        $runTime->day='wednesday';
+        $runTime->day='Wednesday';
         $runTime->opentime=$r->wedOpen;
         $runTime->closetime=$r->wedClose;
         $runTime->save();
 
         $runTime=Resturanttime::findOrFail($r->thuId);
-        $runTime->day='thursday';
+        $runTime->day='Thursday';
         $runTime->opentime=$r->thuOpen;
         $runTime->closetime=$r->thuClose;
         $runTime->save();
 
         $runTime=Resturanttime::findOrFail($r->friId);
-        $runTime->day='friday';
+        $runTime->day='Friday';
         $runTime->opentime=$r->friOpen;
         $runTime->closetime=$r->friClose;
         $runTime->save();
