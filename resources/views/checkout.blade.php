@@ -1,6 +1,7 @@
 @extends('main')
 
 @section('content')
+
         <div class="page-wrapper">
             <div class="top-links">
                 <div class="container">
@@ -22,51 +23,52 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="widget-body">
-                        <form method="post" action="#">
+                        <form method="post" action="{{route('restaurant.submitorder')}}">
+                            {{csrf_field()}}
                             <div class="row">
                                 <div class="col-sm-6 margin-b-30">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>First Name*</label>
-                                                <input type="text" class="form-control" placeholder="John"> </div>
+                                                <input type="text" class="form-control"  name="firstname" placeholder=""> </div>
                                             <!--/form-group-->
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Last Name*</label>
-                                                <input type="text" class="form-control" placeholder="Doe"> </div>
+                                                <input type="text" class="form-control" name="lastname" placeholder=""> </div>
                                             <!--/form-group-->
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Country*</label>
-                                                <select class="form-control">
-                                                    <option>India</option>
-                                                    <option>USA</option>
-                                                    <option>UK</option>
-                                                    <option>Australia</option>
-                                                    <option>Japan</option>
-                                                    <option>Columbia</option>
-                                                    <option>Poland</option>
-                                                </select>
-                                            </div>
-                                            <!--/form-group-->
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Company Name</label>
-                                                <input type="text" class="form-control" placeholder="Lorem ipsum"> </div>
-                                            <!--/form-group-->
-                                        </div>
+                                        {{--<div class="col-sm-6">--}}
+                                            {{--<div class="form-group">--}}
+                                                {{--<label>Country*</label>--}}
+                                                {{--<select class="form-control">--}}
+                                                    {{--<option>India</option>--}}
+                                                    {{--<option>USA</option>--}}
+                                                    {{--<option>UK</option>--}}
+                                                    {{--<option>Australia</option>--}}
+                                                    {{--<option>Japan</option>--}}
+                                                    {{--<option>Columbia</option>--}}
+                                                    {{--<option>Poland</option>--}}
+                                                {{--</select>--}}
+                                            {{--</div>--}}
+                                            {{--<!--/form-group-->--}}
+                                        {{--</div>--}}
+                                        {{--<div class="col-sm-6">--}}
+                                            {{--<div class="form-group">--}}
+                                                {{--<label>Company Name</label>--}}
+                                                {{--<input type="text" class="form-control" placeholder="Lorem ipsum"> </div>--}}
+                                            {{--<!--/form-group-->--}}
+                                        {{--</div>--}}
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Full Address*</label>
-                                                <input type="text" class="form-control" placeholder="124, Lorem Street.."> </div>
+                                                <input type="text" class="form-control" placeholder="" name="address"> </div>
                                             <!--/form-group-->
                                         </div>
                                     </div>
@@ -74,13 +76,13 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>City / State*</label>
-                                                <input type="text" class="form-control" placeholder="Jaipur"> </div>
+                                                <input type="text" class="form-control" placeholder="" name="city"> </div>
                                             <!--/form-group-->
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Zip/ Postal Code*</label>
-                                                <input type="text" class="form-control" placeholder="302012"> </div>
+                                                <input type="number" class="form-control" placeholder="" name="zip"> </div>
                                             <!--/form-group-->
                                         </div>
                                     </div>
@@ -88,13 +90,13 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Email Address*</label>
-                                                <input type="text" class="form-control" placeholder="john@doe.com"> </div>
+                                                <input type="email" class="form-control" placeholder="" name="email"> </div>
                                             <!--/form-group-->
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>phone*</label>
-                                                <input type="text" class="form-control" placeholder="123-345-3322"> </div>
+                                                <input type="number" class="form-control" placeholder="" name="phone"> </div>
                                             <!--/form-group-->
                                         </div>
                                     </div>
@@ -106,20 +108,36 @@
                                         <div class="cart-totals-fields">
                                             <table class="table">
                                                 <tbody>
+
                                                 <tr>
                                                     <td>Cart Subtotal</td>
-                                                    <td>$29.00</td>
+                                                    <td>{{"€ "}}{{Cart::getTotal()}}</td>
                                                 </tr>
+
                                                 <tr>
+                                                    @foreach($cartitem as $ci)
                                                     <td>Shipping &amp; Handling</td>
-                                                    <td>$2.00</td>
+
+                                                    @php
+                                                    $delfee = 0;
+                                                     if(Session::get('ordertype') == "Delivery"){
+                                                     $delfee = $ci->attributes->delfee;
+                                                     }
+                                                     else{
+                                                     $delfee = 0;
+                                                     }
+                                                    @endphp
+                                                    <td>{{"€ "}}{{ $delfee }}</td>
+                                                    @break
+                                                    @endforeach
                                                 </tr>
                                                 <tr>
                                                     <td class="text-color"><strong>Total</strong></td>
-                                                    <td class="text-color"><strong>$31.00</strong></td>
+                                                    <td class="text-color"><strong>{{"€ "}}{{Cart::getTotal()+ $delfee}}</strong></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
+
                                         </div>
                                     </div>
                                     <!--cart summary-->
@@ -127,15 +145,15 @@
                                         <ul class=" list-unstyled">
                                             <li>
                                                 <label class="custom-control custom-radio  m-b-20">
-                                                    <input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Payment on delivery</span>
+                                                    <input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input" onclick="cash()"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Payment on delivery</span>
                                                     <br> <span>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span> </label>
                                             </li>
                                             <li>
                                                 <label class="custom-control custom-radio  m-b-10">
-                                                    <input name="radio-stacked" type="radio" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Paypal <img src="images/paypal.jpg" alt="" width="90"></span> </label>
+                                                    <input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online <img src="images/paypal.jpg" alt="" width="90"></span> </label>
                                             </li>
                                         </ul>
-                                        <p class="text-xs-center"> <a href="#" class="btn btn-outline-success btn-block">Pay now</a> </p>
+                                        <p class="text-xs-center"> <button type="submit" class="btn btn-outline-success btn-block">Pay now</button> </p>
                                     </div>
                                 </div>
                             </div>
@@ -143,4 +161,38 @@
                     </div>
                 </div>
             </div>
+    </div>
  @endsection
+@section('foot-js')
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script>
+    function cash() {
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+    type : 'post' ,
+    url : '{{route('restaurant.cash')}}',
+    data : {_token: CSRF_TOKEN} ,
+    success : function(data){
+
+    }
+    });
+
+    }
+
+    function card() {
+
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+    type : 'post' ,
+    url : '{{route('restaurant.card')}}',
+    data : {_token: CSRF_TOKEN} ,
+    success : function(data){
+
+
+
+    }
+    });
+
+    }
+    </script>
+    @endsection

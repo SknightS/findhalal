@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Customer;
 use App\Item;
 use App\Itemsize;
+use App\Order;
+use App\Orderitems;
 use App\Resturanttime;
+use App\Shipaddress;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Resturant;
+use Session;
+use RealRashid\SweetAlert\Facades\Alert;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
 {
@@ -35,6 +41,8 @@ class RestaurantController extends Controller
         $resttime = Resturanttime::select('*')
             ->where('fkresturantId' , $resid)
             ->get();
+
+
 
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
@@ -110,8 +118,9 @@ class RestaurantController extends Controller
 
 
         $itemid = $r->itemid;
-        $item =  Item::select('item.*', 'itemsize.*')
+        $item =  Item::select('itemId','itemName', 'price','itemsizeId', 'delfee', 'resturantId')
             ->leftJoin('itemsize','itemsize.item_itemId','=','item.itemid')
+            ->leftJoin('resturant','resturant.resturantId','=','item.fkresturantId')
             ->where('itemid', $itemid)
             ->limit(1)
             ->get();
@@ -123,7 +132,9 @@ class RestaurantController extends Controller
                 'price' => $it->price,
                 'quantity' => 1,
                 'attributes' => array(
-                    'size' =>  $it->itemsizeId
+                    'size' =>  $it->itemsizeId,
+                    'delfee' => $it->delfee,
+                    'resid' => $it->resturantId
                 )
             ));
         }
@@ -158,6 +169,89 @@ class RestaurantController extends Controller
             ),
 
         ));
+    }
+
+    public function checkout(){
+
+        $cartitem = Cart::getContent();
+        return view('checkout')
+            ->with('cartitem', $cartitem);
+    }
+
+    public function SubmitOrder(Request $r){
+
+        $cartCollection = Cart::getContent();
+        foreach ($cartCollection as $c)
+        {
+            $resid =   $c->attributes->resid;
+            if (Session::get('ordertype') == "Delivery") {
+                $delfee = $c->attributes->delfee;
+            }else{
+                $delfee = 0;
+            }
+        break;
+        }
+
+        $customer = new Customer();
+        $customer->firstName = $r->firstname;
+        $customer->lastName = $r->lastname;
+        $customer->email = $r->email;
+        $customer->phone = $r->phone;
+        $customer->address = $r->address;
+        $customer->city = $r->city;
+        $customer->zip = $r->zip;
+        $customer->status = $r->status;
+        $customer->save();
+
+        $shipaddress = new Shipaddress();
+        $shipaddress->addressDetails = $r->address;
+        $shipaddress->city = $r->city;
+        $shipaddress->zip = $r->zip;
+        $shipaddress->fkcustomerId = $customer->customerId;
+        @$shipaddress->save();
+
+        $order = new Order();
+        $order->fkresturantId = $resid;
+        $order->fkcustomerId = $customer->customerId;
+        $order->delfee = $delfee;
+        $order->orderTime = date("Y-m-d H:m:s");
+        $order->orderStatus = "Pending";
+        $order->orderType = Session::get('ordertype');
+        $order->paymentType = Session::get('paymentType');
+        $order->save();
+
+
+        foreach ($cartCollection as $cc){
+            $orderitem =  new Orderitems();
+            $orderitem->fkorderId = $order->orderId;
+            $orderitem->fkitemsizeId = $cc->attributes->size;
+            $orderitem->quantity = $cc->quantity;
+            $orderitem->price = $cc->price;
+            $orderitem->save();
+        }
+
+        Cart::clear();
+        alert()->success('Congrats', 'your order has been placed successfully');
+        return redirect("/");
+       // return back();
+
+
+    }
+
+
+
+    public function takeout(){
+        Session::put('ordertype', "Takeout");
+    }
+    public function delivery(){
+        Session::put('ordertype', "Delivery");
+    }
+
+    public function Cash(){
+        Session::put('paymentType', "Cash");
+    }
+    public function Card(){
+        Session::put('ordertype', "Card");
     }
 
 
