@@ -41,12 +41,17 @@ class OrderController extends Controller
         $datatables = DataTables::of($orders);
 
 
-        return $datatables->addColumn('action', function ($order)use ($orders) {
+        return $datatables->addColumn('action', function ($order) {
 
-            foreach ($orders as $orderss){
-                $status=$orderss->orderStatus;
-                $delfee=$orderss->delfee;
-            }
+//            foreach ($orders as $orderss){
+//                $status=$orderss->orderStatus;
+//                $delfee=$orderss->delfee;
+//            }
+
+                $status=$order->orderStatus;
+                $delfee=$order->delfee;
+//            }
+
 
             $orderItems=Orderitems::select('orderitem.orderItemId','orderitem.fkitemsizeId','orderitem.quantity','orderitem.price','itemsize.itemsizeName','item.itemName')
                 ->where('orderitem.fkorderId',$order->orderId)
@@ -69,6 +74,7 @@ class OrderController extends Controller
             $test.='</tr>';
             $test.='</thead>';
             $test.='<tbody>';
+
             $total=0;
             $Ftotal=0;
             foreach ($orderItems as $orderItem) {
@@ -81,6 +87,7 @@ class OrderController extends Controller
                 if ($status != oderStatus[2] && $status != oderStatus[3]) {
                     $test .= '<td class="center">' .
                         '<a  class="btn btn-info btn-xs" href="' . route('orderItem.edit', $orderItem->orderItemId) . '" data-panel-id="' . $orderItem->orderItemId . '">
+
                      <i class="fa fa-edit"></i>
                      </a>' . '&nbsp <a  class="btn btn-danger btn-xs" href="' . route('orderItem.distroy', $orderItem->orderItemId) . '" data-panel-id="' . $orderItem->orderItemId . '">
                      <i class="fa fa-trash"></i>
@@ -186,13 +193,13 @@ class OrderController extends Controller
     public function addOrderItem($orderId){
 
         $order=Order::select('resturant.name as resName')
-                        ->leftJoin('resturant', 'resturant.resturantId', '=', 'order.fkresturantId')
-                        ->where('order.orderId',$orderId)->get();
+            ->leftJoin('resturant', 'resturant.resturantId', '=', 'order.fkresturantId')
+            ->where('order.orderId',$orderId)->get();
         $category=Category::select('category.categoryId','category.name as CategoryName')
-                        ->leftJoin('order', 'order.fkresturantId', '=', 'category.fkresturantId')
-                        ->where('order.orderId',$orderId)
-                        ->where('category.status',Status[0])
-                        ->get();
+            ->leftJoin('order', 'order.fkresturantId', '=', 'category.fkresturantId')
+            ->where('order.orderId',$orderId)
+            ->where('category.status',Status[0])
+            ->get();
 
         return view('order.addOrderItem')
             ->with('categories',$category)
@@ -289,8 +296,8 @@ class OrderController extends Controller
     public function addNewOrder(){
 
         $resName=Resturant::select('resturantId','name')
-                ->where('status',Status[0])
-                ->orderBy('name','ASC')->get();
+            ->where('status',Status[0])
+            ->orderBy('name','ASC')->get();
 
         return view('order.addNewOrder')
             ->with('resturants',$resName);
