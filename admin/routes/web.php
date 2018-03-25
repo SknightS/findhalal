@@ -74,6 +74,8 @@ Route::get('/task/show','TaskController@show')->name('task.show');
 //Report
 Route::get('/reports','ReportController@index')->name('reports');
 Route::post('/reports','ReportController@searchByDate')->name('report.searchByDate');
+Route::get('/report/{id}','ReportController@individual')->name('report.individual');
+
 
 //order
 Route::get('/Orders/show','OrderController@show')->name('order.show');
@@ -87,6 +89,9 @@ Route::post('/Orders/accepted','OrderController@acceptedOrder')->name('order.acc
 Route::post('/Orders/info','OrderController@orderInfo')->name('order.info');
 
 Route::post('/Orders/allCategoryByResturant','OrderController@getItemCatByResId')->name('order.categoryByRes');
+
+
+Route::get('/Orders/FullOrderList','OrderController@getFullOrderList')->name('order.FullOrderList');
 
 
 //order Item

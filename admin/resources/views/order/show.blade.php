@@ -33,9 +33,13 @@
 
 
     <div>
-        <div style="text-align: right;margin-bottom: 20px">
+        <div id="" style="text-align: right;margin-bottom: 20px">
+
+                    <a data-panel-id="day30" onclick="lastThirtyDaysOreder(this)" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">See last 30 days Order</span></a>
+                    <a data-panel-id="full" onclick="fullOreder(this)" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">See Full Order</span></a>
+
+
             <a href="{{route('order.placeOrder')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add New Order</span></a>
-            {{--<a href="{{route('order.add')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add New Order</span></a>--}}
         </div>
 
         <div class="table table-responsive" style="margin-top: 20px">
@@ -86,6 +90,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        var dayCount='';
 
         $(document).ready(function() {
 
@@ -99,11 +104,19 @@
                     "type": "POST",
                     data:function (d){
 
+                        if (dayCount =="full"){
+                            d.dayCount='full';
+                        }
+                        if (dayCount =="day30"){
+                            d.dayCount='day30';
+                        }
+
+
                     },
                 },
                 columns: [
 
-                    { data: 'orderId',name:'orderId' },
+                    { data: 'orderId',name:'orderId' ,"orderable": false},
 
                     { "data": function(data){
                         return '<button data-panel-id="' + data.orderId + '" data-toggle="modal" data-target="#myModal" class="btn btn-success btnorder"><i style="font-size: 20px; " class="fa fa-info-circle"></i></button>'
@@ -111,8 +124,8 @@
                         "orderable": false, "searchable":false
                     },
 
-                    { data: 'action', name: 'action' },
-                    { data: 'paymentType', name: 'paymentType' },
+                    { data: 'action', name: 'action',"orderable": false },
+                    { data: 'paymentType', name: 'paymentType' ,"orderable": false},
                     { data: 'orderTime', name: 'orderTime' },
                     { data: 'orderStatus', name: 'orderStatus' },
 
@@ -198,8 +211,8 @@
             });
 
         }
-        var modal = document.getElementById('myModal');
-        var span = document.getElementsByClassName("close")[0];
+//        var modal = document.getElementById('myModal');
+//        var span = document.getElementsByClassName("close")[0];
 
         {{--function orderInformation(x) {--}}
             {{--btn = $(x).data('panel-id');--}}
@@ -216,16 +229,16 @@
             {{--modal.style.display = "block";--}}
         {{--}--}}
 
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+//        span.onclick = function() {
+//            modal.style.display = "none";
+//        }
+//
+//        // When the user clicks anywhere outside of the modal, close it
+//        window.onclick = function(event) {
+//            if (event.target == modal) {
+//                modal.style.display = "none";
+//            }
+//        }
 
         $('#myModal').on('show.bs.modal', function(e) {
             var id = $(e.relatedTarget).data('panel-id');
@@ -241,6 +254,22 @@
                 }
             });
         });
+
+        function fullOreder(x) {
+            btn = $(x).data('panel-id');
+            dayCount =btn;
+            table.ajax.reload();
+            $('#messageDiv').load(document.URL +  ' #messageDiv');
+
+
+        }
+        function lastThirtyDaysOreder(x) {
+            btn = $(x).data('panel-id');
+            dayCount=btn;
+            table.ajax.reload();
+            $('#messageDiv').load(document.URL + ' #messageDiv');
+
+        }
 
 
     </script>

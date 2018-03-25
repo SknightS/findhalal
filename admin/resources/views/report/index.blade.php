@@ -12,8 +12,8 @@
             <thead>
             <tr>
                 <th width="20%">restaurant name</th>
-                <th >Cash</th>
-                <th >Card</th>
+                <th ><i class="fa fa-money"></i> Cash</th>
+                <th ><i class="fa fa-credit-card"></i> Card</th>
                 {{--<th >sold in cash</th>--}}
                 {{--<th >earn from cash</th>--}}
                 {{--<th >sold in card</th>--}}
@@ -23,10 +23,10 @@
             <tbody>
             @foreach($report as $r)
                 <tr>
-                    <td>{{$r->name}}</td>
+                    <td><a href="{{route('report.individual',['id'=>$r->id])}}">{{$r->name}}</a></td>
                     <td><table class="table table-bordered"><thead><tr>
                             <th>total</th>
-                            <th>earn</th>
+                            <th>findhalal</th>
                             <th>restaurant</th>
                             </tr>
                             </thead>
@@ -45,7 +45,7 @@
 
                     <td><table class="table table-bordered"><thead><tr>
                                 <th>total</th>
-                                <th>earn</th>
+                                <th>findhalal</th>
                                 <th>restaurant</th>
                             </tr>
                             </thead>
