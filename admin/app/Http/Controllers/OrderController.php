@@ -7,6 +7,7 @@ use App\Item;
 use App\Itemsize;
 use App\Order;
 use App\Orderitems;
+use App\Purchase;
 use App\Resturant;
 use Session;
 use Illuminate\Http\Request;
@@ -95,22 +96,22 @@ class OrderController extends Controller
                 }
 
                 $test .= '</tr>';
-                $test .= '<tr>';
-                $delivaryFee=0;
-                if (!empty($delfee)){
-                    $test .='<td style="color: red" colspan="3">'.'Total =( DeliveryFee:'.$delivaryFee=$delfee.')'.'</td>';
-                }else{
-                    $test .='<td style="color: red" colspan="3">'.'Total ='.'</td>';
-                }
-                $test.='<td style="color: red" colspan="1">'.$Ftotal=($total+(float)$delivaryFee).'</td>';
-
-                if ($status != oderStatus[2] && $status != oderStatus[3]) {
-                    $test .= '<td style="color: red" colspan="1">'.'<a data-panel-id="' . $order->orderId . '" href="' . route('orderItem.add', $order->orderId) . '"  style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px;" class="fa fa-plus-circle"></i></a>'.'</td>';
-                }
-
-                $test .= '</tr>';
 
             }
+            $test .= '<tr>';
+            $delivaryFee=0;
+            if (!empty($delfee)){
+                $test .='<td style="color: red" colspan="3">'.'Total =( DeliveryFee:'.$delivaryFee=$delfee.')'.'</td>';
+            }else{
+                $test .='<td style="color: red" colspan="3">'.'Total ='.'</td>';
+            }
+            $test.='<td style="color: red" colspan="1">'.$Ftotal=($total+(float)$delivaryFee).'</td>';
+
+            if ($status != oderStatus[2] && $status != oderStatus[3]) {
+                $test .= '<td style="color: red" colspan="1">'.'<a data-panel-id="' . $order->orderId . '" href="' . route('orderItem.add', $order->orderId) . '"  style="height:35px; width: 100%; margin:0 auto" class="btn btn-success "><i style="font-size: 25px;" class="fa fa-plus-circle"></i></a>'.'</td>';
+            }
+
+            $test .= '</tr>';
             $test.='<tbody>';
             $test.='</table>';
             $test.='</div>';
@@ -136,6 +137,26 @@ class OrderController extends Controller
         $orders=Order::findOrFail($orderId);
         $orders->orderStatus=oderStatus[3];
         $orders->save();
+
+        $orderItems=Orderitems::select('orderitem.orderItemId','orderitem.quantity','orderitem.price')
+                            ->where('orderitem.fkorderId',$orders->orderId)->get();
+        $total=0;$price=0;$finalTotal=0;
+        foreach ($orderItems as $Items){
+
+            $price=($Items->quantity *$Items->price);
+            $total=$total+$price;
+        }
+
+        $purchase=new Purchase;
+
+        $purchase->fkorderId=$orders->orderId;
+        $purchase->purchasetime=date(now());
+        $purchase->delFee=$orders->delfee;
+        $purchase->orderFee=$total;
+        $purchase->total=$finalTotal=($total+$orders->delfee);
+        $purchase->restaurantId=$orders->fkresturantId;
+
+        $purchase->save();
 
         Session::flash('message', 'Order Status Updated Successfully');
 
