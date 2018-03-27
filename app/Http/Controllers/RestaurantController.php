@@ -24,8 +24,8 @@ class RestaurantController extends Controller
 
         $searchresult = Resturant::where('status','Active')
             ->where(function($q) use ($r){
-            $q->orWhere('zip', $r->searchbox)
-            ->orWhere('city', $r->searchbox);
+                $q->orWhere('zip', $r->searchbox)
+                    ->orWhere('city', $r->searchbox);
             })
             ->get();
 
@@ -36,7 +36,7 @@ class RestaurantController extends Controller
     public function ViewMenu($resid){
 
         $restaurant = Resturant::select('*')
-        ->where('resturantId',$resid)
+            ->where('resturantId',$resid)
             ->get();
         $resttime = Resturanttime::select('*')
             ->where('fkresturantId' , $resid)
@@ -146,9 +146,9 @@ class RestaurantController extends Controller
         $itemsize = $r->itemsize;
         $cartid = $r->cartid;
         $itemsize = Itemsize::select('*')
-                    ->where('item_itemId',$cartid)
-                    ->where('itemsizeId',$itemsize)
-                    ->first();
+            ->where('item_itemId',$cartid)
+            ->where('itemsizeId',$itemsize)
+            ->first();
 
         Cart::update($cartid, array(
             'price' => $itemsize->price, // new item name
@@ -189,7 +189,7 @@ class RestaurantController extends Controller
             }else{
                 $delfee = 0;
             }
-        break;
+            break;
         }
 
         $customer = new Customer();
@@ -203,12 +203,7 @@ class RestaurantController extends Controller
         $customer->status = $r->status;
         $customer->save();
 
-        $shipaddress = new Shipaddress();
-        $shipaddress->addressDetails = $r->address;
-        $shipaddress->city = $r->city;
-        $shipaddress->zip = $r->zip;
-        $shipaddress->fkcustomerId = $customer->customerId;
-        @$shipaddress->save();
+
 
         $order = new Order();
         $order->fkresturantId = $resid;
@@ -230,10 +225,18 @@ class RestaurantController extends Controller
             $orderitem->save();
         }
 
+        $shipaddress = new Shipaddress();
+        $shipaddress->addressDetails = $r->address;
+        $shipaddress->city = $r->city;
+        $shipaddress->zip = $r->zip;
+        $shipaddress->fkcustomerId = $customer->customerId;
+        $shipaddress->fkorderId = $order->orderId;
+        $shipaddress->save();
+
         Cart::clear();
         alert()->success('Congrats', 'your order has been placed successfully');
         return redirect("/");
-       // return back();
+        // return back();
 
 
     }
