@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use stdClass;
+use Session;
 use DB;
 use App\Purchase;
 use App\Resturant;
@@ -21,26 +22,35 @@ class ReportController extends Controller
 //        SELECT SUM(orderitem.price) FROM `orderitem`
 //        WHERE `fkorderId` in (SELECT orderId FROM `order` where fkresturantId=6 and paymentType='cash')
         $report =array();
+
         foreach ($purchases as $p){
+            $cashOrderId=Purchase::select('purchase.fkorderId')
+                    ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
+                    ->where('purchase.restaurantId',$p->restaurantId)
+                    ->where('order.paymentType','Cash')
+                    ->get();
+
+
+            $cardOrderId=Purchase::select('purchase.fkorderId')
+                ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
+                ->where('purchase.restaurantId',$p->restaurantId)
+                ->where('order.paymentType','Card')
+                ->get();
+
+
+
+
+
             $cash=DB::table('orderitem')
                 ->select(DB::raw('SUM(orderitem.price) as price'))
-                ->whereIn('fkorderId', function($query) use ($p)
-                {
-                    $query->select('orderId')
-                        ->from('order')
-                        ->where('fkresturantId',$p->restaurantId)
-                        ->where('paymentType','cash');
-                })
+                ->whereIn('fkorderId',$cashOrderId)
                 ->get();
+
+
+
             $card=DB::table('orderitem')
                 ->select(DB::raw('SUM(orderitem.price) as price'))
-                ->whereIn('fkorderId', function($query) use ($p)
-                {
-                    $query->select('orderId')
-                        ->from('order')
-                        ->where('fkresturantId',$p->restaurantId)
-                        ->where('paymentType','card');
-                })
+                ->whereIn('fkorderId',$cardOrderId )
                 ->get();
             $res=Resturant::findOrFail($p->restaurantId);
             $restaurant = new stdClass;
@@ -60,6 +70,7 @@ class ReportController extends Controller
             }
             array_push($report, $restaurant);
         }
+
 
         return view('report.index')
             ->with('report',$report);
@@ -77,29 +88,33 @@ class ReportController extends Controller
 //        WHERE `fkorderId` in (SELECT orderId FROM `order` where fkresturantId=6 and paymentType='cash')
         $report =array();
         foreach ($purchases as $p){
+
+            $cashOrderId=Purchase::select('purchase.fkorderId')
+                ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
+                ->where('purchase.restaurantId',$p->restaurantId)
+                ->where('order.paymentType','Cash')
+                ->whereBetween(DB::raw('DATE(order.orderTime)'),[$from,$to])
+                ->get();
+
+
+            $cardOrderId=Purchase::select('purchase.fkorderId')
+                ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
+                ->where('purchase.restaurantId',$p->restaurantId)
+                ->where('order.paymentType','Card')
+                ->whereBetween(DB::raw('DATE(order.orderTime)'),[$from,$to])
+                ->get();
+
+
             $cash=DB::table('orderitem')
                 ->select(DB::raw('SUM(orderitem.price) as price'))
-                ->whereIn('fkorderId', function($query) use ($p,$from,$to)
-                {
-                    $query->select('orderId')
-                        ->from('order')
-                        ->where('fkresturantId',$p->restaurantId)
-                        ->where('paymentType','cash')
-                        ->whereBetween(DB::raw('DATE(orderTime)'),[$from,$to]);
-                })
+                ->whereIn('fkorderId',$cashOrderId)
                 ->get();
+
             $card=DB::table('orderitem')
                 ->select(DB::raw('SUM(orderitem.price) as price'))
-                ->whereIn('fkorderId', function($query) use ($p,$from,$to)
-                {
-                    $query->select('orderId')
-                        ->from('order')
-                        ->where('fkresturantId',$p->restaurantId)
-                        ->where('paymentType','card')
-                        ->whereBetween(DB::raw('DATE(orderTime)'),[$from,$to]);
-
-                })
+                ->whereIn('fkorderId',$cardOrderId)
                 ->get();
+
             $res=Resturant::findOrFail($p->restaurantId);
             $restaurant = new stdClass;
             $restaurant->id=$p->restaurantId;
@@ -119,6 +134,8 @@ class ReportController extends Controller
             array_push($report, $restaurant);
         }
 
+        Session::flash('message', 'Showing Report From '.$from.' to '.$to);
+
         return view('report.index')
             ->with('report',$report);
 
@@ -127,7 +144,7 @@ class ReportController extends Controller
 
        public function individual($id){
            $restaurantNAme=Resturant::select('name')->findOrFail($id);
-        $reportCash=Purchase::select('purchase.fkorderId','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
+           $reportCash=Purchase::select('purchase.fkorderId','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
                         ->leftJoin('order','purchase.fkorderId','order.orderId')
                         ->leftJoin('customer','order.fkcustomerId','customer.customerId')
                         ->where('order.fkresturantId',$id)
