@@ -147,7 +147,7 @@ class ReportController extends Controller
                         ->leftJoin('order','purchase.fkorderId','order.orderId')
                         ->leftJoin('customer','order.fkcustomerId','customer.customerId')
                         ->where('order.fkresturantId',$id)
-                        ->where('order.paymentType','cash')
+                        ->where('order.paymentType','Cash')
                         ->orderBy('order.orderTime','desc')
                         ->get();
 
@@ -177,7 +177,7 @@ class ReportController extends Controller
                ->leftJoin('order','purchase.fkorderId','order.orderId')
                ->leftJoin('customer','order.fkcustomerId','customer.customerId')
                ->where('order.fkresturantId',$id)
-               ->where('order.paymentType','card')
+               ->where('order.paymentType','Card')
                ->orderBy('order.orderTime','desc')
                ->get();
 
