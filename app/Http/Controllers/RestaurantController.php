@@ -43,7 +43,6 @@ class RestaurantController extends Controller
             ->get();
 
 
-
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
             ->get();
@@ -179,6 +178,13 @@ class RestaurantController extends Controller
     public function checkout(){
 
         $cartitem = Cart::getContent();
+
+
+        if($cartitem->isEmpty()){
+            Session::flash('message','Cart Is Empty');
+            return back();
+        }
+
         return view('checkout')
             ->with('cartitem', $cartitem);
     }
@@ -186,6 +192,7 @@ class RestaurantController extends Controller
     public function SubmitOrder(Request $r){
 
         $cartCollection = Cart::getContent();
+
         foreach ($cartCollection as $c)
         {
             $resid =   $c->attributes->resid;
