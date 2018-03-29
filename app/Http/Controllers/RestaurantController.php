@@ -171,6 +171,11 @@ class RestaurantController extends Controller
         ));
     }
 
+    public function removeCart(Request $r){
+        Cart::remove($r->itemid);
+
+    }
+
     public function checkout(){
 
         $cartitem = Cart::getContent();
