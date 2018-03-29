@@ -208,12 +208,7 @@ class RestaurantController extends Controller
         $customer->status = $r->status;
         $customer->save();
 
-        $shipaddress = new Shipaddress();
-        $shipaddress->addressDetails = $r->address;
-        $shipaddress->city = $r->city;
-        $shipaddress->zip = $r->zip;
-        $shipaddress->fkcustomerId = $customer->customerId;
-        @$shipaddress->save();
+
 
         $order = new Order();
         $order->fkresturantId = $resid;
@@ -224,6 +219,15 @@ class RestaurantController extends Controller
         $order->orderType = Session::get('ordertype');
         $order->paymentType = Session::get('paymentType');
         $order->save();
+
+
+        $shipaddress = new Shipaddress();
+        $shipaddress->addressDetails = $r->address;
+        $shipaddress->city = $r->city;
+        $shipaddress->zip = $r->zip;
+        $shipaddress->fkcustomerId = $customer->customerId;
+        $shipaddress->fkorderId = $order->orderId;
+        $shipaddress->save();
 
 
         foreach ($cartCollection as $cc){
