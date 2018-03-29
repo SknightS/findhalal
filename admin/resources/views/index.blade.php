@@ -164,7 +164,6 @@
                 url : '{{route('task.change')}}',
                 data : {_token: CSRF_TOKEN,'id':value.id},
                 success : function(data) {
-                    console.log(data);
 
                 }
             });
