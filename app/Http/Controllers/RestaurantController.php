@@ -208,7 +208,7 @@ class RestaurantController extends Controller
         $shipaddress->city = $r->city;
         $shipaddress->zip = $r->zip;
         $shipaddress->fkcustomerId = $customer->customerId;
-        @$shipaddress->save();
+        $shipaddress->save();
 
         $order = new Order();
         $order->fkresturantId = $resid;
