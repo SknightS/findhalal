@@ -23,33 +23,38 @@ class ReportController extends Controller
 //        WHERE `fkorderId` in (SELECT orderId FROM `order` where fkresturantId=6 and paymentType='cash')
         $report =array();
 
+
+
         foreach ($purchases as $p){
             $cashOrderId=Purchase::select('purchase.fkorderId')
-                    ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
                     ->where('purchase.restaurantId',$p->restaurantId)
                     ->where('order.paymentType','Cash')
+                    ->leftJoin('order','purchase.fkorderId','order.orderId')
                     ->get();
 
 
+
+
             $cardOrderId=Purchase::select('purchase.fkorderId')
-                ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
                 ->where('purchase.restaurantId',$p->restaurantId)
                 ->where('order.paymentType','Card')
+                ->leftJoin('order','purchase.fkorderId','order.orderId')
                 ->get();
+
 
 
 
 
 
             $cash=DB::table('orderitem')
-                ->select(DB::raw('SUM(orderitem.price) as price'))
+                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
                 ->whereIn('fkorderId',$cashOrderId)
                 ->get();
 
 
 
             $card=DB::table('orderitem')
-                ->select(DB::raw('SUM(orderitem.price) as price'))
+                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
                 ->whereIn('fkorderId',$cardOrderId )
                 ->get();
             $res=Resturant::findOrFail($p->restaurantId);
