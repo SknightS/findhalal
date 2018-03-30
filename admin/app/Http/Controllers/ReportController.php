@@ -149,6 +149,7 @@ class ReportController extends Controller
                         ->where('order.fkresturantId',$id)
                         ->where('order.paymentType','Cash')
                         ->orderBy('order.orderTime','desc')
+                        ->groupBy('purchase.fkorderId')
                         ->get();
 
            $orderCash =array();
@@ -179,6 +180,7 @@ class ReportController extends Controller
                ->where('order.fkresturantId',$id)
                ->where('order.paymentType','Card')
                ->orderBy('order.orderTime','desc')
+               ->groupBy('purchase.fkorderId')
                ->get();
 
 
@@ -203,9 +205,7 @@ class ReportController extends Controller
            }
 
 
-
-
-            return view('report.individual')
+           return view('report.individual')
                 ->with('orderCard',$orderCard)
                 ->with('orderCash',$orderCash)
                 ->with('restaurantNAme',$restaurantNAme);

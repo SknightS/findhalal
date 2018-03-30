@@ -36,7 +36,7 @@
                                 <td>{{$item->itemName}}</td>
                                 <td>{{$item->quantity}}</td>
                                 <td>{{$item->price}}</td>
-                                @php($totalCash+=$item->price)
+                                @php($totalCash+=$item->price*$item->quantity)
                             </tr>
                             @endforeach
 
@@ -97,7 +97,7 @@
                                     <td>{{$item->itemName}}</td>
                                     <td>{{$item->quantity}}</td>
                                     <td>{{$item->price}}</td>
-                                    @php($totalCash+=$item->price)
+                                    @php($totalCash+=$item->price*$item->quantity)
                                 </tr>
                             @endforeach
 
