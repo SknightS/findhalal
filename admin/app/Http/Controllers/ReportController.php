@@ -143,7 +143,7 @@ class ReportController extends Controller
 
        public function individual($id){
            $restaurantNAme=Resturant::select('name')->findOrFail($id);
-           $reportCash=Purchase::select('purchase.fkorderId','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
+           $reportCash=Purchase::select('purchase.fkorderId','purchase.total','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
                         ->leftJoin('order','purchase.fkorderId','order.orderId')
                         ->leftJoin('customer','order.fkcustomerId','customer.customerId')
                         ->where('order.fkresturantId',$id)
@@ -168,13 +168,14 @@ class ReportController extends Controller
             $cash->customerName=$report->firstName;
             $cash->paymentType=$report->paymentType;
             $cash->date=$report->orderTime;
+            $cash->total=$report->total;
             $cash->items=$items;
 
             array_push($orderCash, $cash);
 
             }
 
-           $reportCard=Purchase::select('purchase.fkorderId','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
+           $reportCard=Purchase::select('purchase.fkorderId','purchase.total','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
                ->leftJoin('order','purchase.fkorderId','order.orderId')
                ->leftJoin('customer','order.fkcustomerId','customer.customerId')
                ->where('order.fkresturantId',$id)
@@ -198,6 +199,7 @@ class ReportController extends Controller
                $cash->customerName=$report->firstName;
                $cash->paymentType=$report->paymentType;
                $cash->date=$report->orderTime;
+               $cash->total=$report->total;
                $cash->items=$items;
 
                array_push($orderCard, $cash);
