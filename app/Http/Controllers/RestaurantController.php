@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Category;
 use App\Customer;
 use App\Item;
@@ -18,42 +16,30 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
 {
-
     public function Restaurants(Request $r){
-
-
         $searchresult = Resturant::where('status','Active')
             ->where(function($q) use ($r){
-            $q->orWhere('zip', $r->searchbox)
-            ->orWhere('city', $r->searchbox);
+                $q->orWhere('zip', $r->searchbox)
+                    ->orWhere('city', $r->searchbox);
             })
             ->get();
-
         return view('restaurants.index')
             ->with('resturant',$searchresult);
     }
-
     public function ViewMenu($resid){
-
         $restaurant = Resturant::select('*')
-        ->where('resturantId',$resid)
+            ->where('resturantId',$resid)
             ->get();
         $resttime = Resturanttime::select('*')
             ->where('fkresturantId' , $resid)
             ->get();
-
-
-
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
             ->get();
-
         $itemsize = Itemsize::select('*')
             ->where('status', 'Active')
             ->get();
-
         $cartCollection = Cart::getContent();
-
         return view('restaurants.profile')
             ->with('category', $catagory)
             ->with('restaurant', $restaurant)
@@ -61,13 +47,9 @@ class RestaurantController extends Controller
             ->with('itemsize', $itemsize)
             ->with('restime', $resttime)
             ->with('cartitem', $cartCollection);
-
     }
-
     public function getItem(Request $r){
-
         $resid = $r->resid;
-
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
             ->get();
@@ -80,22 +62,17 @@ class RestaurantController extends Controller
         $itemsize = Itemsize::select('*')
             ->where('status', 'Active')
             ->get();
-
         return view('restaurants.showitem')
             ->with('category', $catagory)
             ->with('item' , $item)
             ->with ('itemsize', $itemsize);
-
     }
-
     public function getItemByCategory(Request $r){
         $resid = $r->resid;
         $catid = $r->catid;
-
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
             ->where('categoryId', $catid)
-
             ->get();
         $item = Item::select('item.*' ,'itemsize.*' )
             ->leftJoin('itemsize','itemsize.itemsizeId','=','itemsize.item_itemId')
@@ -107,16 +84,12 @@ class RestaurantController extends Controller
         $itemsize = Itemsize::select('*')
             ->where('status', 'Active')
             ->get();
-
         return view('restaurants.showitem')
             ->with('category', $catagory)
             ->with('item' , $item)
             ->with ('itemsize', $itemsize);
     }
-
     public function addCart(Request $r){
-
-
         $itemid = $r->itemid;
         $item =  Item::select('itemId','itemName', 'price','itemsizeId', 'delfee', 'resturantId')
             ->leftJoin('itemsize','itemsize.item_itemId','=','item.itemid')
@@ -124,7 +97,6 @@ class RestaurantController extends Controller
             ->where('itemid', $itemid)
             ->limit(1)
             ->get();
-
         foreach ($item as $it){
             Cart::add(array(
                 'id' => $it->itemId,
@@ -138,18 +110,15 @@ class RestaurantController extends Controller
                 )
             ));
         }
-
     }
-
     //cartid and itemid is same
     public function updateItemSize(Request $r){
         $itemsize = $r->itemsize;
         $cartid = $r->cartid;
         $itemsize = Itemsize::select('*')
-                    ->where('item_itemId',$cartid)
-                    ->where('itemsizeId',$itemsize)
-                    ->first();
-
+            ->where('item_itemId',$cartid)
+            ->where('itemsizeId',$itemsize)
+            ->first();
         Cart::update($cartid, array(
             'price' => $itemsize->price, // new item name
             'attributes' => array(
@@ -157,29 +126,29 @@ class RestaurantController extends Controller
             ) // new item price, price can also be a string format like so: '98.67'
         ));
     }
-
     public function updateItemQty(Request $r){
         $qty = $r->qty;
         $cartid = $r->cartid;
-
         Cart::update($cartid, array(
             'quantity' => array(
                 'relative' => false,
                 'value' => $qty
             ),
-
         ));
     }
-
+    public function removeCart(Request $r){
+        Cart::remove($r->itemid);
+    }
     public function checkout(){
-
         $cartitem = Cart::getContent();
+        if($cartitem->isEmpty()){
+            Session::flash('message','Cart Is Empty');
+            return back();
+        }
         return view('checkout')
             ->with('cartitem', $cartitem);
     }
-
     public function SubmitOrder(Request $r){
-
         $cartCollection = Cart::getContent();
         foreach ($cartCollection as $c)
         {
@@ -189,9 +158,8 @@ class RestaurantController extends Controller
             }else{
                 $delfee = 0;
             }
-        break;
+            break;
         }
-
         $customer = new Customer();
         $customer->firstName = $r->firstname;
         $customer->lastName = $r->lastname;
@@ -203,13 +171,6 @@ class RestaurantController extends Controller
         $customer->status = $r->status;
         $customer->save();
 
-        $shipaddress = new Shipaddress();
-        $shipaddress->addressDetails = $r->address;
-        $shipaddress->city = $r->city;
-        $shipaddress->zip = $r->zip;
-        $shipaddress->fkcustomerId = $customer->customerId;
-        $shipaddress->save();
-
         $order = new Order();
         $order->fkresturantId = $resid;
         $order->fkcustomerId = $customer->customerId;
@@ -220,7 +181,14 @@ class RestaurantController extends Controller
         $order->paymentType = Session::get('paymentType');
         $order->save();
 
-
+        $shipaddress = new Shipaddress();
+        $shipaddress->addressDetails = $r->address;
+        $shipaddress->city = $r->city;
+        $shipaddress->zip = $r->zip;
+        $shipaddress->fkcustomerId = $customer->customerId;
+        $shipaddress->fkorderId = $order->orderId;
+        $shipaddress->save();
+        
         foreach ($cartCollection as $cc){
             $orderitem =  new Orderitems();
             $orderitem->fkorderId = $order->orderId;
@@ -229,30 +197,21 @@ class RestaurantController extends Controller
             $orderitem->price = $cc->price;
             $orderitem->save();
         }
-
         Cart::clear();
         alert()->success('Congrats', 'your order has been placed successfully');
         return redirect("/");
-       // return back();
-
-
+        // return back();
     }
-
-
-
     public function takeout(){
         Session::put('ordertype', "Takeout");
     }
     public function delivery(){
         Session::put('ordertype', "Delivery");
     }
-
     public function Cash(){
         Session::put('paymentType', "Cash");
     }
     public function Card(){
         Session::put('ordertype', "Card");
     }
-
-
 }
