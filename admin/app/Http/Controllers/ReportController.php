@@ -21,21 +21,25 @@ class ReportController extends Controller
             ->get();
 //        SELECT SUM(orderitem.price) FROM `orderitem`
 //        WHERE `fkorderId` in (SELECT orderId FROM `order` where fkresturantId=6 and paymentType='cash')
+
         $report =array();
 
 
 
         foreach ($purchases as $p){
-            $cashOrderId=Purchase::select('purchase.fkorderId')
+            $cashOrderId=Purchase::select('purchase.fkorderId',DB::raw('SUM(purchase.total) as total'))
                     ->where('purchase.restaurantId',$p->restaurantId)
                     ->where('order.paymentType','Cash')
                     ->leftJoin('order','purchase.fkorderId','order.orderId')
                     ->get();
 
 
+//            return $cashOrderId;
 
 
-            $cardOrderId=Purchase::select('purchase.fkorderId')
+
+
+            $cardOrderId=Purchase::select('purchase.fkorderId',DB::raw('SUM(purchase.total) as total'))
                 ->where('purchase.restaurantId',$p->restaurantId)
                 ->where('order.paymentType','Card')
                 ->leftJoin('order','purchase.fkorderId','order.orderId')
@@ -61,18 +65,21 @@ class ReportController extends Controller
             $restaurant = new stdClass;
             $restaurant->id=$p->restaurantId;
             $restaurant->name=$res->name;
-            if($cash[0]->price ==null){
-                $restaurant->cash=0;
-            }
-            else{
-                $restaurant->cash=$cash[0]->price;
-            }
-            if($card[0]->price ==null){
-                $restaurant->card=0;
-            }
-            else{
-                $restaurant->card=$card[0]->price;
-            }
+
+            $restaurant->cash=$cashOrderId[0]->total;
+            $restaurant->card=$cardOrderId[0]->total;
+//            if($cash[0]->price ==null){
+//                $restaurant->cash=0;
+//            }
+//            else{
+//                $restaurant->cash=$cash[0]->price;
+//            }
+//            if($card[0]->price ==null){
+//                $restaurant->card=0;
+//            }
+//            else{
+//                $restaurant->card=$card[0]->price;
+//            }
             array_push($report, $restaurant);
         }
 
