@@ -104,18 +104,20 @@
     {{--End TAsk--}}
 
         {{--Chart--}}
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Report Graph</h4>
 
-                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                    <div id="chartContainer"></div>
 
                 </div>
             </div>
         </div>
+
         {{--End Report --}}
     </div>
+    <br><br>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{url('js/chart.js')}}"></script>
     {{--<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>--}}

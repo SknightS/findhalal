@@ -119,7 +119,7 @@
                             @foreach($cartitem as $ci)
                             <div class="order-row bg-white">
                                 <div class="widget-body">
-                                    <div class="title-row">{{$ci->name}} <a href="#"><i class="fa fa-trash pull-right"></i></a></div>
+                                    <div class="title-row">{{$ci->name}} <button id="{{$ci->id}}" class="btn btn-info btn-sm pull-right" onclick="deleteCart(this)"><i class="fa fa-trash"></i></button></div>
                                     <div class="form-group row no-gutter">
                                         <div class="col-xs-8">
                                             <select class="form-control b-r-0" id="{{$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >
@@ -154,7 +154,7 @@
                             <div class="widget-body">
                                 <div class="price-wrap text-xs-center">
                                     <p>TOTAL</p>
-                                    <h3 class="value"><strong>{{"€ "}}{{Cart::getTotal()}}</strong></h3>
+                                    <h3 class="value"><strong>{{"€"}}{{Cart::getTotal()}}</strong></h3>
 
 
                                     <button onclick="location.href='{{route('restaurant.checkout')}}'" type="submit" class="btn theme-btn btn-lg">Checkout</button>
@@ -257,6 +257,23 @@
 
                     $('#cart_table').load(document.URL +  ' #cart_table');
 
+                }
+            });
+
+        }
+
+        function deleteCart(x) {
+
+            var id = x.id;
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('restaurant.removeCart')}}',
+                data : {_token: CSRF_TOKEN, 'itemid':id} ,
+                success : function(data){
+
+                    console.log(data);
+                    $('#cart_table').load(document.URL +  ' #cart_table');
                 }
             });
 

@@ -145,12 +145,12 @@
                                         <ul class=" list-unstyled">
                                             <li>
                                                 <label class="custom-control custom-radio  m-b-20">
-                                                    <input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input" onclick="cash()"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Payment on delivery</span>
+                                                    <input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input" onclick="cash()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Payment on delivery</span>
                                                     <br> <span>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span> </label>
                                             </li>
                                             <li>
                                                 <label class="custom-control custom-radio  m-b-10">
-                                                    <input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online <img src="images/paypal.jpg" alt="" width="90"></span> </label>
+                                                    <input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online <img src="images/paypal.jpg" alt="" width="90"></span> </label>
                                             </li>
                                         </ul>
                                         <p class="text-xs-center"> <button type="submit" class="btn btn-outline-success btn-block">Pay now</button> </p>
