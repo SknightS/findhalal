@@ -29,6 +29,7 @@ Route::post('/restaurants/getItemByCategory','RestaurantController@getItemByCate
 Route::post('/restaurants/addCart','RestaurantController@addCart')->name('restaurant.addCart');
 Route::post('/restaurants/updateitemsize','RestaurantController@updateItemSize')->name('restaurant.updateitemsize');
 Route::post('/restaurants/updateitemqty','RestaurantController@updateItemQty')->name('restaurant.updateitemqty');
+Route::post('/restaurants/removecart','RestaurantController@removeCart')->name('restaurant.removecart');
 
 //checkout
 Route::get('/restaurants/checkout/','RestaurantController@checkout')->name('restaurant.checkout');

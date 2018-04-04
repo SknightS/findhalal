@@ -119,7 +119,7 @@
                             @foreach($cartitem as $ci)
                             <div class="order-row bg-white">
                                 <div class="widget-body">
-                                    <div class="title-row">{{$ci->name}} <a href="#"><i class="fa fa-trash pull-right"></i></a></div>
+                                    <div class="title-row">{{$ci->name}} <a href="" ><i class="fa fa-trash pull-right" data-panel-id2="{{$ci->id}}" onclick="removecart(this)"></i></a></div>
                                     <div class="form-group row no-gutter">
                                         <div class="col-xs-8">
                                             <select class="form-control b-r-0" id="{{$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >
@@ -260,6 +260,23 @@
                 }
             });
 
+        }
+        function removecart(x) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            var id = $(x).data('panel-id2');
+
+       //     alert(id);
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('restaurant.removecart')}}',
+                data : {_token: CSRF_TOKEN, 'cartid':id} ,
+                success : function(data){
+
+                    alert(data);
+                  //  $('#cart_table').load(document.URL +  ' #cart_table');
+
+                }
+            });
         }
 
         function delivery() {

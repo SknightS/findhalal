@@ -241,6 +241,15 @@ class RestaurantController extends Controller
 
     }
 
+    public function removeCart(Request $r){
+
+        $cartid = $r->cartid;
+       // return $cartid;
+        session::forget('cart.'.$cartid);;
+       // Cart::removeItemCondition($cartid);
+       // Cart.$this->removeCart($cartid);
+    }
+
 
 
     public function takeout(){
