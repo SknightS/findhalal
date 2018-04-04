@@ -173,13 +173,12 @@ class ReportController extends Controller
            $orderCard =array();
         foreach ($reportCash as $report){
 
-            $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price')
+            $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price','itemsize.itemsizeName')
                             ->leftJoin('itemsize','orderitem.fkitemsizeId','itemsize.itemsizeId')
                             ->leftJoin('item','itemsize.item_itemId','item.itemId')
                             ->where('fkorderId',$report->fkorderId)->get();
 
             $cash = new stdClass;
-
             $cash->orderId=$report->fkorderId;
             $cash->delFee=$report->delFee;
             $cash->customerName=$report->firstName;
@@ -204,13 +203,12 @@ class ReportController extends Controller
 
 
            foreach ($reportCard as $report){
-               $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price')
+               $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price','itemsize.itemsizeName')
                    ->leftJoin('itemsize','orderitem.fkitemsizeId','itemsize.itemsizeId')
                    ->leftJoin('item','itemsize.item_itemId','item.itemId')
                    ->where('fkorderId',$report->fkorderId)->get();
 
                $cash = new stdClass;
-
                $cash->orderId=$report->fkorderId;
                $cash->delFee=$report->delFee;
                $cash->customerName=$report->firstName;
@@ -218,9 +216,7 @@ class ReportController extends Controller
                $cash->date=$report->orderTime;
                $cash->total=$report->total;
                $cash->items=$items;
-
                array_push($orderCard, $cash);
-
            }
 
 
