@@ -75,6 +75,7 @@ Route::get('/task/show','TaskController@show')->name('task.show');
 Route::get('/reports','ReportController@index')->name('reports');
 Route::post('/reports','ReportController@searchByDate')->name('report.searchByDate');
 Route::get('/report/{id}','ReportController@individual')->name('report.individual');
+Route::get('/report/{id}/{start}/{end}','ReportController@individualWithDate')->name('report.individualWithDate');
 
 
 //order

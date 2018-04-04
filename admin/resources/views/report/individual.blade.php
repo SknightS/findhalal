@@ -21,7 +21,6 @@
             </thead>
             <tbody>
             @foreach($orderCash as $order)
-                @php($totalCash=0)
                 <tr>
                     <td><a>{{$order->orderId}}</a></td>
                     <td><table class="table table-bordered"><thead><tr>
@@ -36,7 +35,6 @@
                                 <td>{{$item->itemName}}</td>
                                 <td>{{$item->quantity}}</td>
                                 <td>{{$item->price}}</td>
-                                @php($totalCash+=$item->price)
                             </tr>
                             @endforeach
 
@@ -45,8 +43,7 @@
                         </table></td>
 
                     <td>{{$order->delFee}}</td>
-                    @php($totalCash+=$order->delFee)
-                    <td>{{$totalCash}}</td>
+                    <td>{{$order->total}}</td>
                     <td>{{$order->customerName}}</td>
                     <td>{{$order->paymentType}}</td>
                     <td>{{$order->date}}</td>
@@ -82,7 +79,6 @@
             </thead>
             <tbody>
             @foreach($orderCard as $order)
-                @php($totalCash=0)
                 <tr>
                     <td><a>{{$order->orderId}}</a></td>
                     <td><table class="table table-bordered"><thead><tr>
@@ -97,7 +93,6 @@
                                     <td>{{$item->itemName}}</td>
                                     <td>{{$item->quantity}}</td>
                                     <td>{{$item->price}}</td>
-                                    @php($totalCash+=$item->price)
                                 </tr>
                             @endforeach
 
@@ -106,8 +101,7 @@
                         </table></td>
 
                     <td>{{$order->delFee}}</td>
-                    @php($totalCash+=$order->delFee)
-                    <td>{{$totalCash}}</td>
+                    <td>{{$order->total}}</td>
                     <td>{{$order->customerName}}</td>
                     <td>{{$order->paymentType}}</td>
                     <td>{{$order->date}}</td>

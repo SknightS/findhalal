@@ -40,7 +40,22 @@ class RestaurantController extends Controller
             ->get();
         $resttime = Resturanttime::select('*')
             ->where('fkresturantId' , $resid)
-            ->get();
+            ->where('day' , date('l'))
+            ->first();
+        $open= date('H.i',strtotime($resttime->opentime));
+        $close= date('H.i',strtotime($resttime->closetime));
+        $now=date('H.i');
+
+        // 12 <now <23.00
+
+        if($open <$now && $close >$now ){
+            $restaurantStatus= "Open";
+        }
+        else{
+            $restaurantStatus= "Close";
+        }
+
+
 
 
 
@@ -59,7 +74,7 @@ class RestaurantController extends Controller
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
-            ->with('restime', $resttime)
+            ->with('restaurantStatus', $restaurantStatus)
             ->with('cartitem', $cartCollection);
 
     }
@@ -171,9 +186,21 @@ class RestaurantController extends Controller
         ));
     }
 
+    public function removeCart(Request $r){
+        Cart::remove($r->itemid);
+
+    }
+
     public function checkout(){
 
         $cartitem = Cart::getContent();
+
+
+        if($cartitem->isEmpty()){
+            Session::flash('message','Cart Is Empty');
+            return back();
+        }
+
         return view('checkout')
             ->with('cartitem', $cartitem);
     }
@@ -181,6 +208,7 @@ class RestaurantController extends Controller
     public function SubmitOrder(Request $r){
 
         $cartCollection = Cart::getContent();
+
         foreach ($cartCollection as $c)
         {
             $resid =   $c->attributes->resid;
@@ -216,6 +244,15 @@ class RestaurantController extends Controller
         $order->save();
 
 
+        $shipaddress = new Shipaddress();
+        $shipaddress->addressDetails = $r->address;
+        $shipaddress->city = $r->city;
+        $shipaddress->zip = $r->zip;
+        $shipaddress->fkcustomerId = $customer->customerId;
+        $shipaddress->fkorderId = $order->orderId;
+        $shipaddress->save();
+
+
         foreach ($cartCollection as $cc){
             $orderitem =  new Orderitems();
             $orderitem->fkorderId = $order->orderId;
@@ -241,14 +278,7 @@ class RestaurantController extends Controller
 
     }
 
-    public function removeCart(Request $r){
 
-        $cartid = $r->cartid;
-       // return $cartid;
-        session::forget('cart.'.$cartid);;
-       // Cart::removeItemCondition($cartid);
-       // Cart.$this->removeCart($cartid);
-    }
 
 
 
