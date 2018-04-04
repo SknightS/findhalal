@@ -34,22 +34,10 @@
                                         $date= date('H:m');
                                         $day= date('l');
                                     @endphp
-                                    @foreach($restime as $rt)
-                                    @if($day == $rt->day)
 
-                                     @if( DateTime::createFromFormat('H:i',$date) > DateTime::createFromFormat('H:i',$rt->opentime) && DateTime::createFromFormat('H:i',$date)< DateTime::createFromFormat('H:i',$rt->closetime))
+                                                <a class="btn btn-small ">{{$restaurantStatus}}</a>
 
-                                                <a class="btn btn-small ">OPEN</a>
 
-                                         @break
-                                       @else
-                                            <a  style=" background-color: red" class="btn btn-small btn- ">CLOSE</a>
-                                                @break
-                                         @endif
-                                        @else
-
-                                        @endif
-                                            @endforeach
                                     <p>{{$rest->details}}</p>
                                     <ul class="nav nav-inline">
                                         <li class="nav-item"> <a class="nav-link active" href="#"><i class="fa fa-check"></i> Min $ {{$rest->minOrder}}</a> </li>

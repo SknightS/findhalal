@@ -40,7 +40,23 @@ class RestaurantController extends Controller
             ->get();
         $resttime = Resturanttime::select('*')
             ->where('fkresturantId' , $resid)
-            ->get();
+            ->where('day' , date('l'))
+            ->first();
+        $open= date('H.i',strtotime($resttime->opentime));
+        $close= date('H.i',strtotime($resttime->closetime));
+        $now=date('H.i');
+
+        // 12 <now <23.00
+
+        if($open <$now && $close >$now ){
+            $restaurantStatus= "Open";
+        }
+        else{
+            $restaurantStatus= "Close";
+        }
+
+
+
 
 
         $catagory = Category::select('*')
@@ -58,7 +74,7 @@ class RestaurantController extends Controller
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
-            ->with('restime', $resttime)
+            ->with('restaurantStatus', $restaurantStatus)
             ->with('cartitem', $cartCollection);
 
     }
