@@ -62,6 +62,10 @@
                 <a href="{{route('settings')}}"><i class="fa fa-cog"></i><span class="title">Account</span></a>
             </li>
 
+            <li class="@if(Request::url()==route('user.show')) active @endif">
+                <a href="{{route('user.show')}}"><i class="fa fa-plus"></i><span class="title">Add User</span></a>
+            </li>
+
         </ul>
     </div>
 
