@@ -188,7 +188,7 @@ class RestaurantController extends Controller
         $shipaddress->fkcustomerId = $customer->customerId;
         $shipaddress->fkorderId = $order->orderId;
         $shipaddress->save();
-        
+
         foreach ($cartCollection as $cc){
             $orderitem =  new Orderitems();
             $orderitem->fkorderId = $order->orderId;
