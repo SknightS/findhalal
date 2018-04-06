@@ -34,22 +34,10 @@
                                         $date= date('H:m');
                                         $day= date('l');
                                     @endphp
-                                    @foreach($restime as $rt)
-                                    @if($day == $rt->day)
 
-                                     @if( DateTime::createFromFormat('H:i',$date) > DateTime::createFromFormat('H:i',$rt->opentime) && DateTime::createFromFormat('H:i',$date)< DateTime::createFromFormat('H:i',$rt->closetime))
+                                                <a class="btn btn-small ">{{$restaurantStatus}}</a>
 
-                                                <a class="btn btn-small ">OPEN</a>
 
-                                         @break
-                                       @else
-                                            <a  style=" background-color: red" class="btn btn-small btn- ">CLOSE</a>
-                                                @break
-                                         @endif
-                                        @else
-
-                                        @endif
-                                            @endforeach
                                     <p>{{$rest->details}}</p>
                                     <ul class="nav nav-inline">
                                         <li class="nav-item"> <a class="nav-link active" href="#"><i class="fa fa-check"></i> Min $ {{$rest->minOrder}}</a> </li>
@@ -119,10 +107,12 @@
                             @foreach($cartitem as $ci)
                             <div class="order-row bg-white">
                                 <div class="widget-body">
+
                                     <div class="title-row">{{$ci->name}} <button id="{{$ci->id}}" class="btn btn-info btn-sm pull-right" onclick="deleteCart(this)"><i class="fa fa-trash"></i></button></div>
+
                                     <div class="form-group row no-gutter">
                                         <div class="col-xs-8">
-                                            <select class="form-control b-r-0" id="{{$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >
+                                            <select class="form-control b-r-0" id="{{"size".$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >
                                               @foreach($itemsize as $is)
                                                   @if($ci->id ==$is->item_itemId)
                                                 <option @if($ci->attributes->size == $is->itemsizeId) selected @endif value="{{$is->itemsizeId}}" >{{$is->itemsizeName." €".$is->price }}</option>
@@ -225,7 +215,7 @@
 
         function updatesize(x) {
             var id = $(x).data('panel-id');
-           var  itemsize = document.getElementById(id).value;
+           var  itemsize = document.getElementById("size"+id).value;
 
 
 
@@ -260,6 +250,23 @@
                 }
             });
 
+        }
+        function removecart(x) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            var id = $(x).data('panel-id2');
+
+       //     alert(id);
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('restaurant.removecart')}}',
+                data : {_token: CSRF_TOKEN, 'cartid':id} ,
+                success : function(data){
+
+                    alert(data);
+                  //  $('#cart_table').load(document.URL +  ' #cart_table');
+
+                }
+            });
         }
 
         function deleteCart(x) {
