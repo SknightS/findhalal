@@ -23,33 +23,38 @@ class ReportController extends Controller
 //        WHERE `fkorderId` in (SELECT orderId FROM `order` where fkresturantId=6 and paymentType='cash')
         $report =array();
 
+
+
         foreach ($purchases as $p){
             $cashOrderId=Purchase::select('purchase.fkorderId')
-                    ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
                     ->where('purchase.restaurantId',$p->restaurantId)
                     ->where('order.paymentType','Cash')
+                    ->leftJoin('order','purchase.fkorderId','order.orderId')
                     ->get();
 
 
+
+
             $cardOrderId=Purchase::select('purchase.fkorderId')
-                ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
                 ->where('purchase.restaurantId',$p->restaurantId)
                 ->where('order.paymentType','Card')
+                ->leftJoin('order','purchase.fkorderId','order.orderId')
                 ->get();
+
 
 
 
 
 
             $cash=DB::table('orderitem')
-                ->select(DB::raw('SUM(orderitem.price) as price'))
+                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
                 ->whereIn('fkorderId',$cashOrderId)
                 ->get();
 
 
 
             $card=DB::table('orderitem')
-                ->select(DB::raw('SUM(orderitem.price) as price'))
+                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
                 ->whereIn('fkorderId',$cardOrderId )
                 ->get();
             $res=Resturant::findOrFail($p->restaurantId);
@@ -143,12 +148,13 @@ class ReportController extends Controller
 
        public function individual($id){
            $restaurantNAme=Resturant::select('name')->findOrFail($id);
-           $reportCash=Purchase::select('purchase.fkorderId','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
+           $reportCash=Purchase::select('purchase.fkorderId','purchase.total','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
                         ->leftJoin('order','purchase.fkorderId','order.orderId')
                         ->leftJoin('customer','order.fkcustomerId','customer.customerId')
                         ->where('order.fkresturantId',$id)
                         ->where('order.paymentType','Cash')
                         ->orderBy('order.orderTime','desc')
+                        ->groupBy('purchase.fkorderId')
                         ->get();
 
            $orderCash =array();
@@ -167,18 +173,20 @@ class ReportController extends Controller
             $cash->customerName=$report->firstName;
             $cash->paymentType=$report->paymentType;
             $cash->date=$report->orderTime;
+            $cash->total=$report->total;
             $cash->items=$items;
 
             array_push($orderCash, $cash);
 
             }
 
-           $reportCard=Purchase::select('purchase.fkorderId','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
+           $reportCard=Purchase::select('purchase.fkorderId','purchase.total','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
                ->leftJoin('order','purchase.fkorderId','order.orderId')
                ->leftJoin('customer','order.fkcustomerId','customer.customerId')
                ->where('order.fkresturantId',$id)
                ->where('order.paymentType','Card')
                ->orderBy('order.orderTime','desc')
+               ->groupBy('purchase.fkorderId')
                ->get();
 
 
@@ -196,6 +204,7 @@ class ReportController extends Controller
                $cash->customerName=$report->firstName;
                $cash->paymentType=$report->paymentType;
                $cash->date=$report->orderTime;
+               $cash->total=$report->total;
                $cash->items=$items;
 
                array_push($orderCard, $cash);
@@ -203,9 +212,7 @@ class ReportController extends Controller
            }
 
 
-
-
-            return view('report.individual')
+           return view('report.individual')
                 ->with('orderCard',$orderCard)
                 ->with('orderCash',$orderCash)
                 ->with('restaurantNAme',$restaurantNAme);
