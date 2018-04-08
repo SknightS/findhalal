@@ -24,7 +24,9 @@
                 <th >min order</th>
                 <th >delivery fee</th>
                 <th >status</th>
+                @if(Auth::user()->fkuserTypeId == User[0])
                 <th >action</th>
+                @endif
             </tr>
             </thead>
 
@@ -80,10 +82,12 @@
         { data: 'minOrder', name: 'minOrder' },
         { data: 'delfee', name: 'delfee' },
         { data: 'status', name: 'status' },
+                @if(Auth::user()->fkuserTypeId == User[0])
             { "data": function(data){
                     {{--var url='{{url("product/edit/", ":id") }}';--}}
                     return '<a class="btn btn-default btn-sm" data-panel-id="'+data.resturantId+'"onclick="editProduct(this)"><i class="fa fa-edit"></i></a>';},
                 "orderable": false, "searchable":false },
+                @endif
 
         ],
         });

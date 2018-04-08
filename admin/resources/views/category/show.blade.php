@@ -13,7 +13,9 @@
                 <th >category name</th>
                 <th >restaurant name</th>
                 <th >status</th>
+                @if(Auth::user()->fkuserTypeId == User[0])
                 <th >action</th>
+                @endif
 
             </tr>
             </thead>
@@ -55,10 +57,12 @@
                     { data: 'name',name:'name' },
                     { data: 'restaurantName', name: 'restaurantName' },
                     { data: 'status', name: 'status' },
+                        @if(Auth::user()->fkuserTypeId == User[0])
                     { "data": function(data){
 
                                 return '<a class="btn btn-default btn-sm" data-panel-id="'+data.categoryId+'" onclick="editProduct(this)"><i class="fa fa-edit"></i></a>'},
                         "orderable": false, "searchable":false },
+                    @endif
                 ],
             });
 

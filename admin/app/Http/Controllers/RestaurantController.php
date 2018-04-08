@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 //use DataTables;
 use Yajra\DataTables\DataTables;
 use Image;
@@ -137,6 +138,9 @@ class RestaurantController extends Controller
     }
 
     public function edit($id){
+        if(!(Auth::user()->fkuserTypeId == User[0])){
+            return back();
+        }
         $restaurant=Resturant::findOrFail($id);
 
         $saturday=Resturanttime::where('fkresturantId',$id)

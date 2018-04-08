@@ -8,7 +8,7 @@ use App\Itemsize;
 use App\Resturant;
 use Illuminate\Http\Request;
 use Session;
-
+use Auth;
 use Image;
 
 use Yajra\DataTables\DataTables;
@@ -178,8 +178,9 @@ class ItemController extends Controller
     }
 
     public function edit($itemId){
-
-
+        if(!(Auth::user()->fkuserTypeId == User[0])){
+            return back();
+        }
 
         $items=Item::select('item.image','item.itemName','item.itemDetails','item.itemId','item.status','item.fkresturantId','category.name as catName','item.fkcategoryId')
             ->leftJoin('category', 'category.categoryId', '=', 'item.fkcategoryId')
