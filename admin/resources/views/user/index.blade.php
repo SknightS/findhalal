@@ -29,7 +29,6 @@
                        <td>{{$user->fkuserTypeId}}</td>
                    </tr>
                @endforeach
-
             </tbody>
         </table>
     </div>

@@ -28,7 +28,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
 
                                 <div class="pull-left right-text white-txt">
-                                    <h6><a href="#">{{$rest->name}}</a></h6>
+                                    <h6><a href="">{{$rest->name}}</a></h6>
                                     @php
                                         date_default_timezone_set("Asia/Dhaka");
                                         $date= date('H:m');
