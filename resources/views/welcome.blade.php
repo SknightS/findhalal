@@ -164,10 +164,13 @@
                     <nav class="primary pull-left">
                         <ul>
                             <li><a href="#" class="selected" data-filter="*">Grill</a> </li>
-                            <li><a href="#" data-filter=".pizza">Pizza</a> </li>
-                            <li><a href="#" data-filter=".pasta">Pasta</a> </li>
-                            <li><a href="#" data-filter=".thaifood">thai food</a> </li>
-                            <li><a href="#" data-filter=".fish">fish</a> </li>
+                            @foreach($featuredResCategory as $featuredRresCat)
+                                <li><a href="#" data-filter=".{{$featuredRresCat->resCategoryName}}">{{$featuredRresCat->resCategoryName}}</a> </li>
+                            @endforeach
+                            {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".thaifood">thai food</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".fish">fish</a> </li>--}}
                         </ul>
                     </nav>
                 </div>
@@ -178,7 +181,11 @@
         <div class="row">
             <div class="restaurant-listing">
                 @foreach($featuredRes as $featuredResturant)
-                <div class="col-xs-12 col-sm-12 col-md-6 single-restaurant grill fish thaifood pizza">
+                    @foreach($resCategory as $resCat)
+                        @if($resCat->fkresturantId ==$featuredResturant->resturantId)
+                <div class="col-xs-12 col-sm-12 col-md-6 single-restaurant {{$resCat->resCategoryName}}">
+                    @endif
+                    @endforeach
                     <div class="restaurant-wrap">
                         <div class="row">
                             <div class="col-xs-12 col-sm-3 col-md-12 col-lg-3 text-xs-center">
@@ -198,7 +205,7 @@
                                 @endforeach
                                 <div class="bottom-part">
                                     <div class="cost"><i class="fa fa-check"></i> Min $ {{$featuredResturant->minOrder}}</div>
-                                    <div class="mins"><i class="fa fa-motorcycle"></i> 30 min</div>
+                                    {{--<div class="mins"><i class="fa fa-motorcycle"></i> 30 min</div>--}}
                                     <div class="ratings"> <span>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
