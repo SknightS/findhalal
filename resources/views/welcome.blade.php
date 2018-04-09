@@ -163,9 +163,9 @@
                 <div class="restaurants-filter pull-right">
                     <nav class="primary pull-left">
                         <ul>
-                            <li><a href="#" class="selected" data-filter="*">Grill</a> </li>
+                            {{--<li><a href="#" class="selected" data-filter="*">Grill</a> </li>--}}
                             @foreach($featuredResCategory as $featuredRresCat)
-                                <li><a href="#" data-filter=".{{$featuredRresCat->resCategoryName}}">{{$featuredRresCat->resCategoryName}}</a> </li>
+                                <li><a href="#" data-filter=".{{$featuredRresCat->name}}">{{$featuredRresCat->name}}</a> </li>
                             @endforeach
                             {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
                             {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
