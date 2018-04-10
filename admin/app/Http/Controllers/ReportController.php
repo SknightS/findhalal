@@ -14,28 +14,31 @@ class ReportController extends Controller
     {
         $this->middleware('auth');
     }
+
+
     public function index(){
+//      Get Every Restaurant Id
         $purchases=DB::table('purchase')
-            ->select('purchase.restaurantId',DB::raw('SUM(purchase.total) as total'),DB::raw('SUM(purchase.orderFee) as totalOrder'))
+            ->select('purchase.restaurantId')
             ->groupBy('purchase.restaurantId')
             ->get();
-//        SELECT SUM(orderitem.price) FROM `orderitem`
-//        WHERE `fkorderId` in (SELECT orderId FROM `order` where fkresturantId=6 and paymentType='cash')
+
+
+//       Make object for each restaurant
         $report =array();
 
 
-
         foreach ($purchases as $p){
-            $cashOrderId=Purchase::select('purchase.fkorderId')
+//          Get All Order Id For Each Restaurant (Cash)
+            $cashOrderId=Purchase::select('purchase.fkorderId',DB::raw('SUM(purchase.total) as total'))
                     ->where('purchase.restaurantId',$p->restaurantId)
                     ->where('order.paymentType','Cash')
                     ->leftJoin('order','purchase.fkorderId','order.orderId')
                     ->get();
 
 
-
-
-            $cardOrderId=Purchase::select('purchase.fkorderId')
+//          Get All Order Id For Each Restaurant (Card)
+            $cardOrderId=Purchase::select('purchase.fkorderId',DB::raw('SUM(purchase.total) as total'))
                 ->where('purchase.restaurantId',$p->restaurantId)
                 ->where('order.paymentType','Card')
                 ->leftJoin('order','purchase.fkorderId','order.orderId')
@@ -44,34 +47,36 @@ class ReportController extends Controller
 
 
 
-
-
-            $cash=DB::table('orderitem')
-                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
-                ->whereIn('fkorderId',$cashOrderId)
-                ->get();
-
-
-
-            $card=DB::table('orderitem')
-                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
-                ->whereIn('fkorderId',$cardOrderId )
-                ->get();
+//            $cash=DB::table('orderitem')
+//                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
+//                ->whereIn('fkorderId',$cashOrderId)
+//                ->get();
+//
+//
+//
+//            $card=DB::table('orderitem')
+//                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
+//                ->whereIn('fkorderId',$cardOrderId )
+//                ->get();
             $res=Resturant::findOrFail($p->restaurantId);
             $restaurant = new stdClass;
             $restaurant->id=$p->restaurantId;
             $restaurant->name=$res->name;
-            if($cash[0]->price ==null){
+
+//           Check Value Empty
+            if($cashOrderId[0]){
+                $restaurant->cash=$cashOrderId[0]->total;
+
+            }
+            else{
                 $restaurant->cash=0;
             }
-            else{
-                $restaurant->cash=$cash[0]->price;
+            if($cardOrderId[0]){
+                $restaurant->card=$cardOrderId[0]->total;
             }
-            if($card[0]->price ==null){
+            else{
+
                 $restaurant->card=0;
-            }
-            else{
-                $restaurant->card=$card[0]->price;
             }
             array_push($report, $restaurant);
         }
@@ -94,47 +99,56 @@ class ReportController extends Controller
         $report =array();
         foreach ($purchases as $p){
 
-            $cashOrderId=Purchase::select('purchase.fkorderId')
-                ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
+
+            $cashOrderId=Purchase::select('purchase.fkorderId',DB::raw('SUM(purchase.total) as total'))
                 ->where('purchase.restaurantId',$p->restaurantId)
                 ->where('order.paymentType','Cash')
+                ->leftJoin('order','purchase.fkorderId','order.orderId')
                 ->whereBetween(DB::raw('DATE(order.orderTime)'),[$from,$to])
                 ->get();
 
 
-            $cardOrderId=Purchase::select('purchase.fkorderId')
-                ->leftJoin('order','purchase.restaurantId','order.fkresturantId')
+
+
+            $cardOrderId=Purchase::select('purchase.fkorderId',DB::raw('SUM(purchase.total) as total'))
                 ->where('purchase.restaurantId',$p->restaurantId)
                 ->where('order.paymentType','Card')
+                ->leftJoin('order','purchase.fkorderId','order.orderId')
                 ->whereBetween(DB::raw('DATE(order.orderTime)'),[$from,$to])
                 ->get();
 
 
-            $cash=DB::table('orderitem')
-                ->select(DB::raw('SUM(orderitem.price) as price'))
-                ->whereIn('fkorderId',$cashOrderId)
-                ->get();
-
-            $card=DB::table('orderitem')
-                ->select(DB::raw('SUM(orderitem.price) as price'))
-                ->whereIn('fkorderId',$cardOrderId)
-                ->get();
+//
+//            $cash=DB::table('orderitem')
+//                ->select(DB::raw('SUM(orderitem.price) as price'))
+//                ->whereIn('fkorderId',$cashOrderId)
+//                ->get();
+//
+//            $card=DB::table('orderitem')
+//                ->select(DB::raw('SUM(orderitem.price) as price'))
+//                ->whereIn('fkorderId',$cardOrderId)
+//                ->get();
 
             $res=Resturant::findOrFail($p->restaurantId);
             $restaurant = new stdClass;
             $restaurant->id=$p->restaurantId;
             $restaurant->name=$res->name;
-            if($cash[0]->price ==null){
+
+
+
+            if($cashOrderId[0]){
+                $restaurant->cash=$cashOrderId[0]->total;
+
+            }
+            else{
                 $restaurant->cash=0;
             }
-            else{
-                $restaurant->cash=$cash[0]->price;
+            if($cardOrderId[0]){
+                $restaurant->card=$cardOrderId[0]->total;
             }
-            if($card[0]->price ==null){
+            else{
+
                 $restaurant->card=0;
-            }
-            else{
-                $restaurant->card=$card[0]->price;
             }
             array_push($report, $restaurant);
         }
@@ -142,11 +156,13 @@ class ReportController extends Controller
         Session::flash('message', 'Showing Report From '.$from.' to '.$to);
 
         return view('report.index')
-            ->with('report',$report);
+            ->with('report',$report)
+            ->with('from',$from)
+            ->with('to',$to);
     }
 
 
-       public function individual($id){
+    public function individual($id){
            $restaurantNAme=Resturant::select('name')->findOrFail($id);
            $reportCash=Purchase::select('purchase.fkorderId','purchase.total','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
                         ->leftJoin('order','purchase.fkorderId','order.orderId')
@@ -161,13 +177,12 @@ class ReportController extends Controller
            $orderCard =array();
         foreach ($reportCash as $report){
 
-            $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price')
+            $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price','itemsize.itemsizeName')
                             ->leftJoin('itemsize','orderitem.fkitemsizeId','itemsize.itemsizeId')
                             ->leftJoin('item','itemsize.item_itemId','item.itemId')
                             ->where('fkorderId',$report->fkorderId)->get();
 
             $cash = new stdClass;
-
             $cash->orderId=$report->fkorderId;
             $cash->delFee=$report->delFee;
             $cash->customerName=$report->firstName;
@@ -192,13 +207,12 @@ class ReportController extends Controller
 
 
            foreach ($reportCard as $report){
-               $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price')
+               $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price','itemsize.itemsizeName')
                    ->leftJoin('itemsize','orderitem.fkitemsizeId','itemsize.itemsizeId')
                    ->leftJoin('item','itemsize.item_itemId','item.itemId')
                    ->where('fkorderId',$report->fkorderId)->get();
 
                $cash = new stdClass;
-
                $cash->orderId=$report->fkorderId;
                $cash->delFee=$report->delFee;
                $cash->customerName=$report->firstName;
@@ -206,9 +220,7 @@ class ReportController extends Controller
                $cash->date=$report->orderTime;
                $cash->total=$report->total;
                $cash->items=$items;
-
                array_push($orderCard, $cash);
-
            }
 
 
@@ -218,6 +230,82 @@ class ReportController extends Controller
                 ->with('restaurantNAme',$restaurantNAme);
 
        }
+
+
+
+
+    public function individualWithDate($id,$start,$end){
+        $restaurantNAme=Resturant::select('name')->findOrFail($id);
+        $reportCash=Purchase::select('purchase.fkorderId','purchase.total','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
+            ->leftJoin('order','purchase.fkorderId','order.orderId')
+            ->leftJoin('customer','order.fkcustomerId','customer.customerId')
+            ->where('order.fkresturantId',$id)
+            ->where('order.paymentType','Cash')
+            ->orderBy('order.orderTime','desc')
+            ->groupBy('purchase.fkorderId')
+            ->whereBetween(DB::raw('DATE(order.orderTime)'),[$start,$end])
+            ->get();
+
+        $orderCash =array();
+        $orderCard =array();
+        foreach ($reportCash as $report){
+
+            $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price','itemsize.itemsizeName')
+                ->leftJoin('itemsize','orderitem.fkitemsizeId','itemsize.itemsizeId')
+                ->leftJoin('item','itemsize.item_itemId','item.itemId')
+                ->where('fkorderId',$report->fkorderId)
+                ->get();
+
+            $cash = new stdClass;
+            $cash->orderId=$report->fkorderId;
+            $cash->delFee=$report->delFee;
+            $cash->customerName=$report->firstName;
+            $cash->paymentType=$report->paymentType;
+            $cash->date=$report->orderTime;
+            $cash->total=$report->total;
+            $cash->items=$items;
+
+            array_push($orderCash, $cash);
+
+        }
+
+        $reportCard=Purchase::select('purchase.fkorderId','purchase.total','purchase.delFee','customer.firstName','order.paymentType','order.orderTime')
+            ->leftJoin('order','purchase.fkorderId','order.orderId')
+            ->leftJoin('customer','order.fkcustomerId','customer.customerId')
+            ->where('order.fkresturantId',$id)
+            ->where('order.paymentType','Card')
+            ->orderBy('order.orderTime','desc')
+            ->groupBy('purchase.fkorderId')
+            ->whereBetween(DB::raw('DATE(order.orderTime)'),[$start,$end])
+            ->get();
+
+
+
+        foreach ($reportCard as $report){
+            $items=Orderitems::select('item.itemName','orderitem.quantity','orderitem.price','itemsize.itemsizeName')
+                ->leftJoin('itemsize','orderitem.fkitemsizeId','itemsize.itemsizeId')
+                ->leftJoin('item','itemsize.item_itemId','item.itemId')
+                ->where('fkorderId',$report->fkorderId)->get();
+
+            $cash = new stdClass;
+            $cash->orderId=$report->fkorderId;
+            $cash->delFee=$report->delFee;
+            $cash->customerName=$report->firstName;
+            $cash->paymentType=$report->paymentType;
+            $cash->date=$report->orderTime;
+            $cash->total=$report->total;
+            $cash->items=$items;
+            array_push($orderCard, $cash);
+        }
+
+
+        return view('report.individual')
+            ->with('orderCard',$orderCard)
+            ->with('orderCash',$orderCash)
+            ->with('restaurantNAme',$restaurantNAme);
+
+
+        }
 
 
 

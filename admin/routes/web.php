@@ -75,6 +75,7 @@ Route::get('/task/show','TaskController@show')->name('task.show');
 Route::get('/reports','ReportController@index')->name('reports');
 Route::post('/reports','ReportController@searchByDate')->name('report.searchByDate');
 Route::get('/report/{id}','ReportController@individual')->name('report.individual');
+Route::get('/report/{id}/{start}/{end}','ReportController@individualWithDate')->name('report.individualWithDate');
 
 
 //order
@@ -104,6 +105,11 @@ Route::post('/OrderItem/itemSizeByCategory/','OrderController@getitemSizeByCateg
 Route::post('/OrderItem/priceByItemSize/','OrderController@getpriceByItemSize')->name('order.priceByItemSize');
 
 Route::get('/OrderItem/distroy/{id}','OrderController@deleteOrderItem')->name('orderItem.distroy');
+
+
+//ADD USER (ex: moderator..)
+Route::get('/user','UserController@index')->name('user.show');
+Route::post('/user/create','UserController@create')->name('user.create');
 
 
 

@@ -252,13 +252,8 @@ class RestaurantController extends Controller
         $runTime->closetime=$r->friClose;
         $runTime->save();
 
-
-
-
         Session::flash('message', 'Restaurant Updated Successfully');
         return back();
-
-
     }
 
     public function destroy(Request $r){

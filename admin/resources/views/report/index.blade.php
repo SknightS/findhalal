@@ -14,16 +14,20 @@
                 <th width="20%">restaurant name</th>
                 <th ><i class="fa fa-money"></i> Cash</th>
                 <th ><i class="fa fa-credit-card"></i> Card</th>
-                {{--<th >sold in cash</th>--}}
-                {{--<th >earn from cash</th>--}}
-                {{--<th >sold in card</th>--}}
-                {{--<th >earn from card</th>--}}
+
             </tr>
             </thead>
+
             <tbody>
             @foreach($report as $r)
                 <tr>
-                    <td><a href="{{route('report.individual',['id'=>$r->id])}}">{{$r->name}}</a></td>
+                    @if(isset($from) && isset($to))
+                        <td><a href="{{route('report.individualWithDate',['id'=>$r->id,'start'=>$from,'end'=>$to])}}">{{$r->name}}</a></td>
+
+                    @else
+                        <td><a href="{{route('report.individual',['id'=>$r->id])}}">{{$r->name}}</a></td>
+                    @endif
+
                     <td><table class="table table-bordered"><thead><tr>
                             <th>total</th>
                             <th>findhalal</th>
