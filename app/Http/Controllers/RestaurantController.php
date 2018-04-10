@@ -174,7 +174,6 @@ class RestaurantController extends Controller
             }
             break;
         }
-        
         $customer = new Customer();
         $customer->firstName = $r->firstname;
         $customer->lastName = $r->lastname;
@@ -217,8 +216,9 @@ class RestaurantController extends Controller
         $shipaddress->fkorderId = $order->orderId;
         $shipaddress->save();
         Cart::clear();
-        alert()->success('Congrats', 'your order has been placed successfully');
-        return redirect("/");
+
+//        alert()->success('Congrats', 'your order has been placed successfully');
+//        return redirect("/");
         // return back();
     }
     public function takeout(){

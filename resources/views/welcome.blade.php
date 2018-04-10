@@ -163,7 +163,7 @@
                 <div class="restaurants-filter pull-right">
                     <nav class="primary pull-left">
                         <ul>
-                            {{--<li><a href="#" class="selected" data-filter="*">Grill</a> </li>--}}
+                            <li><a href="#" class="selected" data-filter="*">All</a> </li>
                             @foreach($featuredResCategory as $featuredRresCat)
                                 <li><a href="#" data-filter=".{{$featuredRresCat->name}}">{{$featuredRresCat->name}}</a> </li>
                             @endforeach
@@ -192,12 +192,12 @@
                                 @if($featuredResturant->image == null)
                                 <a class="restaurant-logo" href="#"> <img src="http://placehold.it/95x95" alt="Restaurant logo"> </a>
                                 @else
-                                    <a class="restaurant-logo" href="#"> <img src="{{url('admin/public/RestaurantImages')."/".$featuredResturant->image}}" alt="Restaurant logo"> </a>
+                                    <a class="restaurant-logo" href="{{route('restaurant.viewmenu',$featuredResturant->resturantId)}}"> <img src="{{url('admin/public/RestaurantImages')."/".$featuredResturant->image}}" alt="Restaurant logo"> </a>
                                 @endif
                             </div>
                             <!--end:col -->
                             <div class="col-xs-12 col-sm-9 col-md-12 col-lg-9">
-                                <h5><a href="profile.html">{{$featuredResturant->name}}</a></h5>
+                                <h5><a href="{{route('restaurant.viewmenu',$featuredResturant->resturantId)}}">{{$featuredResturant->name}}</a></h5>
                                 @foreach($resItems as $resItemss)
                                 @if($featuredResturant->resturantId ==$resItemss->fkresturantId)
                                 <span>{{$resItemss->itemNames}}</span>
