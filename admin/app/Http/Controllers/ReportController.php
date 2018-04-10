@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers;
+use foo\bar;
 use Illuminate\Http\Request;
 use stdClass;
 use Session;
 use DB;
+use Auth;
 use App\Purchase;
 use App\Resturant;
 use App\Order;
@@ -12,12 +14,16 @@ class ReportController extends Controller
 {
     public function __construct()
     {
+
         $this->middleware('auth');
     }
 
 
     public function index(){
 //      Get Every Restaurant Id
+        if(!(Auth::user()->fkuserTypeId == User[0])){
+            return back();
+        }
         $purchases=DB::table('purchase')
             ->select('purchase.restaurantId')
             ->groupBy('purchase.restaurantId')

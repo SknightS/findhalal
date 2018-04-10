@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Session;
+use Auth;
 use App\Category;
 use App\Resturant;
 
@@ -47,6 +48,9 @@ class CategoryController extends Controller
     }
 
     public function edit($id){
+        if(!(Auth::user()->fkuserTypeId == User[0])){
+            return back();
+        }
         $category=Category::findOrFail($id);
         $resturantName=Resturant::select('name')->findOrFail($category->fkresturantId);
 

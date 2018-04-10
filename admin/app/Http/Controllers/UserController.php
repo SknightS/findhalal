@@ -26,7 +26,7 @@ class UserController extends Controller
         $user->firstName=$r->firstName;
         $user->lastName=$r->lastName;
         $user->email=$r->email;
-        $user->fkuserTypeId='MODERATOR';
+        $user->fkuserTypeId=User[1];
         $user->password=Hash::make($r->password);
         $user->save();
 

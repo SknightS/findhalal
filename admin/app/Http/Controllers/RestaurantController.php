@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 //use DataTables;
 use Yajra\DataTables\DataTables;
 use Image;
@@ -34,7 +35,7 @@ class RestaurantController extends Controller
             'city'=>'required|max:45',
             'zip'=>'required|max:45',
             'country'=>'required|max:45',
-//            'image'=>'max:13',
+            'featureRes'=>'nullable|max:1',
 
         ]);
 
@@ -51,6 +52,13 @@ class RestaurantController extends Controller
         $restaurant->country=$r->country;
         $restaurant->email=$r->email;
         $restaurant->phoneNumber=$r->phone;
+        if ($r->featureRes){
+            $restaurant->featureResturant=$r->featureRes;
+        }
+        else{
+            $restaurant->featureResturant="0";
+        }
+
         $restaurant->save();
 
         if($r->hasFile('image')){
@@ -137,6 +145,9 @@ class RestaurantController extends Controller
     }
 
     public function edit($id){
+        if(!(Auth::user()->fkuserTypeId == User[0])){
+            return back();
+        }
         $restaurant=Resturant::findOrFail($id);
 
         $saturday=Resturanttime::where('fkresturantId',$id)
@@ -187,6 +198,13 @@ class RestaurantController extends Controller
         $restaurant->country=$r->country;
         $restaurant->email=$r->email;
         $restaurant->phoneNumber=$r->phone;
+
+        if ($r->featureRes){
+            $restaurant->featureResturant=$r->featureRes;
+        }
+        else{
+            $restaurant->featureResturant="0";
+        }
 
         //Check If the form has Image File
         if($r->hasFile('image')){

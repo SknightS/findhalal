@@ -321,6 +321,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Add as a featured Resturany</label>
+                            <div class="col-sm-5">
+                                <input @if ($restaurant->featureResturant== "1") checked @endif type="checkbox" name="featureRes" value="1">
+                            </div>
+                        </div>
+
 
 
                         <div class="form-group">

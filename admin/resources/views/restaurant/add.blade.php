@@ -309,9 +309,20 @@
                             <label class="col-sm-3 control-label">Status</label>
                             <div class="col-sm-5">
                                 <select class="form-control" name="status">
-                                    <option>Active</option>
-                                    <option>Inactive</option>
+                                    @if(Auth::user()->fkuserTypeId == User[0])
+                                        @foreach(Status as $s)
+                                            <option>{{$s}}</option>
+                                         @endforeach
+                                    @else
+                                        <option>{{Status[1]}}</option>
+                                    @endif
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Add as a featured Resturany</label>
+                            <div class="col-sm-5">
+                                <input type="checkbox" name="featureRes" value="1">
                             </div>
                         </div>
 

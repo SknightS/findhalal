@@ -151,9 +151,13 @@
                                     {{--<option selected value="">Select Status</option>--}}
                                     {{--<option>Active</option>--}}
                                     {{--<option>Inactive</option>--}}
-                                    @foreach(Status as $s)
-                                        <option >{{$s}}</option>
-                                    @endforeach
+                                    @if(Auth::user()->fkuserTypeId == User[0])
+                                        @foreach(Status as $s)
+                                            <option>{{$s}}</option>
+                                        @endforeach
+                                    @else
+                                        <option>{{Status[1]}}</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>

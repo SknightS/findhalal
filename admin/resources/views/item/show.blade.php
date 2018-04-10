@@ -52,7 +52,9 @@
                 <th >Item Name</th>
                 <th >Item Attribute & Price</th>
                 <th >Status</th>
+                @if(Auth::user()->fkuserTypeId == User[0])
                 <th >Action</th>
+                @endif
             </tr>
             </thead>
 
@@ -150,13 +152,14 @@
                     { data: 'itemName', name: 'itemName' },
                     { data: 'action', name: 'action', "orderable": false, "searchable":false },
                     { data: 'status', name: 'status' },
-
+                        @if(Auth::user()->fkuserTypeId == User[0])
                     { "data": function(data){
                         return '<a class="btn btn-info btn-sm"  data-panel-id="'+data.itemId+'"onclick="editItem(this)"><i class="fa fa-edit"></i></a>'
 //                            '<a class="btn btn-danger btn-sm" data-panel-id="'+data.itemId+'"onclick="deleteItem(this)"><i class="fa fa-trash"></i></a>'
                             ;},
                         "orderable": false, "searchable":false
                     },
+                        @endif
 
                 ],
             });
