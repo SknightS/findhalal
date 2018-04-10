@@ -25,7 +25,6 @@ class HomeController extends Controller
         $resItem=Item::select(DB::raw('GROUP_CONCAT(itemName) AS itemNames'),'fkresturantId')->where('status',Status[0])
             ->groupBy('fkresturantId')->get();
         $resCategory=Category::select(DB::raw('GROUP_CONCAT(category.name SEPARATOR " ") AS resCategoryName'),'fkresturantId')
-
             ->where('category.status',Status[0])
             ->groupBy('fkresturantId')->get();
 
@@ -36,7 +35,7 @@ class HomeController extends Controller
             ->where('category.status',Status[0])
             ->groupBy('category.name')->get();
 
-       // return $featuredResCategory;
+        //return $featuredRes;
 
 
 

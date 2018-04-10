@@ -192,15 +192,15 @@
                                 @if($featuredResturant->image == null)
                                 <a class="restaurant-logo" href="#"> <img src="http://placehold.it/95x95" alt="Restaurant logo"> </a>
                                 @else
-                                    <a class="restaurant-logo" href="#"> <img src="{{url('admin/public/RestaurantImages').$featuredResturant->image}}" alt="Restaurant logo"> </a>
+                                    <a class="restaurant-logo" href="#"> <img src="{{url('admin/public/RestaurantImages')."/".$featuredResturant->image}}" alt="Restaurant logo"> </a>
                                 @endif
                             </div>
                             <!--end:col -->
                             <div class="col-xs-12 col-sm-9 col-md-12 col-lg-9">
                                 <h5><a href="profile.html">{{$featuredResturant->name}}</a></h5>
-                                @foreach($resItems as $resItems)
-                                @if($featuredResturant->resturantId ==$resItems->fkresturantId)
-                                <span>{{$resItems->itemNames}}</span>
+                                @foreach($resItems as $resItemss)
+                                @if($featuredResturant->resturantId ==$resItemss->fkresturantId)
+                                <span>{{$resItemss->itemNames}}</span>
                                 @endif
                                 @endforeach
                                 <div class="bottom-part">
