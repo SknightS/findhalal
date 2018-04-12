@@ -131,12 +131,16 @@ class RestaurantController extends Controller
             ->where('itemsizeId',$itemsize)
             ->first();
 
+        foreach (Cart::getContent($cartid) as $cr){
+            $delfeeC = $cr->attributes->delfee;
+            $residC = $cr->attributes->resid;
+        }
         Cart::update($cartid, array(
             'price' => $itemsize->price, // new item name
             'attributes' => array(
                 'size' =>  $itemsize->itemsizeId,
-                'delfee' => Cart::getContent($cartid)->attributes->delfee,
-                'resid' => Cart::getContent($cartid)->attributes->resid
+                'delfee' => $delfeeC,
+                'resid' => $residC
             ) // new item price, price can also be a string format like so: '98.67'
         ));
     }
