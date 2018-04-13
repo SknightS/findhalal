@@ -118,7 +118,8 @@ class RestaurantController extends Controller
                 'price' => $it->price,
                 'quantity' => 1,
                 'attributes' => array(
-                    'size' =>  $it->itemsizeName,
+                    'size' =>  $it->itemsizeId,
+                    'sizeName' =>  $it->itemsizeName,
                     'delfee' => $it->delfee,
                     'resid' => $it->resturantId
                 )

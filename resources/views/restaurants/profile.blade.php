@@ -116,7 +116,7 @@
 
                                     <div class="form-group row no-gutter">
                                         <div class="col-xs-8">
-                                           {{$ci->attributes->size}} € {{$ci->price}}
+                                           {{$ci->attributes->sizeName}} € {{$ci->price}}
                                             {{--<select class="form-control b-r-0" id="{{"size".$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >--}}
                                               {{--@foreach($itemsize as $is)--}}
                                                   {{--@if($ci->id ==$is->item_itemId)--}}
