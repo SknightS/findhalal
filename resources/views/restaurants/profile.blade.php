@@ -28,7 +28,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
 
                                 <div class="pull-left right-text white-txt">
-                                    <h6><a href="#">{{$rest->name}}</a></h6>
+                                    <h6><a href="">{{$rest->name}}</a></h6>
                                     @php
                                         date_default_timezone_set("Asia/Dhaka");
                                         $date= date('H:m');
@@ -78,7 +78,11 @@
                                 <h6>Choose Cusine</h6> <i class="fa fa-cutlery pull-right"></i> </div>
                             <ul id="mydiv">
                                 @foreach($category as $cat)
-                                    <div > <li id="{{$cat->categoryId}}"><a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a></li></div>
+                                    <div >
+                                        <li id="{{$cat->categoryId}}">
+                                            <a href="#{{$cat->categoryId}}" class="scroll active">{{$cat->name}}</a>
+                                        </li>
+                                    </div>
                                 @endforeach
                             </ul>
                             <div class="clearfix"></div>
@@ -112,16 +116,17 @@
 
                                     <div class="form-group row no-gutter">
                                         <div class="col-xs-8">
-                                            <select class="form-control b-r-0" id="{{"size".$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >
-                                              @foreach($itemsize as $is)
-                                                  @if($ci->id ==$is->item_itemId)
-                                                <option @if($ci->attributes->size == $is->itemsizeId) selected @endif value="{{$is->itemsizeId}}" >{{$is->itemsizeName." €".$is->price }}</option>
-                                                    @endif
-                                                  @endforeach
-                                            </select>
+                                           {{$ci->attributes->size}} € {{$ci->price}}
+                                            {{--<select class="form-control b-r-0" id="{{"size".$ci->id}}"  data-panel-id="{{$ci->id}}" onchange="updatesize(this)" >--}}
+                                              {{--@foreach($itemsize as $is)--}}
+                                                  {{--@if($ci->id ==$is->item_itemId)--}}
+                                                {{--<option @if($ci->attributes->size == $is->itemsizeId) selected @endif value="{{$is->itemsizeId}}" >{{$is->itemsizeName." €".$is->price }}</option>--}}
+                                                    {{--@endif--}}
+                                                  {{--@endforeach--}}
+                                            {{--</select>--}}
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="number" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onfocusout="updateqty(this)"  > </div>
+                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="number" min="0" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onfocusout="updateqty(this)"  > </div>
                                     </div>
                                 </div>
                             </div>
@@ -200,8 +205,10 @@
 
     <script>
         function addcart(x){
+
            var id = $(x).data('panel-id');
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            // alert(id);
             $.ajax({
                 type : 'post' ,
                 url : '{{route('restaurant.addCart')}}',

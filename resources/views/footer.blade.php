@@ -101,6 +101,7 @@
 <script src="{{url('js/jquery.isotope.min.js')}}"></script>
 <script src="{{url('js/headroom.js')}}"></script>
 <script src="{{url('js/foodpicky.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
 @yield('foot-js')
 

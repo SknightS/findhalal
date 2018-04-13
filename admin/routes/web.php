@@ -107,6 +107,11 @@ Route::post('/OrderItem/priceByItemSize/','OrderController@getpriceByItemSize')-
 Route::get('/OrderItem/distroy/{id}','OrderController@deleteOrderItem')->name('orderItem.distroy');
 
 
+//ADD USER (ex: moderator..)
+Route::get('/user','UserController@index')->name('user.show');
+Route::post('/user/create','UserController@create')->name('user.create');
+
+
 
 
 

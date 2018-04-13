@@ -63,9 +63,13 @@
                             <label class="col-sm-3 control-label">Status</label>
                             <div class="col-sm-5">
                                 <select class="form-control" name="status">
-                                    @foreach(Status as $s)
-                                        <option value="{{$s}}">{{$s}}</option>
+                                    @if(Auth::user()->fkuserTypeId == User[0])
+                                        @foreach(Status as $s)
+                                            <option>{{$s}}</option>
                                         @endforeach
+                                    @else
+                                        <option>{{Status[1]}}</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>

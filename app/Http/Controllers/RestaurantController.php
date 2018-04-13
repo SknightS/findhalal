@@ -101,21 +101,24 @@ class RestaurantController extends Controller
             ->with ('itemsize', $itemsize);
     }
     public function addCart(Request $r){
-        $itemid = $r->itemid;
-        $item =  Item::select('itemId','itemName', 'price','itemsizeId', 'delfee', 'resturantId')
-            ->leftJoin('itemsize','itemsize.item_itemId','=','item.itemid')
+        $itemSizeId =Itemsize::findOrFail($r->itemid);
+
+        $item =  Item::select('itemId','itemName','itemsizeName', 'price','itemsizeId', 'delfee', 'resturantId')
+            ->leftJoin('itemsize','item.itemid','=','itemsize.item_itemId')
             ->leftJoin('resturant','resturant.resturantId','=','item.fkresturantId')
-            ->where('itemid', $itemid)
+            ->where('itemsize.itemsizeId', $itemSizeId->itemsizeId)
+            ->where('item.itemid', $itemSizeId->item_itemId)
             ->limit(1)
             ->get();
+
         foreach ($item as $it){
             Cart::add(array(
-                'id' => $it->itemId,
+                'id' => $it->itemsizeId,
                 'name' => $it->itemName,
                 'price' => $it->price,
                 'quantity' => 1,
                 'attributes' => array(
-                    'size' =>  $it->itemsizeId,
+                    'size' =>  $it->itemsizeName,
                     'delfee' => $it->delfee,
                     'resid' => $it->resturantId
                 )
@@ -178,7 +181,6 @@ class RestaurantController extends Controller
             }
             break;
         }
-        
         $customer = new Customer();
         $customer->firstName = $r->firstname;
         $customer->lastName = $r->lastname;
@@ -221,8 +223,9 @@ class RestaurantController extends Controller
         $shipaddress->fkorderId = $order->orderId;
         $shipaddress->save();
         Cart::clear();
-        alert()->success('Congrats', 'your order has been placed successfully');
-        return redirect("/");
+
+//        alert()->success('Congrats', 'your order has been placed successfully');
+//        return redirect("/");
         // return back();
     }
     public function takeout(){

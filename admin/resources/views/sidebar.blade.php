@@ -41,25 +41,31 @@
 
 
             <li class="@if(Request::url()==route('restaurant.show')) active @endif">
-               <a href="{{route('restaurant.show')}}"><i class="fa fa-reddit-square"></i><span class="title">Restaurants</span></a>
+               <a href="{{route('restaurant.show')}}"><i class="fa fa-reddit-square"></i> <span class="title">Restaurants</span></a>
             </li>
 
             <li class="@if(Request::url()==route('category.show')) active @endif">
-                <a href="{{route('category.show')}}"><i class="fa fa-list-alt"></i><span class="title">Categories</span></a>
+                <a href="{{route('category.show')}}"><i class="fas fa-clipboard-list"></i> <span class="title">Categories</span></a>
             </li>
             <li class="@if(Request::url()==route('item.show')) active @endif">
-                <a href="{{route('item.show')}}"><i class="fa fa-plus"></i><span class="title">Items</span></a>
+                <a href="{{route('item.show')}}"><i class="fa fa-plus"></i> <span class="title">Items</span></a>
             </li>
             <li class="@if(Request::url()==route('order.show')) active @endif">
-                <a href="{{route('order.show')}}"><i class="fa fa-plus"></i><span class="title">Orders</span></a>
+                <a href="{{route('order.show')}}"><i class="fas fa-utensils"></i> <span class="title">Orders</span></a>
             </li>
 
+            @if(Auth::user()->fkuserTypeId == User[0])
             <li class="@if(Request::url()==route('reports')) active @endif">
-                <a href="{{route('reports')}}"><i class="fa fa-flag"></i><span class="title">Report</span></a>
+                <a href="{{route('reports')}}"><i class="fa fa-flag"></i> <span class="title">Report</span></a>
             </li>
+            @endif
 
             <li class="@if(Request::url()==route('settings')) active @endif">
-                <a href="{{route('settings')}}"><i class="fa fa-cog"></i><span class="title">Account</span></a>
+                <a href="{{route('settings')}}"><i class="fa fa-cog"></i> <span class="title">Account</span></a>
+            </li>
+
+            <li class="@if(Request::url()==route('user.show')) active @endif">
+                <a href="{{route('user.show')}}"><i class="fa fa-user"></i> <span class="title">Users</span></a>
             </li>
 
         </ul>
