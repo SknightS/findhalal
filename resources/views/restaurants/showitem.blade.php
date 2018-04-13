@@ -26,15 +26,25 @@
                                 </div>
                                 <!-- end:Description -->
                             </div>
+                            <div class="col-xs-12 col-sm-12 col-lg-4">
+                                <a href="#demo{{$im->itemId}}" class="btn btn-info btn-sm pull-right" data-toggle="collapse"><i class="fa fa-plus"></i></a>
+                                <div id="demo{{$im->itemId}}" class="collapse">
+
+
                             <!-- end:col -->
                             @foreach($itemsize as  $is)
                                 @if($im->itemId == $is->item_itemId)
-                                    <div class="col-xs-12 col-sm-12 col-lg-4 pull-right item-cart-info"> <span class="
-                                     pull-left">€ {{$is->price}}</span> <a href="#" data-panel-id ="{{$im->itemId}}"  onclick="addcart(this)" class="btn btn-small btn btn-secondary pull-right" data-toggle="modal" data-target="#order-modal">&#43;</a> </div>
-                                    @break
+                                    <div class="col-xs-12 col-sm-12 col-lg-12 pull-right item-cart-info">
+
+                                        <a href="#" data-panel-id ="{{$is->itemsizeId}}"  onclick="addcart(this)" class="btn btn-small btn btn-secondary pull-right" data-toggle="modal" data-target="#order-modal">{{$is->itemsizeName}} € {{$is->price}}</a>
+                                    </div>
+                                    {{--@break--}}
                                 @endif
                             @endforeach
+                                </div>
+                            </div>
                         </div>
+                    </div>
                         <!-- end:row -->
                     </div>
 
