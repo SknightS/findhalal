@@ -250,6 +250,7 @@
                 cache: false,
                 success:function(data)
                 {
+                    // console.log(data);
                     $('#txtHint').html(data);
                 }
             });

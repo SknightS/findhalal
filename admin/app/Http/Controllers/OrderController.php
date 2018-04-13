@@ -181,9 +181,12 @@ class OrderController extends Controller
             ->leftJoin('resturant', 'resturant.resturantId', '=', 'order.fkresturantId')
             ->leftJoin('customer', 'customer.customerId', '=', 'order.fkcustomerId')
             ->leftJoin('shipaddress', 'shipaddress.fkorderId', '=', 'order.orderId')
-            ->where('order.orderId',$orderId)->get();
+            ->where('order.orderId',$orderId)
+            ->get();
 
-        return view('order.orderInfo')->with('orderinfo',$orders);
+
+        return view('order.orderInfo')
+            ->with('orderinfo',$orders);
 
     }
 

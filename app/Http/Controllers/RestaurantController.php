@@ -212,13 +212,13 @@ class RestaurantController extends Controller
             $orderitem->price = $cc->price;
             $orderitem->save();
         }
-        $shipaddress = new Shipaddress();
-        $shipaddress->addressDetails = $r->address;
-        $shipaddress->city = $r->city;
-        $shipaddress->zip = $r->zip;
-        $shipaddress->fkcustomerId = $customer->customerId;
-        $shipaddress->fkorderId = $order->orderId;
-        $shipaddress->save();
+//        $shipaddress = new Shipaddress();
+//        $shipaddress->addressDetails = $r->address;
+//        $shipaddress->city = $r->city;
+//        $shipaddress->zip = $r->zip;
+//        $shipaddress->fkcustomerId = $customer->customerId;
+//        $shipaddress->fkorderId = $order->orderId;
+//        $shipaddress->save();
         Cart::clear();
 
 //        alert()->success('Congrats', 'your order has been placed successfully');
