@@ -8,8 +8,6 @@
 </style>
 @section('content')
 
-
-
     <div class="row">
         <div class="col-sm-3 col-xs-6">
 
