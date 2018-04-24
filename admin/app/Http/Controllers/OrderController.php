@@ -192,19 +192,39 @@ class OrderController extends Controller
 
     public function orderItemEdit($orderItemId){
 
-        $orderItem=Orderitems::select('orderitem.orderItemId','orderitem.quantity','orderitem.price','itemsize.itemsizeName','item.itemName')
+
+        $orderId = Orderitems::where('orderItemId',$orderItemId)->pluck('fkorderId');
+
+        $ResName=Order::select('resturant.name as resName')
+            ->leftJoin('resturant', 'resturant.resturantId', '=', 'order.fkresturantId')
+            ->where('order.orderId',$orderId)->get();
+
+        $orderItem=Orderitems::select('orderitem.orderItemId','orderitem.quantity','orderitem.price',
+                        'itemsize.itemsizeName','itemsize.itemsizeId','item.itemName','item.itemId','category.categoryId')
             ->where('orderitem.orderItemId',$orderItemId)
             ->leftJoin('itemsize', 'itemsize.itemsizeId', '=', 'orderitem.fkitemsizeId')
             ->leftJoin('item', 'item.itemId', '=', 'itemsize.item_itemId')
+            ->leftJoin('category', 'category.categoryId', '=', 'item.fkcategoryId')
             ->get();
 
-        return view('order.editOrderItem')->with('orderItem',$orderItem);
+        $category=Category::select('category.categoryId','category.name as CategoryName')
+            ->leftJoin('order', 'order.fkresturantId', '=', 'category.fkresturantId')
+            ->where('order.orderId',$orderId)
+            ->where('category.status',Status[0])
+            ->get();
+
+        return view('order.editOrderItem')
+            ->with('resName',$ResName)
+            ->with('categories',$category)
+            ->with('orderItem',$orderItem);
 
     }
 
     public function orderItemUpdate($orderItemId,Request $r){
 
         $orderItem=Orderitems::findOrFail($orderItemId);
+        $orderItem->fkitemsizeId=$r->itemSize;
+        $orderItem->price=$r->itemPrice;
         $orderItem->quantity=$r->itemQuantity;
         $orderItem->save();
 

@@ -11,7 +11,7 @@
 
                 <div class="panel-heading">
                     <div class="panel-title">
-                        edit OrderItem
+                        Edit OrderItem
                     </div>
 
                     <div class="panel-options">
@@ -30,20 +30,49 @@
                         {{csrf_field()}}
 
                         <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Item Name</label>
+                            <label class="col-sm-3 control-label">Resturant Name</label>
                             <div style="margin-top: 8px" class="col-sm-5">
-                                {{$orderItem->itemName}}
-
+                                @foreach($resName as $ResName)
+                                    <b>{{$ResName->resName}}</b>
+                                @endforeach
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Item Size</label>
-                            <div style="margin-top: 8px"class="col-sm-5">
-                               {{$orderItem->itemsizeName}}
+                            <label class="col-sm-3 control-label">Item Category<span style="color: red" class="required">*</span></label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="itemCategory" id="itemCategory" required>
 
+                                    <option selected value="">Select Item Type</option>
+                                    @foreach($categories as $category)
+                                        <option @if($category->categoryId == $orderItem->categoryId) selected @endif value="{{$category->categoryId}}">{{$category->CategoryName}}</option>
+                                    @endforeach
+
+                                </select>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Item Name<span style="color: red" class="required">*</span></label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="itemName" id="itemName" required>
+
+                                    <option selected value="{{$orderItem->itemId}}">{{$orderItem->itemName}}</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Item Size<span style="color: red" class="required">*</span></label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="itemSize" id="itemSize" required>
+                                    <option selected value="">Select Item Size</option>
+                                    <option selected value="{{$orderItem->itemsizeId}}">{{$orderItem->itemsizeName}}</option>
+                                </select>
+                            </div>
+                        </div>
+
 
                         <div id = "Item_price" class="form-group">
                             <label class="control-label col-sm-3"> Item Quantity<span style="color: red" class="required">*</span></label>
@@ -60,9 +89,11 @@
                         </div>
 
 
+
                         <div id = "Item_price" class="form-group">
                             <label class="control-label col-sm-3"> Item Price</label>
                             <div style="margin-top: 8px" class="col-sm-5">
+                                <input type="hidden" readonly name="itemPrice" placeholder="Item Price" id="itemPrice" value="{{$orderItem->price}}" class="form-control input-height">
                                 <span id="itemTotalPrice">{{$orderItem->price}}</span>
 
                             </div>
@@ -88,17 +119,24 @@
 @endsection
 
 @section('foot-js')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 <script>
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
     $(document).ready(function(){
 
         var quantity=$("#itemQuantity").val();
-        var TotalPrice=(quantity*'{{$orderItem->price}}');
+        var TotalPrice=(quantity*$("#itemPrice").val());
         $("#itemTotalPrice").html(TotalPrice);
 
         $("#itemQuantity").bind('input',function(){
             quantity=$(this).val();
-            TotalPrice = ( quantity * '{{$orderItem->price}}');
+            TotalPrice = ( quantity * $("#itemPrice").val());
             $("#itemTotalPrice").html(TotalPrice);
         });
     });
@@ -112,6 +150,55 @@
 
         return true;
     }
+
+    $("#itemCategory").change(function() {
+
+        var catId=$(this).val();
+
+        $.ajax({
+            type : 'post' ,
+            url : '{{route('order.itemByCategory')}}',
+            data : {'catId':catId} ,
+            success : function(data){
+                document.getElementById("itemName").innerHTML = data;
+                $("#itemSize").html(
+                    "<option selected value=\"\">Select Item Size</option>"
+                );
+
+            }
+        });
+    });
+
+    $("#itemName").change(function() {
+
+        var itemId=$(this).val();
+
+        $.ajax({
+            type : 'post' ,
+            url : '{{route('order.itemSizeByCategory')}}',
+            data : {'itemId':itemId} ,
+            success : function(data){
+                document.getElementById("itemSize").innerHTML = data;
+
+            }
+        });
+    });
+    $("#itemSize").change(function() {
+
+        var sizeId=$(this).val();
+        $.ajax({
+            type : 'post' ,
+            url : '{{route('order.priceByItemSize')}}',
+            data : {'sizeId':sizeId} ,
+            success : function(data){
+                $("#itemQuantity").val("1");
+                $("#itemPrice").val(data);
+                $("#itemTotalPrice").html(data);
+
+            }
+        });
+    });
+
 </script>
 
 @endsection
