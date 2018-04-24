@@ -67,6 +67,7 @@ return [
 
     'timezone' => 'UTC',
 
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -165,7 +166,7 @@ return [
 
         Yajra\DataTables\DataTablesServiceProvider::class,
 
-        Spatie\Analytics\AnalyticsServiceProvider::class,
+
 
     ],
 
@@ -218,7 +219,7 @@ return [
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
-        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
+
 
     ],
 

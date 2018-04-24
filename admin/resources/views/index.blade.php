@@ -113,12 +113,15 @@
             </div>
         </div>
 
+
         {{--End Report --}}
     </div>
     <br><br>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <br>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{url('js/chart.js')}}"></script>
-    {{--<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>--}}
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
 
         window.onload = function () {
@@ -153,7 +156,11 @@
             });
             chart.render();
 
+
+
         }
+
+
 
 
         function clicked(value) {
@@ -216,26 +223,6 @@
 
 
 
-    {{--<br />--}}
-    {{--<div id="map">My map will go here</div>--}}
-    {{--<br />--}}
-
-
-
-    {{--<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>--}}
-    {{--<script type="text/javascript">--}}
-
-    {{--function myMap() {--}}
-    {{--var mapOptions = {--}}
-    {{--center: new google.maps.LatLng(51.5, -0.12),--}}
-    {{--zoom: 10,--}}
-    {{--mapTypeId: google.maps.MapTypeId.HYBRID--}}
-    {{--}--}}
-    {{--var map = new google.maps.Map(document.getElementById("map"), mapOptions);--}}
-    {{--}--}}
-
-
-    {{--</script>--}}
 
 
 

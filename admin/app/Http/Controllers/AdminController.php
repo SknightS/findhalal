@@ -8,9 +8,9 @@ use Auth;
 use Hash;
 use Session;
 use App\Task;
-use Analytics;
-use Spatie\Analytics\Period;
-use Illuminate\Support\Collection;
+
+
+
 
 class AdminController extends Controller
 {
@@ -31,14 +31,7 @@ class AdminController extends Controller
 
 
 
-//retrieve visitors and pageview data for the current day and the last seven days
-        $analyticsData1 = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
 
-//retrieve visitors and pageviews since the 6 months ago
-        $analyticsData2 = Analytics::fetchMostVisitedPages(Period::days(7));
-
-
-        return $analyticsData1;
 
 
         return view('index')
@@ -46,7 +39,7 @@ class AdminController extends Controller
             ->with('visitors',$visitors)
             ->with('subcriber',$subcriber)
             ->with('message',$message)
-            ->with('ana3',$analyticsData3)
+
             ->with('tasks',$task);
     }
 
