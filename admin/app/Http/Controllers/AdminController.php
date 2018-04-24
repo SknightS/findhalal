@@ -70,7 +70,7 @@ class AdminController extends Controller
 
        // return $result;
 
-        
+
         return view('index')
             ->with('regiteredUser',$regiteredUser)
             ->with('visitors',$visitors)
