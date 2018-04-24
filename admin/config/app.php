@@ -166,6 +166,8 @@ return [
 
         Yajra\DataTables\DataTablesServiceProvider::class,
 
+        Spatie\Analytics\AnalyticsServiceProvider::class,
+
 
 
     ],
@@ -218,6 +220,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+
+        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
 
 
 

@@ -40,6 +40,7 @@ return array(
     'NunoMaduro\\Collision\\' => array($vendorDir . '/nunomaduro/collision/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Madewithlove\\IlluminatePsrCacheBridge\\' => array($vendorDir . '/madewithlove/illuminate-psr-cache-bridge/src'),
+    'Library\\' => array($baseDir . '/app/library'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'Laravel\\Tinker\\' => array($vendorDir . '/laravel/tinker/src'),
     'Intervention\\Image\\' => array($vendorDir . '/intervention/image/src/Intervention/Image'),

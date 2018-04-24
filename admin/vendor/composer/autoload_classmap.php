@@ -33,6 +33,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Item' => $baseDir . '/app/Item.php',
     'App\\Itemsize' => $baseDir . '/app/Itemsize.php',
+    'App\\Libraries\\GoogleAnalytics' => $baseDir . '/app/Libraries/GoogleAnalytics.php',
     'App\\Order' => $baseDir . '/app/Order.php',
     'App\\Orderitems' => $baseDir . '/app/Orderitems.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

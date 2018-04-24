@@ -91,6 +91,7 @@ class ComposerStaticInitaeafaad8a45bacfd6f51c0e3d3fd0665
         ),
         'L' => 
         array (
+            'Library\\' => 8,
             'League\\Flysystem\\' => 17,
             'Laravel\\Tinker\\' => 15,
         ),
@@ -273,6 +274,10 @@ class ComposerStaticInitaeafaad8a45bacfd6f51c0e3d3fd0665
         array (
             0 => __DIR__ . '/..' . '/madewithlove/illuminate-psr-cache-bridge/src',
         ),
+        'Library\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/library',
+        ),
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
@@ -429,6 +434,7 @@ class ComposerStaticInitaeafaad8a45bacfd6f51c0e3d3fd0665
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Item' => __DIR__ . '/../..' . '/app/Item.php',
         'App\\Itemsize' => __DIR__ . '/../..' . '/app/Itemsize.php',
+        'App\\Libraries\\GoogleAnalytics' => __DIR__ . '/../..' . '/app/Libraries/GoogleAnalytics.php',
         'App\\Order' => __DIR__ . '/../..' . '/app/Order.php',
         'App\\Orderitems' => __DIR__ . '/../..' . '/app/Orderitems.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
