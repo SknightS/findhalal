@@ -67,16 +67,17 @@ class AdminController extends Controller
         $this->data['country'] = $result->pluck('country');
         $this->data['country_sessions'] = $result->pluck('sessions');
 
+//        return $analyticsData_two;
 
-       // return $result;
-
+//    return $analyticsData_two;
 
         return view('index')
             ->with('regiteredUser',$regiteredUser)
             ->with('visitors',$visitors)
             ->with('subcriber',$subcriber)
             ->with('message',$message)
-            ->with('tasks',$task);
+            ->with('tasks',$task)
+            ->with('last14days',$analyticsData_two);
     }
 
     public function settings(){
