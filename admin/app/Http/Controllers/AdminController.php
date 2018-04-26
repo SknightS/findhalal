@@ -13,6 +13,7 @@ use Analytics;
 use Spatie\Analytics\Period;
 
 use App\Libraries\GoogleAnalytics;
+use Carbon\Carbon;
 
 
 
@@ -35,11 +36,19 @@ class AdminController extends Controller
         $subcriber=50;
 
 
+
+
+        $visitors= Analytics::getAnalyticsService()->data_realtime->get('ga:'.env('ANALYTICS_VIEW_ID'), 'rt:activeVisitors')->totalsForAllResults['rt:activeVisitors'];
+
+
+
+
 //fetch visitors and page views for currentdate
-        $analyticsData_one = Analytics::fetchTotalVisitorsAndPageViews(Period::days(0));
-        $this->data['dates'] = $analyticsData_one->pluck('date');
-        $visitors = $analyticsData_one->pluck('visitors');
-        $pageViews = $analyticsData_one->pluck('pageViews');
+        $analyticsData_one = Analytics::fetchTotalVisitorsAndPageViews(Period::days(14));
+//        $this->data['dates'] = $analyticsData_one->pluck('date');
+//        $visitors = $analyticsData_one->pluck('visitors');
+//        $pageViews = $analyticsData_one->pluck('pageViews');
+//        return $visitors;
 
 /* from documention*/
         //fetch the most visited pages for today and the past week
@@ -67,7 +76,7 @@ class AdminController extends Controller
         $this->data['country'] = $result->pluck('country');
         $this->data['country_sessions'] = $result->pluck('sessions');
 
-//        return $analyticsData_two;
+//        return $analyticsData_one;
 
 //    return $analyticsData_two;
 
@@ -77,7 +86,7 @@ class AdminController extends Controller
             ->with('subcriber',$subcriber)
             ->with('message',$message)
             ->with('tasks',$task)
-            ->with('last14days',$analyticsData_two);
+            ->with('last14days',$analyticsData_one);
     }
 
     public function settings(){
