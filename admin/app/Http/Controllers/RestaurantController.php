@@ -136,7 +136,8 @@ class RestaurantController extends Controller
     }
 
     public function get(Request $r){
-        $resturants=Resturant::get();
+        $resturants=Resturant::select('resturantId','name','details','address','city','zip','country','minOrder','delfee','status');
+//            ->get();
 
         $datatables = DataTables::of($resturants);
 
