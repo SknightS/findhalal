@@ -1,5 +1,30 @@
 @extends('main')
+@section('header')
+    <style>
+        .StripeElement {
+            background-color: white;
+            height: 40px;
+            padding: 10px 12px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            -webkit-transition: box-shadow 150ms ease;
+            transition: box-shadow 150ms ease;
+        }
 
+        .StripeElement--focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+        }
+
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+    </style>
+@endsection
 @section('content')
 
         <div class="page-wrapper">
@@ -13,6 +38,10 @@
                     </ul>
                 </div>
             </div>
+
+
+
+
             <div class="container m-t-30">
                 <div class="widget clearfix">
                     <!-- /widget heading -->
@@ -148,9 +177,42 @@
                                                     <input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input" onclick="cash()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Payment on delivery</span>
                                                     <br> <span>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span> </label>
                                             </li>
+                                            {{--<li>--}}
+                                                {{--<label class="custom-control custom-radio  m-b-10">--}}
+                                                    {{--<input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online <img src="images/paypal.jpg" alt="" width="90"></span> </label>--}}
+                                            {{--</li>--}}
+
                                             <li>
+
                                                 <label class="custom-control custom-radio  m-b-10">
-                                                    <input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online <img src="images/paypal.jpg" alt="" width="90"></span> </label>
+                                                    <input name="radio-stacked" type="radio" data-toggle="collapse" onclick="card()"  class="custom-control-input" data-target="#demo">
+                                                    {{--<input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()" required> --}}
+                                                    <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online
+                                                        <img src="images/paypal.jpg" alt="" width="90"></span> </label>
+
+                                                {{--<button data-toggle="collapse" class="btn btn-outline-success btn-block" data-target="#demo">Pay With Card</button>--}}
+
+                                                <div id="demo" class="collapse">
+
+                                                <script src="https://js.stripe.com/v3/"></script>
+                                                <form action="{{route('payment')}}" method="post" id="payment-form">
+                                                    {{csrf_field()}}
+                                                    <div class="form-row">
+                                                        <label for="card-element">
+                                                            Credit or debit card
+                                                        </label>
+                                                        <div id="card-element">
+                                                            <!-- A Stripe Element will be inserted here. -->
+                                                        </div>
+
+                                                        <!-- Used to display form errors. -->
+                                                        <div id="card-errors" role="alert"></div>
+                                                    </div>
+
+                                                    <button class="btn btn-outline-success btn-block">Card Payment</button>
+                                                </form>
+
+                                                </div>
                                             </li>
                                         </ul>
                                         <p class="text-xs-center"> <button type="submit" id="PayNow"  class="btn btn-outline-success btn-block">Pay now</button> </p>
@@ -165,12 +227,209 @@
  @endsection
 @section('foot-js')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+
     <script>
+        // Create a Stripe client.  pk_live_FpOYxAZOuEFIkVQTX5QUYQQp
+        var stripe = Stripe('pk_test_gUyDT0SVTbicyy4gAqkbbvyf');
+
+        // Create an instance of Elements.
+        var elements = stripe.elements();
+
+        // Custom styling can be passed to options when creating an Element.
+        // (Note that this demo uses a wider set of styles than the guide below.)
+        var style = {
+            base: {
+                color: '#32325d',
+                lineHeight: '18px',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        };
+
+        // Create an instance of the card Element.
+        var card = elements.create('card', {style: style});
+
+        // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#card-element');
+
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function(event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission.
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    // Inform the user if there was an error.
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Send the token to your server.
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        function stripeTokenHandler(token) {
+            console.log(token);
+            // Insert the token ID into the form so it gets submitted to the server
+            var form = document.getElementById('payment-form');
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            // Submit the form
+//        form.submit();
+            var firstname = $('#firstname').val();
+            var lastname = $('#lastname').val();
+            var address = $('#address').val();
+            var city = $('#city').val();
+            var zip = $('#zip').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (firstname ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'FirstName can not be empty',
+
+                });
+
+            }
+            else if (lastname ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'LastName can not be empty',
+
+                });
+
+            }
+            else if (address ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Address can not be empty',
+
+                });
+
+            }else if (city ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'City can not be empty',
+
+                });
+
+            }else if (zip ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Zip can not be empty',
+
+                });
+
+            }else if (email ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Email can not be empty',
+
+                });
+
+            }
+            else if(!email.match(mailformat))
+            {
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'You have entered an invalid email address!',
+
+                });
+
+            }
+            else if (phone ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Phone can not be empty',
+
+                });
+
+            }
+            else {
+
+                $.ajax({
+                    type : 'post' ,
+                    url : '{{route('restaurant.submitorder')}}',
+                    data : {_token: CSRF_TOKEN,'firstname':firstname,'lastname':lastname,'address':address,'city':city,
+                        'zip':zip,'email':email,'phone':phone
+                    } ,
+                    success : function(data){
+
+                        $.alert({
+                            title: 'Alert!',
+                            type: 'green',
+                            content: 'Order Has Placed successfully',
+                            buttons: {
+                                tryAgain: {
+                                    text: 'Ok',
+                                    btnClass: 'btn-blue',
+                                    action: function(){
+
+                                        window.location.href = "{{route('home')}}";
+                                    }
+                                }
+
+                            }
+                        });
+
+                    }
+                });
+
+            }
+
+
+
+
+        }
+    </script>
+
+
+    <script>
+
 
         $(document).ready(function() {
 
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
             $("#PayNow").click(function () {
                 var firstname = $('#firstname').val();
                 var lastname = $('#lastname').val();
@@ -310,6 +569,8 @@
     }
 
     function card() {
+
+        alert("card");
 
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
