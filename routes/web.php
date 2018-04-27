@@ -49,3 +49,5 @@ Route::post('/restaurants/card','RestaurantController@Card')->name('restaurant.c
 
 
 //Route::view('/admin','admin.index')->name('admin.index');
+//Payments
+//Route::post('payments','TestController@paymentField')->name('payment.field');

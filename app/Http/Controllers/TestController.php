@@ -11,6 +11,12 @@ class TestController extends Controller
        return view('test');
    }
 
+
+   public function paymentField(Request $r){
+
+       return view('payment');
+   }
+
    public function payment(Request $r){
 
        try {
