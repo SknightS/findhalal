@@ -167,6 +167,13 @@ class RestaurantController extends Controller
             ->with('cartitem', $cartitem);
     }
     public function SubmitOrder(Request $r){
+
+        if($r->stripeToken){
+            return $r;
+        }
+
+
+        return $r;
         $cartCollection = Cart::getContent();
         foreach ($cartCollection as $c)
         {
