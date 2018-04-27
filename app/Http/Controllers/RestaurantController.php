@@ -168,12 +168,10 @@ class RestaurantController extends Controller
     }
     public function SubmitOrder(Request $r){
 
-        if($r->stripeToken){
-            return $r;
-        }
 
 
-        return $r;
+
+
         $cartCollection = Cart::getContent();
         foreach ($cartCollection as $c)
         {
@@ -184,6 +182,26 @@ class RestaurantController extends Controller
                 $delfee = 0;
             }
             break;
+        }
+
+
+
+
+
+        if($r->stripeToken){
+            \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
+
+
+// Token is created using Checkout or Elements!
+// Get the payment token ID submitted by the form:
+            $token = $r->stripeToken;
+            $charge = \Stripe\Charge::create([
+                'amount'=>Cart::getTotal()*100,
+                'currency' => 'EUR',
+                'description' => 'Example charge',
+                'source' => $token,
+                "metadata" => array("order_id" => "6735")
+            ]);
         }
         $customer = new Customer();
         $customer->firstName = $r->firstname;

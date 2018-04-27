@@ -269,7 +269,130 @@
             form.appendChild(hiddenInput);
 
             // Submit the form
-            form.submit();
+//            form.submit();
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            var firstname = $('#firstname').val();
+            var lastname = $('#lastname').val();
+            var stripeToken=token.id;
+            var address = $('#address').val();
+            var city = $('#city').val();
+            var zip = $('#zip').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (firstname ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'FirstName can not be empty',
+
+                });
+
+            }
+            else if (lastname ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'LastName can not be empty',
+
+                });
+
+            }
+            else if (address ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Address can not be empty',
+
+                });
+
+            }else if (city ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'City can not be empty',
+
+                });
+
+            }else if (zip ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Zip can not be empty',
+
+                });
+
+            }else if (email ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Email can not be empty',
+
+                });
+
+            }
+            else if(!email.match(mailformat))
+            {
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'You have entered an invalid email address!',
+
+                });
+
+            }
+            else if (phone ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Phone can not be empty',
+
+                });
+
+            }
+            else {
+
+                $.ajax({
+                    type : 'post' ,
+                    url : '{{route('restaurant.submitorder')}}',
+                    data : {_token: CSRF_TOKEN,'stripeToken':stripeToken,'firstname':firstname,'lastname':lastname,'address':address,'city':city,
+                        'zip':zip,'email':email,'phone':phone
+                    } ,
+                    success : function(data){
+
+                        console.log(data);
+
+                        $.alert({
+                            title: 'Alert!',
+                            type: 'green',
+                            content: 'Order Has Placed successfully',
+                            buttons: {
+                                tryAgain: {
+                                    text: 'Ok',
+                                    btnClass: 'btn-blue',
+                                    action: function(){
+
+                                        window.location.href = "{{route('home')}}";
+                                    }
+                                }
+
+                            }
+                        });
+
+                    }
+                });
+
+            }
+
+
+
         }
     </script>
 
