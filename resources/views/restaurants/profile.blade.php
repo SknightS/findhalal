@@ -126,7 +126,7 @@
                                             {{--</select>--}}
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="text" min="1" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onkeypress="return isNumberKey(event,this)" onkeyup="updateqty(this)"  >
+                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="number" min="1" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onkeypress="return isNumberKey(event,this)" onkeyup="updateqty(this)"  >
 
                                         </div>
                                     </div>
