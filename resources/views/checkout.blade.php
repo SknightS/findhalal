@@ -195,7 +195,7 @@
                                         <div id="demo" style="display: none">
 
                                             <script src="https://js.stripe.com/v3/"></script>
-                                            <form action="{{route('payment')}}" method="post" id="payment-form">
+                                            <form action="{{route('restaurant.submitorder')}}" method="post" id="payment-form">
                                                 {{csrf_field()}}
                                                 <div class="form-row">
                                                     <label for="card-element">
@@ -232,7 +232,7 @@
 
     <script>
         // Create a Stripe client.  pk_live_FpOYxAZOuEFIkVQTX5QUYQQp
-        var stripe = Stripe('pk_test_gUyDT0SVTbicyy4gAqkbbvyf');
+        var stripe = Stripe('pk_live_FpOYxAZOuEFIkVQTX5QUYQQp');
 
         // Create an instance of Elements.
         var elements = stripe.elements();
