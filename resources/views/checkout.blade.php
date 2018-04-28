@@ -216,7 +216,7 @@
                                     </li>
                                 </ul>
                                 {{--<p class="text-xs-center"> <button type="submit" id="PayNowCard" style="display: none" class="btn btn-outline-success btn-block">Pay now1</button> </p>--}}
-                                <p class="text-xs-center"> <button type="submit" id="PayNowCash" style="display: none" class="btn btn-outline-success btn-block">Pay now</button> </p>
+                                <p class="text-xs-center"> <button type="submit" id="PayNowCash" style="display: none" onclick="cash()" class="btn btn-outline-success btn-block">Pay now</button> </p>
                             </div>
                         </div>
                     </div>
@@ -280,7 +280,7 @@
         $(document).ready(function() {
 
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $("#PayNow").click(function () {
+            $("#PayNowCash").click(function () {
                 var firstname = $('#firstname').val();
                 var lastname = $('#lastname').val();
                 var address = $('#address').val();
