@@ -126,7 +126,7 @@
                                             {{--</select>--}}
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="text" min="1" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onkeypress="return isNumberKey(event,this)" onkeyup="updateqty(this)"  >
+                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="number" min="1" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onkeypress="return isNumberKey(event,this)" onkeyup="updateqty(this)"  >
 
                                         </div>
                                     </div>
@@ -149,7 +149,7 @@
                                 </form>
                             </div>
                             <div class="widget-body">
-                                <div class="price-wrap text-xs-center">
+                                <div id="totalPrice" class="price-wrap text-xs-center">
                                     <p>TOTAL</p>
                                     <h3 class="value"><strong>{{"€"}}{{Cart::getTotal()}}</strong></h3>
 
@@ -255,7 +255,8 @@
                 data : {_token: CSRF_TOKEN, 'qty':qty, 'cartid':id} ,
                 success : function(data){
 
-                    $('#cart_table').load(document.URL +  ' #cart_table');
+                  //  $('#cart_table').load(document.URL +  ' #cart_table');
+                    $('#totalPrice').load(document.URL +  ' #totalPrice');
 
                 }
             });
@@ -272,7 +273,7 @@
                 data : {_token: CSRF_TOKEN, 'cartid':id} ,
                 success : function(data){
 
-                    alert(data);
+                    //alert(data);
                   //  $('#cart_table').load(document.URL +  ' #cart_table');
 
                 }
