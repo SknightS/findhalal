@@ -278,6 +278,29 @@ class RestaurantController extends Controller
             $orderitem->save();
         }
 
+        $orderInfo = Order::select('order.delfee','order.orderId','order.orderTime', 'order.paymentType','order.orderType', 'customer.firstName',
+            'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country')
+            ->where('order.orderId', $order->orderId)
+            ->leftJoin('customer','customer.customerId','=','order.fkcustomerId')
+            ->leftJoin('shipaddress','shipaddress.fkorderId','=','order.orderId')
+            ->get();
+
+        $orderItemInfo = Orderitems::select('orderitem.quantity','orderitem.price','itemsize.itemsizeName', 'item.itemName','item.itemDetails')
+            ->where('orderitem.fkorderId', $order->orderId)
+            ->leftJoin('itemsize','itemsize.itemsizeId','=','orderitem.fkitemsizeId')
+            ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
+            ->get();
+
+
+
+
+
+        Mail::send('invoiceMail',$orderInfo,$orderItemInfo, function($message) use ($orderInfo)
+        {
+//                $message->from('Techcloud', 'Discount Offer');
+            $message->to($orderInfo->email, $orderInfo->firstName.$orderInfo->lastName)->subject('New Order');
+        });
+
         Cart::clear();
 
         alert()->success('Congrats', 'your order has been placed successfully');

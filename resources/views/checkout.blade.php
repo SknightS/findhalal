@@ -387,6 +387,7 @@
                                         action: function(){
 
                                             window.location.href = "{{route('home')}}";
+                                           // console.log(data);
                                         }
                                     }
 
