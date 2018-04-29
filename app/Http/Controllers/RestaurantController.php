@@ -102,7 +102,6 @@ class RestaurantController extends Controller
             ->with ('itemsize', $itemsize);
     }
     public function addCart(Request $r){
-        
 
         $itemSizeId =Itemsize::findOrFail($r->itemid);
 
