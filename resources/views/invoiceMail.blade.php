@@ -334,12 +334,13 @@
                                                                                     <td>
                                                                                         <div class='contentEditableContainer contentTextEditable'>
                                                                                             <div class='contentEditable' style='text-align: left;'>
-
-                                                                                                <h2 style="font-size: 20px;">Dear {{firstName}} {{lastName}}</h2>
+                                                                                                @foreach($orderInfo as $orderInformation)
+                                                                                                <h2 style="font-size: 20px;">Dear {{$orderInformation->firstName}} {{$orderInformation->lastName}}</h2>
                                                                                                 <br>
 
                                                                                                 <p>Thanks For Ordering From Us.</p> <br>
                                                                                                     <p>Regard <br> <b>FindHalal</b> Team</p>
+                                                                                                 @endforeach
 
                                                                                             </div>
 
@@ -350,23 +351,24 @@
 
                                                                                 <tr><td height='24'></td></tr>
                                                                             </table>
-
+                                                                            @foreach($orderInfo as $orderInformation)
                                                                             <table width="100%">
                                                                                 <tr>
                                                                                     <td style="width: 40%; text-align: center;">
                                                                                         <h4 style="color: #4C4C4C;">Order Details</h4>
-                                                                                        <p style="color: red;">Order Number# <br> {{orderId}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{date('d-m-Y',orderTime)}}</p>
+                                                                                        <p style="color: red;">Order Number# <br> {{$orderInformation->orderId}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{date('d-m-Y',$orderInformation->orderTime)}}</p>
 
                                                                                     </td>
                                                                                     <td style="width: 60%; text-align: center; ">
                                                                                         <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                        <p style="color: #4C4C4C;">{{addressDetails}} , {{zip}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{city}} , {{country}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{phone}}</p>
+                                                                                        <p style="color: #4C4C4C;">{{$orderInformation->addressDetails}} , {{$orderInformation->zip}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{$orderInformation->city}} , {{$orderInformation->country}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{$orderInformation->phone}}</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
+                                                                            @endforeach
 
 
                                                                         </td>
@@ -492,17 +494,6 @@
                                                             <?php }?>
 
                                                         </tr>
-                                                        <?php $pointTk=0;if (!empty($pointUsed)){foreach ($pointUsed as $usedPoint){?>
-                                                        <tr>
-                                                            <td style="width: 75%"></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>Used Point <?php echo $usedPoint->expedPoints?></td>
-                                                            <td>- $<?php echo $pointTk=($usedPoint->expedPoints/10) ?></td>
-                                                        </tr>
-                                                        <?php }} ?>
 
                                                         <tr>
                                                             <td style="width: 60%"></td>
@@ -511,10 +502,10 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td>TOTAL</td>
-                                                            <td>$<?php echo $Total=(($total+$delveryFee+$allOrder->vat)-$pointTk)?></td>
+                                                            <td>$<?php echo $Total=(($total+$delveryFee))?></td>
                                                         </tr>
                                                     </table>
-                                                <?php } ?>
+                                                        @endforeach
                                                 <!-- =============== END BODY =============== -->
                                                     <!-- =============== START FOOTER =============== -->
 
@@ -563,7 +554,7 @@
                                                                                         <td width='40'>
                                                                                             <div class='contentEditableContainer contentFacebookEditable'>
                                                                                                 <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="<?php echo base_url()?>public/img/emailTemp/facebook.png" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">
+                                                                                                    <img src="{{url('public/images/facebook.png')}}" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </td>
@@ -571,7 +562,7 @@
                                                                                         <td width='40'>
                                                                                             <div class='contentEditableContainer contentTwitterEditable'>
                                                                                                 <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="<?php echo base_url()?>public/img/emailTemp/twitter.png" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">
+                                                                                                    <img src="{{url('public/images/twitter.png')}}" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </td>
@@ -579,7 +570,7 @@
                                                                                         <td width='40'>
                                                                                             <div class='contentEditableContainer contentImageEditable'>
                                                                                                 <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="<?php echo base_url()?>public/img/emailTemp/red.png" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">
+                                                                                                    <img src="{{url('public/images/red.png')}}" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </td>
@@ -587,7 +578,7 @@
                                                                                         <td width='40'>
                                                                                             <div class='contentEditableContainer contentImageEditable'>
                                                                                                 <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="<?php echo base_url()?>public/img/emailTemp/blue.png" alt="Social media" width='40' height='40' data-max-width="40" border="0">
+                                                                                                    <img src="{{url('public/images/blue.png')}}" alt="Social media" width='40' height='40' data-max-width="40" border="0">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </td>
@@ -626,7 +617,7 @@
                                                                                     <td>
                                                                                         <div class='contentEditableContainer contentTextEditable'>
                                                                                             <div class='contentEditable' style='text-align: left;'>
-                                                                                                <p style="font-size: 15px; text-align: center;">&copy; Tanuki 2018. All rights reserved</p>
+                                                                                                <p style="font-size: 15px; text-align: center;">&copy; FindHalal 2018. All rights reserved</p>
 
                                                                                             </div>
 

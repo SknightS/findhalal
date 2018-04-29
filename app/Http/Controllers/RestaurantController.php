@@ -10,6 +10,7 @@ use App\Resturanttime;
 use App\Shipaddress;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Resturant;
 use Session;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -101,6 +102,8 @@ class RestaurantController extends Controller
             ->with ('itemsize', $itemsize);
     }
     public function addCart(Request $r){
+        
+
         $itemSizeId =Itemsize::findOrFail($r->itemid);
 
         $item =  Item::select('itemId','itemName','itemsizeName', 'price','itemsizeId', 'delfee', 'resturantId')
@@ -163,9 +166,25 @@ class RestaurantController extends Controller
             Session::flash('message','Cart Is Empty');
             return back();
         }
+
+
+
+        foreach ($cartitem as $c)
+        {
+            $resid =   $c->attributes->resid;
+            break;
+        }
+
+        $restaurantInfo=Resturant::findOrFail($resid);
+
+
+
         return view('checkout')
-            ->with('cartitem', $cartitem);
+            ->with('cartitem', $cartitem)
+            ->with('minOrder',$restaurantInfo->minOrder);
     }
+
+
     public function SubmitOrder(Request $r){
 
         $cartCollection = Cart::getContent();
@@ -180,7 +199,18 @@ class RestaurantController extends Controller
             break;
         }
 
-//        return $delfee;
+
+        $restaurantInfo=Resturant::findOrFail($resid);
+        $totalPrice=Cart::getTotal();
+
+        if($totalPrice>$restaurantInfo->minOrder){
+            $totalPrice=$totalPrice;
+            $delfee=0;
+        }
+        else{
+            $totalPrice+=$delfee;
+        }
+//        return $totalPrice;
 
         if($r->stripeToken){
 //            return $r->stripeToken;
@@ -190,7 +220,7 @@ class RestaurantController extends Controller
                 // Get the payment token ID submitted by the form:
                 $token = $r->stripeToken;
                 $charge = \Stripe\Charge::create([
-                    'amount'=>(Cart::getTotal()+$delfee)*100,
+                    'amount'=>$totalPrice*100,
                     'currency' => 'EUR',
                     'description' => 'Example charge',
                     'source' => $token,
@@ -238,11 +268,6 @@ class RestaurantController extends Controller
             }
 
         }
-
-
-
-
-
         $customer = new Customer();
         $customer->firstName = $r->firstname;
         $customer->lastName = $r->lastname;
@@ -284,6 +309,11 @@ class RestaurantController extends Controller
             ->leftJoin('customer','customer.customerId','=','order.fkcustomerId')
             ->leftJoin('shipaddress','shipaddress.fkorderId','=','order.orderId')
             ->get();
+        foreach ($orderInfo as $mailInfo){
+            $customerMail=$mailInfo->email;
+            $customerFirstName=$mailInfo->firstName;
+            $customerLastName=$mailInfo->lastName;
+        }
 
         $orderItemInfo = Orderitems::select('orderitem.quantity','orderitem.price','itemsize.itemsizeName', 'item.itemName','item.itemDetails')
             ->where('orderitem.fkorderId', $order->orderId)
@@ -291,14 +321,11 @@ class RestaurantController extends Controller
             ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
             ->get();
 
-
-
-
-
-        Mail::send('invoiceMail',$orderInfo,$orderItemInfo, function($message) use ($orderInfo)
+        Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
+        use ($customerMail, $customerFirstName, $customerLastName)
         {
-//                $message->from('Techcloud', 'Discount Offer');
-            $message->to($orderInfo->email, $orderInfo->firstName.$orderInfo->lastName)->subject('New Order');
+            $message->from('noreply@findhalal.de', 'FindHalal');
+            $message->to('mujtaba.rumi1@gmail.com', 'rumi')->subject('New Order');
         });
 
         Cart::clear();
