@@ -160,6 +160,21 @@
                                                 @break
                                             @endforeach
                                         </tr>
+                                        {{--For Min Order--}}
+                                        <tr>
+                                            <td>Discount</td>
+                                            @if(Cart::getTotal() >$minOrder)
+                                                <td>€ {{$delfee}}</td>
+                                                @php($delfee=0)
+                                            @else
+                                                <td>€ 0</td>
+
+                                            @endif
+
+
+
+                                        </tr>
+
                                         <tr>
                                             <td class="text-color"><strong>Total</strong></td>
                                             <td class="text-color"><strong>{{"€ "}}{{Cart::getTotal()+ $delfee}}</strong></td>
@@ -375,6 +390,7 @@
                             'zip':zip,'email':email,'phone':phone
                         } ,
                         success : function(data){
+                            // console.log(data);
 
                             $.alert({
                                 title: 'Alert!',

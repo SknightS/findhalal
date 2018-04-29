@@ -101,6 +101,8 @@ class RestaurantController extends Controller
             ->with ('itemsize', $itemsize);
     }
     public function addCart(Request $r){
+        
+
         $itemSizeId =Itemsize::findOrFail($r->itemid);
 
         $item =  Item::select('itemId','itemName','itemsizeName', 'price','itemsizeId', 'delfee', 'resturantId')
@@ -163,9 +165,25 @@ class RestaurantController extends Controller
             Session::flash('message','Cart Is Empty');
             return back();
         }
+
+
+
+        foreach ($cartitem as $c)
+        {
+            $resid =   $c->attributes->resid;
+            break;
+        }
+
+        $restaurantInfo=Resturant::findOrFail($resid);
+
+
+
         return view('checkout')
-            ->with('cartitem', $cartitem);
+            ->with('cartitem', $cartitem)
+            ->with('minOrder',$restaurantInfo->minOrder);
     }
+
+
     public function SubmitOrder(Request $r){
 
         $cartCollection = Cart::getContent();
@@ -180,7 +198,18 @@ class RestaurantController extends Controller
             break;
         }
 
-//        return $delfee;
+
+        $restaurantInfo=Resturant::findOrFail($resid);
+        $totalPrice=Cart::getTotal();
+
+        if($totalPrice>$restaurantInfo->minOrder){
+            $totalPrice=$totalPrice;
+            $delfee=0;
+        }
+        else{
+            $totalPrice+=$delfee;
+        }
+//        return $totalPrice;
 
         if($r->stripeToken){
 //            return $r->stripeToken;
@@ -190,7 +219,7 @@ class RestaurantController extends Controller
                 // Get the payment token ID submitted by the form:
                 $token = $r->stripeToken;
                 $charge = \Stripe\Charge::create([
-                    'amount'=>(Cart::getTotal()+$delfee)*100,
+                    'amount'=>$totalPrice*100,
                     'currency' => 'EUR',
                     'description' => 'Example charge',
                     'source' => $token,
