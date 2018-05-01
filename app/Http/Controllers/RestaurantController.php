@@ -10,6 +10,7 @@ use App\Resturanttime;
 use App\Shipaddress;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Resturant;
 use App\Rating;
 use Session;
@@ -105,7 +106,6 @@ class RestaurantController extends Controller
             ->with ('itemsize', $itemsize);
     }
     public function addCart(Request $r){
-
 
         $itemSizeId =Itemsize::findOrFail($r->itemid);
 
@@ -292,11 +292,6 @@ class RestaurantController extends Controller
             }
 
         }
-
-
-
-
-
         $customer = new Customer();
         $customer->firstName = $r->firstname;
         $customer->lastName = $r->lastname;
@@ -331,6 +326,31 @@ class RestaurantController extends Controller
             $orderitem->price = $cc->price;
             $orderitem->save();
         }
+
+        $orderInfo = Order::select('order.delfee','order.orderId','order.orderTime', 'order.paymentType','order.orderType', 'customer.firstName',
+            'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country')
+            ->where('order.orderId', $order->orderId)
+            ->leftJoin('customer','customer.customerId','=','order.fkcustomerId')
+            ->leftJoin('shipaddress','shipaddress.fkorderId','=','order.orderId')
+            ->get();
+        foreach ($orderInfo as $mailInfo){
+            $customerMail=$mailInfo->email;
+            $customerFirstName=$mailInfo->firstName;
+            $customerLastName=$mailInfo->lastName;
+        }
+
+        $orderItemInfo = Orderitems::select('orderitem.quantity','orderitem.price','itemsize.itemsizeName', 'item.itemName','item.itemDetails')
+            ->where('orderitem.fkorderId', $order->orderId)
+            ->leftJoin('itemsize','itemsize.itemsizeId','=','orderitem.fkitemsizeId')
+            ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
+            ->get();
+
+        Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
+        use ($customerMail, $customerFirstName, $customerLastName)
+        {
+            $message->from('noreply@findhalal.de', 'FindHalal');
+            $message->to('mujtaba.rumi1@gmail.com', 'rumi')->subject('New Order');
+        });
 
         Cart::clear();
 
