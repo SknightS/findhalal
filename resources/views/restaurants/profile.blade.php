@@ -29,11 +29,7 @@
 
                                 <div class="pull-left right-text white-txt">
                                     <h6><a href="">{{$rest->name}}</a></h6>
-                                    @php
-                                        date_default_timezone_set("Asia/Dhaka");
-                                        $date= date('H:m');
-                                        $day= date('l');
-                                    @endphp
+
 
                                                 <a class="btn btn-small ">{{$restaurantStatus}}</a>
 
@@ -217,6 +213,16 @@
                 url : '{{route('restaurant.addCart')}}',
                 data : {_token: CSRF_TOKEN, 'itemid':id} ,
                 success : function(data){
+
+                    if(data=='mismatch'){
+                        $.alert({
+                            title: 'Alert!',
+                            type: 'red',
+                            content: 'You can not order from multiple restaurant at a time',
+
+                        });
+
+                    }
 
                     $('#cart_table').load(document.URL +  ' #cart_table');
                 }

@@ -1,5 +1,10 @@
 @extends('main')
 @section('header')
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="{{url('public/rating/css/star-rating.min.css')}}" media="all" rel="stylesheet" type="text/css" />
+
+
     <style>
         .StripeElement {
             background-color: white;
@@ -47,7 +52,7 @@
                 <!-- /widget heading -->
                 <div class="widget-heading">
                     <h3 class="widget-title text-dark">
-                        Cart summary
+                       <span style="color: #0a001f">Cart summary</span>
                     </h3>
                     <div class="clearfix"></div>
                 </div>
@@ -70,29 +75,7 @@
                                     <!--/form-group-->
                                 </div>
                             </div>
-                            <div class="row">
-                                {{--<div class="col-sm-6">--}}
-                                {{--<div class="form-group">--}}
-                                {{--<label>Country*</label>--}}
-                                {{--<select class="form-control">--}}
-                                {{--<option>India</option>--}}
-                                {{--<option>USA</option>--}}
-                                {{--<option>UK</option>--}}
-                                {{--<option>Australia</option>--}}
-                                {{--<option>Japan</option>--}}
-                                {{--<option>Columbia</option>--}}
-                                {{--<option>Poland</option>--}}
-                                {{--</select>--}}
-                                {{--</div>--}}
-                                {{--<!--/form-group-->--}}
-                                {{--</div>--}}
-                                {{--<div class="col-sm-6">--}}
-                                {{--<div class="form-group">--}}
-                                {{--<label>Company Name</label>--}}
-                                {{--<input type="text" class="form-control" placeholder="Lorem ipsum"> </div>--}}
-                                {{--<!--/form-group-->--}}
-                                {{--</div>--}}
-                            </div>
+
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
@@ -127,6 +110,12 @@
                                         <label>phone*</label>
                                         <input type="number" class="form-control" placeholder="" id="phone" name="phone"> </div>
                                     <!--/form-group-->
+                                </div>
+
+                                <div class="col-sm-12">
+                                    {{--Rating--}}
+                                    <input id="rating-input" type="text" data-size="sm" title=""/>
+
                                 </div>
                             </div>
                         </div>
@@ -243,7 +232,7 @@
 @endsection
 @section('foot-js')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
+    <script src="{{url('public/rating/js/star-rating.min.js')}}" type="text/javascript"></script>
 
     <script>
         // Create a Stripe client.  pk_live_FpOYxAZOuEFIkVQTX5QUYQQp
@@ -276,16 +265,155 @@
         function stripeTokenHandler(token) {
        // console.log(token);
             // Insert the token ID into the form so it gets submitted to the server
-            var form = document.getElementById('payment-form');
-            var hiddenInput = document.createElement('input');
-            hiddenInput.setAttribute('type', 'hidden');
-            hiddenInput.setAttribute('name', 'stripeToken');
-            hiddenInput.setAttribute('value', token.id);
-            form.appendChild(hiddenInput);
+            // var form = document.getElementById('payment-form');
+            // var hiddenInput = document.createElement('input');
+            // hiddenInput.setAttribute('type', 'hidden');
+            // hiddenInput.setAttribute('name', 'stripeToken');
+            // hiddenInput.setAttribute('value', token.id);
+            // form.appendChild(hiddenInput);
 
             // Submit the form
-            form.submit();
-        }
+            // form.submit();
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+
+            var rating=$('#rating-input').val();
+            var firstname = $('#firstname').val();
+            var lastname = $('#lastname').val();
+            var address = $('#address').val();
+            var city = $('#city').val();
+            var zip = $('#zip').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (firstname ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'FirstName can not be empty',
+
+                });
+
+            }
+            else if (lastname ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'LastName can not be empty',
+
+                });
+
+            }
+            else if (address ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Address can not be empty',
+
+                });
+
+            }else if (city ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'City can not be empty',
+
+                });
+
+            }else if (zip ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Zip can not be empty',
+
+                });
+
+            }else if (email ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Email can not be empty',
+
+                });
+
+            }
+            else if(!email.match(mailformat))
+            {
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'You have entered an invalid email address!',
+
+                });
+
+            }
+            else if (phone ==""){
+
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Phone can not be empty',
+
+                });
+
+            }
+            else {
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{route('restaurant.submitorder')}}',
+                    data: {
+                        _token: CSRF_TOKEN,
+                        'firstname': firstname,
+                        'lastname': lastname,
+                        'address': address,
+                        'city': city,
+                        'zip': zip,
+                        'email': email,
+                        'phone': phone,
+                        'rating': rating,
+                        'stripeToken':token.id
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if(data=='error'){
+                            location.reload();
+                        }
+
+                        else{
+                            $.alert({
+                                title: 'Alert!',
+                                type: 'green',
+                                content: 'Order Has Placed successfully',
+                                buttons: {
+                                    tryAgain: {
+                                        text: 'Ok',
+                                        btnClass: 'btn-blue',
+                                        action: function () {
+
+                                            window.location.href = "{{route('home')}}";
+                                        }
+                                    }
+
+                                }
+                            });
+
+                        }
+
+
+
+                    }
+                });
+            }
+
+
+            }
     </script>
 
 
@@ -294,8 +422,21 @@
 
         $(document).ready(function() {
 
+            var $inp = $('#rating-input');
+
+            $inp.rating({
+                min: 0,
+                max: 5,
+                step: 1,
+                size: 'lg',
+                showClear: false
+            });
+
+
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $("#PayNowCash").click(function () {
+
+                var rating=$('#rating-input').val();
                 var firstname = $('#firstname').val();
                 var lastname = $('#lastname').val();
                 var address = $('#address').val();
@@ -387,7 +528,7 @@
                         type : 'post' ,
                         url : '{{route('restaurant.submitorder')}}',
                         data : {_token: CSRF_TOKEN,'firstname':firstname,'lastname':lastname,'address':address,'city':city,
-                            'zip':zip,'email':email,'phone':phone
+                            'zip':zip,'email':email,'phone':phone,'rating':rating
                         } ,
                         success : function(data){
                             // console.log(data);

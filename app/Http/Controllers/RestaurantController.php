@@ -11,6 +11,7 @@ use App\Shipaddress;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Resturant;
+use App\Rating;
 use Session;
 use RealRashid\SweetAlert\Facades\Alert;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
@@ -37,13 +38,16 @@ class RestaurantController extends Controller
         $open= date('H.i',strtotime($resttime->opentime));
         $close= date('H.i',strtotime($resttime->closetime));
         $now=date('H.i');
-        // 12 <now <23.00
+        // 13 <now <23.00
         if($open <$now && $close >$now ){
             $restaurantStatus= "Open";
         }
         else{
             $restaurantStatus= "Close";
         }
+
+
+
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
             ->get();
@@ -113,7 +117,27 @@ class RestaurantController extends Controller
             ->limit(1)
             ->get();
 
+        $cartCollection = Cart::getContent();
+
+
+
         foreach ($item as $it){
+
+            //Check Order From Same Restaurant
+            if(!$cartCollection->isEmpty()){
+                foreach ($cartCollection as $c)
+                {
+                    $resid =   $c->attributes->resid;
+                    if($resid!=$it->resturantId){
+                        return 'mismatch';
+                    }
+
+                }
+
+            }
+
+
+
             Cart::add(array(
                 'id' => $it->itemsizeId,
                 'name' => $it->itemName,
@@ -186,6 +210,7 @@ class RestaurantController extends Controller
 
     public function SubmitOrder(Request $r){
 
+
         $cartCollection = Cart::getContent();
         foreach ($cartCollection as $c)
         {
@@ -239,31 +264,31 @@ class RestaurantController extends Controller
             } catch (\Stripe\Error\RateLimit $e) {
                 // Too many requests made to the API too quickly
                 Session::flash('message','Too many requests made to the API too quickly');
-                return back();
+                return 'error';
 
             } catch (\Stripe\Error\InvalidRequest $e) {
                 // Invalid parameters were supplied to Stripe's API
                 Session::flash('message','Invalid parameters were supplied to Stripes API');
-                return back();
+                return 'error';
             } catch (\Stripe\Error\Authentication $e) {
                 // Authentication with Stripe's API failed
                 Session::flash('message','Authentication with Stripe\'s API failed');
-                return back();
+                return 'error';
                 // (maybe you changed API keys recently)
             } catch (\Stripe\Error\ApiConnection $e) {
                 // Network communication with Stripe failed
                 Session::flash('message','Network communication with Stripe failed');
-                return back();
+                return 'error';
             } catch (\Stripe\Error\Base $e) {
                 // Display a very generic error to the user, and maybe send
                 // yourself an email
                 Session::flash('message','Display a very generic error to the user, and maybe send');
-                return back();
+                return 'error';
 
             } catch (Exception $e) {
                 // Something else happened, completely unrelated to Stripe
                 Session::flash('message','Something else happened, completely unrelated to Stripe');
-                return back();
+                return 'error';
             }
 
         }
@@ -309,10 +334,23 @@ class RestaurantController extends Controller
 
         Cart::clear();
 
+        //For Rating Restaurant
+        if($r->rating){
+            $rating=new Rating;
+            $rating->customerId=$customer->customerId;
+            $rating->restaurantId=$resid;
+            $rating->rating=$r->rating;
+            $rating->save();
+
+        }
+
         alert()->success('Congrats', 'your order has been placed successfully');
         return redirect("/");
         // return back();
     }
+
+
+
     public function takeout(){
         Session::put('ordertype', "Takeout");
     }
