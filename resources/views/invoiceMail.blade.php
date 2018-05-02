@@ -357,7 +357,7 @@
                                                                                     <td style="width: 40%; text-align: center;">
                                                                                         <h4 style="color: #4C4C4C;">Order Details</h4>
                                                                                         <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{date('d-m-Y',$orderInformation['orderTime'])}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
 
                                                                                     </td>
                                                                                     <td style="width: 60%; text-align: center; ">

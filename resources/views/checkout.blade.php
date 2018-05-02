@@ -213,14 +213,14 @@
                                                     <div id="card-errors" role="alert"></div>
                                                 </div>
 
-                                                <button class="btn btn-outline-success btn-block">Pay now</button>
+                                                <button class="btn btn-success btn-block">Pay now</button>
                                             </form>
 
                                         </div>
                                     </li>
                                 </ul>
                                 {{--<p class="text-xs-center"> <button type="submit" id="PayNowCard" style="display: none" class="btn btn-outline-success btn-block">Pay now1</button> </p>--}}
-                                <p class="text-xs-center"> <button type="submit" id="PayNowCash" style="display: none" onclick="cash()" class="btn btn-outline-success btn-block">Pay now</button> </p>
+                                <p class="text-xs-center"> <button type="submit" id="PayNowCash" style="display: none" onclick="cash()" class="btn btn-success btn-block">Pay now</button> </p>
                             </div>
                         </div>
                     </div>
