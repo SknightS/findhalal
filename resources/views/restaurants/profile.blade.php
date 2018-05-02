@@ -29,11 +29,7 @@
 
                                 <div class="pull-left right-text white-txt">
                                     <h6><a href="">{{$rest->name}}</a></h6>
-                                    @php
-                                        date_default_timezone_set("Asia/Dhaka");
-                                        $date= date('H:m');
-                                        $day= date('l');
-                                    @endphp
+
 
                                                 <a class="btn btn-small ">{{$restaurantStatus}}</a>
 
@@ -126,7 +122,7 @@
                                             {{--</select>--}}
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="text" min="1" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onkeypress="return isNumberKey(event,this)" onkeyup="updateqty(this)"  >
+                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="number" min="1" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onkeypress="return isNumberKey(event,this)" onkeyup="updateqty(this)"  >
 
                                         </div>
                                     </div>
@@ -140,16 +136,16 @@
                                 <form>
                                     <div class="col-xs-6 col-sm-12 col-md-6 col-lg-6 b-t-0">
                                         <label class="custom-control custom-radio">
-                                            <input id="radio4" name="radio" type="radio" class="custom-control-input" required onclick="delivery()"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Delivery</span> </label>
+                                            <input id="radio4" name="radio" type="radio" class="custom-control-input" required onclick="delivery()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Delivery</span> </label>
                                     </div>
                                     <div class="col-xs-6 col-sm-12 col-md-6 col-lg-6 b-t-0">
                                         <label class="custom-control custom-radio">
-                                            <input id="radio3" name="radio" type="radio" class="custom-control-input" onclick="takeout()"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Takeout</span> </label>
+                                            <input id="radio3" name="radio" type="radio" class="custom-control-input" onclick="takeout()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Takeout</span> </label>
                                     </div>
                                 </form>
                             </div>
                             <div class="widget-body">
-                                <div class="price-wrap text-xs-center">
+                                <div id="totalPrice" class="price-wrap text-xs-center">
                                     <p>TOTAL</p>
                                     <h3 class="value"><strong>{{"€"}}{{Cart::getTotal()}}</strong></h3>
 
@@ -218,6 +214,16 @@
                 data : {_token: CSRF_TOKEN, 'itemid':id} ,
                 success : function(data){
 
+                    if(data=='mismatch'){
+                        $.alert({
+                            title: 'Alert!',
+                            type: 'red',
+                            content: 'You can not order from multiple restaurant at a time',
+
+                        });
+
+                    }
+
                     $('#cart_table').load(document.URL +  ' #cart_table');
                 }
             });
@@ -255,7 +261,8 @@
                 data : {_token: CSRF_TOKEN, 'qty':qty, 'cartid':id} ,
                 success : function(data){
 
-                    $('#cart_table').load(document.URL +  ' #cart_table');
+                  //  $('#cart_table').load(document.URL +  ' #cart_table');
+                    $('#totalPrice').load(document.URL +  ' #totalPrice');
 
                 }
             });
@@ -272,7 +279,7 @@
                 data : {_token: CSRF_TOKEN, 'cartid':id} ,
                 success : function(data){
 
-                    alert(data);
+                    //alert(data);
                   //  $('#cart_table').load(document.URL +  ' #cart_table');
 
                 }
