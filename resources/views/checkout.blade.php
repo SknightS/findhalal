@@ -52,7 +52,7 @@
                 <!-- /widget heading -->
                 <div class="widget-heading">
                     <h3 class="widget-title text-dark">
-                        <span style="color: #0a001f">Cart summary</span>
+                       <span style="color: #0a001f">Cart summary</span>
                     </h3>
                     <div class="clearfix"></div>
                 </div>
@@ -263,7 +263,7 @@
 
 
         function stripeTokenHandler(token) {
-            // console.log(token);
+       // console.log(token);
             // Insert the token ID into the form so it gets submitted to the server
             // var form = document.getElementById('payment-form');
             // var hiddenInput = document.createElement('input');
@@ -413,7 +413,7 @@
             }
 
 
-        }
+            }
     </script>
 
 
@@ -543,8 +543,8 @@
                                         btnClass: 'btn-blue',
                                         action: function(){
 
-                                            window.location.href = "{{route('home')}}";
-                                            // console.log(data);
+                                           // window.location.href = "{{route('home')}}";
+                                            console.log(data);
                                         }
                                     }
 
