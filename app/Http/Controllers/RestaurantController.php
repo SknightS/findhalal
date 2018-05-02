@@ -396,6 +396,6 @@ class RestaurantController extends Controller
         Session::put('paymentType', "Cash");
     }
     public function Card(){
-        Session::put('ordertype', "Card");
+        Session::put('paymentType', "Card");
     }
 }
