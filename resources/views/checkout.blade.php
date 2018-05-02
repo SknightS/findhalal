@@ -235,8 +235,8 @@
     <script src="{{url('public/rating/js/star-rating.min.js')}}" type="text/javascript"></script>
 
     <script>
-        // Create a Stripe client.  pk_live_FpOYxAZOuEFIkVQTX5QUYQQp
-        var stripe = Stripe('pk_live_FpOYxAZOuEFIkVQTX5QUYQQp');
+        // Create a Stripe client.
+        var stripe = Stripe('pk_test_gUyDT0SVTbicyy4gAqkbbvyf');
 
         // Create an instance of Elements.
         var elements = stripe.elements();
