@@ -360,7 +360,7 @@ class RestaurantController extends Controller
             ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
             ->get();
 
-
+        Cart::clear();
         $t=Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
         {
             $message->from('2f3192259a-02c01b@inbox.mailtrap.io', 'FindHalal');
