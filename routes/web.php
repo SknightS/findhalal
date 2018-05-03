@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test','TestController@index');
+Route::post('/payment','TestController@payment')->name('payment');
+
 
 Route::get('/','HomeController@index')->name('home');
 Route::view('/food/result','food.foodResult')->name('food.result');
@@ -32,6 +35,8 @@ Route::post('/restaurants/updateitemsize','RestaurantController@updateItemSize')
 Route::post('/restaurants/updateitemqty','RestaurantController@updateItemQty')->name('restaurant.updateitemqty');
 Route::post('/restaurants/removecart','RestaurantController@removeCart')->name('restaurant.removecart');
 
+Route::post('/restaurants/checkOrderType','RestaurantController@checkOrderType')->name('restaurant.checkOrderType');
+
 //checkout
 Route::get('/restaurants/checkout/','RestaurantController@checkout')->name('restaurant.checkout');
 Route::post('/restaurants/submitorder','RestaurantController@SubmitOrder')->name('restaurant.submitorder');
@@ -46,3 +51,5 @@ Route::post('/restaurants/card','RestaurantController@Card')->name('restaurant.c
 
 
 //Route::view('/admin','admin.index')->name('admin.index');
+//Payments
+//Route::post('payments','TestController@paymentField')->name('payment.field');

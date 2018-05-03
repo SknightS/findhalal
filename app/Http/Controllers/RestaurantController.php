@@ -10,7 +10,9 @@ use App\Resturanttime;
 use App\Shipaddress;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Resturant;
+use App\Rating;
 use Session;
 use RealRashid\SweetAlert\Facades\Alert;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
@@ -23,7 +25,9 @@ class RestaurantController extends Controller
                     ->orWhere('city', $r->searchbox);
             })
             ->get();
+
         return view('restaurants.index')
+
             ->with('resturant',$searchresult);
     }
     public function ViewMenu($resid){
@@ -37,13 +41,16 @@ class RestaurantController extends Controller
         $open= date('H.i',strtotime($resttime->opentime));
         $close= date('H.i',strtotime($resttime->closetime));
         $now=date('H.i');
-        // 12 <now <23.00
+        // 13 <now <23.00
         if($open <$now && $close >$now ){
             $restaurantStatus= "Open";
         }
         else{
             $restaurantStatus= "Close";
         }
+
+
+
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
             ->get();
@@ -51,12 +58,15 @@ class RestaurantController extends Controller
             ->where('status', 'Active')
             ->get();
         $cartCollection = Cart::getContent();
+
+
         return view('restaurants.profile')
             ->with('category', $catagory)
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
             ->with('restaurantStatus', $restaurantStatus)
+
             ->with('cartitem', $cartCollection);
     }
     public function getItem(Request $r){
@@ -101,6 +111,7 @@ class RestaurantController extends Controller
             ->with ('itemsize', $itemsize);
     }
     public function addCart(Request $r){
+
         $itemSizeId =Itemsize::findOrFail($r->itemid);
 
         $item =  Item::select('itemId','itemName','itemsizeName', 'price','itemsizeId', 'delfee', 'resturantId')
@@ -111,14 +122,35 @@ class RestaurantController extends Controller
             ->limit(1)
             ->get();
 
+        $cartCollection = Cart::getContent();
+
+
+
         foreach ($item as $it){
+
+            //Check Order From Same Restaurant
+            if(!$cartCollection->isEmpty()){
+                foreach ($cartCollection as $c)
+                {
+                    $resid =   $c->attributes->resid;
+                    if($resid!=$it->resturantId){
+                        return 'mismatch';
+                    }
+
+                }
+
+            }
+
+
+
             Cart::add(array(
                 'id' => $it->itemsizeId,
                 'name' => $it->itemName,
                 'price' => $it->price,
                 'quantity' => 1,
                 'attributes' => array(
-                    'size' =>  $it->itemsizeName,
+                    'size' =>  $it->itemsizeId,
+                    'sizeName' =>  $it->itemsizeName,
                     'delfee' => $it->delfee,
                     'resid' => $it->resturantId
                 )
@@ -166,10 +198,28 @@ class RestaurantController extends Controller
             Session::flash('message','Cart Is Empty');
             return back();
         }
+
+
+
+        foreach ($cartitem as $c)
+        {
+            $resid =   $c->attributes->resid;
+            break;
+        }
+
+        $restaurantInfo=Resturant::findOrFail($resid);
+
+
+
         return view('checkout')
-            ->with('cartitem', $cartitem);
+            ->with('cartitem', $cartitem)
+            ->with('minOrder',$restaurantInfo->minOrder);
     }
+
+
     public function SubmitOrder(Request $r){
+
+
         $cartCollection = Cart::getContent();
         foreach ($cartCollection as $c)
         {
@@ -180,6 +230,76 @@ class RestaurantController extends Controller
                 $delfee = 0;
             }
             break;
+        }
+
+
+        $restaurantInfo=Resturant::findOrFail($resid);
+        $totalPrice=Cart::getTotal();
+
+        if($totalPrice>$restaurantInfo->minOrder){
+            $totalPrice=$totalPrice;
+            $delfee=0;
+        }
+        else{
+            $totalPrice+=$delfee;
+        }
+//        return $totalPrice;
+
+        if($r->stripeToken){
+//            return $r->stripeToken;
+            try {
+                \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
+                // Token is created using Checkout or Elements!
+                // Get the payment token ID submitted by the form:
+                $token = $r->stripeToken;
+                $charge = \Stripe\Charge::create([
+                    'amount'=>$totalPrice*100,
+                    'currency' => 'EUR',
+                    'description' => 'Example charge',
+                    'source' => $token,
+                ]);
+//                dd('Success Payment');
+            } catch(\Stripe\Error\Card $e) {
+                // Since it's a decline, \Stripe\Error\Card will be caught
+                $body = $e->getJsonBody();
+                $err  = $body['error'];
+
+                print('Status is:' . $e->getHttpStatus() . "\n");
+                print('Type is:' . $err['type'] . "\n");
+                print('Code is:' . $err['code'] . "\n");
+                // param is '' in this case
+                print('Param is:' . $err['param'] . "\n");
+                print('Message is:' . $err['message'] . "\n");
+            } catch (\Stripe\Error\RateLimit $e) {
+                // Too many requests made to the API too quickly
+                Session::flash('message','Too many requests made to the API too quickly');
+                return 'error';
+
+            } catch (\Stripe\Error\InvalidRequest $e) {
+                // Invalid parameters were supplied to Stripe's API
+                Session::flash('message','Invalid parameters were supplied to Stripes API');
+                return 'error';
+            } catch (\Stripe\Error\Authentication $e) {
+                // Authentication with Stripe's API failed
+                Session::flash('message','Authentication with Stripe\'s API failed');
+                return 'error';
+                // (maybe you changed API keys recently)
+            } catch (\Stripe\Error\ApiConnection $e) {
+                // Network communication with Stripe failed
+                Session::flash('message','Network communication with Stripe failed');
+                return 'error';
+            } catch (\Stripe\Error\Base $e) {
+                // Display a very generic error to the user, and maybe send
+                // yourself an email
+                Session::flash('message','Display a very generic error to the user, and maybe send');
+                return 'error';
+
+            } catch (Exception $e) {
+                // Something else happened, completely unrelated to Stripe
+                Session::flash('message','Something else happened, completely unrelated to Stripe');
+                return 'error';
+            }
+
         }
         $customer = new Customer();
         $customer->firstName = $r->firstname;
@@ -215,18 +335,70 @@ class RestaurantController extends Controller
             $orderitem->price = $cc->price;
             $orderitem->save();
         }
-        $shipaddress = new Shipaddress();
-        $shipaddress->addressDetails = $r->address;
-        $shipaddress->city = $r->city;
-        $shipaddress->zip = $r->zip;
-        $shipaddress->fkcustomerId = $customer->customerId;
-        $shipaddress->fkorderId = $order->orderId;
-        $shipaddress->save();
-        Cart::clear();
+
+        //For Rating Restaurant
+        if($r->rating){
+            $rating=new Rating;
+            $rating->customerId=$customer->customerId;
+            $rating->restaurantId=$resid;
+            $rating->rating=$r->rating;
+            $rating->save();
+
+        }
+
+        $orderInfo = Order::select('order.delfee','order.orderId','order.orderTime', 'order.paymentType','order.orderType', 'customer.firstName',
+            'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country')
+            ->where('order.orderId', $order->orderId)
+            ->leftJoin('customer','customer.customerId','=','order.fkcustomerId')
+            ->leftJoin('shipaddress','shipaddress.fkorderId','=','order.orderId')
+            ->get();
+        foreach ($orderInfo as $mailInfo){
+            $customerMail=$mailInfo->email;
+            $customerFirstName=$mailInfo->firstName;
+            $customerLastName=$mailInfo->lastName;
+        }
+
+        $orderItemInfo = Orderitems::select('orderitem.quantity','orderitem.price','itemsize.itemsizeName', 'item.itemName','item.itemDetails')
+            ->where('orderitem.fkorderId', $order->orderId)
+            ->leftJoin('itemsize','itemsize.itemsizeId','=','orderitem.fkitemsizeId')
+            ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
+            ->get();
+
+
+        $t=Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
+        {
+            $message->from('2f3192259a-02c01b@inbox.mailtrap.io', 'FindHalal');
+            $message->to('mujtaba.rumi1@gmail.com', 'rumi')->subject('New Order');
+        });
+        if ($t){
+
+//            alert()->success('Congrats', 'your order has been placed successfully');
+//            return redirect("/");
+            return 1;
+
+        }else {
+            return 0;
+        }
+
+      //  Cart::clear();
 
 //        alert()->success('Congrats', 'your order has been placed successfully');
 //        return redirect("/");
+
         // return back();
+    }
+
+
+
+    public function checkOrderType(){
+
+        if (Session::get('ordertype')=='Takeout' || Session::get('ordertype')=='Delivery'){
+
+            return '1';
+        }else{
+            return '0';
+        }
+
     }
     public function takeout(){
         Session::put('ordertype', "Takeout");
@@ -238,6 +410,6 @@ class RestaurantController extends Controller
         Session::put('paymentType', "Cash");
     }
     public function Card(){
-        Session::put('ordertype', "Card");
+        Session::put('paymentType', "Card");
     }
 }

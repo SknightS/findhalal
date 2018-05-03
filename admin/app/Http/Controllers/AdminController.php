@@ -9,6 +9,15 @@ use Hash;
 use Session;
 use App\Task;
 
+use Analytics;
+use Spatie\Analytics\Period;
+
+use App\Libraries\GoogleAnalytics;
+use Carbon\Carbon;
+
+
+
+
 class AdminController extends Controller
 {
     public function __construct()
@@ -16,21 +25,68 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
+
     public function index(){
         $task=Task::orderBy('taskId','desc')
                 ->limit(6)
                 ->get();
         $regiteredUser=10;
-        $visitors=10;
+
         $message=5;
         $subcriber=50;
+
+
+
+
+        $visitors= Analytics::getAnalyticsService()->data_realtime->get('ga:'.env('ANALYTICS_VIEW_ID'), 'rt:activeVisitors')->totalsForAllResults['rt:activeVisitors'];
+
+
+
+
+//fetch visitors and page views for currentdate
+        $analyticsData_one = Analytics::fetchTotalVisitorsAndPageViews(Period::days(14));
+//        $this->data['dates'] = $analyticsData_one->pluck('date');
+//        $visitors = $analyticsData_one->pluck('visitors');
+//        $pageViews = $analyticsData_one->pluck('pageViews');
+//        return $visitors;
+
+/* from documention*/
+        //fetch the most visited pages for today and the past week
+      // $testData1= Analytics::fetchMostVisitedPages(Period::days(7));
+
+        //fetch visitors and page views for the past week
+       // $testData2= Analytics::fetchVisitorsAndPageViews(Period::days(7));
+
+        /*-------------*/
+
+        /* this is necessary if needed */
+         $analyticsData_two = Analytics::fetchVisitorsAndPageViews(Period::days(14));
+         $this->data['two_dates'] = $analyticsData_two->pluck('date');
+         $this->data['two_visitors'] = $analyticsData_two->pluck('visitors')->count();
+         $this->data['two_pageTitle'] = $analyticsData_two->pluck('pageTitle')->count();
+
+         $analyticsData_three = Analytics::fetchMostVisitedPages(Period::days(14));
+         $this->data['three_url'] = $analyticsData_three->pluck('url');
+         $this->data['three_pageTitle'] = $analyticsData_three->pluck('pageTitle');
+         $this->data['three_pageViews'] = $analyticsData_three->pluck('pageViews');
+
+        $this->data['browserjson'] = GoogleAnalytics::topbrowsers();
+
+        $result = GoogleAnalytics::country();
+        $this->data['country'] = $result->pluck('country');
+        $this->data['country_sessions'] = $result->pluck('sessions');
+
+//        return $analyticsData_one;
+
+//    return $analyticsData_two;
 
         return view('index')
             ->with('regiteredUser',$regiteredUser)
             ->with('visitors',$visitors)
             ->with('subcriber',$subcriber)
             ->with('message',$message)
-            ->with('tasks',$task);
+            ->with('tasks',$task)
+            ->with('last14days',$analyticsData_one);
     }
 
     public function settings(){
@@ -51,4 +107,6 @@ class AdminController extends Controller
         Session::flash('message', 'Password did not match');
         return back();
     }
+
+
 }

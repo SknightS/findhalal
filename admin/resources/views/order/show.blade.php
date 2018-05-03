@@ -33,14 +33,20 @@
 
 
     <div>
-        <div id="" style="text-align: right;margin-bottom: 20px">
+        <div id="" class="col-md-12" style="margin-bottom: 20px">
 
-                    <a data-panel-id="day30" onclick="lastThirtyDaysOreder(this)" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">See last 30 days Order</span></a>
-                    <a data-panel-id="full" onclick="fullOreder(this)" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">See Full Order</span></a>
+            <div id="" class="col-md-8" style="text-align: left">
 
+                    <a  data-panel-id="day30" onclick="lastThirtyDaysOreder(this)" class="btn btn-info"><i class="far fa-calendar-alt"></i><span class="title"> last 30 days Order</span></a>
+                    <a  data-panel-id="full" onclick="fullOreder(this)" class="btn btn-info"><i class="fa fa-calendar"></i><span class="title"> Full Order</span></a>
+            </div>
 
-            <a href="{{route('order.placeOrder')}}" class="btn btn-info"><i class="fa fa-plus"></i><span class="title">Add New Order</span></a>
+            <div id="" class="col-md-4" style="text-align: right">
+            <a  href="{{route('order.placeOrder')}}" class="btn btn-info"><i class="fas fa-utensils"></i><span class="title"> Place New Order</span></a>
+            </div>
+
         </div>
+
 
         <div class="table table-responsive" style="margin-top: 20px">
             <table id="allOrderList" class="table table-bordered table-striped">
@@ -242,7 +248,6 @@
 
         $('#myModal').on('show.bs.modal', function(e) {
             var id = $(e.relatedTarget).data('panel-id');
-//            alert(id);
             $.ajax({
                 type:'POST',
                 url:'{{route('order.info')}}',
@@ -250,7 +255,9 @@
                 cache: false,
                 success:function(data)
                 {
+                    // console.log(data);
                     $('#txtHint').html(data);
+
                 }
             });
         });

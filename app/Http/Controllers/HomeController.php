@@ -10,6 +10,7 @@ use App\Resturant;
 use Illuminate\Support\Facades\DB;
 
 use App\Purchase;
+use App\Rating;
 
 
 
@@ -53,6 +54,10 @@ class HomeController extends Controller
         }
         $topRestaurants=Resturant::select('resturantId','name','image','address')->whereIn('resturantId',$resID)->get();
 
+        $resRating=Rating::select('restaurantId',DB::raw('COUNT(ratingId) as totalRating'),DB::raw('AVG(rating) as avgRating'))->groupBy('restaurantId')->get();
+
+       // return $resRating ;
+
 
 //       End Top sellers
 
@@ -61,6 +66,7 @@ class HomeController extends Controller
             ->with('resItems',$resItem)
             ->with('resCategory',$resCategory)
             ->with('featuredResCategory',$featuredResCategory)
+            ->with('restaurantRating', $resRating)
             ->with('featuredRes',$featuredRes);
 
 

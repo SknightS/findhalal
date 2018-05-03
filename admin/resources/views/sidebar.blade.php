@@ -41,7 +41,7 @@
 
 
             <li class="@if(Request::url()==route('restaurant.show')) active @endif">
-               <a href="{{route('restaurant.show')}}"><i class="fa fa-reddit-square"></i> <span class="title">Restaurants</span></a>
+               <a href="{{route('restaurant.show')}}"><i class="fas fa-building"></i> <span class="title">Restaurants</span></a>
             </li>
 
             <li class="@if(Request::url()==route('category.show')) active @endif">

@@ -8,6 +8,7 @@
 </style>
 @section('content')
 
+{{--{{$last14days}}--}}
 
 
     <div class="row">
@@ -115,12 +116,17 @@
             </div>
         </div>
 
+
         {{--End Report --}}
+
+
     </div>
     <br><br>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <br>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{url('js/chart.js')}}"></script>
-    {{--<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>--}}
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
 
         window.onload = function () {
@@ -129,7 +135,7 @@
                 animationEnabled: true,
                 theme: "light1", // "light1", "light2", "dark1", "dark2"
                 title:{
-                    text: "Simple Column Chart with Index Labels"
+                    text: "Last 14 Days Visitors"
                 },
                 data: [{
                     type: "column", //change type to bar, line, area, pie, etc
@@ -137,25 +143,23 @@
                     indexLabelFontColor: "#5A5757",
                     indexLabelPlacement: "outside",
                     dataPoints: [
-                        { x: 10, y: 71 },
-                        { x: 20, y: 55 },
-                        { x: 30, y: 50 },
-                        { x: 40, y: 65 },
-                        { x: 50, y: 92, indexLabel: "Highest" },
-                        { x: 60, y: 68 },
-                        { x: 70, y: 38 },
-                        { x: 80, y: 71 },
-                        { x: 90, y: 54 },
-                        { x: 100, y: 60 },
-                        { x: 110, y: 36 },
-                        { x: 120, y: 49 },
-                        { x: 130, y: 21, indexLabel: "Lowest" }
+                    @foreach($last14days as $data)
+                            @php(
+                            $time=strtotime($data['date'])
+                            )
+
+                        { y: {{$data['visitors']}}, label: "{{date('Y-m-d',$time)}}" ,indexLabel: "{{$data['visitors']}}"},
+                        @endforeach
                     ]
                 }]
             });
             chart.render();
 
+
+
         }
+
+
 
 
         function clicked(value) {
@@ -218,26 +222,6 @@
 
 
 
-    {{--<br />--}}
-    {{--<div id="map">My map will go here</div>--}}
-    {{--<br />--}}
-
-
-
-    {{--<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>--}}
-    {{--<script type="text/javascript">--}}
-
-    {{--function myMap() {--}}
-    {{--var mapOptions = {--}}
-    {{--center: new google.maps.LatLng(51.5, -0.12),--}}
-    {{--zoom: 10,--}}
-    {{--mapTypeId: google.maps.MapTypeId.HYBRID--}}
-    {{--}--}}
-    {{--var map = new google.maps.Map(document.getElementById("map"), mapOptions);--}}
-    {{--}--}}
-
-
-    {{--</script>--}}
 
 
 
