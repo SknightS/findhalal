@@ -290,7 +290,8 @@
 
                         location.href='{{route('restaurant.checkout')}}';
 
-                    }if (data== '2'){
+                    }
+                    else if (data== '2'){
 
                         $.alert({
                             title: 'Alert!',

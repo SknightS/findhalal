@@ -363,8 +363,8 @@ class RestaurantController extends Controller
         Cart::clear();
         $t=Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
         {
-            $message->from('2f3192259a-02c01b@inbox.mailtrap.io', 'FindHalal');
-            $message->to('mujtaba.rumi1@gmail.com', 'rumi')->subject('New Order');
+           // $message->from('2f3192259a-02c01b@inbox.mailtrap.io', 'FindHalal');
+            $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order');
         });
         if ($t){
 
