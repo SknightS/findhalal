@@ -290,6 +290,24 @@
 
                         location.href='{{route('restaurant.checkout')}}';
 
+                    }if (data== '2'){
+
+                        $.alert({
+                            title: 'Alert!',
+                            type: 'Red',
+                            content: 'Your Cart is Empty ',
+                            buttons: {
+                                tryAgain: {
+                                    text: 'Ok',
+                                    btnClass: 'btn-red',
+                                    action: function () {
+
+                                    }
+                                }
+
+                            }
+                        });
+
                     }else {
 
                         $.alert({

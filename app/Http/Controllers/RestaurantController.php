@@ -388,6 +388,12 @@ class RestaurantController extends Controller
 
     public function checkOrderType(){
 
+        $cartitem = Cart::getContent();
+        if($cartitem->isEmpty()){
+            //Session::flash('message','Cart Is Empty');
+            return '2';
+        }
+
         if (Session::get('ordertype')=='Takeout' || Session::get('ordertype')=='Delivery'){
 
             return '1';
