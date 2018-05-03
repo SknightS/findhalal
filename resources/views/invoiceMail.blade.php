@@ -335,7 +335,7 @@
                                                                                         <div class='contentEditableContainer contentTextEditable'>
                                                                                             <div class='contentEditable' style='text-align: left;'>
                                                                                                 @foreach($orderInfo as $orderInformation)
-                                                                                                <h2 style="font-size: 20px;">Dear {{$orderInformation->firstName}} {{$orderInformation->lastName}}</h2>
+                                                                                                <h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>
                                                                                                 <br>
 
                                                                                                 <p>Thanks For Ordering From Us.</p> <br>
@@ -356,15 +356,15 @@
                                                                                 <tr>
                                                                                     <td style="width: 40%; text-align: center;">
                                                                                         <h4 style="color: #4C4C4C;">Order Details</h4>
-                                                                                        <p style="color: red;">Order Number# <br> {{$orderInformation->orderId}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{date('d-m-Y',$orderInformation->orderTime)}}</p>
+                                                                                        <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
 
                                                                                     </td>
                                                                                     <td style="width: 60%; text-align: center; ">
                                                                                         <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                        <p style="color: #4C4C4C;">{{$orderInformation->addressDetails}} , {{$orderInformation->zip}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{$orderInformation->city}} , {{$orderInformation->country}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{$orderInformation->phone}}</p>
+                                                                                        <p style="color: #4C4C4C;">{{$orderInformation['addressDetails']}} , {{$orderInformation['zip']}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{$orderInformation['city']}} , {{$orderInformation['country']}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{$orderInformation['phone']}}</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
@@ -440,13 +440,13 @@
                                                         <tbody>
                                                         <tr>
                                                             <td><?php echo $i?></td>
-                                                            <td>{{$itemInfo->itemName}}<br>{{$itemInfo->itemDetails}}</td>
-                                                            <td>{{$itemInfo->itemsizeName}}</td>
-                                                            <td>${{$itemInfo->price}}</td>
+                                                            <td>{{$itemInfo['itemName']}}<br>{{$itemInfo['itemDetails']}}</td>
+                                                            <td>{{$itemInfo['itemsizeName']}}</td>
+                                                            <td>${{$itemInfo['price']}}</td>
 
-                                                            <td>{{$itemInfo->quantity}}</td>
+                                                            <td>{{$itemInfo['quantity']}}</td>
 
-                                                            <td>${{$price=($itemInfo->price*$itemInfo->quantity)}}</td>
+                                                            <td>${{$price=($itemInfo['price']*$itemInfo['quantity'])}}</td>
                                                         </tr>
                                                         <?php $i++;$total=($total+$price); ?>
 
@@ -466,20 +466,7 @@
                                                             <td style="width: 15%">Sub Total</td>
                                                             <td>$<?php echo $total?></td>
                                                         </tr>
-                                                        {{--<tr>--}}
-                                                            {{--<td style="width: 75%"></td>--}}
-                                                            {{--<td></td>--}}
-                                                            {{--<td></td>--}}
-                                                            {{--<td></td>--}}
-                                                            {{--<td></td>--}}
-                                                            {{--<?php foreach ($charge as $charges){?>--}}
-                                                            {{--<td style="width: 18%">sales tax <?php echo $charges->vat?>%</td>--}}
-                                                            {{--<?php }if (!empty($allOrder->vat)){?>--}}
-                                                            {{--<td>$<?php echo  $allOrder->vat?></td>--}}
-                                                            {{--<?php } else{ ?>--}}
-                                                            {{--<td>$0.00</td>--}}
-                                                            {{--<?php } ?>--}}
-                                                        {{--</tr>--}}
+
                                                         <tr>
                                                             <td style="width: 75%"></td>
                                                             <td></td>
@@ -487,8 +474,8 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td>Delevary Fee</td>
-                                                            <?php $delveryFee=0;if (!empty($orderInformation->delfee)){?>
-                                                            <td>$<?php echo $delveryFee=$orderInformation->delfee?></td>
+                                                            <?php $delveryFee=0;if (!empty($orderInformation['delfee'])){?>
+                                                            <td>$<?php echo $delveryFee=$orderInformation['delfee']?></td>
                                                             <?php }else {?>
                                                             <td>$<?php echo $delveryFee?></td>
                                                             <?php }?>

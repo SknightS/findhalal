@@ -52,7 +52,7 @@
                 <!-- /widget heading -->
                 <div class="widget-heading">
                     <h3 class="widget-title text-dark">
-                        <span style="color: #0a001f">Cart summary</span>
+                       <span style="color: #0a001f">Cart summary</span>
                     </h3>
                     <div class="clearfix"></div>
                 </div>
@@ -213,14 +213,15 @@
                                                     <div id="card-errors" role="alert"></div>
                                                 </div>
 
-                                                <button class="btn btn-outline-success btn-block">Pay now</button>
+                                                <button class="btn btn-success btn-block">Pay now</button>
+
                                             </form>
 
                                         </div>
                                     </li>
                                 </ul>
                                 {{--<p class="text-xs-center"> <button type="submit" id="PayNowCard" style="display: none" class="btn btn-outline-success btn-block">Pay now1</button> </p>--}}
-                                <p class="text-xs-center"> <button type="submit" id="PayNowCash" style="display: none" onclick="cash()" class="btn btn-outline-success btn-block">Pay now</button> </p>
+                                <p class="text-xs-center"> <button type="submit" id="PayNowCash" style="display: none" onclick="cash()" class="btn btn-success btn-block">Pay now</button> </p>
                             </div>
                         </div>
                     </div>
@@ -263,7 +264,7 @@
 
 
         function stripeTokenHandler(token) {
-            // console.log(token);
+       // console.log(token);
             // Insert the token ID into the form so it gets submitted to the server
             // var form = document.getElementById('payment-form');
             // var hiddenInput = document.createElement('input');
@@ -413,7 +414,7 @@
             }
 
 
-        }
+            }
     </script>
 
 
@@ -543,8 +544,8 @@
                                         btnClass: 'btn-blue',
                                         action: function(){
 
-                                            window.location.href = "{{route('home')}}";
-                                            // console.log(data);
+                                           // window.location.href = "{{route('home')}}";
+                                            console.log(data);
                                         }
                                     }
 

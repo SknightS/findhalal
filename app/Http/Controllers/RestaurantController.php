@@ -25,7 +25,9 @@ class RestaurantController extends Controller
                     ->orWhere('city', $r->searchbox);
             })
             ->get();
+
         return view('restaurants.index')
+
             ->with('resturant',$searchresult);
     }
     public function ViewMenu($resid){
@@ -56,12 +58,15 @@ class RestaurantController extends Controller
             ->where('status', 'Active')
             ->get();
         $cartCollection = Cart::getContent();
+
+
         return view('restaurants.profile')
             ->with('category', $catagory)
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
             ->with('restaurantStatus', $restaurantStatus)
+
             ->with('cartitem', $cartCollection);
     }
     public function getItem(Request $r){
@@ -327,6 +332,16 @@ class RestaurantController extends Controller
             $orderitem->save();
         }
 
+        //For Rating Restaurant
+        if($r->rating){
+            $rating=new Rating;
+            $rating->customerId=$customer->customerId;
+            $rating->restaurantId=$resid;
+            $rating->rating=$r->rating;
+            $rating->save();
+
+        }
+
         $orderInfo = Order::select('order.delfee','order.orderId','order.orderTime', 'order.paymentType','order.orderType', 'customer.firstName',
             'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country')
             ->where('order.orderId', $order->orderId)
@@ -345,32 +360,42 @@ class RestaurantController extends Controller
             ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
             ->get();
 
-        Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
-        use ($customerMail, $customerFirstName, $customerLastName)
+
+        $t=Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
         {
-            $message->from('noreply@findhalal.de', 'FindHalal');
+            $message->from('2f3192259a-02c01b@inbox.mailtrap.io', 'FindHalal');
             $message->to('mujtaba.rumi1@gmail.com', 'rumi')->subject('New Order');
         });
+        if ($t){
 
-        Cart::clear();
+//            alert()->success('Congrats', 'your order has been placed successfully');
+//            return redirect("/");
+            return 1;
 
-        //For Rating Restaurant
-        if($r->rating){
-            $rating=new Rating;
-            $rating->customerId=$customer->customerId;
-            $rating->restaurantId=$resid;
-            $rating->rating=$r->rating;
-            $rating->save();
-
+        }else {
+            return 0;
         }
 
-        alert()->success('Congrats', 'your order has been placed successfully');
-        return redirect("/");
+      //  Cart::clear();
+
+//        alert()->success('Congrats', 'your order has been placed successfully');
+//        return redirect("/");
+
         // return back();
     }
 
 
 
+    public function checkOrderType(){
+
+        if (Session::get('ordertype')=='Takeout' || Session::get('ordertype')=='Delivery'){
+
+            return '1';
+        }else{
+            return '0';
+        }
+
+    }
     public function takeout(){
         Session::put('ordertype', "Takeout");
     }
@@ -381,6 +406,6 @@ class RestaurantController extends Controller
         Session::put('paymentType', "Cash");
     }
     public function Card(){
-        Session::put('ordertype', "Card");
+        Session::put('paymentType', "Card");
     }
 }

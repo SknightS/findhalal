@@ -35,6 +35,8 @@ Route::post('/restaurants/updateitemsize','RestaurantController@updateItemSize')
 Route::post('/restaurants/updateitemqty','RestaurantController@updateItemQty')->name('restaurant.updateitemqty');
 Route::post('/restaurants/removecart','RestaurantController@removeCart')->name('restaurant.removecart');
 
+Route::post('/restaurants/checkOrderType','RestaurantController@checkOrderType')->name('restaurant.checkOrderType');
+
 //checkout
 Route::get('/restaurants/checkout/','RestaurantController@checkout')->name('restaurant.checkout');
 Route::post('/restaurants/submitorder','RestaurantController@SubmitOrder')->name('restaurant.submitorder');
