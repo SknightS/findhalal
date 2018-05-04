@@ -309,8 +309,6 @@ class ReportController extends Controller
             ->with('orderCard',$orderCard)
             ->with('orderCash',$orderCash)
             ->with('restaurantNAme',$restaurantNAme);
-
-
         }
 
 
