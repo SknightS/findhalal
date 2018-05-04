@@ -544,8 +544,8 @@
                                         btnClass: 'btn-blue',
                                         action: function(){
 
-                                           // window.location.href = "{{route('home')}}";
-                                            console.log(data);
+                                            window.location.href = "{{route('home')}}";
+                                           // console.log(data);
                                         }
                                     }
 
