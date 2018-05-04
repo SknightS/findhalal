@@ -273,31 +273,31 @@ class RestaurantController extends Controller
             } catch (\Stripe\Error\RateLimit $e) {
                 // Too many requests made to the API too quickly
                 Session::flash('message','Too many requests made to the API too quickly');
-                return 'error';
+                return '2';
 
             } catch (\Stripe\Error\InvalidRequest $e) {
                 // Invalid parameters were supplied to Stripe's API
                 Session::flash('message','Invalid parameters were supplied to Stripes API');
-                return 'error';
+                return '2';
             } catch (\Stripe\Error\Authentication $e) {
                 // Authentication with Stripe's API failed
                 Session::flash('message','Authentication with Stripe\'s API failed');
-                return 'error';
+                return '2';
                 // (maybe you changed API keys recently)
             } catch (\Stripe\Error\ApiConnection $e) {
                 // Network communication with Stripe failed
                 Session::flash('message','Network communication with Stripe failed');
-                return 'error';
+                return '2';
             } catch (\Stripe\Error\Base $e) {
                 // Display a very generic error to the user, and maybe send
                 // yourself an email
                 Session::flash('message','Display a very generic error to the user, and maybe send');
-                return 'error';
+                return '2';
 
             } catch (Exception $e) {
                 // Something else happened, completely unrelated to Stripe
                 Session::flash('message','Something else happened, completely unrelated to Stripe');
-                return 'error';
+                return '2';
             }
 
         }
@@ -364,11 +364,11 @@ class RestaurantController extends Controller
             ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
             ->get();
 
-
+        Cart::clear();
         $t=Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
         {
-            $message->from('2f3192259a-02c01b@inbox.mailtrap.io', 'FindHalal');
-            $message->to('mujtaba.rumi1@gmail.com', 'rumi')->subject('New Order');
+           // $message->from('2f3192259a-02c01b@inbox.mailtrap.io', 'FindHalal');
+            $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order');
         });
         if ($t){
 
@@ -391,6 +391,12 @@ class RestaurantController extends Controller
 
 
     public function checkOrderType(){
+
+        $cartitem = Cart::getContent();
+        if($cartitem->isEmpty()){
+            //Session::flash('message','Cart Is Empty');
+            return '2';
+        }
 
         if (Session::get('ordertype')=='Takeout' || Session::get('ordertype')=='Delivery'){
 

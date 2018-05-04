@@ -128,7 +128,7 @@
                                             {{--</select>--}}
                                         </div>
                                         <div class="col-xs-4">
-                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="number" min="1" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onkeypress="return isNumberKey(event,this)" onkeyup="updateqty(this)"  >
+                                            <input class="form-control myInputField" id="{{"qty".$ci->id}}" type="number" min="1" value="{{$ci->quantity}}" data-panel-id="{{$ci->id}}"  onkeypress="return isNumberKey(event,this)" onkeyup="updateqty(this)" onchange="updateqty(this)" >
 
                                         </div>
                                     </div>
@@ -137,7 +137,7 @@
                             @endforeach
 
                             <!-- end:Order row -->
-                            <div class="widget-delivery clearfix">
+                            <div id="ordertypeDiv" class="widget-delivery clearfix">
 
                                 <form>
                                     <div class="col-xs-6 col-sm-12 col-md-6 col-lg-6 b-t-0">
@@ -157,7 +157,7 @@
 
 
                                     {{--<button onclick="location.href='{{route('restaurant.checkout')}}'" type="submit" class="btn theme-btn btn-lg">Checkout</button>--}}
-                                    <button id="checkOut" type="submit" class="btn theme-btn btn-lg">Checkout</button>
+                                    <button onclick="checkOut()" id="checkOut" type="submit" class="btn theme-btn btn-lg">Checkout</button>
                                 </div>
                             </div>
                                  </span>
@@ -189,6 +189,47 @@
                     document.getElementById("showitem").innerHTML = data;
                 }
             });
+            {{--$('#checkOut').click(function() {--}}
+
+
+                {{--$.ajax({--}}
+                    {{--type : 'post' ,--}}
+                    {{--url : '{{route('restaurant.checkOrderType')}}',--}}
+                    {{--data : {_token: CSRF_TOKEN,} ,--}}
+                    {{--success : function(data){--}}
+
+                        {{--if (data== '1'){--}}
+
+                            {{--location.href='{{route('restaurant.checkout')}}';--}}
+
+                        {{--}else {--}}
+
+                            {{--$.alert({--}}
+                                {{--title: 'Alert!',--}}
+                                {{--type: 'Red',--}}
+                                {{--content: 'Order Type Must be Delivery or Takeout',--}}
+                                {{--buttons: {--}}
+                                    {{--tryAgain: {--}}
+                                        {{--text: 'Ok',--}}
+                                        {{--btnClass: 'btn-red',--}}
+                                        {{--action: function () {--}}
+
+                                        {{--}--}}
+                                    {{--}--}}
+
+                                {{--}--}}
+                            {{--});--}}
+                            {{--$('#cart_table').load(document.URL +  ' #cart_table');--}}
+
+                        {{--}--}}
+
+
+
+                    {{--}--}}
+                {{--});--}}
+
+//            });
+
             $('#mydiv li').click(function() {
                 //Get the id of list items
                 var ID = $(this).attr('id');
@@ -204,45 +245,6 @@
                         document.getElementById("showitem").innerHTML = data;
                     }
                 });
-            });
-            $('#checkOut').click(function() {
-
-
-                    $.ajax({
-                        type : 'post' ,
-                        url : '{{route('restaurant.checkOrderType')}}',
-                        data : {_token: CSRF_TOKEN,} ,
-                        success : function(data){
-
-                            if (data== '1'){
-
-                                location.href='{{route('restaurant.checkout')}}';
-
-                            }else {
-
-                                $.alert({
-                                    title: 'Alert!',
-                                    type: 'Red',
-                                    content: 'Order Type Must be Delivery or Takeout',
-                                    buttons: {
-                                        tryAgain: {
-                                            text: 'Ok',
-                                            btnClass: 'btn-red',
-                                            action: function () {
-
-                                            }
-                                        }
-
-                                    }
-                                });
-
-                            }
-
-
-
-                        }
-                    });
-
             });
 
         });
@@ -271,6 +273,65 @@
                     }
 
                     $('#cart_table').load(document.URL +  ' #cart_table');
+                }
+            });
+        }
+        function checkOut(){
+
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                type : 'post' ,
+                url : '{{route('restaurant.checkOrderType')}}',
+                data : {_token: CSRF_TOKEN,} ,
+                success : function(data){
+
+                    if (data== '1'){
+
+                        location.href='{{route('restaurant.checkout')}}';
+
+                    }
+                    else if (data== '2'){
+
+                        $.alert({
+                            title: 'Alert!',
+                            type: 'Red',
+                            content: 'Your Cart is Empty ',
+                            buttons: {
+                                tryAgain: {
+                                    text: 'Ok',
+                                    btnClass: 'btn-red',
+                                    action: function () {
+
+                                    }
+                                }
+
+                            }
+                        });
+
+                    }else {
+
+                        $.alert({
+                            title: 'Alert!',
+                            type: 'Red',
+                            content: 'Order Type Must be Delivery or Takeout',
+                            buttons: {
+                                tryAgain: {
+                                    text: 'Ok',
+                                    btnClass: 'btn-red',
+                                    action: function () {
+
+                                    }
+                                }
+
+                            }
+                        });
+                        $('#cart_table').load(document.URL +  ' #cart_table');
+
+                    }
+
+
+
                 }
             });
         }
@@ -351,14 +412,6 @@
 
         function delivery() {
 
-            {{--@php--}}
-
-                {{--Session::forget('ordertype');--}}
-
-                {{--Session::put('ordertype', "Delivery");--}}
-            {{----}}
-            {{----}}
-            {{--@endphp--}}
 
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
@@ -367,7 +420,7 @@
                 data : {_token: CSRF_TOKEN} ,
                 success : function(data){
 
-                  //  $('#cart_table').load(document.URL +  ' #cart_table');
+                    $('#ordertypeDiv').load(document.URL +  ' #ordertypeDiv');
 
                 }
             });
@@ -375,10 +428,6 @@
         }
         function takeout() {
 
-            {{--@php--}}
-                {{--Session::forget('ordertype');--}}
-                {{--Session::put('ordertype', "Takeout");--}}
-            {{--@endphp--}}
 
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
@@ -387,12 +436,13 @@
                 data : {_token: CSRF_TOKEN} ,
                 success : function(data){
 
-                    //  $('#cart_table').load(document.URL +  ' #cart_table');
+                     $('#ordertypeDiv').load(document.URL +  ' #ordertypeDiv');
 
                 }
             });
           //   $('#cart_table').load(document.URL +  ' #cart_table');
         }
+
 
 
     </script>

@@ -94,7 +94,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Zip/ Postal Code*</label>
-                                        <input type="number" class="form-control" placeholder="" id="zip" name="zip"> </div>
+                                        <input type="number" class="form-control" onkeypress="return isNumberKey(event,this)" placeholder="" id="zip" name="zip"> </div>
                                     <!--/form-group-->
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>phone*</label>
-                                        <input type="number" class="form-control" placeholder="" id="phone" name="phone"> </div>
+                                        <input type="number" onkeypress="return isNumberKey(event,this)" class="form-control" placeholder="" id="phone" name="phone"> </div>
                                     <!--/form-group-->
                                 </div>
 
@@ -544,8 +544,8 @@
                                         btnClass: 'btn-blue',
                                         action: function(){
 
-                                           // window.location.href = "{{route('home')}}";
-                                            console.log(data);
+                                            window.location.href = "{{route('home')}}";
+                                           // console.log(data);
                                         }
                                     }
 
@@ -638,4 +638,16 @@
 
         }
     </script>
+    <SCRIPT language=Javascript>
+        <!--
+        function isNumberKey(evt)
+        {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+        //-->
+    </SCRIPT>
 @endsection

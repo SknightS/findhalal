@@ -604,7 +604,7 @@
                                                                                     <td>
                                                                                         <div class='contentEditableContainer contentTextEditable'>
                                                                                             <div class='contentEditable' style='text-align: left;'>
-                                                                                                <p style="font-size: 15px; text-align: center;">&copy; FindHalal 2018. All rights reserved</p>
+                                                                                                <p style="font-size: 15px; text-align: center;">&copy; FindHalal {{date('Y')}}. All rights reserved</p>
 
                                                                                             </div>
 

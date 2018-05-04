@@ -215,10 +215,22 @@
                 <div class="restaurants-filter pull-right">
                     <nav class="primary pull-left">
                         <ul>
-                            <li><a href="#" class="selected" data-filter="*">All</a> </li>
-                            @foreach($featuredResCategory as $featuredRresCat)
-                                <li><a href="#" data-filter=".{{$featuredRresCat->name}}">{{$featuredRresCat->name}}</a> </li>
-                            @endforeach
+                            {{--<li><a href="#" class="selected" data-filter="*">All</a> </li>--}}
+                            {{--@foreach($featuredResCategory as $featuredRresCat)--}}
+                                {{--<li><a href="#" data-filter=".{{$featuredRresCat->name}}">{{$featuredRresCat->name}}</a> </li>--}}
+                            {{--@endforeach--}}
+                            {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".thaifood">thai food</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".fish">fish</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".thaifood">thai food</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".fish">fish</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".thaifood">thai food</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".fish">fish</a> </li>--}}
                             {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
                             {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
                             {{--<li><a href="#" data-filter=".thaifood">thai food</a> </li>--}}
@@ -313,7 +325,7 @@
                                     @endforeach
                                         </span> </div>
 
-
+                                    <div class="price-btn-block"> <span class="price"></span> <a href="{{route('restaurant.viewmenu',$featuredResturant->resturantId)}}" class="btn theme-btn-dash pull-right">Order Now</a> </div>
 
                                 </div>
                             </div>
