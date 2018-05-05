@@ -244,8 +244,7 @@ class RestaurantController extends Controller
         if($r->stripeToken){
 //            return $r->stripeToken;
             try {
-                //    \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
-                \Stripe\Stripe::setApiKey("sk_live_oiEzhTuAbHW9MrpLXe5OLw8v");
+                    \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
                 // Token is created using Checkout or Elements!
                 // Get the payment token ID submitted by the form:
                 $token = $r->stripeToken;
