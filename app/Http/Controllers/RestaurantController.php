@@ -260,6 +260,7 @@ class RestaurantController extends Controller
                 // Since it's a decline, \Stripe\Error\Card will be caught
                 $body = $e->getJsonBody();
                 $err  = $body['error'];
+
                 $code= $err['code'];
                 $msg=$err['message'];
                 $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
@@ -271,6 +272,7 @@ class RestaurantController extends Controller
                 // $msg.='Message is:' . $err['message'] . "\n";
                 // Session::flash('message',$err);
                 return $data;
+
             } catch (\Stripe\Error\RateLimit $e) {
                 // Too many requests made to the API too quickly
                 // Session::flash('message','Too many requests made to the API too quickly');
