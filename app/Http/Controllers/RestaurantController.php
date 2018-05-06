@@ -255,12 +255,15 @@ class RestaurantController extends Controller
                 $body = $e->getJsonBody();
                 $err  = $body['error'];
 
-                print('Status is:' . $e->getHttpStatus() . "\n");
-                print('Type is:' . $err['type'] . "\n");
-                print('Code is:' . $err['code'] . "\n");
+                $msg= 'Status is:' . $e->getHttpStatus() . "\n";
+                $msg.='Type is:' . $err['type'] . "\n";
+                $msg.='Code is:' . $err['code'] . "\n";
                 // param is '' in this case
-                print('Param is:' . $err['param'] . "\n");
-                print('Message is:' . $err['message'] . "\n");
+                $msg.='Param is:' . $err['param'] . "\n";
+                $msg.='Message is:' . $err['message'] . "\n";
+                Session::flash('message',$msg);
+                return 'error';
+
             } catch (\Stripe\Error\RateLimit $e) {
                 // Too many requests made to the API too quickly
                 Session::flash('message','Too many requests made to the API too quickly');
