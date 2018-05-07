@@ -189,6 +189,7 @@ class RestaurantController extends Controller
         Cart::remove($r->itemid);
     }
     public function checkout(){
+
         $cartitem = Cart::getContent();
         if($cartitem->isEmpty()){
             Session::flash('message','Cart Is Empty');
@@ -229,20 +230,25 @@ class RestaurantController extends Controller
         }
 
 
-        $restaurantInfo=Resturant::findOrFail($resid);
+//        $restaurantInfo=Resturant::findOrFail($resid);
+        $restaurantInfo=Resturant::where('resturantId',$resid)->get(array('minOrder'));
         $totalPrice=Cart::getTotal();
 
-        if($totalPrice>$restaurantInfo->minOrder){
+        foreach ($restaurantInfo as $resInfoo){
+            $resMinOrder=$resInfoo->minOrder;
+        }
+
+        if($totalPrice >= $resMinOrder){
             $totalPrice=$totalPrice;
             $delfee=0;
         }
         else{
             $totalPrice+=$delfee;
         }
-//        return $totalPrice;
+
 
         if($r->stripeToken){
-//            return $r->stripeToken;
+
             try {
                     \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
                 // Token is created using Checkout or Elements!
@@ -251,7 +257,7 @@ class RestaurantController extends Controller
                 $charge = \Stripe\Charge::create([
                     'amount'=>$totalPrice*100,
                     'currency' => 'EUR',
-                    'description' => 'Example charge',
+                    'description' => 'New Order Payment',
                     'source' => $token,
                 ]);
 //                dd('Success Payment');
@@ -375,17 +381,21 @@ class RestaurantController extends Controller
             $rating->save();
 
         }
-
         $orderInfo = Order::select('order.delfee','order.orderId','order.orderTime', 'order.paymentType','order.orderType', 'customer.firstName',
-            'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country')
+            'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country',
+            'resturant.name as resName','resturant.minOrder as resMinOrder','resturant.delfee as resDelfee','resturant.email as resMail')
             ->where('order.orderId', $order->orderId)
             ->leftJoin('customer','customer.customerId','=','order.fkcustomerId')
             ->leftJoin('shipaddress','shipaddress.fkorderId','=','order.orderId')
-            ->get();
+            ->leftJoin('resturant','resturant.resturantId','=','order.fkresturantId')
+            ->toSql();
+
         foreach ($orderInfo as $mailInfo){
             $customerMail=$mailInfo->email;
             $customerFirstName=$mailInfo->firstName;
             $customerLastName=$mailInfo->lastName;
+            $restaurantMail=$mailInfo->resMail;
+            $restaurantName=$mailInfo->resName;
         }
 
         $orderItemInfo = Orderitems::select('orderitem.quantity','orderitem.price','itemsize.itemsizeName', 'item.itemName','item.itemDetails')
@@ -403,23 +413,20 @@ class RestaurantController extends Controller
 
             Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
             {
-                //  $message->from('support@findhalal.de', 'FindHalal');
+                  $message->from('support@findhalal.de', 'FindHalal');
                 $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order');
             });
-
+            Mail::send('invoiceMail1',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($restaurantMail,$restaurantName)
+            {
+                  $message->from('support@findhalal.de', 'FindHalal');
+                $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');
+            });
 
             return 1;
 
         }catch (Exception $ex) {
             return 0;
         }
-
-        /*  Cart::clear();
-
-          alert()->success('Congrats', 'your order has been placed successfully');
-          return redirect("/");*/
-
-        // return back();
     }
 
 
