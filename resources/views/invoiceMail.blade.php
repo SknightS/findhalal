@@ -338,8 +338,10 @@
                                                                                                 <h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>
                                                                                                 <br>
 
+                                                                                                <p>Attached below is the summary of your order.</p><br>
+
                                                                                                 <p>Thanks For Ordering From Us.</p> <br>
-                                                                                                    <p>Regard <br> <b>FindHalal</b> Team</p>
+                                                                                                    <p>Regards, <br> <b>FindHalal</b> Team</p>
                                                                                                  @endforeach
 
                                                                                             </div>
@@ -356,15 +358,16 @@
                                                                                 <tr>
                                                                                     <td style="width: 40%; text-align: center;">
                                                                                         <h4 style="color: #4C4C4C;">Order Details</h4>
+                                                                                        <span style="color: red;">Restaurant Name:</span><br><span style="color: blue;"><b>{{$orderInformation['resName']}}</b></span>
                                                                                         <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
                                                                                         <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
 
                                                                                     </td>
                                                                                     <td style="width: 60%; text-align: center; ">
                                                                                         <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                        <p style="color: #4C4C4C;">{{$orderInformation['addressDetails']}} , {{$orderInformation['zip']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{$orderInformation['city']}} , {{$orderInformation['country']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">{{$orderInformation['phone']}}</p>
+                                                                                        <p style="color: #4C4C4C;">Address: {{$orderInformation['addressDetails']}} , Zip: {{$orderInformation['zip']}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">City: {{$orderInformation['city']}} , Country: {{$orderInformation['country']}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Phone: {{$orderInformation['phone']}}</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
@@ -442,11 +445,11 @@
                                                             <td><?php echo $i?></td>
                                                             <td>{{$itemInfo['itemName']}}<br>{{$itemInfo['itemDetails']}}</td>
                                                             <td>{{$itemInfo['itemsizeName']}}</td>
-                                                            <td>${{$itemInfo['price']}}</td>
+                                                            <td>&euro;{{$itemInfo['price']}}</td>
 
                                                             <td>{{$itemInfo['quantity']}}</td>
 
-                                                            <td>${{$price=($itemInfo['price']*$itemInfo['quantity'])}}</td>
+                                                            <td>&euro;{{$price=($itemInfo['price']*$itemInfo['quantity'])}}</td>
                                                         </tr>
                                                         <?php $i++;$total=($total+$price); ?>
 
@@ -464,7 +467,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td style="width: 15%">Sub Total</td>
-                                                            <td>$<?php echo $total?></td>
+                                                            <td>&euro;<?php echo $total?></td>
                                                         </tr>
 
                                                         <tr>
@@ -474,11 +477,29 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td>Delevary Fee</td>
-                                                            <?php $delveryFee=0;if (!empty($orderInformation['delfee'])){?>
-                                                            <td>$<?php echo $delveryFee=$orderInformation['delfee']?></td>
-                                                            <?php }else {?>
-                                                            <td>$<?php echo $delveryFee?></td>
-                                                            <?php }?>
+                                                            <?php $delveryFee=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
+
+                                                            <td>&euro;<?php echo $delveryFee=$orderInformation->resDelfee ?></td>
+                                                            <?php }elseif($orderInformation->orderType=='Delivery' && $total < $orderInformation->resMinOrder) {?>
+                                                            <td>&euro;<?php echo $delveryFee=$orderInformation->delfee?></td>
+                                                            <?php }elseif ($orderInformation->orderType=='Takeout'){?>
+                                                            <td>&euro;<?php echo $delveryFee;} ?></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 75%"></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>Discount</td>
+                                                            <?php $discount=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
+
+                                                            <td>&euro;<?php echo $discount=$delveryFee ?></td>
+                                                            <?php }elseif($orderInformation->orderType=='Delivery' && $total < $orderInformation->resMinOrder) {?>
+                                                            <td>&euro;<?php echo $discount?></td>
+                                                            <?php }elseif ($orderInformation->orderType=='Takeout'){?>
+                                                            <td>&euro;<?php echo $discount ; } ?></td>
 
                                                         </tr>
 
@@ -489,7 +510,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td>TOTAL</td>
-                                                            <td>$<?php echo $Total=(($total+$delveryFee))?></td>
+                                                            <td>&euro;<?php echo $Total=(($total+$delveryFee-$discount))?></td>
                                                         </tr>
                                                     </table>
                                                         @endforeach
