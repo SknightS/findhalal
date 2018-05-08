@@ -53,10 +53,10 @@
 </section>
 <!-- banner part ends -->
 <!-- location match part starts -->
-<div class="location-match text-xs-center">
-    <div class="container"> <span>356 restaurants matched your location: <span class="primary-color">New York, NY -</span> </span>
-    </div>
-</div>
+{{--<div class="location-match text-xs-center">--}}
+    {{--<div class="container"> <span>356 restaurants matched your location: <span class="primary-color">New York, NY -</span> </span>--}}
+    {{--</div>--}}
+{{--</div>--}}
 <!-- location match part ends -->
 <!-- Popular block starts -->
 <section class="popular">
@@ -71,7 +71,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4 food-item">
                     <div class="food-item-wrap">
                         <div class="figure-wrap bg-image" data-image-src="{{url('admin/public/RestaurantImages/'.$restaurant->image)}}">
-                            <div class="distance"><i class="fa fa-pin"></i>1240m</div>
+                            {{--<div class="distance"><i class="fa fa-pin"></i>1240m</div>--}}
 
                             @foreach($restaurantRating as $rating)
                                 @if($restaurant->resturantId == $rating->restaurantId)
