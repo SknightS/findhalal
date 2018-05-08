@@ -1,4 +1,3 @@
-
 @extends('main')
 @section('header')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -119,7 +118,6 @@
                                         <i class="fa fa-star"></i>
                                     @endif
                                     </div>
-
 
                                     <div class="review pull-right"><span style="color: white">{{$rating->totalRating}} Ratings</span> </div>
                                 @endif
@@ -349,9 +347,9 @@
                     <div class="col-xs-12 col-sm-3 add-title">
                         <h4>Add Your Restaurant</h4> </div>
                     <div class="col-xs-12 col-sm-5 join-text">
-                        <p>Join the thousands of other restaurants who benefit from having their menus on <a href="#"><strong> FoodPicky directory</strong></a> </p>
+                        <p>Join the thousands of other restaurants who benefit from having their menus on <a href="{{route('home')}}">findhalal.de</a> </p>
                     </div>
-                    <div class="col-xs-12 col-sm-4 join-btn text-xs-right"><a href="contact.html" class="btn theme-btn btn-lg">I‘m restaurant</a> </div>
+                    <div class="col-xs-12 col-sm-4 join-btn text-xs-right"><a href="{{route('contact')}}" class="btn theme-btn btn-lg">I‘m restaurant</a> </div>
                 </div>
             </div>
         </section>
