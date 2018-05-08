@@ -248,7 +248,7 @@ class RestaurantController extends Controller
         if($r->stripeToken){
 //            return $r->stripeToken;
             try {
-                \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
+                    \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
                 // Token is created using Checkout or Elements!
                 // Get the payment token ID submitted by the form:
                 $token = $r->stripeToken;
@@ -264,40 +264,74 @@ class RestaurantController extends Controller
                 $body = $e->getJsonBody();
                 $err  = $body['error'];
 
-                print('Status is:' . $e->getHttpStatus() . "\n");
-                print('Type is:' . $err['type'] . "\n");
-                print('Code is:' . $err['code'] . "\n");
+                $code= $err['code'];
+                $msg=$err['message'];
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                // $msg ='Status is:' . $e->getHttpStatus() . "\n";
+                //  $msg.='Type is:' . $err['type'] . "\n";
+                // $msg.='Code is:' . $err['code'] . "\n";
                 // param is '' in this case
-                print('Param is:' . $err['param'] . "\n");
-                print('Message is:' . $err['message'] . "\n");
+                // $msg.='Param is:' . $err['param'] . "\n";
+                // $msg.='Message is:' . $err['message'] . "\n";
+                // Session::flash('message',$err);
+                return $data;
+
             } catch (\Stripe\Error\RateLimit $e) {
                 // Too many requests made to the API too quickly
-                Session::flash('message','Too many requests made to the API too quickly');
-                return '2';
+                // Session::flash('message','Too many requests made to the API too quickly');
+                $code= 'RateLimit';
+                $msg='Too many requests made to the API too quickly';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
 
             } catch (\Stripe\Error\InvalidRequest $e) {
                 // Invalid parameters were supplied to Stripe's API
-                Session::flash('message','Invalid parameters were supplied to Stripes API');
-                return '2';
+                // Session::flash('message','Invalid parameters were supplied to Stripes API');
+                // return '2';
+                $code= 'InvalidRequest';
+                $msg='Invalid parameters were supplied to Stripes API';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
+
             } catch (\Stripe\Error\Authentication $e) {
                 // Authentication with Stripe's API failed
-                Session::flash('message','Authentication with Stripe\'s API failed');
-                return '2';
+                // Session::flash('message','Authentication with Stripe\'s API failed');
+                // return '2';
+                $code= 'Authentication';
+                $msg='Authentication with Stripe\'s API failed';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
+
                 // (maybe you changed API keys recently)
             } catch (\Stripe\Error\ApiConnection $e) {
                 // Network communication with Stripe failed
-                Session::flash('message','Network communication with Stripe failed');
-                return '2';
+                // Session::flash('message','Network communication with Stripe failed');
+                //  return '2';
+                $code= 'ApiConnection';
+                $msg='Network communication with Stripe failed';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
             } catch (\Stripe\Error\Base $e) {
                 // Display a very generic error to the user, and maybe send
                 // yourself an email
-                Session::flash('message','Display a very generic error to the user, and maybe send');
-                return '2';
+                // Session::flash('message','Display a very generic error to the user, and maybe send');
+                //  return '2';
+
+                $code= 'Stripe Error';
+                $msg='Error In Payment with Stripe , Please Try after Sometime';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
 
             } catch (Exception $e) {
                 // Something else happened, completely unrelated to Stripe
-                Session::flash('message','Something else happened, completely unrelated to Stripe');
-                return '2';
+                //  Session::flash('message','Something else happened, completely unrelated to Stripe');
+                // return '2';
+
+                $code= 'Payment Error';
+                $msg='Something else happened, completely unrelated to Stripe';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
+
             }
 
         }
@@ -364,26 +398,30 @@ class RestaurantController extends Controller
             ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
             ->get();
 
-        Cart::clear();
-        $t=Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
-        {
-           // $message->from('2f3192259a-02c01b@inbox.mailtrap.io', 'FindHalal');
-            $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order');
-        });
-        if ($t){
 
-//            alert()->success('Congrats', 'your order has been placed successfully');
-//            return redirect("/");
+        Cart::clear();
+        Session::forget('ordertype');
+        Session::forget('paymentType');
+
+        try{
+
+            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
+            {
+                //  $message->from('support@findhalal.de', 'FindHalal');
+                $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order');
+            });
+
+
             return 1;
 
-        }else {
+        }catch (Exception $ex) {
             return 0;
         }
 
-      //  Cart::clear();
+        /*  Cart::clear();
 
-//        alert()->success('Congrats', 'your order has been placed successfully');
-//        return redirect("/");
+          alert()->success('Congrats', 'your order has been placed successfully');
+          return redirect("/");*/
 
         // return back();
     }
