@@ -328,7 +328,8 @@
                                                                     <tbody>
                                                                     <tr>
                                                                         <td valign="top" width="40">&nbsp;</td>
-                                                                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+                                                                        <td>
+                                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
                                                                                 <tr><td height='25'></td></tr>
                                                                                 <tr>
                                                                                     <td>
@@ -389,9 +390,9 @@
                                                                                     <tr>
                                                                                         <td style="width: 100%; text-align: center; ">
                                                                                             <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                            <p style="color: #4C4C4C;">Address: {{$orderInformation['addressDetails']}} , Zip: {{$orderInformation['zip']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;">City: {{$orderInformation['city']}} , Country: {{$orderInformation['country']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;">Phone: {{$orderInformation['phone']}}</p>
+                                                                                            <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}} ,<b> Zip:</b> {{$orderInformation['zip']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
@@ -490,7 +491,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td style="width: 15%">Sub Total</td>
+                                                            <td  style="width: 25%">Sub Total</td>
                                                             <td>&euro;<?php echo $total?></td>
                                                         </tr>
 
@@ -500,7 +501,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td>Delevary Fee</td>
+                                                            <td  style="width: 25%">Delivery Fee</td>
                                                             <?php $delveryFee=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
 
                                                             <td>&euro;<?php echo $delveryFee=$orderInformation->resDelfee ?></td>
@@ -516,7 +517,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td>Discount</td>
+                                                            <td style="width: 25%">Discount</td>
                                                             <?php $discount=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
 
                                                             <td>&euro;<?php echo $discount=$delveryFee ?></td>
@@ -533,7 +534,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td>TOTAL</td>
+                                                            <td style="width: 25%">TOTAL</td>
                                                             <td>&euro;<?php echo $Total=(($total+$delveryFee-$discount))?></td>
                                                         </tr>
                                                     </table>
