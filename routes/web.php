@@ -51,6 +51,9 @@ Route::post('/restaurants/cash','RestaurantController@Cash')->name('restaurant.c
 Route::post('/restaurants/card','RestaurantController@Card')->name('restaurant.card');
 
 
+Route::view('/dataprotection','dataprotection')->name('dataprotection');
+
+
 //Route::view('/admin','admin.index')->name('admin.index');
 //Payments
 //Route::post('payments','TestController@paymentField')->name('payment.field');

@@ -43,7 +43,7 @@
             </div>
             <div class="col-xs-12 col-sm-2 pages color-gray">
                 <ul>
-                    <li> <a href="#"style="color: white;"> data protection</a> </li>
+                    <li> <a href="{{route('dataprotection')}}"style="color: white;"> data protection</a> </li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-3 popular-locations color-gray"><ul >

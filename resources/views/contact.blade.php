@@ -3,24 +3,24 @@
 @section('content')
         <div class="page-wrapper">
             <!-- top Links -->
-            <div class="top-links">
-                <div class="container">
-                    <ul class="row links">
-                        <li class="col-xs-12 col-sm-3 link-item active"><span>1</span><a href="#">Choose Your Location</a></li>
-                        <li class="col-xs-12 col-sm-3 link-item"><span>2</span><a href="#">Choose Restaurant</a></li>
-                        <li class="col-xs-12 col-sm-3 link-item"><span>3</span><a href="#">Pick Your favorite food</a></li>
-                        <li class="col-xs-12 col-sm-3 link-item"><span>4</span><a href="#">Order and Pay online</a></li>
-                    </ul>
-                </div>
-            </div>
+            {{--<div class="top-links">--}}
+                {{--<div class="container">--}}
+                    {{--<ul class="row links">--}}
+                        {{--<li class="col-xs-12 col-sm-3 link-item active"><span>1</span><a href="#">Choose Your Location</a></li>--}}
+                        {{--<li class="col-xs-12 col-sm-3 link-item"><span>2</span><a href="#">Choose Restaurant</a></li>--}}
+                        {{--<li class="col-xs-12 col-sm-3 link-item"><span>3</span><a href="#">Pick Your favorite food</a></li>--}}
+                        {{--<li class="col-xs-12 col-sm-3 link-item"><span>4</span><a href="#">Order and Pay online</a></li>--}}
+                    {{--</ul>--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <!-- end:Top links -->
             <!-- start: Inner page hero -->
-            <section class="bg-image space-md" data-image-src="http://placehold.it/1670x680">
+            <section class="bg-image space-md" data-image-src="{{url('images/fhb.jpg')}}">
                 <div class="profile">
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-12 col-sm-4  col-lg-4 profile-img">
-                                <h1 class="font-white">Contact us page</h1> </div>
+                                <h1 class="font-white">Contact us </h1> </div>
                         </div>
                     </div>
                 </div>
@@ -34,6 +34,7 @@
                         <li>Contact</li>
                     </ul>
                 </div>
+            </div>
             </div>
             <section class="contact-page inner-page">
                 <div class="container">
@@ -80,34 +81,34 @@
                         </div>
                         <!-- /REGISTER -->
                         <!-- WHY? -->
-                        <div class="col-md-4">
-                            <h4>Registration is fast, easy, and free.</h4>
-                            <p>Once you"re registered, you can:</p>
-                            <ul class="list-check list-unstyled">
-                                <li>Buy, sell, and interact with other members.</li>
-                                <li>Save your favorite searches and get notified.</li>
-                                <li>Watch the status of up to 200 items.</li>
-                                <li>View yourinformation from any computer in the world.</li>
-                                <li>Connect with the Atropos community.</li>
-                            </ul>
-                            <hr>
-                            <div class="panel">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" class="panel-toggle collapsed" href="#faq1" aria-expanded="false"><i class="ti-info-alt" aria-hidden="true"></i>Can I viverra sit amet quam eget lacinia?</a></h4> </div>
-                                <div class="panel-collapse collapse" id="faq1" aria-expanded="false" role="article" style="height: 0px;">
-                                    <div class="panel-body"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum ut erat a ultricies. Phasellus non auctor nisi, id aliquet lectus. Vestibulum libero eros, aliquet at tempus ut, scelerisque sit amet nunc. Vivamus id porta neque, in pulvinar ipsum. Vestibulum sit amet quam sem. Pellentesque accumsan consequat venenatis. Pellentesque sit amet justo dictum, interdum odio non, dictum nisi. Fusce sit amet turpis eget nibh elementum sagittis. Nunc consequat lacinia purus, in consequat neque consequat id. </div>
-                                </div>
-                            </div>
-                            <!-- end:panel -->
-                            <div class="panel">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" class="panel-toggle" href="#faq2" aria-expanded="true"><i class="ti-info-alt" aria-hidden="true"></i>Can I viverra sit amet quam eget lacinia?</a></h4> </div>
-                                <div class="panel-collapse collapse" id="faq2" aria-expanded="true" role="article">
-                                    <div class="panel-body"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum ut erat a ultricies. Phasellus non auctor nisi, id aliquet lectus. Vestibulum libero eros, aliquet at tempus ut, scelerisque sit amet nunc. Vivamus id porta neque, in pulvinar ipsum. Vestibulum sit amet quam sem. Pellentesque accumsan consequat venenatis. Pellentesque sit amet justo dictum, interdum odio non, dictum nisi. Fusce sit amet turpis eget nibh elementum sagittis. Nunc consequat lacinia purus, in consequat neque consequat id. </div>
-                                </div>
-                            </div>
-                            <!-- end:Panel -->
-                        </div>
+                        {{--<div class="col-md-4">--}}
+                            {{--<h4>Registration is fast, easy, and free.</h4>--}}
+                            {{--<p>Once you"re registered, you can:</p>--}}
+                            {{--<ul class="list-check list-unstyled">--}}
+                                {{--<li>Buy, sell, and interact with other members.</li>--}}
+                                {{--<li>Save your favorite searches and get notified.</li>--}}
+                                {{--<li>Watch the status of up to 200 items.</li>--}}
+                                {{--<li>View yourinformation from any computer in the world.</li>--}}
+                                {{--<li>Connect with the Atropos community.</li>--}}
+                            {{--</ul>--}}
+                            {{--<hr>--}}
+                            {{--<div class="panel">--}}
+                                {{--<div class="panel-heading">--}}
+                                    {{--<h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" class="panel-toggle collapsed" href="#faq1" aria-expanded="false"><i class="ti-info-alt" aria-hidden="true"></i>Can I viverra sit amet quam eget lacinia?</a></h4> </div>--}}
+                                {{--<div class="panel-collapse collapse" id="faq1" aria-expanded="false" role="article" style="height: 0px;">--}}
+                                    {{--<div class="panel-body"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum ut erat a ultricies. Phasellus non auctor nisi, id aliquet lectus. Vestibulum libero eros, aliquet at tempus ut, scelerisque sit amet nunc. Vivamus id porta neque, in pulvinar ipsum. Vestibulum sit amet quam sem. Pellentesque accumsan consequat venenatis. Pellentesque sit amet justo dictum, interdum odio non, dictum nisi. Fusce sit amet turpis eget nibh elementum sagittis. Nunc consequat lacinia purus, in consequat neque consequat id. </div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<!-- end:panel -->--}}
+                            {{--<div class="panel">--}}
+                                {{--<div class="panel-heading">--}}
+                                    {{--<h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" class="panel-toggle" href="#faq2" aria-expanded="true"><i class="ti-info-alt" aria-hidden="true"></i>Can I viverra sit amet quam eget lacinia?</a></h4> </div>--}}
+                                {{--<div class="panel-collapse collapse" id="faq2" aria-expanded="true" role="article">--}}
+                                    {{--<div class="panel-body"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum ut erat a ultricies. Phasellus non auctor nisi, id aliquet lectus. Vestibulum libero eros, aliquet at tempus ut, scelerisque sit amet nunc. Vivamus id porta neque, in pulvinar ipsum. Vestibulum sit amet quam sem. Pellentesque accumsan consequat venenatis. Pellentesque sit amet justo dictum, interdum odio non, dictum nisi. Fusce sit amet turpis eget nibh elementum sagittis. Nunc consequat lacinia purus, in consequat neque consequat id. </div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<!-- end:Panel -->--}}
+                        {{--</div>--}}
                         <!-- /WHY? -->
                     </div>
                 </div>
