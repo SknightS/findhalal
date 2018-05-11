@@ -385,6 +385,7 @@ class ComposerStaticInitaeafaad8a45bacfd6f51c0e3d3fd0665
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Purchase' => __DIR__ . '/../..' . '/app/Purchase.php',
+        'App\\Rating' => __DIR__ . '/../..' . '/app/Rating.php',
         'App\\Resturant' => __DIR__ . '/../..' . '/app/Resturant.php',
         'App\\Resturanttime' => __DIR__ . '/../..' . '/app/Resturanttime.php',
         'App\\Shipaddress' => __DIR__ . '/../..' . '/app/Shipaddress.php',

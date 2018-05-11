@@ -338,10 +338,10 @@
                                                                                                 <h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>
                                                                                                 <br>
 
-                                                                                                <p>Attached below is the summary of your order.</p><br>
+                                                                                                <p style="color: #4C4C4C; margin: 0 auto;">Attached below is the summary of your order.</p><br>
 
-                                                                                                <p>Thanks For Ordering From Us.</p> <br>
-                                                                                                    <p>Regards, <br> <b>FindHalal</b> Team</p>
+                                                                                                <p style="color: #4C4C4C; margin: 0 auto;">Thanks For Ordering From Us.</p> <br>
+                                                                                                    <p style="color: #4C4C4C; margin: 0 auto;">Regards, <br> <b>FindHalal</b> Team</p>
                                                                                                  @endforeach
 
                                                                                             </div>
@@ -365,7 +365,8 @@
                                                                                     </td>
                                                                                     <td style="width: 60%; text-align: center; ">
                                                                                         <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                        <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}} ,<b> Zip:</b> {{$orderInformation['zip']}}</p>
+                                                                                        <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}}</p>
+                                                                                        <p style="color: #4C4C4C; margin: 0 auto;"><b> Zip:</b> {{$orderInformation['zip']}}</p>
                                                                                         <p style="color: #4C4C4C; margin: 0 auto;"><b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
                                                                                         <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
                                                                                     </td>
@@ -399,7 +400,7 @@
                                                                         <tr>
                                                                             <td width="40" valign="top">&nbsp;</td>
                                                                             <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                                                    <tr><td height='25'></td></tr>
+                                                                                    <tr><td height='15'></td></tr>
                                                                                     <tr>
                                                                                         <td>
                                                                                             <div class='contentEditableContainer contentTextEditable'>
@@ -411,7 +412,7 @@
                                                                                             </div>
                                                                                         </td>
                                                                                     </tr>
-                                                                                    <tr><td height='24'></td></tr>
+                                                                                    <tr><td height='14'></td></tr>
                                                                                 </table></td>
 
                                                                             <td width="40" valign="top">&nbsp;</td>
@@ -515,98 +516,98 @@
                                                     </table>
                                                         @endforeach
                                                 <!-- =============== END BODY =============== -->
-                                                    <!-- =============== START FOOTER =============== -->
+                                                    {{--<!-- =============== START FOOTER =============== -->--}}
 
-                                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                            <tbody>
-                                                            <tr>
-                                                                <!--      <td height="48"></td>-->
-                                                            </tr>
-                                                            <tr>
-                                                                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td valign="top" width="90" class="spechide">&nbsp;</td>
-                                                                            <td>
+                                                    {{--<div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">--}}
+                                                        {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                            {{--<tbody>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<!--      <td height="48"></td>-->--}}
+                                                            {{--</tr>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<td><table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                                        {{--<tbody>--}}
+                                                                        {{--<tr>--}}
+                                                                            {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
+                                                                            {{--<td>--}}
 
-                                                                            </td>
-                                                                            <td valign="top" width="90" class="spechide">&nbsp;</td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
+                                                                            {{--</td>--}}
+                                                                            {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
+                                                                        {{--</tr>--}}
+                                                                        {{--</tbody>--}}
+                                                                    {{--</table>--}}
+                                                                {{--</td>--}}
+                                                            {{--</tr>--}}
+                                                            {{--</tbody>--}}
+                                                        {{--</table>--}}
 
 
-                                                    </div>
+                                                    {{--</div>--}}
 
-                                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
+                                                    {{--<div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">--}}
 
-                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td height="40"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td valign="top" width="185" class="spechide">&nbsp;</td>
-                                                                            <td class="specbundle2">
-                                                                                <table width="100%" cellpadding="0" cellspacing="0" align="center">
-                                                                                    <tr>
-                                                                                        <td width='40'>
-                                                                                            <div class='contentEditableContainer contentFacebookEditable'>
-                                                                                                <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="{{url('public/images/facebook.png')}}" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td width='10'></td>
-                                                                                        <td width='40'>
-                                                                                            <div class='contentEditableContainer contentTwitterEditable'>
-                                                                                                <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="{{url('public/images/twitter.png')}}" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td width='10'></td>
-                                                                                        <td width='40'>
-                                                                                            <div class='contentEditableContainer contentImageEditable'>
-                                                                                                <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="{{url('public/images/red.png')}}" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td width='10'></td>
-                                                                                        <td width='40'>
-                                                                                            <div class='contentEditableContainer contentImageEditable'>
-                                                                                                <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="{{url('public/images/blue.png')}}" alt="Social media" width='40' height='40' data-max-width="40" border="0">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                            <td valign="top" width="185" class="spechide">&nbsp;</td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <!--            <td height='40'></td>-->
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
+                                                        {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                            {{--<tbody>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<td height="40"></td>--}}
+                                                            {{--</tr>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<td>--}}
+                                                                    {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                                        {{--<tbody>--}}
+                                                                        {{--<tr>--}}
+                                                                            {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
+                                                                            {{--<td class="specbundle2">--}}
+                                                                                {{--<table width="100%" cellpadding="0" cellspacing="0" align="center">--}}
+                                                                                    {{--<tr>--}}
+                                                                                        {{--<td width='40'>--}}
+                                                                                            {{--<div class='contentEditableContainer contentFacebookEditable'>--}}
+                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                                                                    {{--<img src="{{url('public/images/facebook.png')}}" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
+                                                                                                {{--</div>--}}
+                                                                                            {{--</div>--}}
+                                                                                        {{--</td>--}}
+                                                                                        {{--<td width='10'></td>--}}
+                                                                                        {{--<td width='40'>--}}
+                                                                                            {{--<div class='contentEditableContainer contentTwitterEditable'>--}}
+                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                                                                    {{--<img src="{{url('public/images/twitter.png')}}" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
+                                                                                                {{--</div>--}}
+                                                                                            {{--</div>--}}
+                                                                                        {{--</td>--}}
+                                                                                        {{--<td width='10'></td>--}}
+                                                                                        {{--<td width='40'>--}}
+                                                                                            {{--<div class='contentEditableContainer contentImageEditable'>--}}
+                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                                                                    {{--<img src="{{url('public/images/red.png')}}" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">--}}
+                                                                                                {{--</div>--}}
+                                                                                            {{--</div>--}}
+                                                                                        {{--</td>--}}
+                                                                                        {{--<td width='10'></td>--}}
+                                                                                        {{--<td width='40'>--}}
+                                                                                            {{--<div class='contentEditableContainer contentImageEditable'>--}}
+                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                                                                    {{--<img src="{{url('public/images/blue.png')}}" alt="Social media" width='40' height='40' data-max-width="40" border="0">--}}
+                                                                                                {{--</div>--}}
+                                                                                            {{--</div>--}}
+                                                                                        {{--</td>--}}
+                                                                                    {{--</tr>--}}
+                                                                                {{--</table>--}}
+                                                                            {{--</td>--}}
+                                                                            {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
+                                                                        {{--</tr>--}}
+                                                                        {{--</tbody>--}}
+                                                                    {{--</table>--}}
+                                                                {{--</td>--}}
+                                                            {{--</tr>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<!--            <td height='40'></td>-->--}}
+                                                            {{--</tr>--}}
+                                                            {{--</tbody>--}}
+                                                        {{--</table>--}}
 
-                                                        <!-- =============== END FOOTER =============== -->
-                                                    </div>
+                                                        {{--<!-- =============== END FOOTER =============== -->--}}
+                                                    {{--</div>--}}
 
 
                                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -618,7 +619,7 @@
                                                             <td style="border: 1px solid #EEEEEE; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                     <tbody>
                                                                     <tr>
-                                                                        <td valign="top" width="40">&nbsp;</td>
+                                                                        {{--<td valign="top" width="40">&nbsp;</td>--}}
                                                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
                                                                                 <tr><td height='15'></td></tr>
                                                                                 <tr>
@@ -640,7 +641,7 @@
 
 
                                                                         </td>
-                                                                        <td valign="top" width="40">&nbsp;</td>
+                                                                        {{--<td valign="top" width="40">&nbsp;</td>--}}
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>

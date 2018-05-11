@@ -420,16 +420,17 @@ class RestaurantController extends Controller
                   $message->from('support@findhalal.de', 'FindHalal');
                 $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order From FindHalal');
             });
+            Mail::send('invoiceMailForFindhalal',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
+            {
+                $message->from('support@findhalal.de', 'FindHalal');
+                $message->to(FindhalalNewOrderMail, 'Findhalal Order')->subject('New Order From FindHalal');
+            });
             Mail::send('invoiceMailForRestaurant',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($restaurantMail,$restaurantName)
             {
                   $message->from('support@findhalal.de', 'FindHalal');
                 $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');
             });
-            Mail::send('invoiceMailForFindhalal',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
-            {
-                  $message->from('support@findhalal.de', 'FindHalal');
-                $message->to(FindhalalNewOrderMail, 'Findhalal Order')->subject('New Order From FindHalal');
-            });
+
 
             return 1;
 
@@ -468,4 +469,6 @@ class RestaurantController extends Controller
     public function Card(){
         Session::put('paymentType', "Card");
     }
+
+
 }

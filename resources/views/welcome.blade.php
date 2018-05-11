@@ -254,7 +254,9 @@
                                 @if($featuredResturant->image == null)
                                 <a class="restaurant-logo" href="#"> <img src="http://placehold.it/95x95" alt="Restaurant logo"> </a>
                                 @else
-                                    <a class="restaurant-logo" href="{{route('restaurant.viewmenu',$featuredResturant->resturantId)}}"> <img src="{{url('admin/public/RestaurantImages')."/".$featuredResturant->image}}" alt="Restaurant logo"> </a>
+                                    <a class="restaurant-logo" href="{{route('restaurant.viewmenu',$featuredResturant->resturantId)}}">
+                                        <img src="{{url('admin/public/RestaurantImages')."/".$featuredResturant->image}}" alt="Restaurant logo">
+                                    </a>
                                 @endif
                             </div>
                             <!--end:col -->

@@ -328,42 +328,21 @@
                                                                     <tbody>
                                                                     <tr>
                                                                         <td valign="top" width="40">&nbsp;</td>
-                                                                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                                                <tr><td height='25'></td></tr>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div class='contentEditableContainer contentTextEditable'>
-                                                                                            <div class='contentEditable' style='text-align: left;'>
-                                                                                                {{--@foreach($orderInfo as $orderInformation)--}}
-                                                                                                    {{--<h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>--}}
-                                                                                                    {{--<br>--}}
+                                                                        <td>
 
-                                                                                                    {{--<p>Attached below is the summary of your order.</p><br>--}}
-
-                                                                                                    {{--<p>Thanks For Ordering From Us.</p> <br>--}}
-                                                                                                    {{--<p>Regards, <br> <b>FindHalal</b> Team</p>--}}
-                                                                                                {{--@endforeach--}}
-
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </td>
-
-                                                                                </tr>
-
-                                                                                <tr><td height='24'></td></tr>
-                                                                            </table>
                                                                             @foreach($orderInfo as $orderInformation)
                                                                                 <table width="100%">
                                                                                     <tr>
+                                                                                        <td height="10"></td>
+                                                                                    </tr>
+                                                                                    <tr>
                                                                                         <td style="width: 100%; text-align: center; ">
-                                                                                        <h4 style="color: #4C4C4C;">Order Details</h4>
+                                                                                        {{--<h4 style="color: #4C4C4C;">Order Details</h4>--}}
 
                                                                                         <table width="100%" style="text-align: center; " >
+
                                                                                             <tr>
-
-                                                                                                    <span>Customer Name:</span><br><span><b>{{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</b></span>
-
+                                                                                                <span>Customer Name:</span> &nbsp;<span><b>{{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</b></span>
 
                                                                                             </tr>
                                                                                             <tr>
@@ -388,10 +367,10 @@
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td style="width: 100%; text-align: center; ">
-                                                                                            <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                            <p style="color: #4C4C4C;">Address: {{$orderInformation['addressDetails']}} , Zip: {{$orderInformation['zip']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;">City: {{$orderInformation['city']}} , Country: {{$orderInformation['country']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;">Phone: {{$orderInformation['phone']}}</p>
+                                                                                            <h4 style="color: #4C4C4C;margin: 0px 0px 10px 0px">Shipping Address</h4>
+                                                                                            <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b> Zip:</b> {{$orderInformation['zip']}} ,<b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
@@ -423,7 +402,7 @@
                                                                         <tr>
                                                                             <td width="40" valign="top">&nbsp;</td>
                                                                             <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                                                    <tr><td height='25'></td></tr>
+                                                                                    <tr><td height='15'></td></tr>
                                                                                     <tr>
                                                                                         <td>
                                                                                             <div class='contentEditableContainer contentTextEditable'>
@@ -435,7 +414,7 @@
                                                                                             </div>
                                                                                         </td>
                                                                                     </tr>
-                                                                                    <tr><td height='24'></td></tr>
+                                                                                    <tr><td height='14'></td></tr>
                                                                                 </table></td>
 
                                                                             <td width="40" valign="top">&nbsp;</td>
@@ -500,7 +479,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td>Delevary Fee</td>
+                                                            <td>Delivery Fee</td>
                                                             <?php $delveryFee=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
 
                                                             <td>&euro;<?php echo $delveryFee=$orderInformation->resDelfee ?></td>

@@ -26,6 +26,7 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+
         ],
         "files": [
             "app/Constants/constants.php"
