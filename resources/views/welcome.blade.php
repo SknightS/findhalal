@@ -1,4 +1,3 @@
-
 @extends('main')
 @section('header')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -53,10 +52,10 @@
 </section>
 <!-- banner part ends -->
 <!-- location match part starts -->
-<div class="location-match text-xs-center">
-    <div class="container"> <span>356 restaurants matched your location: <span class="primary-color">New York, NY -</span> </span>
-    </div>
-</div>
+{{--<div class="location-match text-xs-center">--}}
+    {{--<div class="container"> <span>356 restaurants matched your location: <span class="primary-color">New York, NY -</span> </span>--}}
+    {{--</div>--}}
+{{--</div>--}}
 <!-- location match part ends -->
 <!-- Popular block starts -->
 <section class="popular">
@@ -71,7 +70,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4 food-item">
                     <div class="food-item-wrap">
                         <div class="figure-wrap bg-image" data-image-src="{{url('admin/public/RestaurantImages/'.$restaurant->image)}}">
-                            <div class="distance"><i class="fa fa-pin"></i>1240m</div>
+                            {{--<div class="distance"><i class="fa fa-pin"></i>1240m</div>--}}
 
                             @foreach($restaurantRating as $rating)
                                 @if($restaurant->resturantId == $rating->restaurantId)
@@ -119,7 +118,6 @@
                                         <i class="fa fa-star"></i>
                                     @endif
                                     </div>
-
 
                                     <div class="review pull-right"><span style="color: white">{{$rating->totalRating}} Ratings</span> </div>
                                 @endif
@@ -256,7 +254,9 @@
                                 @if($featuredResturant->image == null)
                                 <a class="restaurant-logo" href="#"> <img src="http://placehold.it/95x95" alt="Restaurant logo"> </a>
                                 @else
-                                    <a class="restaurant-logo" href="{{route('restaurant.viewmenu',$featuredResturant->resturantId)}}"> <img src="{{url('admin/public/RestaurantImages')."/".$featuredResturant->image}}" alt="Restaurant logo"> </a>
+                                    <a class="restaurant-logo" href="{{route('restaurant.viewmenu',$featuredResturant->resturantId)}}">
+                                        <img src="{{url('admin/public/RestaurantImages')."/".$featuredResturant->image}}" alt="Restaurant logo">
+                                    </a>
                                 @endif
                             </div>
                             <!--end:col -->
@@ -349,9 +349,9 @@
                     <div class="col-xs-12 col-sm-3 add-title">
                         <h4>Add Your Restaurant</h4> </div>
                     <div class="col-xs-12 col-sm-5 join-text">
-                        <p>Join the thousands of other restaurants who benefit from having their menus on <a href="#"><strong> FoodPicky directory</strong></a> </p>
+                        <p>Join the thousands of other restaurants who benefit from having their menus on <a href="{{route('home')}}">findhalal.de</a> </p>
                     </div>
-                    <div class="col-xs-12 col-sm-4 join-btn text-xs-right"><a href="contact.html" class="btn theme-btn btn-lg">I‘m restaurant</a> </div>
+                    <div class="col-xs-12 col-sm-4 join-btn text-xs-right"><a href="{{route('contact')}}" class="btn theme-btn btn-lg">I‘m restaurant</a> </div>
                 </div>
             </div>
         </section>

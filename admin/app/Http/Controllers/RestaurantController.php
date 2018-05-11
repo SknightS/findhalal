@@ -67,7 +67,10 @@ class RestaurantController extends Controller
             $restaurant->save();
             $location = public_path('RestaurantImages/'.$filename);
 //            Image::make($img)->resize(800,600)->save($location);
-            Image::make($img)->save($location);
+//            Image::make($img)->save($location);
+            Image::make($img)->resize(200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location);
         }
 
 
@@ -219,7 +222,10 @@ class RestaurantController extends Controller
 
             $location = public_path('RestaurantImages/'.$filename);
 //            Image::make($img)->resize(800,600)->save($location);
-            Image::make($img)->save($location);
+//            Image::make($img)->save($location);
+            Image::make($img)->resize(200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location);
         }
         $restaurant->save();
 

@@ -40,6 +40,7 @@ Route::post('/restaurants/checkOrderType','RestaurantController@checkOrderType')
 
 //checkout
 Route::get('/restaurants/checkout/','RestaurantController@checkout')->name('restaurant.checkout');
+
 Route::post('/restaurants/submitorder','RestaurantController@SubmitOrder')->name('restaurant.submitorder');
 
 
