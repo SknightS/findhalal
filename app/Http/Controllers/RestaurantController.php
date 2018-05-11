@@ -270,17 +270,13 @@ class RestaurantController extends Controller
                 $body = $e->getJsonBody();
                 $err  = $body['error'];
 
+
                 $code= $err['code'];
                 $msg=$err['message'];
                 $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
-                // $msg ='Status is:' . $e->getHttpStatus() . "\n";
-                //  $msg.='Type is:' . $err['type'] . "\n";
-                // $msg.='Code is:' . $err['code'] . "\n";
-                // param is '' in this case
-                // $msg.='Param is:' . $err['param'] . "\n";
-                // $msg.='Message is:' . $err['message'] . "\n";
-                // Session::flash('message',$err);
+
                 return $data;
+
 
             } catch (\Stripe\Error\RateLimit $e) {
                 // Too many requests made to the API too quickly

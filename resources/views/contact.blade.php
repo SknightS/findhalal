@@ -45,7 +45,8 @@
                                 <div class="widget-body">
                                     <!-- Contact form -->
                                     <div class="form-horizontal contact-form" role="form">
-                                        <fieldset>
+                                        <form method="post" action="{{route('contact.post')}}">
+                                            {{csrf_field()}}
                                             <div class="row form-group">
                                                 <div class="col-xs-6">
                                                     <input class="form-control" id="fname" name="fname" type="text" placeholder="First Name *" required=""> </div>
@@ -72,7 +73,7 @@
                                                     <button class="btn btn-lg theme-btn" type="submit">Send Message</button>
                                                 </div>
                                             </div>
-                                        </fieldset>
+                                        </form>
                                     </div>
                                     <!-- End Contact form -->
                                 </div>

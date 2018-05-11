@@ -20,6 +20,7 @@ Route::view('/map/result','map.mapResult')->name('map.result');
 //Route::view('/restaurants','restaurants.index')->name('restaurant.result');
 Route::view('/restaurants/profile','restaurants.profile')->name('restaurant.profile');
 Route::view('/contact','contact')->name('contact');
+Route::post('/contact','HomeController@contact')->name('contact.post');
 Route::view('/registration','registration')->name('registration');
 //Route::view('/checkout','checkout')->name('checkout');
 
