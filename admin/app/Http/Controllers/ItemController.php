@@ -90,7 +90,10 @@ class ItemController extends Controller
             $item->image=$filename;
             $location = public_path('ItemImages/'.$filename);
 //            Image::make($img)->resize(800,600)->save($location);
-            Image::make($img)->save($location);
+//            Image::make($img)->save($location);
+            Image::make($img)->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location);
         }
 
 
@@ -229,7 +232,10 @@ class ItemController extends Controller
 
             $location = public_path('ItemImages/'.$filename);
 //            Image::make($img)->resize(800,600)->save($location);
-            Image::make($img)->save($location);
+//            Image::make($img)->save($location);
+            Image::make($img)->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location);
         }
 
         $items->save();

@@ -17,7 +17,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-lg-8">
                                 <div class="rest-logo pull-left">
-                                    <a class="restaurant-logo pull-left" href="#"><img src="{{url('admin/public/ItemImages')."/".$im->image}}" alt="Food logo"></a>
+                                    <a class="restaurant-logo pull-left" href="#"><img width="80px" height="80px" src="{{url('admin/public/ItemImages')."/".$im->image}}" alt="Food logo"></a>
                                 </div>
                                 <!-- end:Logo -->
                                 <div class="rest-descr">
@@ -46,10 +46,11 @@
                         </div>
                     </div>
                         <!-- end:row -->
+                @endif
+            @endforeach
                     </div>
 
-            @endif
-        @endforeach
+
         <!-- end:Food item -->
         </div>
         <!-- end:Collapse -->
