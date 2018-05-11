@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Resturant;
 use App\Rating;
 use Session;
+use DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
@@ -49,7 +50,7 @@ class RestaurantController extends Controller
             $restaurantStatus= "Close";
         }
 
-
+        $resRating=Rating::select(DB::raw('COUNT(ratingId) as totalRating'),DB::raw('AVG(rating) as avgRating'))->where('restaurantId',$resid)->groupBy('restaurantId')->get();
 
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
@@ -65,6 +66,7 @@ class RestaurantController extends Controller
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
+            ->with('restaurantRating', $resRating)
             ->with('restaurantStatus', $restaurantStatus)
 
             ->with('cartitem', $cartCollection);
@@ -141,8 +143,6 @@ class RestaurantController extends Controller
 
             }
 
-
-
             Cart::add(array(
                 'id' => $it->itemsizeId,
                 'name' => $it->itemName,
@@ -166,12 +166,16 @@ class RestaurantController extends Controller
             ->where('itemsizeId',$itemsize)
             ->first();
 
+        foreach (Cart::getContent($cartid) as $cr){
+            $delfeeC = $cr->attributes->delfee;
+            $residC = $cr->attributes->resid;
+        }
         Cart::update($cartid, array(
             'price' => $itemsize->price, // new item name
             'attributes' => array(
                 'size' =>  $itemsize->itemsizeId,
-                'delfee' => Cart::getContent($cartid)->attributes->delfee,
-                'resid' => Cart::getContent($cartid)->attributes->resid
+                'delfee' => $delfeeC,
+                'resid' => $residC
             ) // new item price, price can also be a string format like so: '98.67'
         ));
     }
@@ -189,6 +193,7 @@ class RestaurantController extends Controller
         Cart::remove($r->itemid);
     }
     public function checkout(){
+
         $cartitem = Cart::getContent();
         if($cartitem->isEmpty()){
             Session::flash('message','Cart Is Empty');
@@ -229,29 +234,34 @@ class RestaurantController extends Controller
         }
 
 
-        $restaurantInfo=Resturant::findOrFail($resid);
+//        $restaurantInfo=Resturant::findOrFail($resid);
+        $restaurantInfo=Resturant::where('resturantId',$resid)->get(array('minOrder'));
         $totalPrice=Cart::getTotal();
 
-        if($totalPrice>$restaurantInfo->minOrder){
+        foreach ($restaurantInfo as $resInfoo){
+            $resMinOrder=$resInfoo->minOrder;
+        }
+
+        if($totalPrice >= $resMinOrder){
             $totalPrice=$totalPrice;
             $delfee=0;
         }
         else{
             $totalPrice+=$delfee;
         }
-//        return $totalPrice;
+
 
         if($r->stripeToken){
-//            return $r->stripeToken;
+
             try {
-                \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
+                    \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
                 // Token is created using Checkout or Elements!
                 // Get the payment token ID submitted by the form:
                 $token = $r->stripeToken;
                 $charge = \Stripe\Charge::create([
                     'amount'=>$totalPrice*100,
                     'currency' => 'EUR',
-                    'description' => 'Example charge',
+                    'description' => 'New Order Payment',
                     'source' => $token,
                 ]);
 //                dd('Success Payment');
@@ -260,42 +270,74 @@ class RestaurantController extends Controller
                 $body = $e->getJsonBody();
                 $err  = $body['error'];
 
-                $msg ='Status is:' . $e->getHttpStatus() . "\n";
-                $msg.='Type is:' . $err['type'] . "\n";
-                $msg.='Code is:' . $err['code'] . "\n";
+                $code= $err['code'];
+                $msg=$err['message'];
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                // $msg ='Status is:' . $e->getHttpStatus() . "\n";
+                //  $msg.='Type is:' . $err['type'] . "\n";
+                // $msg.='Code is:' . $err['code'] . "\n";
                 // param is '' in this case
-                $msg.='Param is:' . $err['param'] . "\n";
-                $msg.='Message is:' . $err['message'] . "\n";
-                Session::flash('message',$msg);
-                return '2';
+                // $msg.='Param is:' . $err['param'] . "\n";
+                // $msg.='Message is:' . $err['message'] . "\n";
+                // Session::flash('message',$err);
+                return $data;
+
             } catch (\Stripe\Error\RateLimit $e) {
                 // Too many requests made to the API too quickly
-                Session::flash('message','Too many requests made to the API too quickly');
-                return '2';
+                // Session::flash('message','Too many requests made to the API too quickly');
+                $code= 'RateLimit';
+                $msg='Too many requests made to the API too quickly';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
 
             } catch (\Stripe\Error\InvalidRequest $e) {
                 // Invalid parameters were supplied to Stripe's API
-                Session::flash('message','Invalid parameters were supplied to Stripes API');
-                return '2';
+                // Session::flash('message','Invalid parameters were supplied to Stripes API');
+                // return '2';
+                $code= 'InvalidRequest';
+                $msg='Invalid parameters were supplied to Stripes API';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
+
             } catch (\Stripe\Error\Authentication $e) {
                 // Authentication with Stripe's API failed
-                Session::flash('message','Authentication with Stripe\'s API failed');
-                return '2';
+                // Session::flash('message','Authentication with Stripe\'s API failed');
+                // return '2';
+                $code= 'Authentication';
+                $msg='Authentication with Stripe\'s API failed';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
+
                 // (maybe you changed API keys recently)
             } catch (\Stripe\Error\ApiConnection $e) {
                 // Network communication with Stripe failed
-                Session::flash('message','Network communication with Stripe failed');
-                return '2';
+                // Session::flash('message','Network communication with Stripe failed');
+                //  return '2';
+                $code= 'ApiConnection';
+                $msg='Network communication with Stripe failed';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
             } catch (\Stripe\Error\Base $e) {
                 // Display a very generic error to the user, and maybe send
                 // yourself an email
-                Session::flash('message','Display a very generic error to the user, and maybe send');
-                return '2';
+                // Session::flash('message','Display a very generic error to the user, and maybe send');
+                //  return '2';
+
+                $code= 'Stripe Error';
+                $msg='Error In Payment with Stripe , Please Try after Sometime';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
 
             } catch (Exception $e) {
                 // Something else happened, completely unrelated to Stripe
-                Session::flash('message','Something else happened, completely unrelated to Stripe');
-                return '2';
+                //  Session::flash('message','Something else happened, completely unrelated to Stripe');
+                // return '2';
+
+                $code= 'Payment Error';
+                $msg='Something else happened, completely unrelated to Stripe';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
+
             }
 
         }
@@ -343,17 +385,21 @@ class RestaurantController extends Controller
             $rating->save();
 
         }
-
         $orderInfo = Order::select('order.delfee','order.orderId','order.orderTime', 'order.paymentType','order.orderType', 'customer.firstName',
-            'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country')
+            'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country',
+            'resturant.name as resName','resturant.phoneNumber as resPhone','resturant.minOrder as resMinOrder','resturant.delfee as resDelfee','resturant.email as resMail')
             ->where('order.orderId', $order->orderId)
             ->leftJoin('customer','customer.customerId','=','order.fkcustomerId')
             ->leftJoin('shipaddress','shipaddress.fkorderId','=','order.orderId')
+            ->leftJoin('resturant','resturant.resturantId','=','order.fkresturantId')
             ->get();
+
         foreach ($orderInfo as $mailInfo){
             $customerMail=$mailInfo->email;
             $customerFirstName=$mailInfo->firstName;
             $customerLastName=$mailInfo->lastName;
+            $restaurantMail=$mailInfo->resMail;
+            $restaurantName=$mailInfo->resName;
         }
 
         $orderItemInfo = Orderitems::select('orderitem.quantity','orderitem.price','itemsize.itemsizeName', 'item.itemName','item.itemDetails')
@@ -362,28 +408,34 @@ class RestaurantController extends Controller
             ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
             ->get();
 
-        Cart::clear();
-        $t=Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
-        {
-           // $message->from('2f3192259a-02c01b@inbox.mailtrap.io', 'FindHalal');
-            $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order');
-        });
-        if ($t){
 
-//            alert()->success('Congrats', 'your order has been placed successfully');
-//            return redirect("/");
+        Cart::clear();
+        Session::forget('ordertype');
+        Session::forget('paymentType');
+
+        try{
+
+            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
+            {
+                  $message->from('support@findhalal.de', 'FindHalal');
+                $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order From FindHalal');
+            });
+            Mail::send('invoiceMailForRestaurant',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($restaurantMail,$restaurantName)
+            {
+                  $message->from('support@findhalal.de', 'FindHalal');
+                $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');
+            });
+            Mail::send('invoiceMailForFindhalal',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
+            {
+                  $message->from('support@findhalal.de', 'FindHalal');
+                $message->to(FindhalalNewOrderMail, 'Findhalal Order')->subject('New Order From FindHalal');
+            });
+
             return 1;
 
-        }else {
+        }catch (\Exception $ex) {
             return 0;
         }
-
-      //  Cart::clear();
-
-//        alert()->success('Congrats', 'your order has been placed successfully');
-//        return redirect("/");
-
-        // return back();
     }
 
 

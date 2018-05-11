@@ -328,21 +328,22 @@
                                                                     <tbody>
                                                                     <tr>
                                                                         <td valign="top" width="40">&nbsp;</td>
-                                                                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+                                                                        <td>
+                                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
                                                                                 <tr><td height='25'></td></tr>
                                                                                 <tr>
                                                                                     <td>
                                                                                         <div class='contentEditableContainer contentTextEditable'>
                                                                                             <div class='contentEditable' style='text-align: left;'>
-                                                                                                @foreach($orderInfo as $orderInformation)
-                                                                                                <h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>
-                                                                                                <br>
+                                                                                                {{--@foreach($orderInfo as $orderInformation)--}}
+                                                                                                {{--<h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>--}}
+                                                                                                {{--<br>--}}
 
-                                                                                                <p>Attached below is the summary of your order.</p><br>
+                                                                                                {{--<p>Attached below is the summary of your order.</p><br>--}}
 
-                                                                                                <p>Thanks For Ordering From Us.</p> <br>
-                                                                                                    <p>Regards, <br> <b>FindHalal</b> Team</p>
-                                                                                                 @endforeach
+                                                                                                {{--<p>Thanks For Ordering From Us.</p> <br>--}}
+                                                                                                {{--<p>Regards, <br> <b>FindHalal</b> Team</p>--}}
+                                                                                                {{--@endforeach--}}
 
                                                                                             </div>
 
@@ -354,23 +355,47 @@
                                                                                 <tr><td height='24'></td></tr>
                                                                             </table>
                                                                             @foreach($orderInfo as $orderInformation)
-                                                                            <table width="100%">
-                                                                                <tr>
-                                                                                    <td style="width: 40%; text-align: center;">
-                                                                                        <h4 style="color: #4C4C4C;">Order Details</h4>
-                                                                                        <span style="color: red;">Restaurant Name:</span><br><span style="color: blue;"><b>{{$orderInformation['resName']}}</b></span>
-                                                                                        <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
+                                                                                <table width="100%">
+                                                                                    <tr>
+                                                                                        <td style="width: 100%; text-align: center; ">
+                                                                                            <h4 style="color: #4C4C4C;">Order Details</h4>
 
-                                                                                    </td>
-                                                                                    <td style="width: 60%; text-align: center; ">
-                                                                                        <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                        <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}} ,<b> Zip:</b> {{$orderInformation['zip']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;"><b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
+                                                                                            <table width="100%" style="text-align: center; " >
+                                                                                                <tr>
+
+                                                                                                    <span>Customer Name:</span><br><span><b>{{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</b></span>
+
+
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <p style="color: red;">Order Type: <br> {{$orderInformation['orderType']}}</p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <p style="color: red;">Payment Type: <br> {{$orderInformation['paymentType']}}</p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </td>
+
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="width: 100%; text-align: center; ">
+                                                                                            <h4 style="color: #4C4C4C;">Shipping Address</h4>
+                                                                                            <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}} ,<b> Zip:</b> {{$orderInformation['zip']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
                                                                             @endforeach
 
 
@@ -438,23 +463,23 @@
                                                         </tr>
                                                         </thead>
                                                         @foreach($orderInfo as $orderInformation)
-                                                        <?php $total=0;$i=1;?>
-                                                        @foreach($orderItemInfo as $itemInfo)
-                                                        <tbody>
-                                                        <tr>
-                                                            <td><?php echo $i?></td>
-                                                            <td>{{$itemInfo['itemName']}}<br>{{$itemInfo['itemDetails']}}</td>
-                                                            <td>{{$itemInfo['itemsizeName']}}</td>
-                                                            <td>&euro;{{$itemInfo['price']}}</td>
+                                                            <?php $total=0;$i=1;?>
+                                                            @foreach($orderItemInfo as $itemInfo)
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td><?php echo $i?></td>
+                                                                    <td>{{$itemInfo['itemName']}}<br>{{$itemInfo['itemDetails']}}</td>
+                                                                    <td>{{$itemInfo['itemsizeName']}}</td>
+                                                                    <td>&euro;{{$itemInfo['price']}}</td>
 
-                                                            <td>{{$itemInfo['quantity']}}</td>
+                                                                    <td>{{$itemInfo['quantity']}}</td>
 
-                                                            <td>&euro;{{$price=($itemInfo['price']*$itemInfo['quantity'])}}</td>
-                                                        </tr>
-                                                        <?php $i++;$total=($total+$price); ?>
+                                                                    <td>&euro;{{$price=($itemInfo['price']*$itemInfo['quantity'])}}</td>
+                                                                </tr>
+                                                                <?php $i++;$total=($total+$price); ?>
 
-                                                        </tbody>
-                                                        @endforeach
+                                                                </tbody>
+                                                            @endforeach
 
                                                     </table>
 
@@ -476,7 +501,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td style="width: 25%">Delivery Fee</td>
+                                                            <td  style="width: 25%">Delivery Fee</td>
                                                             <?php $delveryFee=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
 
                                                             <td>&euro;<?php echo $delveryFee=$orderInformation->resDelfee ?></td>
@@ -513,7 +538,7 @@
                                                             <td>&euro;<?php echo $Total=(($total+$delveryFee-$discount))?></td>
                                                         </tr>
                                                     </table>
-                                                        @endforeach
+                                                @endforeach
                                                 <!-- =============== END BODY =============== -->
                                                     <!-- =============== START FOOTER =============== -->
 
