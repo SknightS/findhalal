@@ -23,17 +23,22 @@
         a{
             color:#382F2E;
         }
+
         p, h1,h2,ul,ol,li,div{
             margin:0;
             padding:0;
         }
+
         h1,h2{
             font-weight: normal;
             background:transparent !important;
             border:none !important;
         }
+
         @media only screen and (max-width:480px)
+
         {
+
             table[class="MainContainer"], td[class="cell"]
             {
                 width: 100% !important;
@@ -59,6 +64,7 @@
                 padding-left:10% !important;
                 padding-right:10% !important;
             }
+
             td[class="spechide"]
             {
                 display:none !important;
@@ -73,9 +79,13 @@
                 padding-left:15px !important;
                 padding-right:15px !important;
             }
+
         }
+
         @media only screen and (max-width:540px)
+
         {
+
             table[class="MainContainer"], td[class="cell"]
             {
                 width: 100% !important;
@@ -101,6 +111,7 @@
                 padding-left:10% !important;
                 padding-right:10% !important;
             }
+
             td[class="spechide"]
             {
                 display:none !important;
@@ -115,19 +126,24 @@
                 padding-left:15px !important;
                 padding-right:15px !important;
             }
+
         }
+
         .contentEditable h2.big,.contentEditable h1.big{
             font-size: 26px !important;
         }
+
         .contentEditable h2.bigger,.contentEditable h1.bigger{
             font-size: 37px !important;
         }
+
         td,table{
             vertical-align: top;
         }
         td.middle{
             vertical-align: middle;
         }
+
         a.link1{
             font-size:13px;
             color:#27A1E5;
@@ -137,6 +153,7 @@
         a{
             text-decoration: none;
         }
+
         .link2{
             color:#ffffff;
             border-top:10px solid #27A1E5;
@@ -148,6 +165,7 @@
             -webkit-border-radius:3px;
             background:#27A1E5;
         }
+
         .link3{
             color:#555555;
             border:1px solid #cccccc;
@@ -157,10 +175,12 @@
             -webkit-border-radius:3px;
             background:#ffffff;
         }
+
         .link4{
             color:#27A1E5;
             line-height: 24px;
         }
+
         h2,h1{
             line-height: 20px;
         }
@@ -169,9 +189,13 @@
             line-height: 21px;
             color:#AAAAAA;
         }
+
         .contentEditable li{
+
         }
+
         .appart p{
+
         }
         .bgItem{
             background: #ffffff;
@@ -179,6 +203,7 @@
         .bgBody{
             background: #ffffff;
         }
+
         img {
             outline:none;
             text-decoration:none;
@@ -189,6 +214,7 @@
             display: block;
             float: none;
         }
+
     </style>
 
 
@@ -298,54 +324,69 @@
                                                             <!--      <td height='40'></td>-->
                                                         </tr>
                                                         <tr>
-                                                            <td style="border: 1px solid #EEEEEE; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <td style="border: 1px solid #EEEEEE; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px">
+                                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                     <tbody>
                                                                     <tr>
                                                                         <td valign="top" width="40">&nbsp;</td>
-                                                                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                                                <tr><td height='25'></td></tr>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div class='contentEditableContainer contentTextEditable'>
-                                                                                            <div class='contentEditable' style='text-align: left;'>
-                                                                                                @foreach($orderInfo as $orderInformation)
-                                                                                                    <h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>
-                                                                                                    <br>
+                                                                        <td>
 
-                                                                                                    <p>Attached below is the summary of your order.</p><br>
 
-                                                                                                    <p>Thanks For Ordering From Us.</p> <br>
-                                                                                                    <p>Regards, <br> <b>FindHalal</b> Team</p>
-                                                                                                @endforeach
-
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </td>
-
-                                                                                </tr>
-
-                                                                                <tr><td height='24'></td></tr>
-                                                                            </table>
-                                                                            @foreach($orderInfo as $orderInformation)
-                                                                                <table width="100%">
+                                                                                <table width="100%" style="text-align: center">
+                                                                                    @foreach($orderInfo as $orderInformation)
                                                                                     <tr>
-                                                                                        <td style="width: 40%; text-align: center;">
-                                                                                            <h4 style="color: #4C4C4C;">Order Details</h4>
-                                                                                            <span style="color: red;">Restaurant Name:</span><br><span style="color: blue;"><b>{{$orderInformation['resName']}}</b></span>
-                                                                                            <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
+                                                                                        <td style="width: 100%">
 
+                                                                                            <h4 style="color: #4C4C4C;">Order Details</h4><br>
+
+                                                                                            <table width="100%">
+
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <p style="color: red;">Order Type: <br> {{$orderInformation['orderType']}}</p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <p style="color: red;">Payment Type: <br> {{$orderInformation['paymentType']}}</p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
                                                                                         </td>
-                                                                                        <td style="width: 60%; text-align: center; ">
-                                                                                            <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                            <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}} ,<b> Zip:</b> {{$orderInformation['zip']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
-                                                                                        </td>
+
                                                                                     </tr>
+                                                                                    <tr>
+                                                                                        <table width="100%">
+                                                                                            <tr>
+                                                                                                <td style="width: 40%; text-align: center;">
+                                                                                                    <h4 style="color: #4C4C4C;">Restaurants Details</h4>
+                                                                                                    <span style="color: red;"><b>Restaurant Name:</b></span><br>
+                                                                                                    <span style="color: blue;">{{$orderInformation['resName']}}</span><br/>
+                                                                                                    <span>Restaurant Phone Number:</span><br><span> {{$orderInformation['resPhone']}}</span><br/>
+                                                                                                    <p style="color: #4C4C4C; margin: 0 auto;">Restaurant Mail Address: <br> {{$orderInformation['resMail']}}</p>
+
+                                                                                                </td>
+                                                                                                <td style="width: 60%; text-align: center; ">
+                                                                                                    <h4 style="color: #4C4C4C;">Shipping Address</h4>
+                                                                                                    <p style="color: #4C4C4C;"><b>Customer Name:</b><br/>
+                                                                                                        {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}
+                                                                                                    </p>
+                                                                                                    <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}} ,<b> Zip:</b> {{$orderInformation['zip']}}</p>
+                                                                                                    <p style="color: #4C4C4C; margin: 0 auto;"><b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
+                                                                                                    <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </tr>
+                                                                                    @endforeach
                                                                                 </table>
-                                                                            @endforeach
+
 
 
                                                                         </td>
@@ -439,7 +480,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td></td>
+                                                            <td ></td>
                                                             <td  style="width: 25%">Sub Total</td>
                                                             <td>&euro;<?php echo $total?></td>
                                                         </tr>
@@ -623,5 +664,6 @@
                                                         </tbody>
                                                     </table>
                                             <td valign="top" width="20">&nbsp;</td>
+
 
 

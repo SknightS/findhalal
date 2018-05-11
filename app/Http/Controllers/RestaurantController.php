@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Resturant;
 use App\Rating;
 use Session;
+use DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
@@ -49,7 +50,7 @@ class RestaurantController extends Controller
             $restaurantStatus= "Close";
         }
 
-
+        $resRating=Rating::select(DB::raw('COUNT(ratingId) as totalRating'),DB::raw('AVG(rating) as avgRating'))->where('restaurantId',$resid)->groupBy('restaurantId')->get();
 
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
@@ -65,6 +66,7 @@ class RestaurantController extends Controller
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
+            ->with('restaurantRating', $resRating)
             ->with('restaurantStatus', $restaurantStatus)
 
             ->with('cartitem', $cartCollection);
@@ -141,8 +143,6 @@ class RestaurantController extends Controller
 
             }
 
-
-
             Cart::add(array(
                 'id' => $it->itemsizeId,
                 'name' => $it->itemName,
@@ -166,12 +166,16 @@ class RestaurantController extends Controller
             ->where('itemsizeId',$itemsize)
             ->first();
 
+        foreach (Cart::getContent($cartid) as $cr){
+            $delfeeC = $cr->attributes->delfee;
+            $residC = $cr->attributes->resid;
+        }
         Cart::update($cartid, array(
             'price' => $itemsize->price, // new item name
             'attributes' => array(
                 'size' =>  $itemsize->itemsizeId,
-                'delfee' => Cart::getContent($cartid)->attributes->delfee,
-                'resid' => Cart::getContent($cartid)->attributes->resid
+                'delfee' => $delfeeC,
+                'resid' => $residC
             ) // new item price, price can also be a string format like so: '98.67'
         ));
     }
@@ -383,12 +387,12 @@ class RestaurantController extends Controller
         }
         $orderInfo = Order::select('order.delfee','order.orderId','order.orderTime', 'order.paymentType','order.orderType', 'customer.firstName',
             'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country',
-            'resturant.name as resName','resturant.minOrder as resMinOrder','resturant.delfee as resDelfee','resturant.email as resMail')
+            'resturant.name as resName','resturant.phoneNumber as resPhone','resturant.minOrder as resMinOrder','resturant.delfee as resDelfee','resturant.email as resMail')
             ->where('order.orderId', $order->orderId)
             ->leftJoin('customer','customer.customerId','=','order.fkcustomerId')
             ->leftJoin('shipaddress','shipaddress.fkorderId','=','order.orderId')
             ->leftJoin('resturant','resturant.resturantId','=','order.fkresturantId')
-            ->toSql();
+            ->get();
 
         foreach ($orderInfo as $mailInfo){
             $customerMail=$mailInfo->email;
@@ -413,18 +417,24 @@ class RestaurantController extends Controller
 
             Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
             {
-                  $message->from('support@findhalal.de', 'FindHalal');
-                $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order');
+                $message->from('support@findhalal.de', 'FindHalal');
+                $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order From FindHalal');
             });
-            Mail::send('invoiceMail1',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($restaurantMail,$restaurantName)
+            Mail::send('invoiceMailForFindhalal',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
             {
-                  $message->from('support@findhalal.de', 'FindHalal');
+                $message->from('support@findhalal.de', 'FindHalal');
+                $message->to(FindhalalNewOrderMail, 'Findhalal Order')->subject('New Order From FindHalal');
+            });
+            Mail::send('invoiceMailForRestaurant',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($restaurantMail,$restaurantName)
+            {
+                $message->from('support@findhalal.de', 'FindHalal');
                 $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');
             });
 
+
             return 1;
 
-        }catch (Exception $ex) {
+        }catch (\Exception $ex) {
             return 0;
         }
     }
