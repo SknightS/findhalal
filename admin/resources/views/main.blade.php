@@ -61,7 +61,8 @@
 </head>
 
 
-<body class="page-body  page-fade" data-url="http://neon.dev">
+{{--<body class="page-body  page-fade" data-url="http://neon.dev">--}}
+<body class="page-body">
 
 
 <div id="messageDiv">

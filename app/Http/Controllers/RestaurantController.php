@@ -25,7 +25,9 @@ class RestaurantController extends Controller
                     ->orWhere('city', $r->searchbox);
             })
             ->get();
+
         return view('restaurants.index')
+
             ->with('resturant',$searchresult);
     }
     public function ViewMenu($resid){
@@ -56,12 +58,15 @@ class RestaurantController extends Controller
             ->where('status', 'Active')
             ->get();
         $cartCollection = Cart::getContent();
+
+
         return view('restaurants.profile')
             ->with('category', $catagory)
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
             ->with('restaurantStatus', $restaurantStatus)
+
             ->with('cartitem', $cartCollection);
     }
     public function getItem(Request $r){
@@ -239,7 +244,7 @@ class RestaurantController extends Controller
         if($r->stripeToken){
 //            return $r->stripeToken;
             try {
-                \Stripe\Stripe::setApiKey("sk_live_VhQBr29tOJwtEimukjSn2NEe");
+                    \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
                 // Token is created using Checkout or Elements!
                 // Get the payment token ID submitted by the form:
                 $token = $r->stripeToken;
@@ -255,43 +260,70 @@ class RestaurantController extends Controller
                 $body = $e->getJsonBody();
                 $err  = $body['error'];
 
-                $msg= 'Status is:' . $e->getHttpStatus() . "\n";
-                $msg.='Type is:' . $err['type'] . "\n";
-                $msg.='Code is:' . $err['code'] . "\n";
-                // param is '' in this case
-                $msg.='Param is:' . $err['param'] . "\n";
-                $msg.='Message is:' . $err['message'] . "\n";
-                Session::flash('message',$msg);
-                return 'error';
+
+                $code= $err['code'];
+                $msg=$err['message'];
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+
+                return $data;
+
 
             } catch (\Stripe\Error\RateLimit $e) {
                 // Too many requests made to the API too quickly
-                Session::flash('message','Too many requests made to the API too quickly');
-                return 'error';
+                // Session::flash('message','Too many requests made to the API too quickly');
+                $code= 'RateLimit';
+                $msg='Too many requests made to the API too quickly';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
 
             } catch (\Stripe\Error\InvalidRequest $e) {
                 // Invalid parameters were supplied to Stripe's API
-                Session::flash('message','Invalid parameters were supplied to Stripes API');
-                return 'error';
+                // Session::flash('message','Invalid parameters were supplied to Stripes API');
+                // return '2';
+                $code= 'InvalidRequest';
+                $msg='Invalid parameters were supplied to Stripes API';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
+
             } catch (\Stripe\Error\Authentication $e) {
                 // Authentication with Stripe's API failed
-                Session::flash('message','Authentication with Stripe\'s API failed');
-                return 'error';
+                // Session::flash('message','Authentication with Stripe\'s API failed');
+                // return '2';
+                $code= 'Authentication';
+                $msg='Authentication with Stripe\'s API failed';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
+
                 // (maybe you changed API keys recently)
             } catch (\Stripe\Error\ApiConnection $e) {
                 // Network communication with Stripe failed
-                Session::flash('message','Network communication with Stripe failed');
-                return 'error';
+                // Session::flash('message','Network communication with Stripe failed');
+                //  return '2';
+                $code= 'ApiConnection';
+                $msg='Network communication with Stripe failed';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
             } catch (\Stripe\Error\Base $e) {
                 // Display a very generic error to the user, and maybe send
                 // yourself an email
-                Session::flash('message','Display a very generic error to the user, and maybe send');
-                return 'error';
+                // Session::flash('message','Display a very generic error to the user, and maybe send');
+                //  return '2';
+
+                $code= 'Stripe Error';
+                $msg='Error In Payment with Stripe , Please Try after Sometime';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
 
             } catch (Exception $e) {
                 // Something else happened, completely unrelated to Stripe
-                Session::flash('message','Something else happened, completely unrelated to Stripe');
-                return 'error';
+                //  Session::flash('message','Something else happened, completely unrelated to Stripe');
+                // return '2';
+
+                $code= 'Payment Error';
+                $msg='Something else happened, completely unrelated to Stripe';
+                $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                return $data;
+
             }
 
         }
@@ -330,6 +362,16 @@ class RestaurantController extends Controller
             $orderitem->save();
         }
 
+        //For Rating Restaurant
+        if($r->rating){
+            $rating=new Rating;
+            $rating->customerId=$customer->customerId;
+            $rating->restaurantId=$resid;
+            $rating->rating=$r->rating;
+            $rating->save();
+
+        }
+
         $orderInfo = Order::select('order.delfee','order.orderId','order.orderTime', 'order.paymentType','order.orderType', 'customer.firstName',
             'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country')
             ->where('order.orderId', $order->orderId)
@@ -348,32 +390,52 @@ class RestaurantController extends Controller
             ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
             ->get();
 
-        Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
-        use ($customerMail, $customerFirstName, $customerLastName)
-        {
-            $message->from('noreply@findhalal.de', 'FindHalal');
-            $message->to('mujtaba.rumi1@gmail.com', 'rumi')->subject('New Order');
-        });
 
         Cart::clear();
+        Session::forget('ordertype');
+        Session::forget('paymentType');
 
-        //For Rating Restaurant
-        if($r->rating){
-            $rating=new Rating;
-            $rating->customerId=$customer->customerId;
-            $rating->restaurantId=$resid;
-            $rating->rating=$r->rating;
-            $rating->save();
+        try{
 
+            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
+            {
+                //  $message->from('support@findhalal.de', 'FindHalal');
+                $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order');
+            });
+
+
+            return 1;
+
+        }catch (Exception $ex) {
+            return 0;
         }
 
-        alert()->success('Congrats', 'your order has been placed successfully');
-        return redirect("/");
+        /*  Cart::clear();
+
+          alert()->success('Congrats', 'your order has been placed successfully');
+          return redirect("/");*/
+
         // return back();
     }
 
 
 
+    public function checkOrderType(){
+
+        $cartitem = Cart::getContent();
+        if($cartitem->isEmpty()){
+            //Session::flash('message','Cart Is Empty');
+            return '2';
+        }
+
+        if (Session::get('ordertype')=='Takeout' || Session::get('ordertype')=='Delivery'){
+
+            return '1';
+        }else{
+            return '0';
+        }
+
+    }
     public function takeout(){
         Session::put('ordertype', "Takeout");
     }
@@ -384,6 +446,6 @@ class RestaurantController extends Controller
         Session::put('paymentType', "Cash");
     }
     public function Card(){
-        Session::put('ordertype', "Card");
+        Session::put('paymentType', "Card");
     }
 }

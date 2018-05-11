@@ -16,15 +16,12 @@
             -webkit-transition: box-shadow 150ms ease;
             transition: box-shadow 150ms ease;
         }
-
         .StripeElement--focus {
             box-shadow: 0 1px 3px 0 #cfd7df;
         }
-
         .StripeElement--invalid {
             border-color: #fa755a;
         }
-
         .StripeElement--webkit-autofill {
             background-color: #fefde5 !important;
         }
@@ -52,7 +49,7 @@
                 <!-- /widget heading -->
                 <div class="widget-heading">
                     <h3 class="widget-title text-dark">
-                       <span style="color: #0a001f">Cart summary</span>
+                        <span style="color: #0a001f">Cart summary</span>
                     </h3>
                     <div class="clearfix"></div>
                 </div>
@@ -94,7 +91,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Zip/ Postal Code*</label>
-                                        <input type="number" class="form-control" placeholder="" id="zip" name="zip"> </div>
+                                        <input type="number" class="form-control" onkeypress="return isNumberKey(event,this)" placeholder="" id="zip" name="zip"> </div>
                                     <!--/form-group-->
                                 </div>
                             </div>
@@ -108,7 +105,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>phone*</label>
-                                        <input type="number" class="form-control" placeholder="" id="phone" name="phone"> </div>
+                                        <input type="number" onkeypress="return isNumberKey(event,this)" class="form-control" placeholder="" id="phone" name="phone"> </div>
                                     <!--/form-group-->
                                 </div>
 
@@ -213,14 +210,15 @@
                                                     <div id="card-errors" role="alert"></div>
                                                 </div>
 
-                                                <button class="btn btn-outline-success btn-block">Pay now</button>
+                                                <button class="btn btn-success btn-block">Pay now</button>
+
                                             </form>
 
                                         </div>
                                     </li>
                                 </ul>
                                 {{--<p class="text-xs-center"> <button type="submit" id="PayNowCard" style="display: none" class="btn btn-outline-success btn-block">Pay now1</button> </p>--}}
-                                <p class="text-xs-center"> <button type="submit" id="PayNowCash" style="display: none" onclick="cash()" class="btn btn-outline-success btn-block">Pay now</button> </p>
+                                <p class="text-xs-center"> <button type="submit" id="PayNowCash" style="display: none" onclick="cash()" class="btn btn-success btn-block">Pay now</button> </p>
                             </div>
                         </div>
                     </div>
@@ -235,12 +233,10 @@
     <script src="{{url('public/rating/js/star-rating.min.js')}}" type="text/javascript"></script>
 
     <script>
-        // Create a Stripe client.  pk_live_FpOYxAZOuEFIkVQTX5QUYQQp
-        var stripe = Stripe('pk_live_FpOYxAZOuEFIkVQTX5QUYQQp');
-
+        // Create a Stripe client.
+        var stripe = Stripe('pk_test_gUyDT0SVTbicyy4gAqkbbvyf');
         // Create an instance of Elements.
         var elements = stripe.elements();
-
         // Custom styling can be passed to options when creating an Element.
         // (Note that this demo uses a wider set of styles than the guide below.)
         var style = {
@@ -259,11 +255,8 @@
                 iconColor: '#fa755a'
             }
         };
-
-
-
         function stripeTokenHandler(token) {
-       // console.log(token);
+            // console.log(token);
             // Insert the token ID into the form so it gets submitted to the server
             // var form = document.getElementById('payment-form');
             // var hiddenInput = document.createElement('input');
@@ -381,12 +374,32 @@
                         'stripeToken':token.id
                     },
                     success: function (data) {
-                        console.log(data);
-                        if(data=='error'){
-                            location.reload();
+                        // console.log(data);
+                        if(data.cardError=='2'){
+
+                            $.alert({
+                                title: data.code +'!',
+                                type: 'red',
+                                content: data.message,
+                                buttons: {
+                                    tryAgain: {
+                                        text: 'Ok',
+                                        btnClass: 'btn-blue',
+                                        action: function(){
+                                            // window.location.href = "{{route('home')}}";
+                                            // console.log(data);
+                                            location.reload();
+                                        }
+                                    }
+                                }
+                            });
+
+
+                            //  location.reload();
                         }
 
-                        else{
+                        else if(data=='1'){
+
                             $.alert({
                                 title: 'Alert!',
                                 type: 'green',
@@ -395,12 +408,30 @@
                                     tryAgain: {
                                         text: 'Ok',
                                         btnClass: 'btn-blue',
-                                        action: function () {
-
+                                        action: function(){
                                             window.location.href = "{{route('home')}}";
+                                            // console.log(data);
                                         }
                                     }
+                                }
+                            });
 
+
+                        }else if(data=='0'){
+
+                            $.alert({
+                                title: 'Alert!',
+                                type: 'red',
+                                content: 'Your Order Has Placed Successfully <br> Something wrong with the mail ,Please contact us for the invoice',
+                                buttons: {
+                                    tryAgain: {
+                                        text: 'Ok',
+                                        btnClass: 'btn-blue',
+                                        action: function(){
+                                            window.location.href = "{{route('home')}}";
+                                            // console.log(data);
+                                        }
+                                    }
                                 }
                             });
 
@@ -413,17 +444,13 @@
             }
 
 
-            }
+        }
     </script>
 
 
     <script>
-
-
         $(document).ready(function() {
-
             var $inp = $('#rating-input');
-
             $inp.rating({
                 min: 0,
                 max: 5,
@@ -431,11 +458,8 @@
                 size: 'lg',
                 showClear: false
             });
-
-
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $("#PayNowCash").click(function () {
-
                 var rating=$('#rating-input').val();
                 var firstname = $('#firstname').val();
                 var lastname = $('#lastname').val();
@@ -446,61 +470,43 @@
                 var phone = $('#phone').val();
                 var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                 if (firstname ==""){
-
                     $.alert({
                         title: 'Alert!',
                         type: 'red',
                         content: 'FirstName can not be empty',
-
                     });
-
                 }
                 else if (lastname ==""){
-
                     $.alert({
                         title: 'Alert!',
                         type: 'red',
                         content: 'LastName can not be empty',
-
                     });
-
                 }
                 else if (address ==""){
-
                     $.alert({
                         title: 'Alert!',
                         type: 'red',
                         content: 'Address can not be empty',
-
                     });
-
                 }else if (city ==""){
-
                     $.alert({
                         title: 'Alert!',
                         type: 'red',
                         content: 'City can not be empty',
-
                     });
-
                 }else if (zip ==""){
-
                     $.alert({
                         title: 'Alert!',
                         type: 'red',
                         content: 'Zip can not be empty',
-
                     });
-
                 }else if (email ==""){
-
                     $.alert({
                         title: 'Alert!',
                         type: 'red',
                         content: 'Email can not be empty',
-
                     });
-
                 }
                 else if(!email.match(mailformat))
                 {
@@ -508,19 +514,14 @@
                         title: 'Alert!',
                         type: 'red',
                         content: 'You have entered an invalid email address!',
-
                     });
-
                 }
                 else if (phone ==""){
-
                     $.alert({
                         title: 'Alert!',
                         type: 'red',
                         content: 'Phone can not be empty',
-
                     });
-
                 }
                 else {
 
@@ -531,80 +532,105 @@
                             'zip':zip,'email':email,'phone':phone,'rating':rating
                         } ,
                         success : function(data){
-                            // console.log(data);
 
-                            $.alert({
-                                title: 'Alert!',
-                                type: 'green',
-                                content: 'Order Has Placed successfully',
-                                buttons: {
-                                    tryAgain: {
-                                        text: 'Ok',
-                                        btnClass: 'btn-blue',
-                                        action: function(){
+                            if(data.cardError=='2'){
 
-                                            window.location.href = "{{route('home')}}";
-                                           // console.log(data);
+                                $.alert({
+                                    title: data.code +'!',
+                                    type: 'red',
+                                    content: data.message,
+                                    buttons: {
+                                        tryAgain: {
+                                            text: 'Ok',
+                                            btnClass: 'btn-blue',
+                                            action: function(){
+                                                // window.location.href = "{{route('home')}}";
+                                                // console.log(data);
+                                                location.reload();
+                                            }
                                         }
                                     }
+                                });
 
-                                }
-                            });
+
+                                //  location.reload();
+                            }
+
+                            // console.log(data);
+                            else if(data=='1'){
+
+                                $.alert({
+                                    title: 'Alert!',
+                                    type: 'green',
+                                    content: 'Order Has Placed successfully',
+                                    buttons: {
+                                        tryAgain: {
+                                            text: 'Ok',
+                                            btnClass: 'btn-blue',
+                                            action: function(){
+                                                window.location.href = "{{route('home')}}";
+                                                // console.log(data);
+                                            }
+                                        }
+                                    }
+                                });
+
+
+                            }else if(data=='0') {
+
+                                $.alert({
+                                    title: 'Alert!',
+                                    type: 'green',
+                                    content: 'Your Order Has Placed Successfully <br> Something wrong with the mail ,Please contact us for the invoice',
+                                    buttons: {
+                                        tryAgain: {
+                                            text: 'Ok',
+                                            btnClass: 'btn-blue',
+                                            action: function(){
+                                                window.location.href = "{{route('home')}}";
+                                                // console.log(data);
+                                            }
+                                        }
+                                    }
+                                });
+
+                            }
 
                         }
                     });
 
                 }
-
-
-
-
             });
-
-
         });
         function cash() {
-
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type : 'post' ,
                 url : '{{route('restaurant.cash')}}',
                 data : {_token: CSRF_TOKEN} ,
                 success : function(data){
-
                     document.getElementById('PayNowCash').style.display = 'block';
 //                    document.getElementById('PayNowCard').style.display = 'none';
                     $("#demo").slideToggle( "slow");
                     document.getElementById('demo').style.display = 'none';
-
-
-
                 }
             });
-
         }
-
         function card() {
-
 //        alert("card");
-
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type : 'post' ,
                 url : '{{route('restaurant.card')}}',
                 data : {_token: CSRF_TOKEN} ,
                 success : function(data){
-
                     document.getElementById('PayNowCash').style.display = 'none';
 //                    document.getElementById('PayNowCard').style.display = 'block';
                     document.getElementById('demo').style.display = 'block';
-
                     // Create an instance of the card Element.
                     var card = elements.create('card', {style: style});
-
                     // Add an instance of the card Element into the `card-element` <div>.
                     card.mount('#card-element');
-
                     // Handle real-time validation errors from the card Element.
                     card.addEventListener('change', function(event) {
                         var displayError = document.getElementById('card-errors');
@@ -614,12 +640,10 @@
                             displayError.textContent = '';
                         }
                     });
-
                     // Handle form submission.
                     var form = document.getElementById('payment-form');
                     form.addEventListener('submit', function(event) {
                         event.preventDefault();
-
                         stripe.createToken(card).then(function(result) {
                             if (result.error) {
                                 // Inform the user if there was an error.
@@ -631,10 +655,19 @@
                             }
                         });
                     });
-
                 }
             });
-
         }
     </script>
+    <SCRIPT language=Javascript>
+        <!--
+        function isNumberKey(evt)
+        {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+        //-->
+    </SCRIPT>
 @endsection

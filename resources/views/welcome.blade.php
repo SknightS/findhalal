@@ -72,8 +72,60 @@
                     <div class="food-item-wrap">
                         <div class="figure-wrap bg-image" data-image-src="{{url('admin/public/RestaurantImages/'.$restaurant->image)}}">
                             <div class="distance"><i class="fa fa-pin"></i>1240m</div>
-                            <div class="rating pull-left"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
-                            <div class="review pull-right"><a href="#">198 reviews</a> </div>
+
+                            @foreach($restaurantRating as $rating)
+                                @if($restaurant->resturantId == $rating->restaurantId)
+                                    <div class="rating pull-left">
+                                    @if(round($rating->avgRating) == '0')
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    @endif
+                                    @if(round($rating->avgRating) == '1')
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    @endif
+                                    @if(round($rating->avgRating) == '2')
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    @endif
+                                    @if(round($rating->avgRating) == '3')
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    @endif
+                                    @if(round($rating->avgRating) == '4')
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    @endif
+                                    @if(round($rating->avgRating) == '5')
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    @endif
+                                    </div>
+
+
+                                    <div class="review pull-right"><span style="color: white">{{$rating->totalRating}} Ratings</span> </div>
+                                @endif
+
+                            @endforeach
+
                         </div>
                         <div class="content">
                             <h5><a href="{{ route('restaurant.viewmenu', $restaurant->resturantId) }}">{{$restaurant->name}}</a></h5>
@@ -163,10 +215,22 @@
                 <div class="restaurants-filter pull-right">
                     <nav class="primary pull-left">
                         <ul>
-                            <li><a href="#" class="selected" data-filter="*">All</a> </li>
-                            @foreach($featuredResCategory as $featuredRresCat)
-                                <li><a href="#" data-filter=".{{$featuredRresCat->name}}">{{$featuredRresCat->name}}</a> </li>
-                            @endforeach
+                            {{--<li><a href="#" class="selected" data-filter="*">All</a> </li>--}}
+                            {{--@foreach($featuredResCategory as $featuredRresCat)--}}
+                                {{--<li><a href="#" data-filter=".{{$featuredRresCat->name}}">{{$featuredRresCat->name}}</a> </li>--}}
+                            {{--@endforeach--}}
+                            {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".thaifood">thai food</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".fish">fish</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".thaifood">thai food</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".fish">fish</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".thaifood">thai food</a> </li>--}}
+                            {{--<li><a href="#" data-filter=".fish">fish</a> </li>--}}
                             {{--<li><a href="#" data-filter=".pizza">Pizza</a> </li>--}}
                             {{--<li><a href="#" data-filter=".pasta">Pasta</a> </li>--}}
                             {{--<li><a href="#" data-filter=".thaifood">thai food</a> </li>--}}
@@ -207,12 +271,62 @@
                                     <div class="cost"><i class="fa fa-check"></i> Min $ {{$featuredResturant->minOrder}}</div>
                                     {{--<div class="mins"><i class="fa fa-motorcycle"></i> 30 min</div>--}}
                                     <div class="ratings"> <span>
+
+                                            @foreach($restaurantRating as $rating)
+                                            @if($featuredResturant->resturantId == $rating->restaurantId)
+                                                @if(round($rating->avgRating) == '0')
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                @endif
+                                                    @if(round($rating->avgRating) == '1')
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                @endif
+                                                    @if(round($rating->avgRating) == '2')
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                @endif
+                                                    @if(round($rating->avgRating) == '3')
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                @endif
+                                                    @if(round($rating->avgRating) == '4')
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star-o"></i>
-                                                </span> (122) </div>
+                                                @endif
+                                                    @if(round($rating->avgRating) == '5')
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                @endif
+
+
+                                                    ({{$rating->totalRating}})
+
+                                    @endif
+
+                                    @endforeach
+                                        </span> </div>
+
+                                    <div class="price-btn-block"> <span class="price"></span> <a href="{{route('restaurant.viewmenu',$featuredResturant->resturantId)}}" class="btn theme-btn-dash pull-right">Order Now</a> </div>
+
                                 </div>
                             </div>
                             <!-- end:col -->
