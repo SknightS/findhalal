@@ -234,7 +234,7 @@
 
     <script>
         // Create a Stripe client.
-        var stripe = Stripe('pk_test_gUyDT0SVTbicyy4gAqkbbvyf');
+        var stripe = Stripe('{{STRIPE_TOKEN_FRONTEND}}');
         // Create an instance of Elements.
         var elements = stripe.elements();
         // Custom styling can be passed to options when creating an Element.

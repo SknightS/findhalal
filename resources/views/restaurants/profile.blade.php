@@ -94,8 +94,9 @@
 
                                             @endforeach
                                             </a>
+                                            @if(isset($rating))
                                             &nbsp; <span class="review pull-right"><span style="color: white">{{$rating->totalRating}} Ratings</span> </span>
-
+                                            @endif
                                         </li>
                                     </ul>
                                 </div>
