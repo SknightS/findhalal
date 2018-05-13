@@ -53,6 +53,8 @@ Route::post('/restaurants/card','RestaurantController@Card')->name('restaurant.c
 
 
 Route::view('/dataprotection','dataprotection')->name('dataprotection');
+Route::view('/Impressum','impressum')->name('impressum');
+Route::view('/CityList','citylist')->name('citylist');
 
 
 //Route::view('/admin','admin.index')->name('admin.index');

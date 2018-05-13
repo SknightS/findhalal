@@ -32,14 +32,14 @@
         <!-- top footer statrs -->
         <div class="row top-footer">
             <div class="col-xs-12 col-sm-3 footer-logo-block color-gray">
-                <a href="#"> <img src="{{url('images/food-picky-logo.png')}}" alt="Footer logo"> </a> <span>Order Delivery &amp; Take-Out </span> </div>
+                <a href="#"> <img src="{{url('images/findhalal.png')}}" width="110px" height="35px" alt="Footer logo"> </a> <span >Order Delivery &amp; Take-Out </span> </div>
             <div class="col-xs-12 col-sm-2 about color-gray"><ul>
-                    <li> <a href="#" style="color: white;"> imprint</a> </li>
+                    <li> <a href="{{route('impressum')}}" style="color: white;"> imprint</a> </li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-2 how-it-works-links color-gray">
                 <ul>
-                    <li> <a href="#" style="color: white;"> contact</a> </li>  </ul>
+                    <li> <a href="{{route('contact')}}" style="color: white;"> contact</a> </li>  </ul>
             </div>
             <div class="col-xs-12 col-sm-2 pages color-gray">
                 <ul>
@@ -47,7 +47,7 @@
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-3 popular-locations color-gray"><ul >
-                    <li> <a href="#" style="color: white;"> city List</a> </li></ul>
+                    <li> <a href="{{route('citylist')}}" style="color: white;"> city List</a> </li></ul>
             </div>
 
         </div>
@@ -59,29 +59,29 @@
                     <h5>Payment Options</h5>
                     <ul>
                         <li>
-                            <a href="#"> <img src="{{url('images/paypal.png')}}" alt="Paypal"> </a>
+                            <a href="#"> <img src="{{url('images/master.png')}}"  width="45px" height="30px" alt="Master Card"> </a>
                         </li>
                         <li>
-                            <a href="#"> <img src="{{url('images/mastercard.png')}}" alt="Mastercard"> </a>
+                            <a href="#"> <img src="{{url('images/visa.png')}}" width="45px" height="30px" alt="VisaCard"> </a>
                         </li>
                         <li>
-                            <a href="#"> <img src="{{url('images/maestro.png')}}" alt="Maestro"> </a>
+                            <a href="#"> <img src="{{url('images/maestro.png')}}"  width="45px" height="30px" alt="Maestro"> </a>
                         </li>
                         <li>
-                            <a href="#"> <img src="{{url('images/stripe.png')}}" alt="Stripe"> </a>
+                            <a href="#"> <img src="{{url('images/stripe.png')}}"  width="45px" height="30px"alt="Stripe"> </a>
                         </li>
                         <li>
-                            <a href="#"> <img src="{{url('images/bitcoin.png')}}" alt="Bitcoin"> </a>
+                            <a href="#"> <img src="{{url('images/bitcoin.png')}}"  width="45px" height="30px"alt="Bitcoin"> </a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-xs-12 col-sm-4 address color-gray">
                     <h5>Address</h5>
                     <p>Concept design of oline food order and deliveye,planned as restaurant directory</p>
-                    <h5>Phone: <a href="tel:+080000012222">080 000012 222</a></h5> </div>
-                <div class="col-xs-12 col-sm-5 additional-info color-gray">
-                    <h5>Addition informations</h5>
-                    <p>Join the thousands of other restaurants who benefit from having their menus on TakeOff</p>
+                    </div>
+                <div class="col-xs-12 col-sm-5 address color-gray">
+                    <h5>Phone: </h5>
+                    <h5><a href="tel:+080000012222">080 000012 222</a></h5>
                 </div>
             </div>
         </div>

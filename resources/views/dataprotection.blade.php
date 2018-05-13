@@ -2,25 +2,14 @@
 
 @section('content')
     <div class="page-wrapper">
-        <!-- top Links -->
-    {{--<div class="top-links">--}}
-    {{--<div class="container">--}}
-    {{--<ul class="row links">--}}
-    {{--<li class="col-xs-12 col-sm-3 link-item active"><span>1</span><a href="#">Choose Your Location</a></li>--}}
-    {{--<li class="col-xs-12 col-sm-3 link-item"><span>2</span><a href="#">Choose Restaurant</a></li>--}}
-    {{--<li class="col-xs-12 col-sm-3 link-item"><span>3</span><a href="#">Pick Your favorite food</a></li>--}}
-    {{--<li class="col-xs-12 col-sm-3 link-item"><span>4</span><a href="#">Order and Pay online</a></li>--}}
-    {{--</ul>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    <!-- end:Top links -->
+    
         <!-- start: Inner page hero -->
         <section class="bg-image space-md" data-image-src="{{url('images/fhb.jpg')}}">
             <div class="profile">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4  col-lg-4 profile-img">
-                            <h1 class="font-white">Contact us </h1> </div>
+                            <h1 class="font-white">Data Protection </h1> </div>
                     </div>
                 </div>
             </div>
@@ -31,7 +20,7 @@
                 <ul>
                     <li><a href="#" class="active">Home</a></li>
                     <li><a href="#">Search results</a></li>
-                    <li>Contact</li>
+                    <li>Data Protection</li>
                 </ul>
             </div>
         </div>
