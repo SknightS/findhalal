@@ -31,11 +31,11 @@
     {{--</div>--}}
 
     {{--<div class="form-group col-md-6">--}}
-        <label class="col-sm-2 control-label">Item Type<span style="color: red" class="required">*</span></label>
+        <label class="col-sm-2 control-label">Categories<span style="color: red" class="required">*</span></label>
         <div class="col-sm-3">
             <select class="form-control" name="itemCategory" id="itemCategory" required>
 
-                <option value="">Select Item Type</option>
+                <option value="">Select Category</option>
 
 
             </select>

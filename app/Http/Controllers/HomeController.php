@@ -71,4 +71,11 @@ class HomeController extends Controller
 
 
     }
+
+
+    public function contact(Request $r){
+
+        return $r;
+
+    }
 }

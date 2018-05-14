@@ -56,7 +56,7 @@
 
 
                         <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Min Order</label>
+                            <label for="field-1" class="col-sm-3 control-label">Min Order(€)</label>
                             <div class="col-sm-5">
                                 <input type="number" min="0" class="form-control" id="field-1" name="minOrder" value="{{$restaurant->minOrder}}" placeholder="min order">
                                 @if ($errors->has('minOrder'))
@@ -69,7 +69,7 @@
 
 
                         <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Delivery Fee</label>
+                            <label for="field-1" class="col-sm-3 control-label">Delivery Fee(€)</label>
                             <div class="col-sm-5">
                                 <input type="number" min="0" class="form-control" id="field-1" name="delfee" value="{{$restaurant->delfee}}" placeholder="insert fee">
                                 @if ($errors->has('delfee'))

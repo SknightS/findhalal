@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
-//use DataTables;
 use Yajra\DataTables\DataTables;
 use Image;
 use DB;

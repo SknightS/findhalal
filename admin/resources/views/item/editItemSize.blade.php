@@ -44,7 +44,7 @@
 
 
                             <div id = "Item_price" class="form-group">
-                                <label class="control-label col-sm-3"> Item Price<span style="color: red" class="required">*</span></label>
+                                <label class="control-label col-sm-3"> Item Price(€)<span style="color: red" class="required">*</span></label>
                                 <div class="col-sm-5">
                                     <input type="text" name="itemPrice" placeholder="Item Price" id="itemPrice" value="{{$itemSize->price}}" class="form-control input-height" required >
                                     @if ($errors->has('itemPrice'))

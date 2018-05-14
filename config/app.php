@@ -213,6 +213,8 @@ return [
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
 
+
+
     ],
 
 ];
