@@ -54,8 +54,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="widget-body">
-                    {{--<form method="post" action="{{route('restaurant.submitorder')}}">--}}
-                    {{--{{csrf_field()}}--}}
+                    
                     <div class="row">
                         <div class="col-sm-6 margin-b-30">
                             <div class="row">
@@ -178,20 +177,13 @@
                                             <input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input" onclick="cash()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Payment on delivery</span>
                                             <br> <span>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span> </label>
                                     </li>
-                                    {{--<li>--}}
-                                    {{--<label class="custom-control custom-radio  m-b-10">--}}
-                                    {{--<input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online <img src="images/paypal.jpg" alt="" width="90"></span> </label>--}}
-                                    {{--</li>--}}
 
                                     <li>
 
                                         <label class="custom-control custom-radio  m-b-10">
                                             <input name="radio-stacked" id="cartButton" type="radio" onclick="card()"  class="custom-control-input">
-                                            {{--<input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()" required> --}}
                                             <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online
                                                         <img src="images/paypal.jpg" alt="" width="90"></span> </label>
-
-                                        {{--<button data-toggle="collapse" class="btn btn-outline-success btn-block" data-target="#demo">Pay With Card</button>--}}
 
                                         <div id="demo" style="display: none">
 
@@ -256,17 +248,8 @@
             }
         };
         function stripeTokenHandler(token) {
-            // console.log(token);
-            // Insert the token ID into the form so it gets submitted to the server
-            // var form = document.getElementById('payment-form');
-            // var hiddenInput = document.createElement('input');
-            // hiddenInput.setAttribute('type', 'hidden');
-            // hiddenInput.setAttribute('name', 'stripeToken');
-            // hiddenInput.setAttribute('value', token.id);
-            // form.appendChild(hiddenInput);
 
-            // Submit the form
-            // form.submit();
+            // Insert the token ID into the form so it gets submitted to the server
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
 
@@ -372,11 +355,12 @@
                         'email': email,
                         'phone': phone,
                         'rating': rating,
-                        'stripeToken':token.id
+                        'stripeToken':token.id,
+                        'cardInfo':token.card,
                     },
                     success: function (data) {
                         $("#wait").css("display", "none");
-                        // console.log(data);
+
                         if(data.cardError=='2'){
 
                             $.alert({
@@ -388,8 +372,6 @@
                                         text: 'Ok',
                                         btnClass: 'btn-blue',
                                         action: function(){
-                                            // window.location.href = "{{route('home')}}";
-                                            // console.log(data);
                                             location.reload();
                                         }
                                     }
@@ -397,7 +379,6 @@
                             });
 
 
-                            //  location.reload();
                         }
 
                         else if(data=='1'){
@@ -412,7 +393,6 @@
                                         btnClass: 'btn-blue',
                                         action: function(){
                                             window.location.href = "{{route('home')}}";
-                                            // console.log(data);
                                         }
                                     }
                                 }
@@ -431,7 +411,6 @@
                                         btnClass: 'btn-blue',
                                         action: function(){
                                             window.location.href = "{{route('home')}}";
-                                            // console.log(data);
                                         }
                                     }
                                 }
@@ -538,6 +517,7 @@
                     } ,
                     success : function(data){
 
+
                         $("#wait").css("display", "none");
 
                         if(data.cardError=='2'){
@@ -551,8 +531,6 @@
                                         text: 'Ok',
                                         btnClass: 'btn-blue',
                                         action: function(){
-                                            // window.location.href = "{{route('home')}}";
-                                            // console.log(data);
                                             location.reload();
                                         }
                                     }
@@ -560,10 +538,8 @@
                             });
 
 
-                            //  location.reload();
                         }
 
-                        // console.log(data);
                         else if(data=='1'){
 
                             $.alert({
@@ -631,7 +607,6 @@
                 data : {_token: CSRF_TOKEN} ,
                 success : function(data){
                     document.getElementById('PayNowCash').style.display = 'none';
-//                    document.getElementById('PayNowCard').style.display = 'block';
                     document.getElementById('demo').style.display = 'block';
                     // Create an instance of the card Element.
                     var card = elements.create('card', {style: style});
@@ -651,6 +626,7 @@
                     form.addEventListener('submit', function(event) {
                         event.preventDefault();
                         stripe.createToken(card).then(function(result) {
+                            // console.log(result.token.card);
                             if (result.error) {
                                 // Inform the user if there was an error.
                                 var errorElement = document.getElementById('card-errors');

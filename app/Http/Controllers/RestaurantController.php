@@ -220,6 +220,8 @@ class RestaurantController extends Controller
 
     public function SubmitOrder(Request $r){
 
+        return $r;
+
 
         $cartCollection = Cart::getContent();
         foreach ($cartCollection as $c)
