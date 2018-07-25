@@ -220,9 +220,6 @@ class RestaurantController extends Controller
 
     public function SubmitOrder(Request $r){
 
-        return $r;
-
-
         $cartCollection = Cart::getContent();
         foreach ($cartCollection as $c)
         {
@@ -406,24 +403,60 @@ class RestaurantController extends Controller
             ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
             ->get();
 
+        if (Session::get('paymentType')=='Card'){
+
+            $cardInformation= array(
+                'cardType'=>$r->cardInfo['brand'],
+                'cardNo'=>$r->cardInfo['last4'],
+            );
+
+        }elseif(Session::get('paymentType')=='Cash'){
+
+            $cardInformation= null;
+        }
+
+
+       // return $cardInformation;
 
         Cart::clear();
         Session::forget('ordertype');
         Session::forget('paymentType');
 
+
+
         try{
 
-            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
+//            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
+//            {
+//                $message->from('support@findhalal.de', 'FindHalal');
+//                $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order From FindHalal');
+//            });
+//            Mail::send('invoiceMailForFindhalal',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
+//            {
+//                $message->from('support@findhalal.de', 'FindHalal');
+//                $message->to(FindhalalNewOrderMail, 'Findhalal Order')->subject('New Order From FindHalal');
+//            });
+//            Mail::send('invoiceMailForRestaurant',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($restaurantMail,$restaurantName)
+//            {
+//                $message->from('support@findhalal.de', 'FindHalal');
+//                $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');
+//            });
+
+
+//new mail
+            Mail::send('invoiceMail1',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message) use ($customerMail,$customerFirstName, $customerLastName)
             {
                 $message->from('support@findhalal.de', 'FindHalal');
                 $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order From FindHalal');
             });
-            Mail::send('invoiceMailForFindhalal',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
+
+            Mail::send('invoiceMail1',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message)
             {
                 $message->from('support@findhalal.de', 'FindHalal');
                 $message->to(FindhalalNewOrderMail, 'Findhalal Order')->subject('New Order From FindHalal');
             });
-            Mail::send('invoiceMailForRestaurant',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($restaurantMail,$restaurantName)
+
+            Mail::send('invoiceMail1',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message) use ($restaurantMail,$restaurantName)
             {
                 $message->from('support@findhalal.de', 'FindHalal');
                 $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');
@@ -467,6 +500,5 @@ class RestaurantController extends Controller
     public function Card(){
         Session::put('paymentType', "Card");
     }
-
 
 }

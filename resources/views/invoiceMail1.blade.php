@@ -1,678 +1,325 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>New Order Invoice</title>
-    <style type="text/css">
-        body {
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            margin:0 !important;
+
+<HTML>
+<HEAD>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <META http-equiv="X-UA-Compatible" content="IE=8">
+    <TITLE>Invoice</TITLE>
+    <META name="generator" content="BCL easyConverter SDK 5.0.101">
+    <STYLE type="text/css">
+
+        BODY {
+            margin-top: 0px;margin-left: 0px;
             width: 100% !important;
+            margin: auto;padding: 0px;border: none;
             -webkit-text-size-adjust: 100% !important;
             -ms-text-size-adjust: 100% !important;
             -webkit-font-smoothing: antialiased !important;
         }
-        .tableContent img {
-            border: 0 !important;
-            display: block !important;
-            outline: none !important;
-        }
-        a{
-            color:#382F2E;
-        }
-
-        p, h1,h2,ul,ol,li,div{
-            margin:0;
-            padding:0;
-        }
-
-        h1,h2{
-            font-weight: normal;
-            background:transparent !important;
-            border:none !important;
-        }
-
-        @media only screen and (max-width:480px)
-
-        {
-
-            table[class="MainContainer"], td[class="cell"]
-            {
-                width: 100% !important;
-                height:auto !important;
-            }
-            td[class="specbundle"]
-            {
-                width: 100% !important;
-                float:left !important;
-                font-size:13px !important;
-                line-height:17px !important;
-                display:block !important;
-                padding-bottom:15px !important;
-            }
-            td[class="specbundle2"]
-            {
-                width:80% !important;
-                float:left !important;
-                font-size:13px !important;
-                line-height:17px !important;
-                display:block !important;
-                padding-bottom:10px !important;
-                padding-left:10% !important;
-                padding-right:10% !important;
-            }
-
-            td[class="spechide"]
-            {
-                display:none !important;
-            }
-            img[class="banner"]
-            {
-                width: 100% !important;
-                height: auto !important;
-            }
-            td[class="left_pad"]
-            {
-                padding-left:15px !important;
-                padding-right:15px !important;
-            }
-
-        }
-
-        @media only screen and (max-width:540px)
-
-        {
-
-            table[class="MainContainer"], td[class="cell"]
-            {
-                width: 100% !important;
-                height:auto !important;
-            }
-            td[class="specbundle"]
-            {
-                width: 100% !important;
-                float:left !important;
-                font-size:13px !important;
-                line-height:17px !important;
-                display:block !important;
-                padding-bottom:15px !important;
-            }
-            td[class="specbundle2"]
-            {
-                width:80% !important;
-                float:left !important;
-                font-size:13px !important;
-                line-height:17px !important;
-                display:block !important;
-                padding-bottom:10px !important;
-                padding-left:10% !important;
-                padding-right:10% !important;
-            }
-
-            td[class="spechide"]
-            {
-                display:none !important;
-            }
-            img[class="banner"]
-            {
-                width: 100% !important;
-                height: auto !important;
-            }
-            td[class="left_pad"]
-            {
-                padding-left:15px !important;
-                padding-right:15px !important;
-            }
-
-        }
-
-        .contentEditable h2.big,.contentEditable h1.big{
-            font-size: 26px !important;
-        }
-
-        .contentEditable h2.bigger,.contentEditable h1.bigger{
-            font-size: 37px !important;
-        }
-
-        td,table{
-            vertical-align: top;
-        }
-        td.middle{
-            vertical-align: middle;
-        }
-
-        a.link1{
-            font-size:13px;
-            color:#27A1E5;
-            line-height: 24px;
-            text-decoration:none;
-        }
-        a{
-            text-decoration: none;
-        }
-
-        .link2{
-            color:#ffffff;
-            border-top:10px solid #27A1E5;
-            border-bottom:10px solid #27A1E5;
-            border-left:18px solid #27A1E5;
-            border-right:18px solid #27A1E5;
-            border-radius:3px;
-            -moz-border-radius:3px;
-            -webkit-border-radius:3px;
-            background:#27A1E5;
-        }
-
-        .link3{
-            color:#555555;
-            border:1px solid #cccccc;
-            padding:10px 18px;
-            border-radius:3px;
-            -moz-border-radius:3px;
-            -webkit-border-radius:3px;
-            background:#ffffff;
-        }
-
-        .link4{
-            color:#27A1E5;
-            line-height: 24px;
-        }
-
-        h2,h1{
-            line-height: 20px;
-        }
-        p{
-            font-size: 14px;
-            line-height: 21px;
-            color:#AAAAAA;
-        }
-
-        .contentEditable li{
-
-        }
-
-        .appart p{
-
-        }
-        .bgItem{
-            background: #ffffff;
-        }
-        .bgBody{
-            background: #ffffff;
-        }
-
-        img {
-            outline:none;
-            text-decoration:none;
-            -ms-interpolation-mode: bicubic;
-            width: auto;
-            max-width: 100%;
-            clear: both;
-            display: block;
-            float: none;
-        }
-
-    </style>
-
-
-    <script type="colorScheme" class="swatch active">
-{
-    "name":"Default",
-    "bgBody":"ffffff",
-    "link":"27A1E5",
-    "color":"AAAAAA",
-    "bgItem":"ffffff",
-    "title":"444444"
-}
-</script>
-
-
-</head>
-<body paddingwidth="0" paddingheight="0" bgcolor="#d1d3d4"  style="padding-top: 0; padding-bottom: 0; padding-top: 0; padding-bottom: 0; background-repeat: repeat; width: 100% !important; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-font-smoothing: antialiased;" offset="0" toppadding="0" leftpadding="0">
-<table width="100%" border="1" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-        <td><table width="600" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#ffffff" style="font-family:helvetica, sans-serif;" class="MainContainer">
-                <!-- =============== START HEADER =============== -->
-                <tbody>
-                <tr>
-                    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <tbody>
-                            <tr>
-                                <td valign="top" width="20">&nbsp;</td>
-                                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                        <tbody>
-                                        <tr>
-                                            <td class="movableContentContainer">
-                                                <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td height="15"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td valign="top">
-                                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                                <tbody>
-                                                                                <tr>
-                                                                                    <td valign="top" width="60"><img src="{{url('public/images/logo.png')}}" alt="Logo" title="Logo" width="60" height="60" data-max-width="100"></td>
-                                                                                    <td width="10" valign="top">&nbsp;</td>
-                                                                                    <td valign="middle" style='vertical-align: middle;'>
-                                                                                        <div class='contentEditableContainer contentTextEditable'>
-                                                                                            <div class='contentEditable' style='text-align: left;font-weight: light; color:#555555;font-size:26;line-height: 39px;font-family: Helvetica Neue;'>
-                                                                                                <h1 class='big'><a target='_blank' href="{{route('home')}}" style='color:red'>FindHalal</a></h1>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </td>
-                                                                        <td valign="top" width="90" class="spechide">&nbsp;</td>
-                                                                        <td valign="middle" style='vertical-align: middle;' width='150'>
-                                                                            <div class='contentEditableContainer contentTextEditable'>
-                                                                                <div class='contentEditable' style='text-align: right;'>
-                                                                                    <a target='_blank' href="[SHOWEMAIL]" class='link1'></a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td height='15'></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td ><hr style='height:1px;background:#DDDDDD;border:none;'></td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <!-- =============== END HEADER =============== -->
-                                                <!-- =============== START BODY =============== -->
-
-                                                <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <!--      <td height="40"></td>-->
-                                                        </tr>
-                                                        <tr>
-                                                            <td valign="top" width="580"><div class='contentEditableContainer contentImageEditable'>
-                                                                    <div class='contentEditable' style="text-align: center;"><img class="banner" src="{{url('public/images/main.jpg')}}" alt="Logo" title="Logo" width="580" height="221" border="0"></div></div></td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-
-
-
-                                                </div>
-
-                                                <div class="movableContent" style="border: 1px; padding-top: 0px; position: relative;">
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <!--      <td height='40'></td>-->
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="border: 1px solid #EEEEEE; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td valign="top" width="40">&nbsp;</td>
-                                                                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                                                <tr><td height='25'></td></tr>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div class='contentEditableContainer contentTextEditable'>
-                                                                                            <div class='contentEditable' style='text-align: left;'>
-                                                                                                {{--@foreach($orderInfo as $orderInformation)--}}
-                                                                                                {{--<h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>--}}
-                                                                                                {{--<br>--}}
-
-                                                                                                {{--<p>Attached below is the summary of your order.</p><br>--}}
-
-                                                                                                {{--<p>Thanks For Ordering From Us.</p> <br>--}}
-                                                                                                {{--<p>Regards, <br> <b>FindHalal</b> Team</p>--}}
-                                                                                                {{--@endforeach--}}
-
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </td>
-
-                                                                                </tr>
-
-                                                                                <tr><td height='24'></td></tr>
-                                                                            </table>
-                                                                            @foreach($orderInfo as $orderInformation)
-                                                                                <table width="100%">
-                                                                                    <tr>
-                                                                                        <td style="width: 100%; text-align: center; ">
-                                                                                            <h4 style="color: #4C4C4C;">Order Details</h4>
-
-                                                                                            <table width="100%" style="text-align: center; " >
-                                                                                                <tr>
-
-                                                                                                    <span>Customer Name:</span><br><span><b>{{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</b></span>
-
-
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <p style="color: red;">Order Type: <br> {{$orderInformation['orderType']}}</p>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <p style="color: red;">Payment Type: <br> {{$orderInformation['paymentType']}}</p>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </td>
-
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td style="width: 100%; text-align: center; ">
-                                                                                            <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                            <p style="color: #4C4C4C;">Address: {{$orderInformation['addressDetails']}} , Zip: {{$orderInformation['zip']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;">City: {{$orderInformation['city']}} , Country: {{$orderInformation['country']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;">Phone: {{$orderInformation['phone']}}</p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            @endforeach
-
-
-                                                                        </td>
-                                                                        <td valign="top" width="40">&nbsp;</td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-
-
-
-                                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td height="20"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="background:#F6F6F6; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px">
-                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td width="40" valign="top">&nbsp;</td>
-                                                                            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                                                    <tr><td height='25'></td></tr>
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <div class='contentEditableContainer contentTextEditable'>
-                                                                                                <div class='contentEditable' style='text-align: center;'>
-                                                                                                    <h2 style="font-size: 20px; color: red;">Order Details</h2>
-
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr><td height='24'></td></tr>
-                                                                                </table></td>
-
-                                                                            <td width="40" valign="top">&nbsp;</td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-
-                                                    <table  width="100%" border="0" cellspacing="0" cellpadding="0" align="center"  style="width: 100%; color: #000017; text-align: center; border: 1px" class="table table-bordered">
-                                                        <thead>
-                                                        <tr>
-                                                            <th style="width: 5%; padding: 7px;">#</th>
-                                                            <th style="width: 33%">Name</th>
-                                                            <th style="width: ">Size</th>
-                                                            <th style="width: ">Unit Price</th>
-                                                            <th style="width: ">Quantity</th>
-
-                                                            <th style="width: ">Total</th>
-                                                        </tr>
-                                                        </thead>
-                                                        @foreach($orderInfo as $orderInformation)
-                                                            <?php $total=0;$i=1;?>
-                                                            @foreach($orderItemInfo as $itemInfo)
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td><?php echo $i?></td>
-                                                                    <td>{{$itemInfo['itemName']}}<br>{{$itemInfo['itemDetails']}}</td>
-                                                                    <td>{{$itemInfo['itemsizeName']}}</td>
-                                                                    <td>&euro;{{$itemInfo['price']}}</td>
-
-                                                                    <td>{{$itemInfo['quantity']}}</td>
-
-                                                                    <td>&euro;{{$price=($itemInfo['price']*$itemInfo['quantity'])}}</td>
-                                                                </tr>
-                                                                <?php $i++;$total=($total+$price); ?>
-
-                                                                </tbody>
-                                                            @endforeach
-
-                                                    </table>
-
-                                                    <hr>
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width: 75%"></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td style="width: 15%">Sub Total</td>
-                                                            <td>&euro;<?php echo $total?></td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td style="width: 75%"></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>Delevary Fee</td>
-                                                            <?php $delveryFee=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
-
-                                                            <td>&euro;<?php echo $delveryFee=$orderInformation->resDelfee ?></td>
-                                                            <?php }elseif($orderInformation->orderType=='Delivery' && $total < $orderInformation->resMinOrder) {?>
-                                                            <td>&euro;<?php echo $delveryFee=$orderInformation->delfee?></td>
-                                                            <?php }elseif ($orderInformation->orderType=='Takeout'){?>
-                                                            <td>&euro;<?php echo $delveryFee;} ?></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 75%"></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>Discount</td>
-                                                            <?php $discount=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
-
-                                                            <td>&euro;<?php echo $discount=$delveryFee ?></td>
-                                                            <?php }elseif($orderInformation->orderType=='Delivery' && $total < $orderInformation->resMinOrder) {?>
-                                                            <td>&euro;<?php echo $discount?></td>
-                                                            <?php }elseif ($orderInformation->orderType=='Takeout'){?>
-                                                            <td>&euro;<?php echo $discount ; } ?></td>
-
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td style="width: 60%"></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>TOTAL</td>
-                                                            <td>&euro;<?php echo $Total=(($total+$delveryFee-$discount))?></td>
-                                                        </tr>
-                                                    </table>
-                                                @endforeach
-                                                <!-- =============== END BODY =============== -->
-                                                    <!-- =============== START FOOTER =============== -->
-
-                                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                            <tbody>
-                                                            <tr>
-                                                                <!--      <td height="48"></td>-->
-                                                            </tr>
-                                                            <tr>
-                                                                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td valign="top" width="90" class="spechide">&nbsp;</td>
-                                                                            <td>
-
-                                                                            </td>
-                                                                            <td valign="top" width="90" class="spechide">&nbsp;</td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-
-
-                                                    </div>
-
-                                                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
-
-                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td height="40"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td valign="top" width="185" class="spechide">&nbsp;</td>
-                                                                            <td class="specbundle2">
-                                                                                <table width="100%" cellpadding="0" cellspacing="0" align="center">
-                                                                                    <tr>
-                                                                                        <td width='40'>
-                                                                                            <div class='contentEditableContainer contentFacebookEditable'>
-                                                                                                <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="{{url('public/images/facebook.png')}}" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td width='10'></td>
-                                                                                        <td width='40'>
-                                                                                            <div class='contentEditableContainer contentTwitterEditable'>
-                                                                                                <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="{{url('public/images/twitter.png')}}" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td width='10'></td>
-                                                                                        <td width='40'>
-                                                                                            <div class='contentEditableContainer contentImageEditable'>
-                                                                                                <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="{{url('public/images/red.png')}}" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td width='10'></td>
-                                                                                        <td width='40'>
-                                                                                            <div class='contentEditableContainer contentImageEditable'>
-                                                                                                <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
-                                                                                                    <img src="{{url('public/images/blue.png')}}" alt="Social media" width='40' height='40' data-max-width="40" border="0">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                            <td valign="top" width="185" class="spechide">&nbsp;</td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <!--            <td height='40'></td>-->
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-
-                                                        <!-- =============== END FOOTER =============== -->
-                                                    </div>
-
-
-                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td height='40'></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="border: 1px solid #EEEEEE; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td valign="top" width="40">&nbsp;</td>
-                                                                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                                                <tr><td height='15'></td></tr>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div class='contentEditableContainer contentTextEditable'>
-                                                                                            <div class='contentEditable' style='text-align: left;'>
-                                                                                                <p style="font-size: 15px; text-align: center;">&copy; FindHalal {{date('Y')}}. All rights reserved</p>
-
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </td>
-
-                                                                                </tr>
-
-                                                                                <tr><td height='15'></td></tr>
-                                                                            </table>
-
-
-
-                                                                        </td>
-                                                                        <td valign="top" width="40">&nbsp;</td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                            <td valign="top" width="20">&nbsp;</td>
 
+        #page_1 {position:relative; overflow: hidden;margin: auto;padding: 0px;border: none;width: 794px;height: 1074px;}
+
+        #page_1 #p1dimg1 {position:absolute;top:0px;left:0px;z-index:-1;width:750px;height:1074px;}
+        #page_1 #p1dimg1 #p1img1 {width:750px;height:1074px;}
+
+        #logo{position:absolute;top:0px;left:0px;}
+
+
+
+
+        .dclr {clear:both;float:none;height:1px;margin:0px;padding:0px;overflow:hidden;}
+
+        .ft0{font: bold 13px 'Arial';text-decoration: underline;line-height: 16px;}
+        .ft1{font: 13px 'Arial';line-height: 16px;}
+        .ft2{font: bold 13px 'Arial';line-height: 16px;}
+        .ft3{font: italic bold 13px 'Arial';line-height: 16px;}
+        .ft4{font: bold 15px 'Arial';line-height: 18px;}
+        .ft5{font: 11px 'Arial';line-height: 14px;}
+        .ft6{font: italic 10px 'Arial';background-color: #deeaf6;line-height: 13px;}
+        .ft7{font: italic 13px 'Arial';line-height: 16px;}
+        .ft8{font: 1px 'Arial';line-height: 1px;}
+        .ft9{font: italic 12px 'Arial';line-height: 15px;}
+        .ft10{font: italic 13px 'Arial';text-decoration: underline;line-height: 16px;}
+        .ft11{font: 11px 'Arial';line-height: 19px;}
+        .ft12{font: 10px 'Segoe UI';line-height: 12px;}
+        .ft13{font: 11px 'Calibri';color: #4472c4;line-height: 13px;}
+
+        .p0{text-align: left;padding-left: 414px;margin-top: 9px;margin-bottom: 0px;}
+        .p1{text-align: left;padding-left: 414px;margin-top: 3px;margin-bottom: 0px;}
+        .p2{text-align: left;padding-left: 48px;margin-top: 54px;margin-bottom: 0px;}
+        .p3{text-align: left;padding-left: 48px;margin-top: 22px;margin-bottom: 0px;}
+        .p4{text-align: left;padding: 5px 25px 5px 30px;margin: 40px 30px 0px 30px;background-color: #dff1f8;border-radius: 10px;}
+        .p5{text-align: left;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p6{text-align: right;padding-right: 7px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p7{text-align: left;padding-left: 7px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p8{text-align: left;padding: 5px 25px 5px 30px;margin: 40px 30px 0px 30px;background-color: #dff1f8;border-radius: 10px;}
+        .p9{text-align: left;padding-left: 15px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p10{text-align: left;padding-left: 14px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p11{text-align: left;padding-left: 8px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p12{text-align: left;padding-left: 44px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p13{text-align: left;padding-left: 43px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p14{text-align: right;padding-right: 21px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p15{text-align: center;padding-right: 4px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p16{text-align: right;padding-right: 24px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p17{text-align: center;padding-left: 7px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p18{text-align: right;padding-right: 8px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p19{text-align: left;padding: 5px 25px 5px 30px;margin: 40px 30px 0px 30px;background-color: #dff1f8;border-radius: 10px;}
+        .p20{text-align: left;padding-left: 1px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p21{text-align: left;padding-left: 41px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p22{text-align: left;padding-left: 78px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p23{text-align: right;padding-right: 74px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p24{text-align: center;padding-left: 60px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+        .p25{text-align: left;padding-left: 48px;margin-top: 38px;margin-bottom: 0px;}
+        .p26{text-align: left;padding-left: 48px;margin-top: 3px;margin-bottom: 0px;}
+        .p27{text-align: left;padding-left: 48px;margin-top: 41px;margin-bottom: 0px;}
+        .p28{text-align: left;padding-left: 48px;padding-right: 200px;margin-top: 3px;margin-bottom: 0px;}
+        .p29{text-align: right;padding-right: 48px;margin-top: 19px;margin-bottom: 0px;}
+        .p30{text-align: left;padding-left: 367px;margin-top: 3px;margin-bottom: 0px;}
+
+        .td0{padding: 0px;margin: 0px;width: 87px;vertical-align: bottom;}
+        .td1{padding: 0px;margin: 0px;width: 19px;vertical-align: bottom;}
+        .td2{padding: 0px;margin: 0px;width: 358px;vertical-align: bottom;}
+        .td3{border-top: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 34px;vertical-align: bottom;background: #deeaf6;}
+        .td4{border-top: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 294px;vertical-align: bottom;background: #deeaf6;}
+        .td5{border-top: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 62px;vertical-align: bottom;background: #deeaf6;}
+        .td6{border-top: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 77px;vertical-align: bottom;background: #deeaf6;}
+        .td7{border-top: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 7px;vertical-align: bottom;background: #deeaf6;}
+        .td8{border-top: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 120px;vertical-align: bottom;background: #deeaf6;}
+        .td9{border-top: #000000 1px solid;border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 104px;vertical-align: bottom;background: #deeaf6;}
+        .td10{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 34px;vertical-align: bottom;}
+        .td11{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 294px;vertical-align: bottom;}
+        .td12{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 62px;vertical-align: bottom;}
+        .td13{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 77px;vertical-align: bottom;}
+        .td14{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 127px;vertical-align: bottom;}
+        .td15{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 104px;vertical-align: bottom;}
+        .td16{padding: 0px;margin: 0px;width: 34px;vertical-align: bottom;}
+        .td17{padding: 0px;margin: 0px;width: 294px;vertical-align: bottom;}
+        .td18{padding: 0px;margin: 0px;width: 62px;vertical-align: bottom;}
+        .td19{padding: 0px;margin: 0px;width: 77px;vertical-align: bottom;}
+        .td20{padding: 0px;margin: 0px;width: 7px;vertical-align: bottom;}
+        .td21{border-bottom: #000000 1px solid;padding: 0px;margin: 0px;width: 120px;vertical-align: bottom;background: #deeaf6;}
+        .td22{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 146px;vertical-align: bottom;}
+        .td23{border-right: #000000 1px solid;padding: 0px;margin: 0px;width: 232px;vertical-align: bottom;}
+        .td24{padding: 0px;margin: 0px;width: 169px;vertical-align: bottom;}
+        .td25{padding: 0px;margin: 0px;width: 570px;vertical-align: bottom;}
+        .td26{padding: 0px;margin: 0px;width: 54px;vertical-align: bottom;}
+
+        .tr0{height: 21px;}
+        .tr1{height: 19px;}
+        .tr2{height: 17px;}
+        .tr3{height: 18px;}
+        .tr4{height: 15px;}
+
+        .t0{width: 464px;margin-left: 48px;margin-top: 17px;font: 13px 'Arial';}
+        .t1{width: 698px;margin-left: 48px;margin-top: 24px;font: italic 13px 'Arial';}
+        .t2{width: 549px;margin-left: 134px;margin-top: 17px;font: italic 13px 'Arial';}
+        .t3{width: 624px;margin-left: 85px;margin-top: 25px;font: 10px 'Segoe UI';}
+
+        .CorporateHeadquarters{text-align: left;background-color: #dff1f8;border-radius: 10px;}
+
 
-
+    </STYLE>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+</HEAD>
+
+<BODY>
+<DIV  class="container" id="">
+
+    <div style="margin-top:5px;" class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+
+            <img src="{{url('public/images/findhalal.png')}}">
+
+        </div>
+
+        <div class="col-sm-8 col-md-6 col-lg-6 CorporateHeadquarters">
+            <P class="">Unternehmenszentrale:</P>
+            <P class="">Mainzer Landstraße 49, 60329 Frankfurt am Main, DE</P>
+            <P class="">Phone: +4917686097107; Email: info@findhalal.de</P>
+        </div>
+    </div>
+    <div class="BodyPart">
+
+        <P class="p2 ft2"><SPAN class="ft1">Hallo</SPAN>
+            @foreach($orderInfo as $orderInformation)
+            {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}
+            @endforeach
+            <SPAN class="ft1">,</SPAN>
+        </P>
+
+        <P class="p3 ft1">vielen Dank fuer Ihre Bestellung bei <SPAN class="ft3">FindHalal.de</SPAN>. Hier sind Ihre Bestellinformationen.</P>
+    </div>
+    <P class="p4 ft4">Rechnung</P>
+
+    @foreach($orderInfo as $orderInformation)
+    <TABLE cellpadding=0 cellspacing=0 class="t0">
+        <TR>
+            <TD class="tr0 td0"><P class="p5 ft1">Ihr Name:</P></TD>
+            <TD class="tr0 td1"><P class="p6 ft1">|</P></TD>
+            <TD class="tr0 td2"><P class="p7 ft1">{{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</P></TD>
+        </TR>
+        <TR>
+            <TD class="tr1 td0"><P class="p5 ft1">Lieferadresse:</P></TD>
+            <TD class="tr1 td1"><P class="p6 ft1">|</P></TD>
+            <TD class="tr1 td2"><P class="p7 ft5">{{$orderInformation['addressDetails']}}, {{$orderInformation['zip']}} {{$orderInformation['city']}}, {{$orderInformation['country']}}</P></TD>
+        </TR>
+        <TR>
+            <TD class="tr1 td0"><P class="p5 ft5">Bestellnummer:</P></TD>
+            <TD class="tr1 td1"><P class="p6 ft1">|</P></TD>
+            <TD class="tr1 td2"><P class="p7 ft1">{{$orderInformation['orderId']}}</P></TD>
+        </TR>
+        <TR>
+            <TD class="tr1 td0"><P class="p5 ft1">Bestelldatum:</P></TD>
+            <TD class="tr1 td1"><P class="p6 ft1">|</P></TD>
+            <TD class="tr1 td2"><P class="p7 ft1"><NOBR>{{ \Carbon\Carbon::parse($orderInformation['orderTime'])->format('d-F-Y')}}</NOBR> ; {{ \Carbon\Carbon::parse($orderInformation['orderTime'])->format('g:ia')}}</P></TD>
+
+
+        </TR>
+        <TR>
+            <TD class="tr1 td0"><P class="p5 ft1">Lieferart:</P></TD>
+            <TD class="tr1 td1"><P class="p6 ft1">|</P></TD>
+            <TD class="tr1 td2"><P class="p7 ft1">{{$orderInformation->orderType}}</P></TD>
+        </TR>
+    </TABLE>
+    @endforeach
+
+    <P class="p8 ft4">Ihre Bestellung</P>
+    <TABLE cellpadding=0 cellspacing=0 class="t1" style="width: 90%">
+        <thead>
+        <TR>
+            <TD class="tr1 td3"><P class="p7 ft6">Sl.Nr.</P></TD>
+            <TD class="tr1 td4"><P class="p9 ft7">Artikel</P></TD>
+            <TD class="tr1 td5"><P class="p10 ft7">Größe</P></TD>
+            <TD class="tr1 td6"><P class="p11 ft6">Einzelpreis (€)</P></TD>
+            <TD class="tr1 td7"><P class="p5 ft8">&nbsp;</P></TD>
+            <TD class="tr1 td8"><P class="p12 ft7">Menge</P></TD>
+            <TD class="tr1 td9"><P class="p13 ft9">Gesamt (€)</P></TD>
+        </TR>
+        </thead>
+        <tbody>
+        @foreach($orderInfo as $orderInformation)
+            <?php $total=0;$i=1;?>
+            @foreach($orderItemInfo as $itemInfo)
+        <TR>
+            <TD class="tr2 td10"><P class="p14 ft1"><?php echo $i?></P></TD>
+            <TD class="tr2 td11"><P class="p9 ft1">{{$itemInfo['itemName']}}</P></TD>
+            <TD class="tr2 td12"><P class="p15 ft5">{{$itemInfo['itemsizeName']}}</P></TD>
+            <TD class="tr2 td13"><P class="p16 ft1">{{$itemInfo['price']}}</P></TD>
+            <TD colspan=2 class="tr2 td14"><P class="p17 ft5">{{$itemInfo['quantity']}}</P></TD>
+            <TD class="tr2 td15"><P class="p18 ft1">{{$price=($itemInfo['price']*$itemInfo['quantity'])}}</P></TD>
+        </TR>
+        <?php $i++;$total=($total+$price); ?>
+        @endforeach
+            <TR>
+                <TD class="tr1 td16"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr1 td17"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr1 td18"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr1 td19"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr1 td20"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td21"><P class="p7 ft7">Insgesamt</P></TD>
+                <TD class="tr3 td15"><P class="p18 ft1"><?php echo $total?></P></TD>
+            </TR>
+            <TR>
+                <TD class="tr3 td16"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td17"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td18"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td19"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td20"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr2 td21"><P class="p7 ft7">Rabatt </P></TD>
+                {{--<TD class="tr2 td15"><P class="p6 ft1">- 1.16</P></TD>--}}
+
+                <?php $discount=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
+
+                <td class="tr2 td15"><P class="p6 ft1">- <?php echo $discount=$delveryFee ?></P></td>
+                <?php }elseif($orderInformation->orderType=='Delivery' && $total < $orderInformation->resMinOrder) {?>
+                <td class="tr2 td15"><P class="p6 ft1">- <?php echo $discount?></P></td>
+                <?php }elseif ($orderInformation->orderType=='Takeout'){?>
+                <td class="tr2 td15"><P class="p6 ft1">- <?php echo $discount ; } ?></P></td>
+
+
+            </TR>
+            <TR>
+                <TD class="tr3 td16"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td17"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td18"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td19"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td20"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr2 td21"><P class="p7 ft7">Versandkosten</P></TD>
+                {{--<TD class="tr2 td15"><P class="p18 ft1">1.00</P></TD>--}}
+
+
+                <?php $delveryFee=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
+
+                <td class="tr2 td15"><P class="p18 ft1"><?php echo $delveryFee=$orderInformation->resDelfee ?></P></td>
+                <?php }elseif($orderInformation->orderType=='Delivery' && $total < $orderInformation->resMinOrder) {?>
+                <td class="tr2 td15"><P class="p18 ft1"><?php echo $delveryFee=$orderInformation->delfee?></P></td>
+                <?php }elseif ($orderInformation->orderType=='Takeout'){?>
+                <td class="tr2 td15"><P class="p18 ft1"><?php echo $delveryFee;} ?></P></td>
+
+
+            </TR>
+            <TR>
+                <TD class="tr3 td16"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td17"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td18"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td19"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr3 td20"><P class="p5 ft8">&nbsp;</P></TD>
+                <TD class="tr2 td21"><P class="p7 ft7">Gesamtbetrag</P></TD>
+                <TD class="tr2 td15"><P class="p18 ft1"><?php echo $Total=(($total+$delveryFee-$discount))?></P></TD>
+            </TR>
+
+        @endforeach
+        </tbody>
+
+    </TABLE>
+    <P class="p19 ft4">Gewählte Zahlungsart</P>
+    <TABLE cellpadding=0 cellspacing=0 class="t2">
+        @foreach($orderInfo as $orderInformation)
+            @if($orderInformation->paymentType =='Card')
+        <TR>
+            <TD class="tr0 td22"><P class="p20 ft10">Zahlungsart</P></TD>
+            <TD class="tr0 td23"><P class="p21 ft10">Konto Nr. / IBAN Nr. / Karte Nr.</P></TD>
+            <TD class="tr0 td24"><P class="p22 ft10">Zahlungsstatus</P></TD>
+        </TR>
+
+        <TR>
+            <TD class="tr3 td22"><P class="p5 ft1">{{$cardInformations['cardType']}}</P></TD>
+            <TD class="tr3 td23"><P class="p23 ft1">************{{$cardInformations['cardNo']}}</P></TD>
+            {{--<TD class="tr3 td24"><P class="p24 ft5">Bezahlung erfolgreich</P></TD>--}}
+            <TD class="tr3 td24"><P class="p24 ft5"></P></TD>
+        </TR>
+            @elseif($orderInformation->paymentType == 'Cash')
+
+                <TR>
+                    <TD class="tr0 td22"><P class="p20 ft10">Zahlungsart</P></TD>
+
+                </TR>
+
+                <TR>
+                    <TD class="tr3 td22"><P class="p5 ft1">Cash</P></TD>
+
+                </TR>
+            @endif
+        @endforeach
+
+    </TABLE>
+    <P class="p25 ft1">Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung. Sie erreichen uns wie folgt.</P>
+    <P class="p3 ft1">Mit freundlichen Grüßen,</P>
+    <P class="p26 ft1">Ihr Team von FindHalal.de</P>
+
+    <P class="p27 ft2">FindHalal</P>
+    <P class="p28 ft11">Mainzer Landstraße 49, 60329 Frankfurt am Main, DE Telefon: +4917686097107 Email: info@findhalal.de URL: www.findhalal.de</P>
+
+    <P class="p29 ft7">** Alle Artikel Preise inkl <NOBR>Mw.-St.</NOBR> (7%).</P>
+    <P class="p30 ft9">*** Diese Rechnung ist elektronisch erstellt und daher ohne Unterschrift gültig.</P>
+    <TABLE cellpadding=0 cellspacing=0 class="t3">
+        <TR>
+            <TD class="tr4 td25"><P class="p5 ft12">© FindHalal {{date('Y')}}. All rights reserved.</P></TD>
+            <TD class="tr4 td26"><P class="p5 ft13">Page 1 of 1</P></TD>
+        </TR>
+    </TABLE>
+</DIV>
+</BODY>
+</HTML>
