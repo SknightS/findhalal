@@ -336,6 +336,8 @@ class RestaurantController extends Controller
             }
 
         }
+
+
         $customer = new Customer();
         $customer->firstName = $r->firstname;
         $customer->lastName = $r->lastname;
@@ -347,6 +349,24 @@ class RestaurantController extends Controller
         $customer->status = $r->status;
         $customer->save();
         $order = new Order();
+
+        
+
+        if (Session::get('paymentType')=='Card'){
+
+            $cardInformation= array(
+                'cardType'=>$r->cardInfo['brand'],
+                'cardNo'=>$r->cardInfo['last4'],
+            );
+            $order->cardBrand=$r->cardInfo['brand'];
+
+        }elseif(Session::get('paymentType')=='Cash'){
+
+            $cardInformation= null;
+
+        }
+
+
         $order->fkresturantId = $resid;
         $order->fkcustomerId = $customer->customerId;
         $order->delfee = $delfee;
