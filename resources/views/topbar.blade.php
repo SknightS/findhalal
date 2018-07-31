@@ -16,7 +16,8 @@
     <link href="{{url('css/animsition.min.css')}}" rel="stylesheet">
     <link href="{{url('css/animate.css')}}" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="{{url('css/style.css')}}" rel="stylesheet"> </head>
+    <link href="{{url('css/style.css')}}" rel="stylesheet">
+</head>
 <!--[if lt IE 9]-->
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -28,11 +29,11 @@
 <div class="site-wrapper animsition" data-animsition-in="fade-in" data-animsition-out="fade-out">
     <!--header starts-->
     <header id="header" class="header-scroll top-header headrom">
+
         <!-- .navbar -->
         <nav class="navbar navbar-dark">
             <div class="container">
                 <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#mainNavbarCollapse">&#9776;</button>
-                <a class="navbar-brand" href="{{route('home')}}"> <img class="img-rounded" width="134px" height="40px" src="{{url('images/findhalal.png')}}" alt=""> </a>
                 <div class="collapse navbar-toggleable-md  float-lg-right" id="mainNavbarCollapse">
                     <ul class="nav navbar-nav">
                         <li class="nav-item"> <a class="nav-link active" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a> </li>
@@ -45,7 +46,7 @@
             </div>
         </nav>
         <!-- /.navbar -->
-        <marquee><h4 style="color: red">The Website Is Under Construction || Die Website befindet sich im Aufbau</h4></marquee>
+        <a style="position: relative;top: -60px;left: 86px;padding-top: 0px;" class="" href="{{route('home')}}"> <img class="img-rounded" style="height: 100px;width: 145px"   src="{{url('images/findhalal.png')}}" alt=""> </a>
     </header>
 </div>
 
@@ -55,6 +56,5 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'UA-117514017-1');
 </script>

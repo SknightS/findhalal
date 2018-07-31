@@ -23,22 +23,17 @@
         a{
             color:#382F2E;
         }
-
         p, h1,h2,ul,ol,li,div{
             margin:0;
             padding:0;
         }
-
         h1,h2{
             font-weight: normal;
             background:transparent !important;
             border:none !important;
         }
-
         @media only screen and (max-width:480px)
-
         {
-
             table[class="MainContainer"], td[class="cell"]
             {
                 width: 100% !important;
@@ -64,7 +59,6 @@
                 padding-left:10% !important;
                 padding-right:10% !important;
             }
-
             td[class="spechide"]
             {
                 display:none !important;
@@ -79,13 +73,9 @@
                 padding-left:15px !important;
                 padding-right:15px !important;
             }
-
         }
-
         @media only screen and (max-width:540px)
-
         {
-
             table[class="MainContainer"], td[class="cell"]
             {
                 width: 100% !important;
@@ -111,7 +101,6 @@
                 padding-left:10% !important;
                 padding-right:10% !important;
             }
-
             td[class="spechide"]
             {
                 display:none !important;
@@ -126,24 +115,19 @@
                 padding-left:15px !important;
                 padding-right:15px !important;
             }
-
         }
-
         .contentEditable h2.big,.contentEditable h1.big{
             font-size: 26px !important;
         }
-
         .contentEditable h2.bigger,.contentEditable h1.bigger{
             font-size: 37px !important;
         }
-
         td,table{
             vertical-align: top;
         }
         td.middle{
             vertical-align: middle;
         }
-
         a.link1{
             font-size:13px;
             color:#27A1E5;
@@ -153,7 +137,6 @@
         a{
             text-decoration: none;
         }
-
         .link2{
             color:#ffffff;
             border-top:10px solid #27A1E5;
@@ -165,7 +148,6 @@
             -webkit-border-radius:3px;
             background:#27A1E5;
         }
-
         .link3{
             color:#555555;
             border:1px solid #cccccc;
@@ -175,12 +157,10 @@
             -webkit-border-radius:3px;
             background:#ffffff;
         }
-
         .link4{
             color:#27A1E5;
             line-height: 24px;
         }
-
         h2,h1{
             line-height: 20px;
         }
@@ -189,13 +169,9 @@
             line-height: 21px;
             color:#AAAAAA;
         }
-
         .contentEditable li{
-
         }
-
         .appart p{
-
         }
         .bgItem{
             background: #ffffff;
@@ -203,7 +179,6 @@
         .bgBody{
             background: #ffffff;
         }
-
         img {
             outline:none;
             text-decoration:none;
@@ -214,7 +189,6 @@
             display: block;
             float: none;
         }
-
     </style>
 
 
@@ -335,14 +309,14 @@
                                                                                         <div class='contentEditableContainer contentTextEditable'>
                                                                                             <div class='contentEditable' style='text-align: left;'>
                                                                                                 @foreach($orderInfo as $orderInformation)
-                                                                                                <h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>
-                                                                                                <br>
+                                                                                                    <h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>
+                                                                                                    <br>
 
-                                                                                                <p style="color: #4C4C4C; margin: 0 auto;">Attached below is the summary of your order.</p><br>
+                                                                                                    <p style="color: #4C4C4C; margin: 0 auto;">Attached below is the summary of your order.</p><br>
 
-                                                                                                <p style="color: #4C4C4C; margin: 0 auto;">Thanks For Ordering From Us.</p> <br>
+                                                                                                    <p style="color: #4C4C4C; margin: 0 auto;">Thanks For Ordering From Us.</p> <br>
                                                                                                     <p style="color: #4C4C4C; margin: 0 auto;">Regards, <br> <b>FindHalal</b> Team</p>
-                                                                                                 @endforeach
+                                                                                                @endforeach
 
                                                                                             </div>
 
@@ -354,24 +328,24 @@
                                                                                 <tr><td height='24'></td></tr>
                                                                             </table>
                                                                             @foreach($orderInfo as $orderInformation)
-                                                                            <table width="100%">
-                                                                                <tr>
-                                                                                    <td style="width: 40%; text-align: center;">
-                                                                                        <h4 style="color: #4C4C4C;">Order Details</h4>
-                                                                                        <span style="color: red;">Restaurant Name:</span><br><span style="color: blue;"><b>{{$orderInformation['resName']}}</b></span>
-                                                                                        <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
+                                                                                <table width="100%">
+                                                                                    <tr>
+                                                                                        <td style="width: 40%; text-align: center;">
+                                                                                            <h4 style="color: #4C4C4C;">Order Details</h4>
+                                                                                            <span style="color: red;">Restaurant Name:</span><br><span style="color: blue;"><b>{{$orderInformation['resName']}}</b></span>
+                                                                                            <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
 
-                                                                                    </td>
-                                                                                    <td style="width: 60%; text-align: center; ">
-                                                                                        <h4 style="color: #4C4C4C;">Shipping Address</h4>
-                                                                                        <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;"><b> Zip:</b> {{$orderInformation['zip']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;"><b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
-                                                                                        <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
+                                                                                        </td>
+                                                                                        <td style="width: 60%; text-align: center; ">
+                                                                                            <h4 style="color: #4C4C4C;">Shipping Address</h4>
+                                                                                            <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b> Zip:</b> {{$orderInformation['zip']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
                                                                             @endforeach
 
 
@@ -439,23 +413,23 @@
                                                         </tr>
                                                         </thead>
                                                         @foreach($orderInfo as $orderInformation)
-                                                        <?php $total=0;$i=1;?>
-                                                        @foreach($orderItemInfo as $itemInfo)
-                                                        <tbody>
-                                                        <tr>
-                                                            <td><?php echo $i?></td>
-                                                            <td>{{$itemInfo['itemName']}}<br>{{$itemInfo['itemDetails']}}</td>
-                                                            <td>{{$itemInfo['itemsizeName']}}</td>
-                                                            <td>&euro;{{$itemInfo['price']}}</td>
+                                                            <?php $total=0;$i=1;?>
+                                                            @foreach($orderItemInfo as $itemInfo)
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td><?php echo $i?></td>
+                                                                    <td>{{$itemInfo['itemName']}}<br>{{$itemInfo['itemDetails']}}</td>
+                                                                    <td>{{$itemInfo['itemsizeName']}}</td>
+                                                                    <td>&euro;{{$itemInfo['price']}}</td>
 
-                                                            <td>{{$itemInfo['quantity']}}</td>
+                                                                    <td>{{$itemInfo['quantity']}}</td>
 
-                                                            <td>&euro;{{$price=($itemInfo['price']*$itemInfo['quantity'])}}</td>
-                                                        </tr>
-                                                        <?php $i++;$total=($total+$price); ?>
+                                                                    <td>&euro;{{$price=($itemInfo['price']*$itemInfo['quantity'])}}</td>
+                                                                </tr>
+                                                                <?php $i++;$total=($total+$price); ?>
 
-                                                        </tbody>
-                                                        @endforeach
+                                                                </tbody>
+                                                            @endforeach
 
                                                     </table>
 
@@ -514,99 +488,99 @@
                                                             <td>&euro;<?php echo $Total=(($total+$delveryFee-$discount))?></td>
                                                         </tr>
                                                     </table>
-                                                        @endforeach
+                                                @endforeach
                                                 <!-- =============== END BODY =============== -->
                                                     {{--<!-- =============== START FOOTER =============== -->--}}
 
                                                     {{--<div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">--}}
-                                                        {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
-                                                            {{--<tbody>--}}
-                                                            {{--<tr>--}}
-                                                                {{--<!--      <td height="48"></td>-->--}}
-                                                            {{--</tr>--}}
-                                                            {{--<tr>--}}
-                                                                {{--<td><table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
-                                                                        {{--<tbody>--}}
-                                                                        {{--<tr>--}}
-                                                                            {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
-                                                                            {{--<td>--}}
+                                                    {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                    {{--<tbody>--}}
+                                                    {{--<tr>--}}
+                                                    {{--<!--      <td height="48"></td>-->--}}
+                                                    {{--</tr>--}}
+                                                    {{--<tr>--}}
+                                                    {{--<td><table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                    {{--<tbody>--}}
+                                                    {{--<tr>--}}
+                                                    {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
+                                                    {{--<td>--}}
 
-                                                                            {{--</td>--}}
-                                                                            {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
-                                                                        {{--</tr>--}}
-                                                                        {{--</tbody>--}}
-                                                                    {{--</table>--}}
-                                                                {{--</td>--}}
-                                                            {{--</tr>--}}
-                                                            {{--</tbody>--}}
-                                                        {{--</table>--}}
+                                                    {{--</td>--}}
+                                                    {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
+                                                    {{--</tr>--}}
+                                                    {{--</tbody>--}}
+                                                    {{--</table>--}}
+                                                    {{--</td>--}}
+                                                    {{--</tr>--}}
+                                                    {{--</tbody>--}}
+                                                    {{--</table>--}}
 
 
                                                     {{--</div>--}}
 
                                                     {{--<div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">--}}
 
-                                                        {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
-                                                            {{--<tbody>--}}
-                                                            {{--<tr>--}}
-                                                                {{--<td height="40"></td>--}}
-                                                            {{--</tr>--}}
-                                                            {{--<tr>--}}
-                                                                {{--<td>--}}
-                                                                    {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
-                                                                        {{--<tbody>--}}
-                                                                        {{--<tr>--}}
-                                                                            {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
-                                                                            {{--<td class="specbundle2">--}}
-                                                                                {{--<table width="100%" cellpadding="0" cellspacing="0" align="center">--}}
-                                                                                    {{--<tr>--}}
-                                                                                        {{--<td width='40'>--}}
-                                                                                            {{--<div class='contentEditableContainer contentFacebookEditable'>--}}
-                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
-                                                                                                    {{--<img src="{{url('public/images/facebook.png')}}" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
-                                                                                                {{--</div>--}}
-                                                                                            {{--</div>--}}
-                                                                                        {{--</td>--}}
-                                                                                        {{--<td width='10'></td>--}}
-                                                                                        {{--<td width='40'>--}}
-                                                                                            {{--<div class='contentEditableContainer contentTwitterEditable'>--}}
-                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
-                                                                                                    {{--<img src="{{url('public/images/twitter.png')}}" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
-                                                                                                {{--</div>--}}
-                                                                                            {{--</div>--}}
-                                                                                        {{--</td>--}}
-                                                                                        {{--<td width='10'></td>--}}
-                                                                                        {{--<td width='40'>--}}
-                                                                                            {{--<div class='contentEditableContainer contentImageEditable'>--}}
-                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
-                                                                                                    {{--<img src="{{url('public/images/red.png')}}" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">--}}
-                                                                                                {{--</div>--}}
-                                                                                            {{--</div>--}}
-                                                                                        {{--</td>--}}
-                                                                                        {{--<td width='10'></td>--}}
-                                                                                        {{--<td width='40'>--}}
-                                                                                            {{--<div class='contentEditableContainer contentImageEditable'>--}}
-                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
-                                                                                                    {{--<img src="{{url('public/images/blue.png')}}" alt="Social media" width='40' height='40' data-max-width="40" border="0">--}}
-                                                                                                {{--</div>--}}
-                                                                                            {{--</div>--}}
-                                                                                        {{--</td>--}}
-                                                                                    {{--</tr>--}}
-                                                                                {{--</table>--}}
-                                                                            {{--</td>--}}
-                                                                            {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
-                                                                        {{--</tr>--}}
-                                                                        {{--</tbody>--}}
-                                                                    {{--</table>--}}
-                                                                {{--</td>--}}
-                                                            {{--</tr>--}}
-                                                            {{--<tr>--}}
-                                                                {{--<!--            <td height='40'></td>-->--}}
-                                                            {{--</tr>--}}
-                                                            {{--</tbody>--}}
-                                                        {{--</table>--}}
+                                                    {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                    {{--<tbody>--}}
+                                                    {{--<tr>--}}
+                                                    {{--<td height="40"></td>--}}
+                                                    {{--</tr>--}}
+                                                    {{--<tr>--}}
+                                                    {{--<td>--}}
+                                                    {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                    {{--<tbody>--}}
+                                                    {{--<tr>--}}
+                                                    {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
+                                                    {{--<td class="specbundle2">--}}
+                                                    {{--<table width="100%" cellpadding="0" cellspacing="0" align="center">--}}
+                                                    {{--<tr>--}}
+                                                    {{--<td width='40'>--}}
+                                                    {{--<div class='contentEditableContainer contentFacebookEditable'>--}}
+                                                    {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                    {{--<img src="{{url('public/images/facebook.png')}}" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
+                                                    {{--</div>--}}
+                                                    {{--</div>--}}
+                                                    {{--</td>--}}
+                                                    {{--<td width='10'></td>--}}
+                                                    {{--<td width='40'>--}}
+                                                    {{--<div class='contentEditableContainer contentTwitterEditable'>--}}
+                                                    {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                    {{--<img src="{{url('public/images/twitter.png')}}" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
+                                                    {{--</div>--}}
+                                                    {{--</div>--}}
+                                                    {{--</td>--}}
+                                                    {{--<td width='10'></td>--}}
+                                                    {{--<td width='40'>--}}
+                                                    {{--<div class='contentEditableContainer contentImageEditable'>--}}
+                                                    {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                    {{--<img src="{{url('public/images/red.png')}}" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">--}}
+                                                    {{--</div>--}}
+                                                    {{--</div>--}}
+                                                    {{--</td>--}}
+                                                    {{--<td width='10'></td>--}}
+                                                    {{--<td width='40'>--}}
+                                                    {{--<div class='contentEditableContainer contentImageEditable'>--}}
+                                                    {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                    {{--<img src="{{url('public/images/blue.png')}}" alt="Social media" width='40' height='40' data-max-width="40" border="0">--}}
+                                                    {{--</div>--}}
+                                                    {{--</div>--}}
+                                                    {{--</td>--}}
+                                                    {{--</tr>--}}
+                                                    {{--</table>--}}
+                                                    {{--</td>--}}
+                                                    {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
+                                                    {{--</tr>--}}
+                                                    {{--</tbody>--}}
+                                                    {{--</table>--}}
+                                                    {{--</td>--}}
+                                                    {{--</tr>--}}
+                                                    {{--<tr>--}}
+                                                    {{--<!--            <td height='40'></td>-->--}}
+                                                    {{--</tr>--}}
+                                                    {{--</tbody>--}}
+                                                    {{--</table>--}}
 
-                                                        {{--<!-- =============== END FOOTER =============== -->--}}
+                                                    {{--<!-- =============== END FOOTER =============== -->--}}
                                                     {{--</div>--}}
 
 
@@ -650,6 +624,3 @@
                                                         </tbody>
                                                     </table>
                                             <td valign="top" width="20">&nbsp;</td>
-
-
-
