@@ -410,7 +410,7 @@ class RestaurantController extends Controller
 
             return 1;
 
-        }catch (Exception $ex) {
+        }catch (\Exception $ex) {
             return 0;
         }
 
