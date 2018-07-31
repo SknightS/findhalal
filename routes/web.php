@@ -20,6 +20,7 @@ Route::view('/map/result','map.mapResult')->name('map.result');
 //Route::view('/restaurants','restaurants.index')->name('restaurant.result');
 Route::view('/restaurants/profile','restaurants.profile')->name('restaurant.profile');
 Route::view('/contact','contact')->name('contact');
+Route::post('/contact','HomeController@contact')->name('contact.post');
 Route::view('/registration','registration')->name('registration');
 //Route::view('/checkout','checkout')->name('checkout');
 
@@ -39,6 +40,7 @@ Route::post('/restaurants/checkOrderType','RestaurantController@checkOrderType')
 
 //checkout
 Route::get('/restaurants/checkout/','RestaurantController@checkout')->name('restaurant.checkout');
+
 Route::post('/restaurants/submitorder','RestaurantController@SubmitOrder')->name('restaurant.submitorder');
 
 
@@ -48,6 +50,11 @@ Route::post('/restaurants/takeout','RestaurantController@takeout')->name('restau
 Route::post('/restaurants/delivery','RestaurantController@delivery')->name('restaurant.delivery');
 Route::post('/restaurants/cash','RestaurantController@Cash')->name('restaurant.cash');
 Route::post('/restaurants/card','RestaurantController@Card')->name('restaurant.card');
+
+
+Route::view('/dataprotection','dataprotection')->name('dataprotection');
+Route::view('/Impressum','impressum')->name('impressum');
+Route::view('/CityList','citylist')->name('citylist');
 
 
 //Route::view('/admin','admin.index')->name('admin.index');

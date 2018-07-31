@@ -122,7 +122,7 @@
                         </div>
 
                         <div id = "Item_price" class="form-group">
-                            <label class="control-label col-md-3"> Item Price<span style="color: red" class="required">*</span></label>
+                            <label class="control-label col-md-3"> Item Price(€)<span style="color: red" class="required">*</span></label>
                             <div class="col-md-5">
                                 <input type="text" name="itemPrice" placeholder="Item Price" id="itemPrice"  class="form-control input-height" required >
                             </div>

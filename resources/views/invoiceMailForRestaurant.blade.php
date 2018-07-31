@@ -23,17 +23,22 @@
         a{
             color:#382F2E;
         }
+
         p, h1,h2,ul,ol,li,div{
             margin:0;
             padding:0;
         }
+
         h1,h2{
             font-weight: normal;
             background:transparent !important;
             border:none !important;
         }
+
         @media only screen and (max-width:480px)
+
         {
+
             table[class="MainContainer"], td[class="cell"]
             {
                 width: 100% !important;
@@ -59,6 +64,7 @@
                 padding-left:10% !important;
                 padding-right:10% !important;
             }
+
             td[class="spechide"]
             {
                 display:none !important;
@@ -73,9 +79,13 @@
                 padding-left:15px !important;
                 padding-right:15px !important;
             }
+
         }
+
         @media only screen and (max-width:540px)
+
         {
+
             table[class="MainContainer"], td[class="cell"]
             {
                 width: 100% !important;
@@ -101,6 +111,7 @@
                 padding-left:10% !important;
                 padding-right:10% !important;
             }
+
             td[class="spechide"]
             {
                 display:none !important;
@@ -115,19 +126,24 @@
                 padding-left:15px !important;
                 padding-right:15px !important;
             }
+
         }
+
         .contentEditable h2.big,.contentEditable h1.big{
             font-size: 26px !important;
         }
+
         .contentEditable h2.bigger,.contentEditable h1.bigger{
             font-size: 37px !important;
         }
+
         td,table{
             vertical-align: top;
         }
         td.middle{
             vertical-align: middle;
         }
+
         a.link1{
             font-size:13px;
             color:#27A1E5;
@@ -137,6 +153,7 @@
         a{
             text-decoration: none;
         }
+
         .link2{
             color:#ffffff;
             border-top:10px solid #27A1E5;
@@ -148,6 +165,7 @@
             -webkit-border-radius:3px;
             background:#27A1E5;
         }
+
         .link3{
             color:#555555;
             border:1px solid #cccccc;
@@ -157,10 +175,12 @@
             -webkit-border-radius:3px;
             background:#ffffff;
         }
+
         .link4{
             color:#27A1E5;
             line-height: 24px;
         }
+
         h2,h1{
             line-height: 20px;
         }
@@ -169,9 +189,13 @@
             line-height: 21px;
             color:#AAAAAA;
         }
+
         .contentEditable li{
+
         }
+
         .appart p{
+
         }
         .bgItem{
             background: #ffffff;
@@ -179,6 +203,7 @@
         .bgBody{
             background: #ffffff;
         }
+
         img {
             outline:none;
             text-decoration:none;
@@ -189,6 +214,7 @@
             display: block;
             float: none;
         }
+
     </style>
 
 
@@ -278,70 +304,65 @@
                                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <!--      <td height="40"></td>-->
-                                                        </tr>
-                                                        <tr>
-                                                            <td valign="top" width="580"><div class='contentEditableContainer contentImageEditable'>
-                                                                    <div class='contentEditable' style="text-align: center;"><img class="banner" src="{{url('public/images/main.jpg')}}" alt="Logo" title="Logo" width="580" height="221" border="0"></div></div></td>
+                                                            <td valign="top" width="580">
+                                                                <div class='contentEditableContainer contentImageEditable'>
+                                                                    <div class='contentEditable' style="text-align: center;"><img class="banner" src="{{url('public/images/main.jpg')}}" alt="Logo" title="Logo" width="580" height="221" border="0">
+                                                                    </div>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
-
-
-
                                                 </div>
 
                                                 <div class="movableContent" style="border: 1px; padding-top: 0px; position: relative;">
                                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <!--      <td height='40'></td>-->
-                                                        </tr>
-                                                        <tr>
                                                             <td style="border: 1px solid #EEEEEE; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                     <tbody>
                                                                     <tr>
                                                                         <td valign="top" width="40">&nbsp;</td>
-                                                                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                                                <tr><td height='25'></td></tr>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div class='contentEditableContainer contentTextEditable'>
-                                                                                            <div class='contentEditable' style='text-align: left;'>
-                                                                                                @foreach($orderInfo as $orderInformation)
-                                                                                                    <h2 style="font-size: 20px;">Dear {{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</h2>
-                                                                                                    <br>
-
-                                                                                                    <p style="color: #4C4C4C; margin: 0 auto;">Attached below is the summary of your order.</p><br>
-
-                                                                                                    <p style="color: #4C4C4C; margin: 0 auto;">Thanks For Ordering From Us.</p> <br>
-                                                                                                    <p style="color: #4C4C4C; margin: 0 auto;">Regards, <br> <b>FindHalal</b> Team</p>
-                                                                                                @endforeach
-
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </td>
-
-                                                                                </tr>
-
-                                                                                <tr><td height='24'></td></tr>
-                                                                            </table>
+                                                                        <td>
                                                                             @foreach($orderInfo as $orderInformation)
-                                                                                <table width="100%">
+                                                                                <table width="100%" style="text-align: center">
                                                                                     <tr>
-                                                                                        <td style="width: 40%; text-align: center;">
-                                                                                            <h4 style="color: #4C4C4C;">Order Details</h4>
-                                                                                            <span style="color: red;">Restaurant Name:</span><br><span style="color: blue;"><b>{{$orderInformation['resName']}}</b></span>
-                                                                                            <p style="color: red;">Order Number# <br> {{$orderInformation['orderId']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
+                                                                                        <td height="10"></td>
+                                                                                    </tr>
+                                                                                    <tr>
 
+
+                                                                                        <td style="width: 100%; text-align: center; ">
+                                                                                            <table width="100%" style="text-align: center; " >
+                                                                                                <tr>
+                                                                                                    <span>Customer Name:</span> &nbsp;<span><b>{{$orderInformation['firstName']}} {{$orderInformation['lastName']}}</b></span>
+
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <p style="color: red;">Order Number# <br> <b>{{$orderInformation['orderId']}}</b></p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <p style="color: #4C4C4C; margin: 0 auto;">Date Ordered: <br> {{$orderInformation['orderTime']}}</p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <p style="color: red;">Order Type: <br> <b>{{$orderInformation['orderType']}}</b></p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <p style="color: red;">Payment Type: <br> <b>{{$orderInformation['paymentType']}}</b></p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
                                                                                         </td>
-                                                                                        <td style="width: 60%; text-align: center; ">
-                                                                                            <h4 style="color: #4C4C4C;">Shipping Address</h4>
+
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="width: 100%; text-align: center; ">
+                                                                                            <h4 style="color: #4C4C4C;margin: 0px 0px 10px 0px">Shipping Address</h4>
                                                                                             <p style="color: #4C4C4C;"><b>Address:</b> {{$orderInformation['addressDetails']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b> Zip:</b> {{$orderInformation['zip']}}</p>
-                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
+                                                                                            <p style="color: #4C4C4C; margin: 0 auto;"><b> Zip:</b> {{$orderInformation['zip']}} ,<b>City:</b> {{$orderInformation['city']}} ,<b> Country:</b> {{$orderInformation['country']}}</p>
                                                                                             <p style="color: #4C4C4C; margin: 0 auto;"><b>Phone: </b>{{$orderInformation['phone']}}</p>
                                                                                         </td>
                                                                                     </tr>
@@ -387,7 +408,8 @@
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr><td height='14'></td></tr>
-                                                                                </table></td>
+                                                                                </table>
+                                                                            </td>
 
                                                                             <td width="40" valign="top">&nbsp;</td>
                                                                         </tr>
@@ -436,33 +458,33 @@
                                                     <hr>
                                                     <table>
                                                         <tr>
-                                                            <td style="width: 75%"></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td  style="width: 25%">Sub Total</td>
-                                                            <td>&euro;<?php echo $total?></td>
+                                                            <td style="width: 65%"></td>
+                                                            <td ></td>
+                                                            <td ></td>
+                                                            <td ></td>
+                                                            <td ></td>
+                                                            <td style="width: 25%">Sub Total</td>
+                                                            <td style="width: 10%">&euro;<?php echo $total?></td>
                                                         </tr>
 
                                                         <tr>
-                                                            <td style="width: 75%"></td>
+                                                            <td style="width: 65%"></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td style="width: 25%">Delivery Fee</td>
+                                                            <td  style="width: 25%">Delivery Fee</td>
                                                             <?php $delveryFee=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
 
-                                                            <td>&euro;<?php echo $delveryFee=$orderInformation->resDelfee ?></td>
+                                                            <td style="width: 10%">&euro;<?php echo $delveryFee=$orderInformation->resDelfee ?></td>
                                                             <?php }elseif($orderInformation->orderType=='Delivery' && $total < $orderInformation->resMinOrder) {?>
-                                                            <td>&euro;<?php echo $delveryFee=$orderInformation->delfee?></td>
+                                                            <td style="width: 10%">&euro;<?php echo $delveryFee=$orderInformation->delfee?></td>
                                                             <?php }elseif ($orderInformation->orderType=='Takeout'){?>
-                                                            <td>&euro;<?php echo $delveryFee;} ?></td>
+                                                            <td style="width: 10%">&euro;<?php echo $delveryFee;} ?></td>
 
                                                         </tr>
                                                         <tr>
-                                                            <td style="width: 75%"></td>
+                                                            <td style="width: 65%"></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
@@ -470,130 +492,130 @@
                                                             <td style="width: 25%">Discount</td>
                                                             <?php $discount=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
 
-                                                            <td>&euro;<?php echo $discount=$delveryFee ?></td>
+                                                            <td style="width: 10%">&euro;<?php echo $discount=$delveryFee ?></td>
                                                             <?php }elseif($orderInformation->orderType=='Delivery' && $total < $orderInformation->resMinOrder) {?>
-                                                            <td>&euro;<?php echo $discount?></td>
+                                                            <td style="width: 10%">&euro;<?php echo $discount?></td>
                                                             <?php }elseif ($orderInformation->orderType=='Takeout'){?>
-                                                            <td>&euro;<?php echo $discount ; } ?></td>
+                                                            <td style="width: 10%">&euro;<?php echo $discount ; } ?></td>
 
                                                         </tr>
 
                                                         <tr>
-                                                            <td style="width: 60%"></td>
+                                                            <td style="width: 65%"></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td style="width: 25%">TOTAL</td>
-                                                            <td>&euro;<?php echo $Total=(($total+$delveryFee-$discount))?></td>
+                                                            <td style="width: 10%">&euro;<?php echo $Total=(($total+$delveryFee-$discount))?></td>
                                                         </tr>
                                                     </table>
                                                 @endforeach
                                                 <!-- =============== END BODY =============== -->
-                                                    {{--<!-- =============== START FOOTER =============== -->--}}
+                                                    <!-- =============== START FOOTER =============== -->
 
                                                     {{--<div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">--}}
-                                                    {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
-                                                    {{--<tbody>--}}
-                                                    {{--<tr>--}}
-                                                    {{--<!--      <td height="48"></td>-->--}}
-                                                    {{--</tr>--}}
-                                                    {{--<tr>--}}
-                                                    {{--<td><table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
-                                                    {{--<tbody>--}}
-                                                    {{--<tr>--}}
-                                                    {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
-                                                    {{--<td>--}}
+                                                        {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                            {{--<tbody>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<!--      <td height="48"></td>-->--}}
+                                                            {{--</tr>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<td><table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                                        {{--<tbody>--}}
+                                                                        {{--<tr>--}}
+                                                                            {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
+                                                                            {{--<td>--}}
 
-                                                    {{--</td>--}}
-                                                    {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
-                                                    {{--</tr>--}}
-                                                    {{--</tbody>--}}
-                                                    {{--</table>--}}
-                                                    {{--</td>--}}
-                                                    {{--</tr>--}}
-                                                    {{--</tbody>--}}
-                                                    {{--</table>--}}
+                                                                            {{--</td>--}}
+                                                                            {{--<td valign="top" width="90" class="spechide">&nbsp;</td>--}}
+                                                                        {{--</tr>--}}
+                                                                        {{--</tbody>--}}
+                                                                    {{--</table>--}}
+                                                                {{--</td>--}}
+                                                            {{--</tr>--}}
+                                                            {{--</tbody>--}}
+                                                        {{--</table>--}}
 
 
                                                     {{--</div>--}}
 
                                                     {{--<div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">--}}
 
-                                                    {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
-                                                    {{--<tbody>--}}
-                                                    {{--<tr>--}}
-                                                    {{--<td height="40"></td>--}}
-                                                    {{--</tr>--}}
-                                                    {{--<tr>--}}
-                                                    {{--<td>--}}
-                                                    {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
-                                                    {{--<tbody>--}}
-                                                    {{--<tr>--}}
-                                                    {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
-                                                    {{--<td class="specbundle2">--}}
-                                                    {{--<table width="100%" cellpadding="0" cellspacing="0" align="center">--}}
-                                                    {{--<tr>--}}
-                                                    {{--<td width='40'>--}}
-                                                    {{--<div class='contentEditableContainer contentFacebookEditable'>--}}
-                                                    {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
-                                                    {{--<img src="{{url('public/images/facebook.png')}}" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
-                                                    {{--</div>--}}
-                                                    {{--</div>--}}
-                                                    {{--</td>--}}
-                                                    {{--<td width='10'></td>--}}
-                                                    {{--<td width='40'>--}}
-                                                    {{--<div class='contentEditableContainer contentTwitterEditable'>--}}
-                                                    {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
-                                                    {{--<img src="{{url('public/images/twitter.png')}}" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
-                                                    {{--</div>--}}
-                                                    {{--</div>--}}
-                                                    {{--</td>--}}
-                                                    {{--<td width='10'></td>--}}
-                                                    {{--<td width='40'>--}}
-                                                    {{--<div class='contentEditableContainer contentImageEditable'>--}}
-                                                    {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
-                                                    {{--<img src="{{url('public/images/red.png')}}" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">--}}
-                                                    {{--</div>--}}
-                                                    {{--</div>--}}
-                                                    {{--</td>--}}
-                                                    {{--<td width='10'></td>--}}
-                                                    {{--<td width='40'>--}}
-                                                    {{--<div class='contentEditableContainer contentImageEditable'>--}}
-                                                    {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
-                                                    {{--<img src="{{url('public/images/blue.png')}}" alt="Social media" width='40' height='40' data-max-width="40" border="0">--}}
-                                                    {{--</div>--}}
-                                                    {{--</div>--}}
-                                                    {{--</td>--}}
-                                                    {{--</tr>--}}
-                                                    {{--</table>--}}
-                                                    {{--</td>--}}
-                                                    {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
-                                                    {{--</tr>--}}
-                                                    {{--</tbody>--}}
-                                                    {{--</table>--}}
-                                                    {{--</td>--}}
-                                                    {{--</tr>--}}
-                                                    {{--<tr>--}}
-                                                    {{--<!--            <td height='40'></td>-->--}}
-                                                    {{--</tr>--}}
-                                                    {{--</tbody>--}}
-                                                    {{--</table>--}}
+                                                        {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                            {{--<tbody>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<td height="40"></td>--}}
+                                                            {{--</tr>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<td>--}}
+                                                                    {{--<table width="100%" border="0" cellspacing="0" cellpadding="0">--}}
+                                                                        {{--<tbody>--}}
+                                                                        {{--<tr>--}}
+                                                                            {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
+                                                                            {{--<td class="specbundle2">--}}
+                                                                                {{--<table width="100%" cellpadding="0" cellspacing="0" align="center">--}}
+                                                                                    {{--<tr>--}}
+                                                                                        {{--<td width='40'>--}}
+                                                                                            {{--<div class='contentEditableContainer contentFacebookEditable'>--}}
+                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                                                                    {{--<img src="{{url('public/images/facebook.png')}}" alt="facebook" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
+                                                                                                {{--</div>--}}
+                                                                                            {{--</div>--}}
+                                                                                        {{--</td>--}}
+                                                                                        {{--<td width='10'></td>--}}
+                                                                                        {{--<td width='40'>--}}
+                                                                                            {{--<div class='contentEditableContainer contentTwitterEditable'>--}}
+                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                                                                    {{--<img src="{{url('public/images/twitter.png')}}" alt="twitter" width='40' height='40' data-max-width="40" data-customIcon="true" border="0">--}}
+                                                                                                {{--</div>--}}
+                                                                                            {{--</div>--}}
+                                                                                        {{--</td>--}}
+                                                                                        {{--<td width='10'></td>--}}
+                                                                                        {{--<td width='40'>--}}
+                                                                                            {{--<div class='contentEditableContainer contentImageEditable'>--}}
+                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                                                                    {{--<img src="{{url('public/images/red.png')}}" alt="Pinterest" width='40' height='40' data-max-width="40" border="0">--}}
+                                                                                                {{--</div>--}}
+                                                                                            {{--</div>--}}
+                                                                                        {{--</td>--}}
+                                                                                        {{--<td width='10'></td>--}}
+                                                                                        {{--<td width='40'>--}}
+                                                                                            {{--<div class='contentEditableContainer contentImageEditable'>--}}
+                                                                                                {{--<div class='contentEditable' style='text-align: center;color:#AAAAAA;'>--}}
+                                                                                                    {{--<img src="{{url('public/images/blue.png')}}" alt="Social media" width='40' height='40' data-max-width="40" border="0">--}}
+                                                                                                {{--</div>--}}
+                                                                                            {{--</div>--}}
+                                                                                        {{--</td>--}}
+                                                                                    {{--</tr>--}}
+                                                                                {{--</table>--}}
+                                                                            {{--</td>--}}
+                                                                            {{--<td valign="top" width="185" class="spechide">&nbsp;</td>--}}
+                                                                        {{--</tr>--}}
+                                                                        {{--</tbody>--}}
+                                                                    {{--</table>--}}
+                                                                {{--</td>--}}
+                                                            {{--</tr>--}}
+                                                            {{--<tr>--}}
+                                                                {{--<!--            <td height='40'></td>-->--}}
+                                                            {{--</tr>--}}
+                                                            {{--</tbody>--}}
+                                                        {{--</table>--}}
 
-                                                    {{--<!-- =============== END FOOTER =============== -->--}}
+                                                        {{--<!-- =============== END FOOTER =============== -->--}}
                                                     {{--</div>--}}
 
 
                                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td height='40'></td>
+                                                            <td height='20'></td>
                                                         </tr>
                                                         <tr>
                                                             <td style="border: 1px solid #EEEEEE; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                     <tbody>
                                                                     <tr>
-                                                                        {{--<td valign="top" width="40">&nbsp;</td>--}}
+                                                                        <td valign="top" width="40">&nbsp;</td>
                                                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
                                                                                 <tr><td height='15'></td></tr>
                                                                                 <tr>
@@ -624,3 +646,6 @@
                                                         </tbody>
                                                     </table>
                                             <td valign="top" width="20">&nbsp;</td>
+
+
+

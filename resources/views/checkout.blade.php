@@ -54,8 +54,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="widget-body">
-                    {{--<form method="post" action="{{route('restaurant.submitorder')}}">--}}
-                    {{--{{csrf_field()}}--}}
+                    
                     <div class="row">
                         <div class="col-sm-6 margin-b-30">
                             <div class="row">
@@ -178,20 +177,13 @@
                                             <input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input" onclick="cash()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Payment on delivery</span>
                                             <br> <span>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span> </label>
                                     </li>
-                                    {{--<li>--}}
-                                    {{--<label class="custom-control custom-radio  m-b-10">--}}
-                                    {{--<input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()" required> <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online <img src="images/paypal.jpg" alt="" width="90"></span> </label>--}}
-                                    {{--</li>--}}
 
                                     <li>
 
                                         <label class="custom-control custom-radio  m-b-10">
                                             <input name="radio-stacked" id="cartButton" type="radio" onclick="card()"  class="custom-control-input">
-                                            {{--<input name="radio-stacked" type="radio" class="custom-control-input" onclick="card()" required> --}}
                                             <span class="custom-control-indicator"></span> <span class="custom-control-description">Pay Online
                                                         <img src="images/paypal.jpg" alt="" width="90"></span> </label>
-
-                                        {{--<button data-toggle="collapse" class="btn btn-outline-success btn-block" data-target="#demo">Pay With Card</button>--}}
 
                                         <div id="demo" style="display: none">
 
@@ -234,7 +226,7 @@
 
     <script>
         // Create a Stripe client.
-        var stripe = Stripe('pk_test_gUyDT0SVTbicyy4gAqkbbvyf');
+        var stripe = Stripe('{{STRIPE_TOKEN_FRONTEND}}');
         // Create an instance of Elements.
         var elements = stripe.elements();
         // Custom styling can be passed to options when creating an Element.
@@ -256,17 +248,8 @@
             }
         };
         function stripeTokenHandler(token) {
-            // console.log(token);
-            // Insert the token ID into the form so it gets submitted to the server
-            // var form = document.getElementById('payment-form');
-            // var hiddenInput = document.createElement('input');
-            // hiddenInput.setAttribute('type', 'hidden');
-            // hiddenInput.setAttribute('name', 'stripeToken');
-            // hiddenInput.setAttribute('value', token.id);
-            // form.appendChild(hiddenInput);
 
-            // Submit the form
-            // form.submit();
+            // Insert the token ID into the form so it gets submitted to the server
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
 
@@ -357,6 +340,7 @@
 
             }
             else {
+                $("#wait").css("display", "block");
 
                 $.ajax({
                     type: 'post',
@@ -371,10 +355,14 @@
                         'email': email,
                         'phone': phone,
                         'rating': rating,
-                        'stripeToken':token.id
+                        'stripeToken':token.id,
+                        'cardInfo':token.card,
                     },
                     success: function (data) {
-                        // console.log(data);
+                        $("#wait").css("display", "none");
+
+                       // console.log(data)
+
                         if(data.cardError=='2'){
 
                             $.alert({
@@ -386,8 +374,6 @@
                                         text: 'Ok',
                                         btnClass: 'btn-blue',
                                         action: function(){
-                                            // window.location.href = "{{route('home')}}";
-                                            // console.log(data);
                                             location.reload();
                                         }
                                     }
@@ -395,7 +381,6 @@
                             });
 
 
-                            //  location.reload();
                         }
 
                         else if(data=='1'){
@@ -410,7 +395,6 @@
                                         btnClass: 'btn-blue',
                                         action: function(){
                                             window.location.href = "{{route('home')}}";
-                                            // console.log(data);
                                         }
                                     }
                                 }
@@ -429,7 +413,6 @@
                                         btnClass: 'btn-blue',
                                         action: function(){
                                             window.location.href = "{{route('home')}}";
-                                            // console.log(data);
                                         }
                                     }
                                 }
@@ -458,149 +441,150 @@
                 size: 'lg',
                 showClear: false
             });
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $("#PayNowCash").click(function () {
-                var rating=$('#rating-input').val();
-                var firstname = $('#firstname').val();
-                var lastname = $('#lastname').val();
-                var address = $('#address').val();
-                var city = $('#city').val();
-                var zip = $('#zip').val();
-                var email = $('#email').val();
-                var phone = $('#phone').val();
-                var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                if (firstname ==""){
-                    $.alert({
-                        title: 'Alert!',
-                        type: 'red',
-                        content: 'FirstName can not be empty',
-                    });
-                }
-                else if (lastname ==""){
-                    $.alert({
-                        title: 'Alert!',
-                        type: 'red',
-                        content: 'LastName can not be empty',
-                    });
-                }
-                else if (address ==""){
-                    $.alert({
-                        title: 'Alert!',
-                        type: 'red',
-                        content: 'Address can not be empty',
-                    });
-                }else if (city ==""){
-                    $.alert({
-                        title: 'Alert!',
-                        type: 'red',
-                        content: 'City can not be empty',
-                    });
-                }else if (zip ==""){
-                    $.alert({
-                        title: 'Alert!',
-                        type: 'red',
-                        content: 'Zip can not be empty',
-                    });
-                }else if (email ==""){
-                    $.alert({
-                        title: 'Alert!',
-                        type: 'red',
-                        content: 'Email can not be empty',
-                    });
-                }
-                else if(!email.match(mailformat))
-                {
-                    $.alert({
-                        title: 'Alert!',
-                        type: 'red',
-                        content: 'You have entered an invalid email address!',
-                    });
-                }
-                else if (phone ==""){
-                    $.alert({
-                        title: 'Alert!',
-                        type: 'red',
-                        content: 'Phone can not be empty',
-                    });
-                }
-                else {
 
-                    $.ajax({
-                        type : 'post' ,
-                        url : '{{route('restaurant.submitorder')}}',
-                        data : {_token: CSRF_TOKEN,'firstname':firstname,'lastname':lastname,'address':address,'city':city,
-                            'zip':zip,'email':email,'phone':phone,'rating':rating
-                        } ,
-                        success : function(data){
+        });
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $("#PayNowCash").click(function () {
+            var rating=$('#rating-input').val();
+            var firstname = $('#firstname').val();
+            var lastname = $('#lastname').val();
+            var address = $('#address').val();
+            var city = $('#city').val();
+            var zip = $('#zip').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (firstname ==""){
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'FirstName can not be empty',
+                });
+            }
+            else if (lastname ==""){
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'LastName can not be empty',
+                });
+            }
+            else if (address ==""){
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Address can not be empty',
+                });
+            }else if (city ==""){
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'City can not be empty',
+                });
+            }else if (zip ==""){
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Zip can not be empty',
+                });
+            }else if (email ==""){
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Email can not be empty',
+                });
+            }
+            else if(!email.match(mailformat))
+            {
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'You have entered an invalid email address!',
+                });
+            }
+            else if (phone ==""){
+                $.alert({
+                    title: 'Alert!',
+                    type: 'red',
+                    content: 'Phone can not be empty',
+                });
+            }
+            else {
+                $("#wait").css("display", "block");
 
-                            if(data.cardError=='2'){
+                $.ajax({
+                    type : 'post' ,
+                    url : '{{route('restaurant.submitorder')}}',
+                    data : {_token: CSRF_TOKEN,'firstname':firstname,'lastname':lastname,'address':address,'city':city,
+                        'zip':zip,'email':email,'phone':phone,'rating':rating
+                    } ,
+                    success : function(data){
 
-                                $.alert({
-                                    title: data.code +'!',
-                                    type: 'red',
-                                    content: data.message,
-                                    buttons: {
-                                        tryAgain: {
-                                            text: 'Ok',
-                                            btnClass: 'btn-blue',
-                                            action: function(){
-                                                // window.location.href = "{{route('home')}}";
-                                                // console.log(data);
-                                                location.reload();
-                                            }
+
+                        $("#wait").css("display", "none");
+
+                        if(data.cardError=='2'){
+
+                            $.alert({
+                                title: data.code +'!',
+                                type: 'red',
+                                content: data.message,
+                                buttons: {
+                                    tryAgain: {
+                                        text: 'Ok',
+                                        btnClass: 'btn-blue',
+                                        action: function(){
+                                            location.reload();
                                         }
                                     }
-                                });
+                                }
+                            });
 
-
-                                //  location.reload();
-                            }
-
-                            // console.log(data);
-                            else if(data=='1'){
-
-                                $.alert({
-                                    title: 'Alert!',
-                                    type: 'green',
-                                    content: 'Order Has Placed successfully',
-                                    buttons: {
-                                        tryAgain: {
-                                            text: 'Ok',
-                                            btnClass: 'btn-blue',
-                                            action: function(){
-                                                window.location.href = "{{route('home')}}";
-                                                // console.log(data);
-                                            }
-                                        }
-                                    }
-                                });
-
-
-                            }else if(data=='0') {
-
-                                $.alert({
-                                    title: 'Alert!',
-                                    type: 'green',
-                                    content: 'Your Order Has Placed Successfully <br> Something wrong with the mail ,Please contact us for the invoice',
-                                    buttons: {
-                                        tryAgain: {
-                                            text: 'Ok',
-                                            btnClass: 'btn-blue',
-                                            action: function(){
-                                                window.location.href = "{{route('home')}}";
-                                                // console.log(data);
-                                            }
-                                        }
-                                    }
-                                });
-
-                            }
 
                         }
-                    });
 
-                }
-            });
+                        else if(data=='1'){
+
+                            $.alert({
+                                title: 'Alert!',
+                                type: 'green',
+                                content: 'Order Has Placed successfully',
+                                buttons: {
+                                    tryAgain: {
+                                        text: 'Ok',
+                                        btnClass: 'btn-blue',
+                                        action: function(){
+                                            window.location.href = "{{route('home')}}";
+                                            // console.log(data);
+                                        }
+                                    }
+                                }
+                            });
+
+
+                        }else if(data=='0') {
+
+                            $.alert({
+                                title: 'Alert!',
+                                type: 'green',
+                                content: 'Your Order Has Placed Successfully <br> Something wrong with the mail ,Please contact us for the invoice',
+                                buttons: {
+                                    tryAgain: {
+                                        text: 'Ok',
+                                        btnClass: 'btn-blue',
+                                        action: function(){
+                                            window.location.href = "{{route('home')}}";
+                                            // console.log(data);
+                                        }
+                                    }
+                                }
+                            });
+
+                        }
+
+                    }
+                });
+
+            }
         });
         function cash() {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -625,7 +609,6 @@
                 data : {_token: CSRF_TOKEN} ,
                 success : function(data){
                     document.getElementById('PayNowCash').style.display = 'none';
-//                    document.getElementById('PayNowCard').style.display = 'block';
                     document.getElementById('demo').style.display = 'block';
                     // Create an instance of the card Element.
                     var card = elements.create('card', {style: style});
@@ -645,6 +628,7 @@
                     form.addEventListener('submit', function(event) {
                         event.preventDefault();
                         stripe.createToken(card).then(function(result) {
+                            // console.log(result.token.card);
                             if (result.error) {
                                 // Inform the user if there was an error.
                                 var errorElement = document.getElementById('card-errors');

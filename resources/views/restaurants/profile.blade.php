@@ -37,21 +37,66 @@
                                     <p>{{$rest->details}}</p>
                                     <ul class="nav nav-inline">
                                         <li class="nav-item"> <a class="nav-link active" href="#"><i class="fa fa-check"></i> Min $ {{$rest->minOrder}}</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="#"><i class="fa fa-motorcycle"></i> 30 min</a> </li>
+                                        <li class="nav-item">  </li>
                                         <li class="nav-item ratings">
-                                            <a class="nav-link" href="#">
+                                            <a class="nav-link" style="cursor: pointer">
+
+
+                                            @foreach($restaurantRating as $rating)
+
                                                 <span>
+                                                        @if(round($rating->avgRating) == '0')
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endif
+                                                        @if(round($rating->avgRating) == '1')
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endif
+                                                        @if(round($rating->avgRating) == '2')
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endif
+                                                        @if(round($rating->avgRating) == '3')
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endif
+                                                        @if(round($rating->avgRating) == '4')
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endif
+                                                        @if(round($rating->avgRating) == '5')
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        @endif
+                                                      </span>
 
 
 
 
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        </span>
+                                            @endforeach
                                             </a>
+                                            @if(isset($rating))
+                                            &nbsp; <span class="review pull-right"><span style="color: white">{{$rating->totalRating}} Ratings</span> </span>
+                                            @endif
                                         </li>
                                     </ul>
                                 </div>

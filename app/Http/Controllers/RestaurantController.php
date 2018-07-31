@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Resturant;
 use App\Rating;
 use Session;
+use DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
@@ -49,7 +50,7 @@ class RestaurantController extends Controller
             $restaurantStatus= "Close";
         }
 
-
+        $resRating=Rating::select(DB::raw('COUNT(ratingId) as totalRating'),DB::raw('AVG(rating) as avgRating'))->where('restaurantId',$resid)->groupBy('restaurantId')->get();
 
         $catagory = Category::select('*')
             ->where('fkresturantId', $resid)
@@ -65,6 +66,7 @@ class RestaurantController extends Controller
             ->with('restaurant', $restaurant)
             ->with('resid', $resid)
             ->with('itemsize', $itemsize)
+            ->with('restaurantRating', $resRating)
             ->with('restaurantStatus', $restaurantStatus)
 
             ->with('cartitem', $cartCollection);
@@ -141,8 +143,6 @@ class RestaurantController extends Controller
 
             }
 
-
-
             Cart::add(array(
                 'id' => $it->itemsizeId,
                 'name' => $it->itemName,
@@ -166,12 +166,16 @@ class RestaurantController extends Controller
             ->where('itemsizeId',$itemsize)
             ->first();
 
+        foreach (Cart::getContent($cartid) as $cr){
+            $delfeeC = $cr->attributes->delfee;
+            $residC = $cr->attributes->resid;
+        }
         Cart::update($cartid, array(
             'price' => $itemsize->price, // new item name
             'attributes' => array(
                 'size' =>  $itemsize->itemsizeId,
-                'delfee' => Cart::getContent($cartid)->attributes->delfee,
-                'resid' => Cart::getContent($cartid)->attributes->resid
+                'delfee' => $delfeeC,
+                'resid' => $residC
             ) // new item price, price can also be a string format like so: '98.67'
         ));
     }
@@ -189,6 +193,7 @@ class RestaurantController extends Controller
         Cart::remove($r->itemid);
     }
     public function checkout(){
+
         $cartitem = Cart::getContent();
         if($cartitem->isEmpty()){
             Session::flash('message','Cart Is Empty');
@@ -215,7 +220,6 @@ class RestaurantController extends Controller
 
     public function SubmitOrder(Request $r){
 
-
         $cartCollection = Cart::getContent();
         foreach ($cartCollection as $c)
         {
@@ -229,29 +233,34 @@ class RestaurantController extends Controller
         }
 
 
-        $restaurantInfo=Resturant::findOrFail($resid);
+//        $restaurantInfo=Resturant::findOrFail($resid);
+        $restaurantInfo=Resturant::where('resturantId',$resid)->get(array('minOrder'));
         $totalPrice=Cart::getTotal();
 
-        if($totalPrice>$restaurantInfo->minOrder){
+        foreach ($restaurantInfo as $resInfoo){
+            $resMinOrder=$resInfoo->minOrder;
+        }
+
+        if($totalPrice >= $resMinOrder){
             $totalPrice=$totalPrice;
             $delfee=0;
         }
         else{
             $totalPrice+=$delfee;
         }
-//        return $totalPrice;
+
 
         if($r->stripeToken){
-//            return $r->stripeToken;
+
             try {
-                    \Stripe\Stripe::setApiKey("sk_test_J8Qu60frbczlbH9VqxWtmgad");
+                    \Stripe\Stripe::setApiKey(STRIPE_TOKEN_BACKEND);
                 // Token is created using Checkout or Elements!
                 // Get the payment token ID submitted by the form:
                 $token = $r->stripeToken;
                 $charge = \Stripe\Charge::create([
                     'amount'=>$totalPrice*100,
                     'currency' => 'EUR',
-                    'description' => 'Example charge',
+                    'description' => 'New Order Payment',
                     'source' => $token,
                 ]);
 //                dd('Success Payment');
@@ -260,17 +269,13 @@ class RestaurantController extends Controller
                 $body = $e->getJsonBody();
                 $err  = $body['error'];
 
+
                 $code= $err['code'];
                 $msg=$err['message'];
                 $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
-                // $msg ='Status is:' . $e->getHttpStatus() . "\n";
-                //  $msg.='Type is:' . $err['type'] . "\n";
-                // $msg.='Code is:' . $err['code'] . "\n";
-                // param is '' in this case
-                // $msg.='Param is:' . $err['param'] . "\n";
-                // $msg.='Message is:' . $err['message'] . "\n";
-                // Session::flash('message',$err);
+
                 return $data;
+
 
             } catch (\Stripe\Error\RateLimit $e) {
                 // Too many requests made to the API too quickly
@@ -331,6 +336,8 @@ class RestaurantController extends Controller
             }
 
         }
+
+
         $customer = new Customer();
         $customer->firstName = $r->firstname;
         $customer->lastName = $r->lastname;
@@ -342,6 +349,24 @@ class RestaurantController extends Controller
         $customer->status = $r->status;
         $customer->save();
         $order = new Order();
+
+        
+
+        if (Session::get('paymentType')=='Card'){
+
+            $cardInformation= array(
+                'cardType'=>$r->cardInfo['brand'],
+                'cardNo'=>$r->cardInfo['last4'],
+            );
+            $order->cardBrand=$r->cardInfo['brand'];
+
+        }elseif(Session::get('paymentType')=='Cash'){
+
+            $cardInformation= null;
+
+        }
+
+
         $order->fkresturantId = $resid;
         $order->fkcustomerId = $customer->customerId;
         $order->delfee = $delfee;
@@ -375,17 +400,21 @@ class RestaurantController extends Controller
             $rating->save();
 
         }
-
         $orderInfo = Order::select('order.delfee','order.orderId','order.orderTime', 'order.paymentType','order.orderType', 'customer.firstName',
-            'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country')
+            'customer.lastName','customer.phone','customer.email','shipaddress.addressDetails','shipaddress.city','shipaddress.zip','shipaddress.country',
+            'resturant.name as resName','resturant.phoneNumber as resPhone','resturant.minOrder as resMinOrder','resturant.delfee as resDelfee','resturant.email as resMail')
             ->where('order.orderId', $order->orderId)
             ->leftJoin('customer','customer.customerId','=','order.fkcustomerId')
             ->leftJoin('shipaddress','shipaddress.fkorderId','=','order.orderId')
+            ->leftJoin('resturant','resturant.resturantId','=','order.fkresturantId')
             ->get();
+
         foreach ($orderInfo as $mailInfo){
             $customerMail=$mailInfo->email;
             $customerFirstName=$mailInfo->firstName;
             $customerLastName=$mailInfo->lastName;
+            $restaurantMail=$mailInfo->resMail;
+            $restaurantName=$mailInfo->resName;
         }
 
         $orderItemInfo = Orderitems::select('orderitem.quantity','orderitem.price','itemsize.itemsizeName', 'item.itemName','item.itemDetails')
@@ -394,17 +423,63 @@ class RestaurantController extends Controller
             ->leftJoin('item','item.itemId','=','itemsize.item_itemId')
             ->get();
 
+        if (Session::get('paymentType')=='Card'){
+
+            $cardInformation= array(
+                'cardType'=>$r->cardInfo['brand'],
+                'cardNo'=>$r->cardInfo['last4'],
+            );
+
+        }elseif(Session::get('paymentType')=='Cash'){
+
+            $cardInformation= null;
+        }
+
+
+       // return $cardInformation;
 
         Cart::clear();
         Session::forget('ordertype');
         Session::forget('paymentType');
 
+
+
         try{
 
-            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
+//            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($customerMail,$customerFirstName, $customerLastName)
+//            {
+//                $message->from('support@findhalal.de', 'FindHalal');
+//                $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order From FindHalal');
+//            });
+//            Mail::send('invoiceMailForFindhalal',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message)
+//            {
+//                $message->from('support@findhalal.de', 'FindHalal');
+//                $message->to(FindhalalNewOrderMail, 'Findhalal Order')->subject('New Order From FindHalal');
+//            });
+//            Mail::send('invoiceMailForRestaurant',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo], function($message) use ($restaurantMail,$restaurantName)
+//            {
+//                $message->from('support@findhalal.de', 'FindHalal');
+//                $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');
+//            });
+
+
+//new mail
+            Mail::send('invoiceMail1',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message) use ($customerMail,$customerFirstName, $customerLastName)
             {
-                //  $message->from('support@findhalal.de', 'FindHalal');
-                $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order');
+                $message->from('support@findhalal.de', 'FindHalal');
+                $message->to($customerMail, $customerFirstName.' '.$customerLastName)->subject('New Order From FindHalal');
+            });
+
+            Mail::send('invoiceMail1',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message)
+            {
+                $message->from('support@findhalal.de', 'FindHalal');
+                $message->to(FindhalalNewOrderMail, 'Findhalal Order')->subject('New Order From FindHalal');
+            });
+
+            Mail::send('invoiceMail1',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message) use ($restaurantMail,$restaurantName)
+            {
+                $message->from('support@findhalal.de', 'FindHalal');
+                $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');
             });
 
 
@@ -413,13 +488,6 @@ class RestaurantController extends Controller
         }catch (\Exception $ex) {
             return 0;
         }
-
-        /*  Cart::clear();
-
-          alert()->success('Congrats', 'your order has been placed successfully');
-          return redirect("/");*/
-
-        // return back();
     }
 
 
@@ -452,4 +520,5 @@ class RestaurantController extends Controller
     public function Card(){
         Session::put('paymentType', "Card");
     }
+
 }
