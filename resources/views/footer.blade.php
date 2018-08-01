@@ -32,7 +32,7 @@
         <!-- top footer statrs -->
         <div class="row top-footer">
             <div class="col-xs-12 col-sm-3 footer-logo-block color-gray">
-                <a href="#"> <img src="{{url('images/findhalal.png')}}" width="110px" height="35px" alt="Footer logo"> </a> <span >Order Delivery &amp; Take-Out </span> </div>
+                <a href="#"> <img src="{{url('images/findhalal.png')}}" style="width: 120px;height: 60px;" alt="Footer logo"> </a> <span >Order Delivery &amp; Take-Out </span> </div>
             <div class="col-xs-12 col-sm-2 about color-gray"><ul>
                     <li> <a href="{{route('impressum')}}" style="color: white;"> imprint</a> </li>
                 </ul>

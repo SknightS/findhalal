@@ -44,7 +44,7 @@
                             <div class="widget">
                                 <div class="widget-body">
                                     <!-- Contact form -->
-                                    <div class="form-horizontal contact-form" role="form">
+                                    <div class="form-horizontal contact-form" >
                                         <form method="post" action="{{route('contact.post')}}">
                                             {{csrf_field()}}
                                             <div class="row form-group">

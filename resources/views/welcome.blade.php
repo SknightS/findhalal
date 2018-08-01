@@ -5,7 +5,6 @@
     @endsection
 @section('content')
 <section class="hero bg-image" data-image-src="{{url('images/fhb.jpg')}}">
-
     <div class="hero-inner">
         <div class="container text-center hero-text font-white">
             <h1>Order Delivery & Take-Out </h1>
