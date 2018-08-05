@@ -74,6 +74,7 @@ Route::get('/task/show','TaskController@show')->name('task.show');
 //Report
 Route::get('/reports','ReportController@index')->name('reports');
 Route::post('/reports','ReportController@searchByDate')->name('report.searchByDate');
+Route::post('/getCardInfo','ReportController@getCardInfo')->name('report.getCardInfo');
 Route::get('/report/{id}','ReportController@individual')->name('report.individual');
 Route::get('/report/{id}/{start}/{end}','ReportController@individualWithDate')->name('report.individualWithDate');
 
