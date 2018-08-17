@@ -50,20 +50,6 @@ class ReportController extends Controller
                 ->leftJoin('order','purchase.fkorderId','order.orderId')
                 ->get();
 
-
-
-
-//            $cash=DB::table('orderitem')
-//                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
-//                ->whereIn('fkorderId',$cashOrderId)
-//                ->get();
-//
-//
-//
-//            $card=DB::table('orderitem')
-//                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
-//                ->whereIn('fkorderId',$cardOrderId )
-//                ->get();
             $res=Resturant::findOrFail($p->restaurantId);
             $restaurant = new stdClass;
             $restaurant->id=$p->restaurantId;
@@ -87,6 +73,7 @@ class ReportController extends Controller
             array_push($report, $restaurant);
         }
 
+//        return $report;
 
         return view('report.index')
             ->with('report',$report);
@@ -124,16 +111,6 @@ class ReportController extends Controller
                 ->get();
 
 
-//
-//            $cash=DB::table('orderitem')
-//                ->select(DB::raw('SUM(orderitem.price) as price'))
-//                ->whereIn('fkorderId',$cashOrderId)
-//                ->get();
-//
-//            $card=DB::table('orderitem')
-//                ->select(DB::raw('SUM(orderitem.price) as price'))
-//                ->whereIn('fkorderId',$cardOrderId)
-//                ->get();
 
             $res=Resturant::findOrFail($p->restaurantId);
             $restaurant = new stdClass;
@@ -165,6 +142,20 @@ class ReportController extends Controller
             ->with('report',$report)
             ->with('from',$from)
             ->with('to',$to);
+    }
+
+    public function getCardInfo(Request $r){
+        $card=Order::select('order.cardBrand as cardBrand',DB::raw('SUM(purchase.total) as total'))
+            ->where('fkresturantId',$r->fkresturantId)
+            ->leftJoin('purchase','purchase.fkorderId','order.orderId')
+            ->where('order.cardBrand','!=',null)
+            ->groupBy('order.cardBrand');
+        if($r->from && $r->to){
+            $card=$card->whereBetween(DB::raw('DATE(orderTime)'),[$r->from,$r->to]);
+        }
+          $card=$card->get();
+        return view('report.cardInfoModal',compact('card'));
+//        return $card;
     }
 
 

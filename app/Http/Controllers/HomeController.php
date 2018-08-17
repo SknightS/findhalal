@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Resturant;
 
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Mail;
 use App\Purchase;
 use App\Rating;
 
@@ -75,7 +75,17 @@ class HomeController extends Controller
 
     public function contact(Request $r){
 
-        return $r;
+
+        $firstname = $r->fname;
+        $lastname = $r->lname;
+
+
+
+        Mail::send('contactmail',['contactInfo' => $r], function($message) use ($firstname , $lastname)
+        {
+            $message->from('support@findhalal.de', 'FindHalal');
+            $message->to(FindhalalMail, $firstname.' '.$lastname)->subject('Contact');
+        });
 
     }
 }
