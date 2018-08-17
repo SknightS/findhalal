@@ -436,7 +436,7 @@ class RestaurantController extends Controller
         }
 
 
-       // return $cardInformation;
+
 
         Cart::clear();
         Session::forget('ordertype');
@@ -481,7 +481,6 @@ class RestaurantController extends Controller
                 $message->from('support@findhalal.de', 'FindHalal');
                 $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');
             });
-
 
             return 1;
 
