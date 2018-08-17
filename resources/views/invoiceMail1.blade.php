@@ -3,6 +3,8 @@
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <META http-equiv="X-UA-Compatible" content="IE=8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <TITLE>Invoice</TITLE>
     <META name="generator" content="BCL easyConverter SDK 5.0.101">
     <STYLE type="text/css">

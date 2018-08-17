@@ -350,7 +350,7 @@ class RestaurantController extends Controller
         $customer->save();
         $order = new Order();
 
-        
+
 
         if (Session::get('paymentType')=='Card'){
 
