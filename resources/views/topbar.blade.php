@@ -24,7 +24,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 
 @yield('header')
+
 <body class="home">
+
 <div class="site-wrapper animsition" data-animsition-in="fade-in" data-animsition-out="fade-out">
     <!--header starts-->
     <header id="header" class="header-scroll top-header headrom">
