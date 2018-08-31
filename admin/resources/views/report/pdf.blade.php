@@ -1,13 +1,13 @@
 <html>
 
-<body>
+<body style="margin: 0px;">
 
-<table width="100%">
+<table width="100%" style="margin-right: 0px;">
     <tr>
-        <td width="30%"><img src="{{url('public/images/findhalal.png')}}" height="100px" width="200px"></td>
-        <td width="40%"></td>
+        <td width="30%" align="left"><img src="{{url('public/images/findhalal.png')}}" height="100px" width="200px"></td>
+
         <td>
-            <table width="70%" >
+            <table width="70%" align="right">
                 <tr  style="background-color: #DEEBF7" >
                     <td width="40%"> <b>Unternehmenszentrale: </b><br>
                         Mainzer Landstraße 49, 60329 Frankfurt am Main, DE<br>
@@ -19,23 +19,23 @@
 </table>
 
 <table width="100%">
-    <tr height="50px"></tr>
+    {{--<tr height="50px"></tr>--}}
 
     <tr>
-        <td>Hallo <b>Mohammad Zahid Kamal,</b> </td>
+        <td>Hallo <b>Guten Tag,</b> </td>
     </tr>
-    <tr height="20px"></tr>
+    {{--<tr height="20px"></tr>--}}
 
     <tr>
         <td width="10%">vielen Dank fuer Ihre Bestellung bei <b>FindHalal.de.</b> Hier sind Ihre Bestellinformationen. </td>
     </tr>
 
 </table>
-
+<br>
 <table width="100%">
-    <tr width="100%" height="20px"></tr>
+    {{--<tr width="100%" height="20px"></tr>--}}
 
-    <tr   width="100%" style="background-color: #DEEBF7" >
+    <tr   width="100%" style="background-color: #DEEBF7;" >
         <td style="padding: 10px"><b>Rechnung</b></td>
     </tr>
     <tr width="40%">
@@ -75,12 +75,12 @@
 </table>
 
 <table width="100%">
-    <tr width="100%" height="20px"></tr>
+    {{--<tr width="100%" height="20px"></tr>--}}
 
     <tr   width="100%" style="background-color: #DEEBF7" >
         <td style="padding: 10px"><b>Verkaufsdetails</b></td>
     </tr>
-    <tr width="100%" height="20px"></tr>
+    {{--<tr width="100%" height="20px"></tr>--}}
     <tr width="40%">
 
         <table width="100%">
@@ -93,28 +93,31 @@
                 <td width="8%">Online bezahlt (€)</td>
                 <td width="15%">Bar bezahlt (€)</td>
             </tr>
+            @php($sl=0)
+            @foreach($report as $val)
+                <tr >
+                    <td width="5%">{{++$sl}}</td>
+                    <td width="15%">{{$val->orderTime}}</td>
+                    <td width="15%">FH1808010031 </td>
+                    <td width="15%">{{$val->orderStatus}} </td>
+                    <td width="8%">{{$val->total}}</td>
+                    <td width="8%">
+                    @if($val->paymentType == "Cash")
+                            {{$val->total}}
+                    @else
+                        -
+                    @endif
+                    </td>
+                    <td width="15%">
+                        @if($val->paymentType == "Card")
+                            {{$val->total}}
+                        @else
+                            -
+                        @endif
+                    </td>
+                </tr>
 
-            <tr >
-                <td width="5%">1</td>
-                <td width="15%">01-August-2018</td>
-                <td width="15%">FH1808010031 </td>
-                <td width="15%">Geliefert </td>
-                <td width="8%">19.00</td>
-                <td width="8%">-</td>
-                <td width="15%">19.00</td>
-            </tr>
-            <tr >
-                <td width="5%">1</td>
-                <td width="15%">01-August-2018</td>
-                <td width="15%">FH1808010031 </td>
-                <td width="15%">Geliefert </td>
-                <td width="8%">19.00</td>
-                <td width="8%">-</td>
-                <td width="15%">19.00</td>
-            </tr>
-
-
-
+            @endforeach
 
 
         </table>
@@ -123,25 +126,25 @@
 
 
 </table>
+<br>
 
-
-<table width="100%">
-    <tr height="50px"></tr>
+<table width="100%" style="margin-top: 40px;">
+    {{--<tr height="50px"></tr>--}}
 
     <tr>
         <td>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung. Sie erreichen uns wie folgt. </td>
     </tr>
-    <tr height="20px"></tr>
+    {{--<tr height="20px"></tr>--}}
 
-    <tr>
+    <tr style="margin-top:20px;">
         <td width="10%">Mit freundlichen Grüßen,<br>
             Ihr Team von FindHalal.de </td>
     </tr>
 
 </table>
-
+<br>
 <table width="100%">
-    <tr height="50px"></tr>
+    {{--<tr height="50px"></tr>--}}
     <tr>
         <td width="10%"><b>FindHalal</b> <br>
             Mainzer Landstraße 49,<br>
@@ -154,7 +157,7 @@
 
 </table>
 <table width="100%">
-    <tr height="50px"></tr>
+    {{--<tr height="50px"></tr>--}}
 
     <tr align="right">
         <td>** Alle Artikel Preise inkl Mw.-St. (7%) <br>
@@ -166,7 +169,7 @@
 </table>
 
 <table width="100%">
-    <tr height="10px"></tr>
+    {{--<tr height="10px"></tr>--}}
 
     <tr>
         <td onclose="4"></td>

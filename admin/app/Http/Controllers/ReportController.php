@@ -322,7 +322,7 @@ class ReportController extends Controller
             $report= $report->get();
 //            return $report;
 //            $pdf = PDF::loadView('report.pdf',compact('shifts','ProductionManager','ProcessingManager','QcManager','productionTeams','processingnTeams','qcTeams','shiftMain'));
-            $pdf = PDF::loadView('report.pdf');
+            $pdf = PDF::loadView('report.pdf',compact('report'));
             $pdf->save('public/pdf/tst.pdf'); // Saving Pdf To Server
         }
 
