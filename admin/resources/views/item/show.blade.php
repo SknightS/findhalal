@@ -41,6 +41,9 @@
             </select>
         </div>
     {{--</div>--}}
+        <div class="col-sm-3">
+            <button onclick="activeAll()" class="btn btn-success">Active All</button>
+        </div>
 
     </div>
 
@@ -48,6 +51,7 @@
         <table id="allItemList" class="table table-bordered table-striped">
             <thead>
             <tr>
+                <th ><input type="checkbox" id="selectall" onClick="selectAll(this)" /></th>
                 <th >Image</th>
                 <th >Item Name</th>
                 <th >Item Attribute & Price</th>
@@ -88,6 +92,37 @@
 
 
     <script>
+        function selectAll(source) {
+            checkboxes = document.getElementsByName('checkboxvar[]');
+            for(var i in checkboxes)
+                checkboxes[i].checked = source.checked;
+        }
+
+        function activeAll() {
+            var chkArray = [];
+
+            $('.checkboxvar:checked').each(function (i) {
+
+                chkArray[i] = $(this).val();
+            });
+            if(chkArray.length >0){
+                $.ajax({
+                    type : 'post' ,
+                    url : '{{route('item.activeAll')}}',
+                    data : {'itemIds':chkArray} ,
+                    success : function(data){
+//                        console.log(data);
+                        location.reload();
+
+
+                    }
+                });
+            }
+            else {
+                alert('select item');
+            }
+
+        }
 
         $.ajaxSetup({
             headers: {
@@ -137,7 +172,12 @@
                 },
                 columns: [
 
-//                    { data: 'image',name:'image' },
+                    { "data": function(data){
+                        return '<input input type="checkbox" class="checkboxvar" name="checkboxvar[]" value="'+data.itemId+'">'
+//                            '<a class="btn btn-danger btn-sm" data-panel-id="'+data.itemId+'"onclick="deleteItem(this)"><i class="fa fa-trash"></i></a>'
+                            ;},
+                        "orderable": false, "searchable":false
+                    },
 
                     {
                         "name": "image",

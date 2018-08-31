@@ -41,6 +41,7 @@ Route::post('/Items/showBack/','ItemController@showBack')->name('item.showBack')
 Route::post('/Items/show','ItemController@get')->name('item.get');
 Route::get('/Items/edit/{id}','ItemController@edit')->name('item.edit');
 Route::post('/Items/update/{id}','ItemController@update')->name('item.update');
+Route::post('/Items/activeAll','ItemController@activeAll')->name('item.activeAll');
 
 Route::get('/Items/editItemSize/{id}','ItemController@editItemSize')->name('itemSize.edit');
 Route::post('/Items/updateItemSize/{id}','ItemController@updateItemSize')->name('itemSize.update');
