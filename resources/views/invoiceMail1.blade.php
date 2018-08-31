@@ -234,7 +234,7 @@
 
                 <?php $discount=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
 
-                <td class="tr2 td15"><P class="p6 ft1">- <?php echo $discount=$delveryFee ?></P></td>
+                <td class="tr2 td15"><P class="p6 ft1">- <?php echo $discount=$orderInformation->resDelfee ?></P></td>
                 <?php }elseif($orderInformation->orderType=='Delivery' && $total < $orderInformation->resMinOrder) {?>
                 <td class="tr2 td15"><P class="p6 ft1">- <?php echo $discount?></P></td>
                 <?php }elseif ($orderInformation->orderType=='Takeout'){?>
