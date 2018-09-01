@@ -10,6 +10,8 @@ use App\Purchase;
 use App\Resturant;
 use App\Order;
 use App\Orderitems;
+
+use PDF;
 class ReportController extends Controller
 {
     public function __construct()
@@ -224,7 +226,8 @@ class ReportController extends Controller
            return view('report.individual')
                 ->with('orderCard',$orderCard)
                 ->with('orderCash',$orderCash)
-                ->with('restaurantNAme',$restaurantNAme);
+                ->with('restaurantNAme',$restaurantNAme)
+                ->with('id',$id);
 
        }
 
@@ -299,9 +302,29 @@ class ReportController extends Controller
         return view('report.individual')
             ->with('orderCard',$orderCard)
             ->with('orderCash',$orderCash)
-            ->with('restaurantNAme',$restaurantNAme);
+            ->with('restaurantNAme',$restaurantNAme)
+            ->with('id',$id)
+            ->with('start',$start)
+            ->with('end',$end);
         }
 
+        public function generatePdf(Request $r){
+            $restaurantName=Resturant::findOrFail($r->id)->name;
+
+            $report=Order::select('purchase.fkorderId','order.fkresturantId','orderStatus','purchase.total','purchase.delFee','order.paymentType','order.orderTime')
+                ->leftJoin('purchase','purchase.fkorderId','order.orderId')
+                ->leftJoin('customer','order.fkcustomerId','customer.customerId')
+                ->where('order.fkresturantId',$r->id);
+            if($r->startDate && $r->endDate){
+                $report= $report->whereBetween(DB::raw('DATE(order.orderTime)'),[$r->startDate,$r->endDate]);
+            }
+
+            $report= $report->get();
+//            return $report;
+//            $pdf = PDF::loadView('report.pdf',compact('shifts','ProductionManager','ProcessingManager','QcManager','productionTeams','processingnTeams','qcTeams','shiftMain'));
+            $pdf = PDF::loadView('report.pdf',compact('report'));
+            $pdf->save('public/pdf/tst.pdf'); // Saving Pdf To Server
+        }
 
 
 

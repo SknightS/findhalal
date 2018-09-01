@@ -78,6 +78,7 @@ Route::post('/reports','ReportController@searchByDate')->name('report.searchByDa
 Route::post('/getCardInfo','ReportController@getCardInfo')->name('report.getCardInfo');
 Route::get('/report/{id}','ReportController@individual')->name('report.individual');
 Route::get('/report/{id}/{start}/{end}','ReportController@individualWithDate')->name('report.individualWithDate');
+Route::post('/report/generatePdf','ReportController@generatePdf')->name('report.generatePdf');
 
 
 //order
@@ -112,6 +113,10 @@ Route::get('/OrderItem/distroy/{id}','OrderController@deleteOrderItem')->name('o
 //ADD USER (ex: moderator..)
 Route::get('/user','UserController@index')->name('user.show');
 Route::post('/user/create','UserController@create')->name('user.create');
+
+
+//Test
+Route::view('/test/pdf','report.pdf');
 
 
 
