@@ -1,6 +1,10 @@
 @extends('main')
 
 @section('content')
+    <div id="wait" style="display:none;position:absolute;top:40%;left:40%;padding:2px;">
+        <img style="height: 50px;width: 50px;" src='{{url('public/images/loader.gif')}}' />
+    </div>
+
     <h1 style="color: red;"><b>{{$restaurantNAme->name}}</b></h1>
 
     <button class="btn btn-default pull-right" onclick="generatePdf()">Generate PDF</button>
@@ -170,7 +174,7 @@
                 var startDate="{{$start}}";
                 var endDate="{{$end}}";
             @endif
-
+$('#wait').css('display','block');
             $.ajax({
             type: 'POST',
             url: "{!! route('report.generatePdf') !!}",
@@ -181,7 +185,17 @@
                 data: {_token: "{{csrf_token()}}",'id': id},
                 @endif
             success: function (data) {
-            console.log(data);
+
+//            console.log(data);
+                    var link = document.createElement("a");
+                    link.download = data;
+                    var uri = '{{url("public/pdf")}}'+"/"+data;
+                    link.href = uri;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    delete link;
+                    $('#wait').css('display','none');
             }
             });
         }
