@@ -309,9 +309,15 @@ class ReportController extends Controller
         }
 
         public function generatePdf(Request $r){
-            $restaurantName=Resturant::findOrFail($r->id)->name;
+            $restaurant=Resturant::findOrFail($r->id);
+            $fromDate="";
+            $toDate="";
+            if($r->startDate && $r->endDate) {
+                $fromDate = $r->startDate;
+                $toDate = $r->endDate;
+            }
 
-            $report=Order::select('purchase.fkorderId','order.fkresturantId','orderStatus','purchase.total','purchase.delFee','order.paymentType','order.orderTime')
+            $report=Order::select('purchase.fkorderId','order.fkresturantId','order.invoiceNumber','orderStatus','purchase.total','purchase.delFee','order.paymentType','order.orderTime')
                 ->leftJoin('purchase','purchase.fkorderId','order.orderId')
                 ->leftJoin('customer','order.fkcustomerId','customer.customerId')
                 ->where('order.fkresturantId',$r->id);
@@ -320,10 +326,10 @@ class ReportController extends Controller
             }
 
             $report= $report->get();
-//            return $report;
-//            $pdf = PDF::loadView('report.pdf',compact('shifts','ProductionManager','ProcessingManager','QcManager','productionTeams','processingnTeams','qcTeams','shiftMain'));
-            $pdf = PDF::loadView('report.pdf',compact('report'));
+
+            $pdf = PDF::loadView('report.pdf',compact('report','restaurant','fromDate','toDate'));
             $pdf->save('public/pdf/tst.pdf'); // Saving Pdf To Server
+            return "tst.pdf";
         }
 
 

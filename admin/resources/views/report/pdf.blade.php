@@ -41,29 +41,23 @@
     <tr width="40%">
         <table width="60%">
             <tr>
-                <td>Ihr Name:</td>
+                <td>Firma:</td>
                 <td>|</td>
-                <td>Mohammad Zahid Kamal</td>
+                <td>{{$restaurant->name}}</td>
             </tr>
             <tr>
-                <td>Lieferadresse:</td>
+                <td>Firmenadresse:</td>
                 <td>|</td>
-                <td> Heddernheimer Landstraße 41, 60439 Frankfurt am Main, Deutschland</td>
+                <td>{{$restaurant->address}} </td>
             </tr>
             <tr>
-                <td>Bestellnummer:</td>
+                <td>Zeitraum:</td>
                 <td>|</td>
-                <td>FH1807140031</td>
-            </tr>
-            <tr>
-                <td>Bestelldatum:</td>
-                <td>|</td>
-                <td>14-July-2018 ; 12:51pm</td>
-            </tr>
-            <tr>
-                <td>Lieferart:</td>
-                <td>|</td>
-                <td>Hauslieferung</td>
+                @if($fromDate=="" && $toDate=="")
+                    <td>ALLE</td>
+                @else
+                <td>ab {{ \Carbon\Carbon::parse($fromDate)->format('d-F-Y')}} bis {{ \Carbon\Carbon::parse($toDate)->format('d-F-Y')}}</td>
+                @endif
             </tr>
 
 
@@ -97,8 +91,8 @@
             @foreach($report as $val)
                 <tr >
                     <td width="5%">{{++$sl}}</td>
-                    <td width="15%">{{$val->orderTime}}</td>
-                    <td width="15%">FH1808010031 </td>
+                    <td width="15%">{{ \Carbon\Carbon::parse($val->orderTime)->format('d-F-Y')}}</td>
+                    <td width="15%">{{$val->invoiceNumber}} </td>
                     <td width="15%">{{$val->orderStatus}} </td>
                     <td width="8%">{{$val->total}}</td>
                     <td width="8%">
