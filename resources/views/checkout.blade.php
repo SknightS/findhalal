@@ -522,6 +522,8 @@
 
                         $("#wait").css("display", "none");
 
+                       // console.log(data);
+
                         if(data.cardError=='2'){
 
                             $.alert({
