@@ -373,7 +373,8 @@ class RestaurantController extends Controller
 
         // update Invoice number
         DB::table('order')->where('orderId', $order->orderId)->update(['invoiceNumber' =>'FH'.date('y').date('m').date('d').$order->orderId]);
-
+        $invoiceNumber='FH'.date('y').date('m').date('d').$order->orderId;
+        //
         $shipaddress = new Shipaddress();
         $shipaddress->addressDetails = $r->address;
         $shipaddress->city = $r->city;
@@ -447,7 +448,7 @@ class RestaurantController extends Controller
         /* make invoice pdf*/
 
         $pdf = PDF::loadView('newInvoicePdf',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation]);
-//        $pdf->save('public/images/tst.pdf');
+//        $pdf->save('admin/public/invoicePdf'.'/'.$invoiceNumber.'.pdf');
 
 
         /* end invoice pdf */
@@ -460,7 +461,7 @@ class RestaurantController extends Controller
 
 
 
-            Mail::send('invoiceMail',[], function($message) use ($customerMail,$customerFirstName,$customerLastName,$orderInfo,$orderItemInfo,$cardInformation,$pdf)
+            Mail::send('invoiceMail',[], function($message) use ($customerMail,$customerFirstName,$customerLastName,$orderInfo,$orderItemInfo,$cardInformation,$pdf,$invoiceNumber)
             {
 
                 $message->from('support@findhalal.de', 'FindHalal');
@@ -469,17 +470,18 @@ class RestaurantController extends Controller
 
                 $message->attachData($pdf->output(),'invoice.pdf',['mime' => 'application/pdf']);
 
+//                $message->attach('admin/public/invoicePdf'.'/'.$invoiceNumber.'.pdf',array('as' => 'pdf-report.pdf', 'mime' => 'application/pdf'));
 
             });
 
-            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message)use ($pdf)
+            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message)use ($pdf,$invoiceNumber)
             {
                 $message->from('support@findhalal.de', 'FindHalal');
                 $message->to(FindhalalNewOrderMail, 'Findhalal Order')->subject('New Order From FindHalal');
                 $message->attachData($pdf->output(),'invoice.pdf',['mime' => 'application/pdf']);
             });
 
-            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message) use ($restaurantMail,$restaurantName,$pdf)
+            Mail::send('invoiceMail',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation], function($message) use ($restaurantMail,$restaurantName,$pdf,$invoiceNumber)
             {
                 $message->from('support@findhalal.de', 'FindHalal');
                 $message->to($restaurantMail, $restaurantName)->subject('New Order From FindHalal');

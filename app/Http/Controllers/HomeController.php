@@ -23,8 +23,8 @@ class HomeController extends Controller
             ->where('featureResturant', "1")
             ->where('status',Status[0])
             ->get();
-        $resItem=Item::select(DB::raw('GROUP_CONCAT(itemName) AS itemNames'),'fkresturantId')->where('status',Status[0])
-            ->groupBy('fkresturantId')->get();
+//        $resItem=Item::select(DB::raw('GROUP_CONCAT(itemName) AS itemNames'),'fkresturantId')->where('status',Status[0])
+//            ->groupBy('fkresturantId')->get();
         $resCategory=Category::select(DB::raw('GROUP_CONCAT(category.name SEPARATOR " ") AS resCategoryName'),'fkresturantId')
             ->where('category.status',Status[0])
             ->groupBy('fkresturantId')->get();
@@ -63,7 +63,7 @@ class HomeController extends Controller
 
         return view('welcome')
             ->with('topRestaurants',$topRestaurants)
-            ->with('resItems',$resItem)
+//            ->with('resItems',$resItem)
             ->with('resCategory',$resCategory)
             ->with('featuredResCategory',$featuredResCategory)
             ->with('restaurantRating', $resRating)
