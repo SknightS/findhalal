@@ -38,25 +38,25 @@
     <tr   width="100%" style="background-color: #DEEBF7;" >
         <td style="padding: 10px"><b>Rechnung</b></td>
     </tr>
-    <tr width="40%">
-        <table width="60%">
+    <tr width="100%">
+        <table width="100%">
             <tr>
-                <td>Firma:</td>
-                <td>|</td>
-                <td>{{$restaurant->name}}</td>
+                <td width="10%">Firma:</td>
+                <td width="5%">|</td>
+                <td width="85%">{{$restaurant->name}}</td>
             </tr>
             <tr>
-                <td>Firmenadresse:</td>
-                <td>|</td>
-                <td>{{$restaurant->address}} </td>
+                <td width="10%">Firmenadresse:</td>
+                <td width="5%">|</td>
+                <td width="85%">{{$restaurant->address}} </td>
             </tr>
             <tr>
-                <td>Zeitraum:</td>
-                <td>|</td>
+                <td width="10%">Zeitraum:</td>
+                <td width="5%">|</td>
                 @if($fromDate=="" && $toDate=="")
-                    <td>ALLE</td>
+                    <td width="85%">ALLE</td>
                 @else
-                <td>ab {{ \Carbon\Carbon::parse($fromDate)->format('d-F-Y')}} bis {{ \Carbon\Carbon::parse($toDate)->format('d-F-Y')}}</td>
+                <td width="85%">ab {{ \Carbon\Carbon::parse($fromDate)->format('d-F-Y')}} bis {{ \Carbon\Carbon::parse($toDate)->format('d-F-Y')}}</td>
                 @endif
             </tr>
 
@@ -75,6 +75,11 @@
         <td style="padding: 10px"><b>Verkaufsdetails</b></td>
     </tr>
     {{--<tr width="100%" height="20px"></tr>--}}
+    @php
+    $total=0;
+    $cash=0;
+    $card=0;
+    @endphp
     <tr width="40%">
 
         <table width="100%">
@@ -93,11 +98,21 @@
                     <td width="5%">{{++$sl}}</td>
                     <td width="15%">{{ \Carbon\Carbon::parse($val->orderTime)->format('d-F-Y')}}</td>
                     <td width="15%">{{$val->invoiceNumber}} </td>
-                    <td width="15%">{{$val->orderStatus}} </td>
+                    <td width="15%">
+                        @if($val->orderStatus=="Delivered")
+                            Geliefert
+                        @elseif($val->orderStatus=="Cancelled")
+                            abgebrochen
+                         @elseif($val->orderStatus=="Pending")
+                            steht aus
+                        @endif
+                    </td>
                     <td width="8%">{{$val->total}}</td>
+                    @php($total+=$val->total)
                     <td width="8%">
                     @if($val->paymentType == "Cash")
                             {{$val->total}}
+                            @php($cash+=$val->total)
                     @else
                         -
                     @endif
@@ -105,6 +120,7 @@
                     <td width="15%">
                         @if($val->paymentType == "Card")
                             {{$val->total}}
+                            @php($card+=$val->total)
                         @else
                             -
                         @endif
@@ -112,6 +128,13 @@
                 </tr>
 
             @endforeach
+            <tr>
+                <td colspan="4" align="center">Total</td>
+                <td>{{$total}}</td>
+                <td>{{$cash}}</td>
+                <td>{{$card}}</td>
+
+            </tr>
 
 
         </table>

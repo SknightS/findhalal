@@ -169,12 +169,13 @@
 
 
         function generatePdf() {
+            $('#wait').css('display','block');
             var id="{{$id}}";
             @if(isset($start) && isset($end))
                 var startDate="{{$start}}";
                 var endDate="{{$end}}";
             @endif
-$('#wait').css('display','block');
+
             $.ajax({
             type: 'POST',
             url: "{!! route('report.generatePdf') !!}",
@@ -188,7 +189,7 @@ $('#wait').css('display','block');
 
 //            console.log(data);
                     var link = document.createElement("a");
-                    link.download = data;
+                    link.download = "Verkaufsbericht.pdf";
                     var uri = '{{url("public/pdf")}}'+"/"+data;
                     link.href = uri;
                     document.body.appendChild(link);
