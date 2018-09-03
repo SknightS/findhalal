@@ -66,7 +66,8 @@ return [
     */
 
 //    'timezone' => 'UTC',
-    'timezone' => date_default_timezone_set("Europe/London"),
+    'timezone' => 'Europe/Berlin',
+
 
 
     /*

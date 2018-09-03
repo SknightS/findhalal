@@ -448,7 +448,7 @@ class RestaurantController extends Controller
         /* make invoice pdf*/
 
         $pdf = PDF::loadView('newInvoicePdf',['orderInfo' => $orderInfo,'orderItemInfo'=>$orderItemInfo,'cardInformations'=>$cardInformation]);
-        $pdf->save('public/images'.'/'.'tst'.'.pdf');
+//        $pdf->save('public/images'.'/'.'tst'.'.pdf');
 
 
         /* end invoice pdf */
