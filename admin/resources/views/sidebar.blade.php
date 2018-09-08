@@ -6,7 +6,7 @@
 
             <!-- logo -->
             <div class="logo">
-                <a href="index.html">
+                <a href="{{route('admin.index')}}">
                     <img src="{{url('assets/images/logo@2x.png')}}" width="120" alt="" />
                 </a>
             </div>

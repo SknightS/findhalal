@@ -1,7 +1,13 @@
 @extends('main')
 
 @section('content')
+    <div id="wait" style="display:none;position:absolute;top:40%;left:40%;padding:2px;">
+        <img style="height: 50px;width: 50px;" src='{{url('public/images/loader.gif')}}' />
+    </div>
+
     <h1 style="color: red;"><b>{{$restaurantNAme->name}}</b></h1>
+
+    <button class="btn btn-default pull-right" onclick="generatePdf()">Generate PDF</button>
 
     <h1 align="center" style="color:#1b6d85;"><b>CASH</b></h1>
     <div class="table table-responsive" style="margin-top: 20px">
@@ -161,6 +167,39 @@
             });
         });
 
+
+        function generatePdf() {
+            $('#wait').css('display','block');
+            var id="{{$id}}";
+            @if(isset($start) && isset($end))
+                var startDate="{{$start}}";
+                var endDate="{{$end}}";
+            @endif
+
+            $.ajax({
+            type: 'POST',
+            url: "{!! route('report.generatePdf') !!}",
+            cache: false,
+                @if(isset($start) && isset($end))
+                data: {_token: "{{csrf_token()}}",'id': id,startDate:startDate,endDate:endDate},
+                @else
+                data: {_token: "{{csrf_token()}}",'id': id},
+                @endif
+            success: function (data) {
+
+//            console.log(data);
+                    var link = document.createElement("a");
+                    link.download = "Verkaufsbericht.pdf";
+                    var uri = '{{url("public/pdf")}}'+"/"+data;
+                    link.href = uri;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    delete link;
+                    $('#wait').css('display','none');
+            }
+            });
+        }
 
 
 

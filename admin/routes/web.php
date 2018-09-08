@@ -41,6 +41,7 @@ Route::post('/Items/showBack/','ItemController@showBack')->name('item.showBack')
 Route::post('/Items/show','ItemController@get')->name('item.get');
 Route::get('/Items/edit/{id}','ItemController@edit')->name('item.edit');
 Route::post('/Items/update/{id}','ItemController@update')->name('item.update');
+Route::post('/Items/activeAll','ItemController@activeAll')->name('item.activeAll');
 
 Route::get('/Items/editItemSize/{id}','ItemController@editItemSize')->name('itemSize.edit');
 Route::post('/Items/updateItemSize/{id}','ItemController@updateItemSize')->name('itemSize.update');
@@ -74,8 +75,10 @@ Route::get('/task/show','TaskController@show')->name('task.show');
 //Report
 Route::get('/reports','ReportController@index')->name('reports');
 Route::post('/reports','ReportController@searchByDate')->name('report.searchByDate');
+Route::post('/getCardInfo','ReportController@getCardInfo')->name('report.getCardInfo');
 Route::get('/report/{id}','ReportController@individual')->name('report.individual');
 Route::get('/report/{id}/{start}/{end}','ReportController@individualWithDate')->name('report.individualWithDate');
+Route::post('/report/generatePdf','ReportController@generatePdf')->name('report.generatePdf');
 
 
 //order
@@ -110,6 +113,10 @@ Route::get('/OrderItem/distroy/{id}','OrderController@deleteOrderItem')->name('o
 //ADD USER (ex: moderator..)
 Route::get('/user','UserController@index')->name('user.show');
 Route::post('/user/create','UserController@create')->name('user.create');
+
+
+//Test
+Route::view('/test/pdf','report.pdf');
 
 
 

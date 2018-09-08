@@ -20,6 +20,13 @@ class ItemController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function activeAll(Request $r){
+        foreach ($r->itemIds as $item){
+            Itemsize::where('item_itemId',$item)->update(array('status' => "Active"));
+            Item::where('itemId',$item)->update(array('status' => "Active"));
+        }
+    }
     public function add(){
         $resName=Resturant::select('resturantId','name')->orderBy('name','ASC')->get();
 

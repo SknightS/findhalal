@@ -10,6 +10,8 @@ use App\Purchase;
 use App\Resturant;
 use App\Order;
 use App\Orderitems;
+
+use PDF;
 class ReportController extends Controller
 {
     public function __construct()
@@ -50,20 +52,6 @@ class ReportController extends Controller
                 ->leftJoin('order','purchase.fkorderId','order.orderId')
                 ->get();
 
-
-
-
-//            $cash=DB::table('orderitem')
-//                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
-//                ->whereIn('fkorderId',$cashOrderId)
-//                ->get();
-//
-//
-//
-//            $card=DB::table('orderitem')
-//                ->select(DB::raw('SUM(orderitem.price*orderitem.quantity) as price'))
-//                ->whereIn('fkorderId',$cardOrderId )
-//                ->get();
             $res=Resturant::findOrFail($p->restaurantId);
             $restaurant = new stdClass;
             $restaurant->id=$p->restaurantId;
@@ -87,6 +75,7 @@ class ReportController extends Controller
             array_push($report, $restaurant);
         }
 
+//        return $report;
 
         return view('report.index')
             ->with('report',$report);
@@ -124,16 +113,6 @@ class ReportController extends Controller
                 ->get();
 
 
-//
-//            $cash=DB::table('orderitem')
-//                ->select(DB::raw('SUM(orderitem.price) as price'))
-//                ->whereIn('fkorderId',$cashOrderId)
-//                ->get();
-//
-//            $card=DB::table('orderitem')
-//                ->select(DB::raw('SUM(orderitem.price) as price'))
-//                ->whereIn('fkorderId',$cardOrderId)
-//                ->get();
 
             $res=Resturant::findOrFail($p->restaurantId);
             $restaurant = new stdClass;
@@ -165,6 +144,20 @@ class ReportController extends Controller
             ->with('report',$report)
             ->with('from',$from)
             ->with('to',$to);
+    }
+
+    public function getCardInfo(Request $r){
+        $card=Order::select('order.cardBrand as cardBrand',DB::raw('SUM(purchase.total) as total'))
+            ->where('fkresturantId',$r->fkresturantId)
+            ->leftJoin('purchase','purchase.fkorderId','order.orderId')
+            ->where('order.cardBrand','!=',null)
+            ->groupBy('order.cardBrand');
+        if($r->from && $r->to){
+            $card=$card->whereBetween(DB::raw('DATE(orderTime)'),[$r->from,$r->to]);
+        }
+          $card=$card->get();
+        return view('report.cardInfoModal',compact('card'));
+//        return $card;
     }
 
 
@@ -233,7 +226,8 @@ class ReportController extends Controller
            return view('report.individual')
                 ->with('orderCard',$orderCard)
                 ->with('orderCash',$orderCash)
-                ->with('restaurantNAme',$restaurantNAme);
+                ->with('restaurantNAme',$restaurantNAme)
+                ->with('id',$id);
 
        }
 
@@ -308,9 +302,35 @@ class ReportController extends Controller
         return view('report.individual')
             ->with('orderCard',$orderCard)
             ->with('orderCash',$orderCash)
-            ->with('restaurantNAme',$restaurantNAme);
+            ->with('restaurantNAme',$restaurantNAme)
+            ->with('id',$id)
+            ->with('start',$start)
+            ->with('end',$end);
         }
 
+        public function generatePdf(Request $r){
+            $restaurant=Resturant::findOrFail($r->id);
+            $fromDate="";
+            $toDate="";
+            if($r->startDate && $r->endDate) {
+                $fromDate = $r->startDate;
+                $toDate = $r->endDate;
+            }
+
+            $report=Order::select('purchase.fkorderId','order.fkresturantId','order.invoiceNumber','orderStatus','purchase.total','purchase.delFee','order.paymentType','order.orderTime')
+                ->leftJoin('purchase','purchase.fkorderId','order.orderId')
+                ->leftJoin('customer','order.fkcustomerId','customer.customerId')
+                ->where('order.fkresturantId',$r->id);
+            if($r->startDate && $r->endDate){
+                $report= $report->whereBetween(DB::raw('DATE(order.orderTime)'),[$r->startDate,$r->endDate]);
+            }
+
+            $report= $report->get();
+
+            $pdf = PDF::loadView('report.pdf',compact('report','restaurant','fromDate','toDate'));
+            $pdf->save('public/pdf/Verkaufsbericht.pdf'); // Saving Pdf To Server
+            return "Verkaufsbericht.pdf";
+        }
 
 
 

@@ -261,11 +261,11 @@
                             <!--end:col -->
                             <div class="col-xs-12 col-sm-9 col-md-12 col-lg-9">
                                 <h5><a href="{{route('restaurant.viewmenu',$featuredResturant->resturantId)}}">{{$featuredResturant->name}}</a></h5>
-                                @foreach($resItems as $resItemss)
-                                @if($featuredResturant->resturantId ==$resItemss->fkresturantId)
-                                <span>{{$resItemss->itemNames}}</span>
-                                @endif
-                                @endforeach
+                                {{--@foreach($resItems as $resItemss)--}}
+                                {{--@if($featuredResturant->resturantId ==$resItemss->fkresturantId)--}}
+                                {{--<span>{{$resItemss->itemNames}}</span>--}}
+                                {{--@endif--}}
+                                {{--@endforeach--}}
                                 <div class="bottom-part">
                                     <div class="cost"><i class="fa fa-check"></i> Min $ {{$featuredResturant->minOrder}}</div>
                                     {{--<div class="mins"><i class="fa fa-motorcycle"></i> 30 min</div>--}}

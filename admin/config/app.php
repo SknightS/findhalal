@@ -65,7 +65,9 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+//    'timezone' => 'UTC',
+    'timezone' => 'Europe/Berlin',
+
 
 
     /*
@@ -167,6 +169,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
 
         Spatie\Analytics\AnalyticsServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
 
 
@@ -222,6 +225,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
         'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
 
 

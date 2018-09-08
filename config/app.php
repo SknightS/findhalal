@@ -65,7 +65,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+//    'timezone' => 'UTC',
+    'timezone' => 'Europe/Berlin',
 
     /*
     |--------------------------------------------------------------------------
@@ -162,6 +163,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
+        /*pdf */
+        Barryvdh\DomPDF\ServiceProvider::class,
+
     ],
 
     /*
@@ -212,6 +216,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+
+        /* pdf */
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
 
 
