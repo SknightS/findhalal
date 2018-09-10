@@ -1,5 +1,11 @@
 <html>
-
+<head>
+    <style>
+        body{
+            font-size: 12px;
+        }
+    </style>
+</head>
 <body style="margin: 0px;">
 
 <table width="100%" style="margin-right: 0px;">
@@ -145,7 +151,7 @@
 </table>
 <br>
 
-<table width="100%" style="margin-top: 40px;">
+<table width="100%" style="margin-top: 20px;">
     {{--<tr height="50px"></tr>--}}
 
     <tr>
@@ -153,7 +159,7 @@
     </tr>
     {{--<tr height="20px"></tr>--}}
 
-    <tr style="margin-top:20px;">
+    <tr style="margin-top:5px;">
         <td width="10%">Mit freundlichen Grüßen,<br>
             Ihr Team von FindHalal.de </td>
     </tr>
