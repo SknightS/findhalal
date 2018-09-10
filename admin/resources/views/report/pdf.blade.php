@@ -36,7 +36,7 @@
     {{--<tr width="100%" height="20px"></tr>--}}
 
     <tr   width="100%" style="background-color: #DEEBF7;" >
-        <td style="padding: 10px"><b>Rechnung</b></td>
+        <td style="padding: 10px"><b>Verkaufsbericht</b></td>
     </tr>
     <tr width="100%">
         <table width="100%">
@@ -128,7 +128,7 @@
                 </tr>
 
             @endforeach
-            <tr>
+            <tr style="background-color: #DEEBF7">
                 <td colspan="4" align="center">Total</td>
                 <td>{{$total}}</td>
                 <td>{{$cash}}</td>
