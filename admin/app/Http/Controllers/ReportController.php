@@ -328,8 +328,8 @@ class ReportController extends Controller
             $report= $report->get();
 
             $pdf = PDF::loadView('report.pdf',compact('report','restaurant','fromDate','toDate'));
-            $pdf->save('public/pdf/tst.pdf'); // Saving Pdf To Server
-            return "tst.pdf";
+            $pdf->save('public/pdf/Verkaufsbericht.pdf'); // Saving Pdf To Server
+            return "Verkaufsbericht.pdf";
         }
 
 

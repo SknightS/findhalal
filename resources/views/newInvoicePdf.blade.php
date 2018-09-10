@@ -1,13 +1,28 @@
 <html>
+<style>
+
+    @font-face {
+        font-family: 'Roboto Condensed', sans-serif;
+        src: url('public/fonts/RobotoCondensed-Light.ttf');
+    }
+
+    /*<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">*/
+    body{
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 10px;
+    }
+
+
+</style>
 <body style="margin: 0px;">
 <table width="100%">
     <tr>
-        <td width="30%"align="left"><img src="{{url('public/images/findhalal.png')}}" height="100px" width="200px"></td>
+        <td width="30%"align="left"><img src="{{url('public/images/findhalal.png')}}" height="100px" width="150px"></td>
 
         <td >
             <table width="70%" align="right" >
-                <tr >
-                    <td width="40%" style="background-color: #DEEBF7;border-radius: 20px;padding: 10px"> <b>Unternehmenszentrale: </b><br>
+                <tr>
+                    <td style="background-color: #DEEBF7;border-radius: 20px;padding: 10px" width="40%"> <b>Unternehmenszentrale: </b><br>
                         Mainzer Landstraße 49, 60329 Frankfurt am Main, DE<br>
                         Phone: +4917686097107; Email: info@findhalal.de</td>
                 </tr>
@@ -15,7 +30,7 @@
         </td>
     </tr>
 </table>
-
+<br>
 <table width="100%">
     <tr>
         <td>Hallo <b>
@@ -28,9 +43,9 @@
         <td width="10%">vielen Dank fuer Ihre Bestellung bei <b>FindHalal.de.</b> Hier sind Ihre Bestellinformationen. </td>
     </tr>
 </table>
-
+<br>
 <table width="100%">
-    <tr width="100%" style="" >
+    <tr width="100%">
         <td style="background-color: #DEEBF7;padding: 10px;border-radius: 20px;"><b>Rechnung</b></td>
     </tr>
     <tr width="40%">
@@ -44,7 +59,7 @@
                 <tr>
                     <td>Lieferadresse:</td>
                     <td>|</td>
-                    <td>{{$orderInformation['addressDetails']}}, {{$orderInformation['zip']}} {{$orderInformation['city']}}, Germany</td>
+                    <td>{{$orderInformation['addressDetails']}},{{$orderInformation['zip']}}&nbsp;{{$orderInformation['city']}},Germany</td>
                 </tr>
                 <tr>
                     <td>Bestellnummer:</td>
@@ -69,11 +84,10 @@
     </tr>
 
 </table>
-
+<br>
 <table width="100%">
 
-
-    <tr   width="100%" style="" >
+    <tr   width="100%"  >
         <td style="background-color: #DEEBF7;padding: 10px;border-radius: 20px;"><b>Ihre Bestellung</b></td>
     </tr>
 
@@ -106,14 +120,14 @@
                     <td colspan="4">
 
                     </td>
-                    <td style="background-color: #DEEBF7">Insgesamt</td>
+                    <td style="background-color: #DEEBF7;text-align: right">Insgesamt</td>
                     <td style="text-align: center"><?php echo $total?></td>
                 </tr>
                 <tr>
                     <td colspan="4">
 
                     </td>
-                    <td style="background-color: #DEEBF7">Rabatt (5%)</td>
+                    <td style="background-color: #DEEBF7;text-align: right">Rabatt (5%)</td>
                     <?php $discount=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
                     <td style="text-align: center"> - <?php echo $discount=$orderInformation->resDelfee ?></td>
 
@@ -127,7 +141,7 @@
                     <td colspan="4">
 
                     </td>
-                    <td style="background-color: #DEEBF7">Versandkosten</td>
+                    <td style="background-color: #DEEBF7;text-align: right">Versandkosten</td>
 
                     <?php $delveryFee=0; if ($orderInformation->orderType=='Delivery' && $total >= $orderInformation->resMinOrder){?>
 
@@ -142,7 +156,7 @@
                     <td colspan="4">
 
                     </td>
-                    <td style="background-color: #DEEBF7">Gesamtbetrag</td>
+                    <td style="background-color: #DEEBF7;text-align: right">Gesamtbetrag</td>
                     <td style="text-align: center"> <?php echo $Total=(($total+$delveryFee-$discount))?></td>
                 </tr>
             @endforeach
@@ -154,11 +168,9 @@
 
 
 </table>
-
+<br>
 <table width="100%">
-
-
-    <tr   width="100%" style="" >
+    <tr width="100%"  >
         <td style="background-color: #DEEBF7;padding: 10px;border-radius: 20px;"><b>Gewählte Zahlungsart</b></td>
     </tr>
     <tr width="100%">
@@ -201,18 +213,20 @@
     </tr>
 
 </table>
-
+<br>
 <table width="100%">
     <tr>
         <td>Für Rückfragen stehen wir Ihnen jederzeit gerne zur Verfügung. Sie erreichen uns wie folgt. </td>
     </tr>
-    <br>
+</table>
+<br>
+<table>
     <tr>
-        <td width="10%">Mit freundlichen Grüßen,<br>
+        <td  width="10%">Mit freundlichen Grüßen,<br>
             Ihr Team von FindHalal.de </td>
     </tr>
-
 </table>
+<br>
 <table width="100%">
     <tr>
         <td width="10%"><b>FindHalal</b> <br>

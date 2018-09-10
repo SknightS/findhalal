@@ -1,11 +1,23 @@
 <html>
+<<<<<<< HEAD
 <head>
     <style>
-        body{
-            font-size: 12px;
+
+        @font-face {
+            font-family: 'Roboto Condensed', sans-serif;
+            src: url('public/fonts/RobotoCondensed-Light.ttf');
         }
+
+        /*<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">*/
+        body{
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 10px;
+        }
+
+
     </style>
 </head>
+
 <body style="margin: 0px;">
 
 <table width="100%" style="margin-right: 0px;">

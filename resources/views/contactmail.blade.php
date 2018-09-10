@@ -1,20 +1,27 @@
 <table border="1">
     <tr>
-    <td>First Name</td>
-    <td>Last Name</td>
-    <td>Email</td>
-    <td>Phone</td>
-    <td>Subject</td>
-    <td>Message</td>
+        <td>First Name</td>
+        <td>{{$contactInfo['fname']}}</td>
     </tr>
-@foreach($contactInfo as $ci)
     <tr>
-    <td>{{$ci['fname']}}</td>
-    <td>{{$ci['lname']}}</td>
-    <td>{{$ci['email']}}</td>
-    <td>{{$ci['phone']}}</td>
-    <td>{{$ci['subject']}}</td>
-    <td>{{$ci['message']}}</td>
+        <td>Last Name</td>
+        <td>{{$contactInfo['lname']}}</td>
     </tr>
-    @endforeach
+    <tr>
+        <td>Email</td>
+        <td>{{$contactInfo['email']}}</td>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>{{$contactInfo['phone']}}</td>
+    </tr>
+    <tr>
+        <td>Subject</td>
+        <td>{{$contactInfo['subject']}}</td>
+    </tr>
+    <tr>
+        <td>Message</td>
+        <td>{{$contactInfo['message']}}</td>
+    </tr>
+
 </table>
