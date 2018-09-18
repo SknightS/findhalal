@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ZipCode;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
@@ -29,10 +30,10 @@ class RestaurantController extends Controller
             'status' => 'required|max:10',
             'details' => 'required|max:1100',
             'minOrder' => 'required|max:11',
-            'delfee'=>'required|max:20',
+//            'delfee'=>'required|max:20',
             'address'=>'required|max:1000',
             'city'=>'required|max:45',
-            'zip'=>'required|max:45',
+//            'zip'=>'required|max:45',
             'country'=>'required|max:45',
             'featureRes'=>'nullable|max:1',
 
@@ -43,11 +44,11 @@ class RestaurantController extends Controller
         $restaurant->details=$r->details;
         $restaurant->minOrder=$r->minOrder;
 //        $restaurant->image=$r->image;
-        $restaurant->delfee=$r->delfee;
+//        $restaurant->delfee=$r->delfee;
         $restaurant->status=$r->status;
         $restaurant->address=$r->address;
         $restaurant->city=$r->city;
-        $restaurant->zip=$r->zip;
+//        $restaurant->zip=$r->zip;
         $restaurant->country=$r->country;
         $restaurant->email=$r->email;
         $restaurant->phoneNumber=$r->phone;
@@ -59,6 +60,16 @@ class RestaurantController extends Controller
         }
 
         $restaurant->save();
+
+        for($i=0;$i<count($r->zip);$i++){
+            $zip=new ZipCode();
+            $zip->zip=$r->zip[$i];
+            $zip->delfee=$r->deliveryFee[$i];
+            $zip->fkresturantId=$restaurant->resturantId;
+            $zip->save();
+        }
+
+
 
         if($r->hasFile('image')){
             $img = $r->file('image');
@@ -174,7 +185,7 @@ class RestaurantController extends Controller
         $friday=Resturanttime::where('fkresturantId',$id)
             ->where('day','Friday')->first();
 
-
+        $zip=ZipCode::where('fkresturantId',$id)->get();
 
 
         return view('restaurant.edit')
@@ -185,7 +196,8 @@ class RestaurantController extends Controller
             ->with('tuesday',$tuesday)
             ->with('wednesday',$wednesday)
             ->with('thursday',$thursday)
-            ->with('friday',$friday);
+            ->with('friday',$friday)
+            ->with('zip',$zip);
     }
 
     public function update(Request $r){
@@ -193,11 +205,11 @@ class RestaurantController extends Controller
         $restaurant->name=$r->name;
         $restaurant->details=$r->details;
         $restaurant->minOrder=$r->minOrder;
-        $restaurant->delfee=$r->delfee;
+//        $restaurant->delfee=$r->delfee;
         $restaurant->status=$r->status;
         $restaurant->address=$r->address;
         $restaurant->city=$r->city;
-        $restaurant->zip=$r->zip;
+//        $restaurant->zip=$r->zip;
         $restaurant->country=$r->country;
         $restaurant->email=$r->email;
         $restaurant->phoneNumber=$r->phone;
@@ -208,6 +220,19 @@ class RestaurantController extends Controller
         else{
             $restaurant->featureResturant="0";
         }
+
+        ZipCode::where('fkresturantId',$r->id)
+            ->delete();
+
+
+        for($i=0;$i<count($r->zip);$i++){
+            $zip=new ZipCode();
+            $zip->zip=$r->zip[$i];
+            $zip->delfee=$r->deliveryFee[$i];
+            $zip->fkresturantId=$restaurant->resturantId;
+            $zip->save();
+        }
+
 
         //Check If the form has Image File
         if($r->hasFile('image')){

@@ -68,17 +68,17 @@
                         </div>
 
 
-                        <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Delivery Fee(€)</label>
-                            <div class="col-sm-5">
-                                <input type="number" min="0" class="form-control" id="field-1" name="delfee" value="{{$restaurant->delfee}}" placeholder="insert fee">
-                                @if ($errors->has('delfee'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('delfee') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        {{--<div class="form-group">--}}
+                            {{--<label for="field-1" class="col-sm-3 control-label">Delivery Fee(€)</label>--}}
+                            {{--<div class="col-sm-5">--}}
+                                {{--<input type="number" min="0" class="form-control" id="field-1" name="delfee" value="{{$restaurant->delfee}}" placeholder="insert fee">--}}
+                                {{--@if ($errors->has('delfee'))--}}
+                                    {{--<span class="invalid-feedback">--}}
+                                        {{--<strong>{{ $errors->first('delfee') }}</strong>--}}
+                                    {{--</span>--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
 
                         <div class="form-group">
@@ -121,16 +121,37 @@
                         </div>
 
 
+                        {{--<div class="form-group">--}}
+                            {{--<label for="field-1" class="col-sm-3 control-label">Zip</label>--}}
+                            {{--<div class="col-sm-5">--}}
+                                {{--<input type="text" class="form-control" id="zip" value="{{$restaurant->zip}}" name="zip" placeholder="Enter Restaurant Name">--}}
+                                {{--@if ($errors->has('zip'))--}}
+                                    {{--<span class="invalid-feedback">--}}
+                                        {{--<strong>{{ $errors->first('zip') }}</strong>--}}
+                                    {{--</span>--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Zip</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="zip" value="{{$restaurant->zip}}" name="zip" placeholder="Enter Restaurant Name">
-                                @if ($errors->has('zip'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('zip') }}</strong>
-                                    </span>
-                                @endif
+                            <div class="col-sm-5" id="zipDiv">
+                                @php($temp=0)
+                               @foreach($zip as $zipcode)
+                                   <div id="TextBoxDiv{{++$temp}}">
+                                <div class="row">
+                                    <input type="text" class="col-sm-5 zip" name="zip[]" value="{{$zipcode->zip}}" placeholder="enter your zip code" required>
+                                    <input type="number" class="col-sm-5" name="deliveryFee[]" value="{{$zipcode->delfee}}" placeholder="enter delivery fee" required>
+                                </div>
+                                   </div>
+
+                                @endforeach
+
+
+
                             </div>
+                            <button type="button" class="btn btn-success" onclick="addMoreZip()">add mode</button>
+                            <button type="button" class="btn btn-danger" onclick="removeZip()">remove</button>
                         </div>
 
 
@@ -354,6 +375,36 @@
     <script src="{{url('assets/js/bootstrap-timepicker.min.js')}}"></script>
 
     <script>
+        var counter ="{{count($zip)-1}}";
+        function addMoreZip(){
+            counter++;
+            var newTextBoxDiv = $(document.createElement('div'))
+                .attr("id", 'TextBoxDiv' + counter);
+
+
+            newTextBoxDiv.after().html(
+                '<br><div class="row">' +
+                '<input type="text" class="col-sm-5 zip" name="zip[]" placeholder="enter your zip code" required> ' +
+                '<input type="number" class="col-sm-5" name="deliveryFee[]" placeholder="enter delivery fee" required> ' +
+                '</div>');
+            newTextBoxDiv.appendTo("#zipDiv");
+//            console.log(counter);
+
+        }
+
+        function removeZip() {
+
+            $("#TextBoxDiv" + counter).remove();
+            if(counter>0){
+                counter--;
+            }
+
+//            console.log(counter);
+        }
+
+
+
+
         $("#mainPic").change(function(){
             mainPic(this);
         });
@@ -604,7 +655,7 @@
 
             ];
 
-            $( "#zip" ).autocomplete({
+            $( ".zip" ).autocomplete({
                 source: availableZip
             });
             $( "#city" ).autocomplete({
