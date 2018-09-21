@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Name</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="field-1" value="{{old('name')}}" name="name" placeholder="Enter Restaurant Name">
+                                <input type="text" class="form-control" id="field-1" value="{{old('name')}}" name="name" placeholder="Enter Restaurant Name" required>
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Min Order(€)</label>
                             <div class="col-sm-5">
-                                <input type="number" min="0" class="form-control"  value="{{old('minOrder')}}" name="minOrder" placeholder="min order">
+                                <input type="number" min="0" class="form-control"  value="{{old('minOrder')}}" name="minOrder" placeholder="min order" required>
                                 @if ($errors->has('minOrder'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('minOrder') }}</strong>
@@ -67,17 +67,17 @@
                         </div>
 
 
-                        <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Delivery Fee(€)</label>
-                            <div class="col-sm-5">
-                                <input type="number" min="0" class="form-control" value="{{old('delfee')}}" name="delfee" placeholder="insert fee">
-                                @if ($errors->has('delfee'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('delfee') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        {{--<div class="form-group">--}}
+                            {{--<label for="field-1" class="col-sm-3 control-label">Delivery Fee(€)</label>--}}
+                            {{--<div class="col-sm-5">--}}
+                                {{--<input type="number" min="0" class="form-control" value="{{old('delfee')}}" name="delfee" placeholder="insert fee">--}}
+                                {{--@if ($errors->has('delfee'))--}}
+                                    {{--<span class="invalid-feedback">--}}
+                                        {{--<strong>{{ $errors->first('delfee') }}</strong>--}}
+                                    {{--</span>--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
 
                         <div class="form-group">
@@ -96,7 +96,7 @@
                         <div class="form-group">
                             <label for="field-ta" class="col-sm-3 control-label">Address</label>
                             <div class="col-sm-5">
-                                <textarea class="form-control" id="field-ta" name="address" placeholder="Textarea">{{old('address')}}</textarea>
+                                <textarea class="form-control" id="field-ta" name="address" placeholder="Textarea" required>{{old('address')}}</textarea>
                                 @if ($errors->has('address'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -121,15 +121,26 @@
 
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Zip</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="zip" value="{{old('zip')}}" name="zip" placeholder="enter your zip code">
-                                @if ($errors->has('zip'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('zip') }}</strong>
-                                    </span>
-                                @endif
+                            <div class="col-sm-5" id="zipDiv">
+                                {{--<input type="text" class="form-control" id="zip" value="{{old('zip')}}" name="zip" placeholder="enter your zip code">--}}
+                                {{--@if ($errors->has('zip'))--}}
+                                    {{--<span class="invalid-feedback">--}}
+                                        {{--<strong>{{ $errors->first('zip') }}</strong>--}}
+                                    {{--</span>--}}
+                                {{--@endif--}}
+                                <div class="row">
+                                    <input type="text" class="col-sm-5 zip" name="zip[]" placeholder="enter your zip code" required>
+                                    <input type="number" class="col-sm-5" name="deliveryFee[]" placeholder="enter delivery fee" required>
+                                </div>
+
+
+
                             </div>
+                            <button type="button" class="btn btn-success" onclick="addMoreZip()">add mode</button>
+                            <button type="button" class="btn btn-danger" onclick="removeZip()">remove</button>
                         </div>
+
+
 
 
 
@@ -353,7 +364,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
 
-   function mainPic(input) {
+    var counter =1;
+    function addMoreZip(){
+        counter++;
+        var newTextBoxDiv = $(document.createElement('div'))
+            .attr("id", 'TextBoxDiv' + counter);
+
+
+        newTextBoxDiv.after().html(
+        '<br><div class="row">' +
+        '<input type="text" class="col-sm-5 zip" name="zip[]" placeholder="enter your zip code" required> ' +
+        '<input type="number" class="col-sm-5" name="deliveryFee[]" placeholder="enter delivery fee" required> ' +
+        '</div>');
+        newTextBoxDiv.appendTo("#zipDiv");
+//        console.log(counter);
+
+    }
+
+    function removeZip() {
+
+        $("#TextBoxDiv" + counter).remove();
+        if(counter>0){
+            counter--;
+        }
+
+//        console.log(counter);
+    }
+
+
+
+    function mainPic(input) {
            if (input.files && input.files[0]) {
                var reader = new FileReader();
 
@@ -367,6 +407,7 @@
 
 
 $( function() {
+
     var availableCity=[
         "Altstadt",
         "Altstadt",
@@ -600,12 +641,15 @@ $( function() {
 
     ];
 
-    $( "#zip" ).autocomplete({
+    $( ".zip" ).autocomplete({
         source: availableZip
     });
     $( "#city" ).autocomplete({
         source: availableCity
     });
+
+
+
 } );
 
 
