@@ -54,7 +54,7 @@
                                     </div>
                                     <!-- end:Logo -->
                                     <div class="entry-dscr">
-                                        <h5><a href="{{ route('restaurant.viewmenu', $res->resturantId) }}">{{$res->name}}</a></h5> <span>{{$res->details}} <a href="#">...</a></span>
+                                        <h5><a href="{{ route('restaurant.viewmenu', [$res->resturantId, $res->zipcodeZip]) }}">{{$res->name}}</a></h5> <span>{{$res->details}} <a href="#">...</a></span>
                                         <ul class="list-inline">
                                             <li class="list-inline-item"><i class="fa fa-check"></i> Min € {{$res->minOrder}}</li>
                                            {{$res->address}}
@@ -66,7 +66,7 @@
                                     <div class="right-content bg-white">
                                         <div class="right-review">
                                             <div class="rating-block"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
-                                            <p> 245 Reviews</p> <a href="{{ route('restaurant.viewmenu', $res->resturantId) }}" class="btn theme-btn-dash">View Menu</a> </div>
+                                            <p> 245 Reviews</p> <a href="{{ route('restaurant.viewmenu', [$res->resturantId , $res->zipcodeZip]) }}" class="btn theme-btn-dash">View Menu</a> </div>
                                     </div>
                                     <!-- end:right info -->
                                 </div>

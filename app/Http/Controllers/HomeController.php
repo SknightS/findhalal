@@ -19,7 +19,9 @@ class HomeController extends Controller
     //
 
     public function index(){
-        $featuredRes = Resturant::select('resturantId','name','minOrder','image')
+        $featuredRes = Resturant::select('resturantId','name','minOrder','image', 'zipcode.zip as zipcodeZip', 'zipcode.delfee as zipcodeDelfee')
+            ->leftjoin('zipcode','fkresturantId','resturantId')
+            ->leftjoin('city','fkcityId','cityId')
             ->where('featureResturant', "1")
             ->where('status',Status[0])
             ->get();
@@ -52,7 +54,13 @@ class HomeController extends Controller
         foreach ($purchase as $p){
             array_push($resID,$p->restaurantId);
         }
-        $topRestaurants=Resturant::select('resturantId','name','image','address')->whereIn('resturantId',$resID)->get();
+
+
+        $topRestaurants=Resturant::select('resturantId','name','image','address','zipcode.zip as zipcodeZip', 'zipcode.delfee as zipcodeDelfee')
+            ->leftjoin('zipcode','fkresturantId','resturantId')
+            ->leftjoin('city','fkcityId','cityId')
+            ->whereIn('resturantId',$resID)->get();
+
 
         $resRating=Rating::select('restaurantId',DB::raw('COUNT(ratingId) as totalRating'),DB::raw('AVG(rating) as avgRating'))->groupBy('restaurantId')->get();
 

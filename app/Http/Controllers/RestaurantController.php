@@ -21,10 +21,13 @@ use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
 {
     public function Restaurants(Request $r){
-        $searchresult = Resturant::where('status','Active')
+        $searchresult = Resturant::select('*', 'zipcode.zip as zipcodeZip', 'zipcode.delfee as zipcodeDelfee')
+         ->leftjoin('zipcode','fkresturantId','resturantId')
+            ->leftjoin('city','fkcityId','cityId')
+        ->where('status','Active')
             ->where(function($q) use ($r){
-                $q->orWhere('zip', $r->searchbox)
-                    ->orWhere('city', $r->searchbox);
+                $q->orWhere('zipcode.zip', $r->searchbox)
+                    ->orWhere('cityName', $r->searchbox);
             })
             ->get();
 
@@ -32,7 +35,7 @@ class RestaurantController extends Controller
 
             ->with('resturant',$searchresult);
     }
-    public function ViewMenu($resid){
+    public function ViewMenu($resid, $zipcode){
         $restaurant = Resturant::select('*')
             ->where('resturantId',$resid)
             ->get();
@@ -72,6 +75,7 @@ class RestaurantController extends Controller
 
             ->with('cartitem', $cartCollection);
     }
+
     public function getItem(Request $r){
         $resid = $r->resid;
         $catagory = Category::select('*')
