@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
 use App\ZipCode;
 use Illuminate\Http\Request;
 use Session;
@@ -19,8 +20,8 @@ class RestaurantController extends Controller
         $this->middleware('auth');
     }
     public function add(){
-
-        return view('restaurant.add');
+        $cities=City::get();
+        return view('restaurant.add',compact('cities'));
     }
 
 
@@ -65,6 +66,7 @@ class RestaurantController extends Controller
             $zip=new ZipCode();
             $zip->zip=$r->zip[$i];
             $zip->delfee=$r->deliveryFee[$i];
+            $zip->fkcityId=$r->zipCity[$i];
             $zip->fkresturantId=$restaurant->resturantId;
             $zip->save();
         }
@@ -186,6 +188,7 @@ class RestaurantController extends Controller
             ->where('day','Friday')->first();
 
         $zip=ZipCode::where('fkresturantId',$id)->get();
+        $cities=City::get();
 
 
         return view('restaurant.edit')
@@ -197,7 +200,8 @@ class RestaurantController extends Controller
             ->with('wednesday',$wednesday)
             ->with('thursday',$thursday)
             ->with('friday',$friday)
-            ->with('zip',$zip);
+            ->with('zip',$zip)
+            ->with('cities',$cities);
     }
 
     public function update(Request $r){
@@ -229,6 +233,7 @@ class RestaurantController extends Controller
             $zip=new ZipCode();
             $zip->zip=$r->zip[$i];
             $zip->delfee=$r->deliveryFee[$i];
+            $zip->fkcityId=$r->zipCity[$i];
             $zip->fkresturantId=$restaurant->resturantId;
             $zip->save();
         }

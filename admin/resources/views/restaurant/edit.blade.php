@@ -108,17 +108,17 @@
                         </div>
 
 
-                        <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">City</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="city" name="city" value="{{$restaurant->city}}" placeholder="Enter Restaurant Name">
-                                @if ($errors->has('city'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('city') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        {{--<div class="form-group">--}}
+                            {{--<label for="field-1" class="col-sm-3 control-label">City</label>--}}
+                            {{--<div class="col-sm-5">--}}
+                                {{--<input type="text" class="form-control" id="city" name="city" value="{{$restaurant->city}}" placeholder="Enter Restaurant Name">--}}
+                                {{--@if ($errors->has('city'))--}}
+                                    {{--<span class="invalid-feedback">--}}
+                                        {{--<strong>{{ $errors->first('city') }}</strong>--}}
+                                    {{--</span>--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
 
                         {{--<div class="form-group">--}}
@@ -139,10 +139,28 @@
                                 @php($temp=0)
                                @foreach($zip as $zipcode)
                                    <div id="TextBoxDiv{{++$temp}}">
-                                <div class="row">
-                                    <input type="text" class="col-sm-5 zip" name="zip[]" value="{{$zipcode->zip}}" placeholder="enter your zip code" required>
-                                    <input type="number" class="col-sm-5" name="deliveryFee[]" value="{{$zipcode->delfee}}" placeholder="enter delivery fee" required>
-                                </div>
+                                {{--<div class="row">--}}
+                                    {{--<input type="text" class="col-sm-5 zip" name="zip[]" value="{{$zipcode->zip}}" placeholder="enter your zip code" required>--}}
+                                    {{--<input type="number" class="col-sm-5" name="deliveryFee[]" value="{{$zipcode->delfee}}" placeholder="enter delivery fee" required>--}}
+                                {{--</div>--}}
+                                       <div class="form-group">
+                                           <div class="col-sm-3"><input type="text" class=" form-control zip  t" value="{{$zipcode->zip}}" name="zip[]" placeholder="enter your zip code" required>
+                                           </div>
+                                           <div class="col-sm-3"><input type="number" class="form-control t" name="deliveryFee[]" value="{{$zipcode->delfee}}" placeholder="enter delivery fee" required>
+                                           </div>
+                                           <div class="col-sm-6">
+                                               <select class="t form-control " name="zipCity[]" required>
+                                                   <option value="">Select City</option>
+                                                   @foreach($cities as $city)
+                                                       <option value="{{$city->cityId}}" @if($city->cityId == $zipcode->fkcityId) selected @endif>{{$city->cityName}}</option>
+
+                                                   @endforeach
+                                               </select></div>
+
+
+                                       </div>
+
+
                                    </div>
 
                                 @endforeach
@@ -174,7 +192,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">email</label>
                             <div class="col-sm-5">
-                                <input type="email" class="form-control" id="zip" value="{{$restaurant->email}}" name="email" placeholder="enter email">
+                                <input type="email" class="form-control"  value="{{$restaurant->email}}" name="email" placeholder="enter email">
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -375,7 +393,15 @@
     <script src="{{url('assets/js/bootstrap-timepicker.min.js')}}"></script>
 
     <script>
-        var counter ="{{count($zip)-1}}";
+        var counter ="{{count($zip)}}";
+        var countries=[];
+        $(function () {
+            @foreach($cities as $city)
+                countries.push('<option value="{{$city->cityId}}">{{$city->cityName}}</option>');
+            @endforeach
+
+            
+        });
         function addMoreZip(){
             counter++;
             var newTextBoxDiv = $(document.createElement('div'))
@@ -383,19 +409,26 @@
 
 
             newTextBoxDiv.after().html(
-                '<br><div class="row">' +
-                '<input type="text" class="col-sm-5 zip" name="zip[]" placeholder="enter your zip code" required> ' +
-                '<input type="number" class="col-sm-5" name="deliveryFee[]" placeholder="enter delivery fee" required> ' +
+                '<div class="form-group"> ' +
+                '<div class="col-sm-3"><input type="text" class=" form-control zip  t" name="zip[]" placeholder="enter your zip code" required> ' +
+                '</div> ' +
+                '<div class="col-sm-3"><input type="number" class="form-control t" name="deliveryFee[]" placeholder="enter delivery fee" required> ' +
+                '</div> ' +
+                '<div class="col-sm-6"><select class="t form-control " name="zipCity[]" required> ' +
+                '<option value="">Select City</option>'+countries+
+                '</select> ' +
+                '</div> ' +
                 '</div>');
             newTextBoxDiv.appendTo("#zipDiv");
-//            console.log(counter);
+
 
         }
 
         function removeZip() {
 
-            $("#TextBoxDiv" + counter).remove();
-            if(counter>0){
+
+            if(counter>1){
+                $("#TextBoxDiv" + counter).remove();
                 counter--;
             }
 

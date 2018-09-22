@@ -2,6 +2,12 @@
 
 @section('content')
 
+    <style>
+        t{
+            width: ;!important;
+        }
+    </style>
+
 
 
     <div class="row">
@@ -106,39 +112,52 @@
                         </div>
 
 
-                        <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">City</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="city" name="city" value="{{old('city')}}" placeholder="enter your city">
-                                @if ($errors->has('city'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('city') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        {{--<div class="form-group">--}}
+                            {{--<label for="field-1" class="col-sm-3 control-label">City</label>--}}
+                            {{--<div class="col-sm-5">--}}
+                                {{--<input type="text" class="form-control" id="city" name="city" value="{{old('city')}}" placeholder="enter your city">--}}
+                                {{--@if ($errors->has('city'))--}}
+                                    {{--<span class="invalid-feedback">--}}
+                                        {{--<strong>{{ $errors->first('city') }}</strong>--}}
+                                    {{--</span>--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
 
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Zip</label>
-                            <div class="col-sm-5" id="zipDiv">
-                                {{--<input type="text" class="form-control" id="zip" value="{{old('zip')}}" name="zip" placeholder="enter your zip code">--}}
-                                {{--@if ($errors->has('zip'))--}}
-                                    {{--<span class="invalid-feedback">--}}
-                                        {{--<strong>{{ $errors->first('zip') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                                <div class="row">
-                                    <input type="text" class="col-sm-5 zip" name="zip[]" placeholder="enter your zip code" required>
-                                    <input type="number" class="col-sm-5" name="deliveryFee[]" placeholder="enter delivery fee" required>
+                            <div class="col-sm-9" id="zipDiv">
+
+                                <div class="form-group">
+                                    <div class="col-sm-3"><input type="text" class=" form-control zip  t" name="zip[]" placeholder="enter your zip code" required>
+                                    </div>
+                                    <div class="col-sm-3"><input type="number" class="form-control t" name="deliveryFee[]" placeholder="enter delivery fee" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select class="t form-control " name="zipCity[]" required>
+                                            <option value="">Select City</option>
+                                            @foreach($cities as $city)
+                                                <option value="{{$city->cityId}}">{{$city->cityName}}</option>
+
+                                            @endforeach
+                                        </select></div>
+
+
                                 </div>
 
 
 
                             </div>
-                            <button type="button" class="btn btn-success" onclick="addMoreZip()">add mode</button>
-                            <button type="button" class="btn btn-danger" onclick="removeZip()">remove</button>
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-success" onclick="addMoreZip()">add mode</button>
+                                <button type="button" class="btn btn-danger" onclick="removeZip()">remove</button>
+
+
+                            </div>
+
                         </div>
+
 
 
 
@@ -163,7 +182,7 @@
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">email</label>
                             <div class="col-sm-5">
-                                <input type="email" class="form-control" id="zip" value="{{old('email')}}" name="email" placeholder="enter email">
+                                <input type="email" class="form-control"  value="{{old('email')}}" name="email" placeholder="enter email">
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -365,6 +384,12 @@
 <script>
 
     var counter =1;
+    var countries=[];
+    $(function () {
+        @foreach($cities as $city)
+            countries.push('<option value="{{$city->cityId}}">{{$city->cityName}}</option>');
+        @endforeach
+    });
     function addMoreZip(){
         counter++;
         var newTextBoxDiv = $(document.createElement('div'))
@@ -372,9 +397,15 @@
 
 
         newTextBoxDiv.after().html(
-        '<br><div class="row">' +
-        '<input type="text" class="col-sm-5 zip" name="zip[]" placeholder="enter your zip code" required> ' +
-        '<input type="number" class="col-sm-5" name="deliveryFee[]" placeholder="enter delivery fee" required> ' +
+        '<div class="form-group"> ' +
+        '<div class="col-sm-3"><input type="text" class=" form-control zip  t" name="zip[]" placeholder="enter your zip code" required> ' +
+        '</div> ' +
+        '<div class="col-sm-3"><input type="number" class="form-control t" name="deliveryFee[]" placeholder="enter delivery fee" required> ' +
+        '</div> ' +
+        '<div class="col-sm-6"><select class="t form-control " name="zipCity[]" required> ' +
+        '<option value="">Select City</option>'+countries+
+        '</select> ' +
+        '</div> ' +
         '</div>');
         newTextBoxDiv.appendTo("#zipDiv");
 //        console.log(counter);
