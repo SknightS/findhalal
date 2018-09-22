@@ -234,46 +234,7 @@
                     document.getElementById("showitem").innerHTML = data;
                 }
             });
-            {{--$('#checkOut').click(function() {--}}
 
-
-                {{--$.ajax({--}}
-                    {{--type : 'post' ,--}}
-                    {{--url : '{{route('restaurant.checkOrderType')}}',--}}
-                    {{--data : {_token: CSRF_TOKEN,} ,--}}
-                    {{--success : function(data){--}}
-
-                        {{--if (data== '1'){--}}
-
-                            {{--location.href='{{route('restaurant.checkout')}}';--}}
-
-                        {{--}else {--}}
-
-                            {{--$.alert({--}}
-                                {{--title: 'Alert!',--}}
-                                {{--type: 'Red',--}}
-                                {{--content: 'Order Type Must be Delivery or Takeout',--}}
-                                {{--buttons: {--}}
-                                    {{--tryAgain: {--}}
-                                        {{--text: 'Ok',--}}
-                                        {{--btnClass: 'btn-red',--}}
-                                        {{--action: function () {--}}
-
-                                        {{--}--}}
-                                    {{--}--}}
-
-                                {{--}--}}
-                            {{--});--}}
-                            {{--$('#cart_table').load(document.URL +  ' #cart_table');--}}
-
-                        {{--}--}}
-
-
-
-                    {{--}--}}
-                {{--});--}}
-
-//            });
 
             $('#mydiv li').click(function() {
                 //Get the id of list items
@@ -298,13 +259,15 @@
     <script>
         function addcart(x){
 
+            var zipcode = '<?php echo $zipcode ?>';
+
            var id = $(x).data('panel-id');
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             // alert(id);
             $.ajax({
                 type : 'post' ,
                 url : '{{route('restaurant.addCart')}}',
-                data : {_token: CSRF_TOKEN, 'itemid':id} ,
+                data : {_token: CSRF_TOKEN, 'itemid':id, 'zipcode':zipcode} ,
                 success : function(data){
 
                     if(data=='mismatch'){

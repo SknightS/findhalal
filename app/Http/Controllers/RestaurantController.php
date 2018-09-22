@@ -72,7 +72,7 @@ class RestaurantController extends Controller
             ->with('itemsize', $itemsize)
             ->with('restaurantRating', $resRating)
             ->with('restaurantStatus', $restaurantStatus)
-
+            ->with('zipcode', $zipcode)
             ->with('cartitem', $cartCollection);
     }
 
@@ -120,12 +120,16 @@ class RestaurantController extends Controller
     public function addCart(Request $r){
 
         $itemSizeId =Itemsize::findOrFail($r->itemid);
+        $zipcode = $r->zipcode;
 
-        $item =  Item::select('itemId','itemName','itemsizeName', 'price','itemsizeId', 'delfee', 'resturantId')
+        $item =  Item::select('itemId','itemName','itemsizeName', 'price','itemsizeId', 'zipcode.delfee as delfee', 'resturantId')
             ->leftJoin('itemsize','item.itemid','=','itemsize.item_itemId')
             ->leftJoin('resturant','resturant.resturantId','=','item.fkresturantId')
+            ->leftjoin('zipcode','zipcode.fkresturantId','resturant.resturantId')
+            ->leftjoin('city','zipcode.fkcityId','city.cityId')
             ->where('itemsize.itemsizeId', $itemSizeId->itemsizeId)
             ->where('item.itemid', $itemSizeId->item_itemId)
+            ->where('zipcode.zip', $zipcode)
             ->limit(1)
             ->get();
 
