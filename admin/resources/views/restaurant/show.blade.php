@@ -18,11 +18,12 @@
                 <th >name</th>
                 <th >details</th>
                 <th >address</th>
-                <th >city</th>
-                <th >zip</th>
+                <th >OrderInfo</th>
+                {{--<th >city</th>--}}
+                {{--<th >zip</th>--}}
                 <th >country</th>
                 <th >min order</th>
-                <th >delivery fee</th>
+                {{--<th >delivery fee</th>--}}
                 <th >status</th>
                 @if(Auth::user()->fkuserTypeId == User[0])
                 <th >action</th>
@@ -74,11 +75,12 @@
         { data: 'name',name:'name' },
         { data: 'details', name: 'details' },
         { data: 'address', name: 'address' },
-        { data: 'city', name: 'city' },
-        { data: 'zip', name: 'zip' },
+        { data: 'action', name: 'action' },
+//        { data: 'city', name: 'city' },
+//        { data: 'zip', name: 'zip' },
         { data: 'country', name: 'country' },
         { data: 'minOrder', name: 'minOrder' },
-        { data: 'delfee', name: 'delfee' },
+//        { data: 'delfee', name: 'delfee' },
         { data: 'status', name: 'status' },
                 @if(Auth::user()->fkuserTypeId == User[0])
             { "data": function(data){

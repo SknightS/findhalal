@@ -151,13 +151,49 @@ class RestaurantController extends Controller
     }
 
     public function get(Request $r){
-        $resturants=Resturant::select('resturantId','name','details','address','city','zip','country','minOrder','delfee','status')
+        $resturants=Resturant::select('resturant.resturantId','resturant.name','resturant.details','resturant.address','resturant.country','resturant.minOrder','resturant.status')
             ->get();
 
         $datatables = DataTables::of($resturants);
 
-        return $datatables->make(true);
+        return $datatables->addColumn('action', function ($resturant) {
 
+
+            $orderItems=ZipCode::select('zipcode.zipcodeId','zipcode.zip','zipcode.delfee','city.cityName')
+                ->where('zipcode.fkresturantId',$resturant->resturantId)
+                ->leftJoin('city', 'city.cityId', '=', 'zipcode.fkcityId')
+                ->get();
+
+            $test='<div class="table table-responsive">';
+            $test.='<table class="table table-striped table-bordered table-hover valign-middle">';
+            $test.='<thead>';
+            $test.='<tr>';
+            $test.='<th class="center">Zip</th>';
+            $test.='<th class="center">Delivery Fee</th>';
+            $test.='<th class="center">CityName</th>';
+
+            $test.='</tr>';
+            $test.='</thead>';
+            $test.='<tbody>';
+
+            foreach ($orderItems as $orderItem) {
+                $test .= '<tr>';
+                $test .= '<td class="center">' . $orderItem->zip . '</td>';
+                $test .= '<td class="center">' . $orderItem->delfee . '</td>';
+                $test .= '<td class="center">' . $orderItem->cityName . '</td>';
+
+                $test .= '</tr>';
+
+            }
+
+            $test.='</tbody>';
+            $test.='</table>';
+            $test.='</div>';
+
+            return $test;
+
+
+        })->make(true);
     }
 
     public function edit($id){
