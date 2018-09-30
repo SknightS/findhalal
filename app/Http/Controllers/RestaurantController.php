@@ -8,6 +8,7 @@ use App\Order;
 use App\Orderitems;
 use App\Resturanttime;
 use App\Shipaddress;
+use App\ZipCode;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -235,11 +236,26 @@ class RestaurantController extends Controller
             $resid =   $c->attributes->resid;
             if (Session::get('ordertype') == "Delivery") {
                 $delfee = $c->attributes->delfee;
+
+                //check customer zip to resturant zip
+                $zipCheck=ZipCode::where('fkresturantId',$resid)
+                    ->where('zip',$r->zip)
+                    ->count();
+                if($zipCheck==0 && Session::get('ordertype') == "Delivery"){
+                    $code= 'Zipcode Error';
+                    $msg='Sorry we dont delivery to your zipcode';
+                    $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                    return $data;
+                }
+
             }else{
                 $delfee = 0;
             }
             break;
         }
+
+
+
 
         $restaurantInfo=Resturant::where('resturantId',$resid)->get(array('minOrder'));
         $totalPrice=Cart::getTotal();

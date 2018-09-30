@@ -252,7 +252,6 @@
             // Insert the token ID into the form so it gets submitted to the server
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-
             var rating=$('#rating-input').val();
             var firstname = $('#firstname').val();
             var lastname = $('#lastname').val();
