@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Purchase;
 use App\Rating;
-
+use DB;
 
 
 class HomeController extends Controller
@@ -59,7 +59,8 @@ class HomeController extends Controller
         $topRestaurants=Resturant::select('resturantId','name','image','address','zipcode.zip as zipcodeZip', 'zipcode.delfee as zipcodeDelfee')
             ->leftjoin('zipcode','fkresturantId','resturantId')
             ->leftjoin('city','fkcityId','cityId')
-            ->whereIn('resturantId',$resID)->get();
+            ->whereIn('resturantId',$resID)
+            ->get();
 
 
         $resRating=Rating::select('restaurantId',DB::raw('COUNT(ratingId) as totalRating'),DB::raw('AVG(rating) as avgRating'))->groupBy('restaurantId')->get();
