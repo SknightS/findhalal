@@ -240,13 +240,15 @@ class RestaurantController extends Controller
                 //check customer zip to resturant zip
                 $zipCheck=ZipCode::where('fkresturantId',$resid)
                     ->where('zip',$r->zip)
-                    ->count();
-                if($zipCheck==0 && Session::get('ordertype') == "Delivery"){
+                    ->first();
+
+                if( $zipCheck!=null && Session::get('ordertype') == "Delivery"){
                     $code= 'Zipcode Error';
                     $msg='Sorry we dont delivery to your zipcode';
                     $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
                     return $data;
                 }
+
 
             }else{
                 $delfee = 0;
@@ -259,6 +261,15 @@ class RestaurantController extends Controller
 
         $restaurantInfo=Resturant::where('resturantId',$resid)->get(array('minOrder'));
         $totalPrice=Cart::getTotal();
+
+//        $minOrderForZip=ZipCode::where('fkresturantId',$resid)
+//            ->where('zip',$r->zip)
+//            ->first();
+//        if($minOrderForZip==null){
+//
+//        }
+
+//        return $totalPrice
 
         foreach ($restaurantInfo as $resInfoo){
             $resMinOrder=$resInfoo->minOrder;
