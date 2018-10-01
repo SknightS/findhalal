@@ -523,6 +523,7 @@
 
                        // console.log(data);
 
+
                         if(data.cardError=='2'){
 
                             $.alert({
@@ -535,6 +536,25 @@
                                         btnClass: 'btn-blue',
                                         action: function(){
                                             location.reload();
+                                        }
+                                    }
+                                }
+                            });
+
+
+                        }
+                        if(data.ZipError=='3'){
+
+                            $.alert({
+                                title: data.code +'!',
+                                type: 'red',
+                                content: data.message,
+                                buttons: {
+                                    tryAgain: {
+                                        text: 'Ok',
+                                        btnClass: 'btn-blue',
+                                        action: function(){
+                                            //location.reload();
                                         }
                                     }
                                 }

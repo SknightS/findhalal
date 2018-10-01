@@ -267,7 +267,7 @@
                                 {{--@endif--}}
                                 {{--@endforeach--}}
                                 <div class="bottom-part">
-                                    <div class="cost"><i class="fa fa-check"></i> Min $ {{$featuredResturant->minOrder}}</div>
+                                    {{--<div class="cost"><i class="fa fa-check"></i> Min $ {{$featuredResturant->minOrder}}</div>--}}
                                     {{--<div class="mins"><i class="fa fa-motorcycle"></i> 30 min</div>--}}
                                     <div class="ratings"> <span>
 

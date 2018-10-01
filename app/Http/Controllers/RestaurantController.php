@@ -242,10 +242,11 @@ class RestaurantController extends Controller
                     ->where('zip',$r->zip)
                     ->first();
 
-                if( $zipCheck!=null && Session::get('ordertype') == "Delivery"){
+                if( !$zipCheck   && Session::get('ordertype') == "Delivery"){
+
                     $code= 'Zipcode Error';
                     $msg='Sorry we dont delivery to your zipcode';
-                    $data=array('cardError'=>'2','code'=>$code,'message'=>$msg);
+                    $data=array('ZipError'=>'3','code'=>$code,'message'=>$msg);
                     return $data;
                 }
 
@@ -256,32 +257,31 @@ class RestaurantController extends Controller
             break;
         }
 
-
+        $delfee = 0;
 
 
         $restaurantInfo=Resturant::where('resturantId',$resid)->get(array('minOrder'));
         $totalPrice=Cart::getTotal();
+        if($totalPrice <$zipCheck->minOrder){
+            $code= 'Minimum Error';
+            $msg='Minimum Order For this zip is '.$zipCheck->minOrder.' Please fulfill your minimum order';
+            $data=array('ZipError'=>'3','code'=>$code,'message'=>$msg);
+            return $data;
+        }
 
-//        $minOrderForZip=ZipCode::where('fkresturantId',$resid)
-//            ->where('zip',$r->zip)
-//            ->first();
-//        if($minOrderForZip==null){
-//
+
+
+//        foreach ($restaurantInfo as $resInfoo){
+//            $resMinOrder=$resInfoo->minOrder;
 //        }
-
-//        return $totalPrice
-
-        foreach ($restaurantInfo as $resInfoo){
-            $resMinOrder=$resInfoo->minOrder;
-        }
-
-        if($totalPrice >= $resMinOrder){
-            $totalPrice=$totalPrice;
-            $delfee=0;
-        }
-        else{
-            $totalPrice+=$delfee;
-        }
+//
+//        if($totalPrice >= $resMinOrder){
+//            $totalPrice=$totalPrice;
+//            $delfee=0;
+//        }
+//        else{
+//            $totalPrice+=$delfee;
+//        }
 
 
         if($r->stripeToken){

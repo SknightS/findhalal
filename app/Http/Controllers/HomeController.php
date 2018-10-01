@@ -19,7 +19,7 @@ class HomeController extends Controller
     //
 
     public function index(){
-        $featuredRes = Resturant::select('resturantId','name','minOrder','image', 'zipcode.zip as zipcodeZip', 'zipcode.delfee as zipcodeDelfee')
+        $featuredRes = Resturant::select('resturantId','name','image', 'zipcode.zip as zipcodeZip', 'zipcode.delfee as zipcodeDelfee')
             ->leftjoin('zipcode','fkresturantId','resturantId')
             ->leftjoin('city','fkcityId','cityId')
             ->where('featureResturant', "1")
