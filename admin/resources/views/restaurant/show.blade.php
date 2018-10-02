@@ -15,18 +15,18 @@
         <table id="allProductList" class="table table-bordered table-striped">
             <thead>
             <tr>
-                <th >name</th>
-                <th >details</th>
-                <th >address</th>
-                <th >OrderInfo</th>
+                <th width="10%">name</th>
+                <th width="20%">details</th>
+                <th width="20%">address</th>
+                <th width="35%">OrderInfo</th>
                 {{--<th >city</th>--}}
                 {{--<th >zip</th>--}}
-                <th >country</th>
-                <th >min order</th>
+                {{--<th >country</th>--}}
+                {{--<th >min order</th>--}}
                 {{--<th >delivery fee</th>--}}
-                <th >status</th>
+                <th width="8%">status</th>
                 @if(Auth::user()->fkuserTypeId == User[0])
-                <th >action</th>
+                <th width="5%">action</th>
                 @endif
             </tr>
             </thead>
@@ -58,10 +58,11 @@
             rowReorder: {
                 selector: 'td:nth-child(8)'
             },
-            responsive: true,
+         responsive: true,
         processing: true,
         serverSide: true,
         stateSave: true,
+         ordering:false,
         "ajax":{
         "url": "{!! route('restaurant.get') !!}",
         "type": "POST",
@@ -78,8 +79,8 @@
         { data: 'action', name: 'action' },
 //        { data: 'city', name: 'city' },
 //        { data: 'zip', name: 'zip' },
-        { data: 'country', name: 'country' },
-        { data: 'minOrder', name: 'minOrder' },
+//        { data: 'country', name: 'country' },
+//        { data: 'minOrder', name: 'minOrder' },
 //        { data: 'delfee', name: 'delfee' },
         { data: 'status', name: 'status' },
                 @if(Auth::user()->fkuserTypeId == User[0])

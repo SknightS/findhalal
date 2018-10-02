@@ -151,7 +151,7 @@ class RestaurantController extends Controller
     }
 
     public function get(Request $r){
-        $resturants=Resturant::select('resturant.resturantId','resturant.name','resturant.details','resturant.address','resturant.country','resturant.minOrder','resturant.status')
+        $resturants=Resturant::select('resturant.resturantId','resturant.name','resturant.details','resturant.address','resturant.country','resturant.status')
             ->get();
 
         $datatables = DataTables::of($resturants);
@@ -159,7 +159,7 @@ class RestaurantController extends Controller
         return $datatables->addColumn('action', function ($resturant) {
 
 
-            $orderItems=ZipCode::select('zipcode.zipcodeId','zipcode.zip','zipcode.delfee','city.cityName')
+            $orderItems=ZipCode::select('zipcode.zipcodeId','zipcode.zip','zipcode.delfee','city.cityName','zipcode.minOrder')
                 ->where('zipcode.fkresturantId',$resturant->resturantId)
                 ->leftJoin('city', 'city.cityId', '=', 'zipcode.fkcityId')
                 ->get();
@@ -170,6 +170,7 @@ class RestaurantController extends Controller
             $test.='<tr>';
             $test.='<th class="center">Zip</th>';
             $test.='<th class="center">Delivery Fee</th>';
+            $test.='<th class="center">minimum Order</th>';
             $test.='<th class="center">CityName</th>';
 
             $test.='</tr>';
@@ -178,9 +179,10 @@ class RestaurantController extends Controller
 
             foreach ($orderItems as $orderItem) {
                 $test .= '<tr>';
-                $test .= '<td class="center">' . $orderItem->zip . '</td>';
-                $test .= '<td class="center">' . $orderItem->delfee . '</td>';
-                $test .= '<td class="center">' . $orderItem->cityName . '</td>';
+                $test .= '<td width="20%" class="center">' . $orderItem->zip . '</td>';
+                $test .= '<td width="25%"class="center">' . $orderItem->delfee . '</td>';
+                $test .= '<td width="25%"class="center">' . $orderItem->minOrder . '</td>';
+                $test .= '<td width="25%"class="center">' . $orderItem->cityName . '</td>';
 
                 $test .= '</tr>';
 
