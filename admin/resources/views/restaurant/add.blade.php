@@ -60,30 +60,19 @@
                         </div>
 
 
-                        <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Min Order(€)</label>
-                            <div class="col-sm-5">
-                                <input type="number" min="0" class="form-control"  value="{{old('minOrder')}}" name="minOrder" placeholder="min order" required>
-                                @if ($errors->has('minOrder'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('minOrder') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-
                         {{--<div class="form-group">--}}
-                            {{--<label for="field-1" class="col-sm-3 control-label">Delivery Fee(€)</label>--}}
+                            {{--<label for="field-1" class="col-sm-3 control-label">Min Order(€)</label>--}}
                             {{--<div class="col-sm-5">--}}
-                                {{--<input type="number" min="0" class="form-control" value="{{old('delfee')}}" name="delfee" placeholder="insert fee">--}}
-                                {{--@if ($errors->has('delfee'))--}}
+                                {{--<input type="number" min="0" class="form-control"  value="{{old('minOrder')}}" name="minOrder" placeholder="min order" required>--}}
+                                {{--@if ($errors->has('minOrder'))--}}
                                     {{--<span class="invalid-feedback">--}}
-                                        {{--<strong>{{ $errors->first('delfee') }}</strong>--}}
+                                        {{--<strong>{{ $errors->first('minOrder') }}</strong>--}}
                                     {{--</span>--}}
                                 {{--@endif--}}
                             {{--</div>--}}
                         {{--</div>--}}
+
+
 
 
                         <div class="form-group">
@@ -112,17 +101,6 @@
                         </div>
 
 
-                        {{--<div class="form-group">--}}
-                            {{--<label for="field-1" class="col-sm-3 control-label">City</label>--}}
-                            {{--<div class="col-sm-5">--}}
-                                {{--<input type="text" class="form-control" id="city" name="city" value="{{old('city')}}" placeholder="enter your city">--}}
-                                {{--@if ($errors->has('city'))--}}
-                                    {{--<span class="invalid-feedback">--}}
-                                        {{--<strong>{{ $errors->first('city') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
 
 
                         <div class="form-group">
@@ -134,14 +112,17 @@
                                     </div>
                                     <div class="col-sm-3"><input type="number" class="form-control t" name="deliveryFee[]" placeholder="enter delivery fee" required>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <select class="t form-control " name="zipCity[]" required>
                                             <option value="">Select City</option>
                                             @foreach($cities as $city)
                                                 <option value="{{$city->cityId}}">{{$city->cityName}}</option>
-
                                             @endforeach
-                                        </select></div>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" class="form-control t" name="minOrder[]"  placeholder="Min Order(€)" required>
+                                    </div>
 
 
                                 </div>
@@ -149,10 +130,10 @@
 
 
                             </div>
+
                             <div class="pull-right">
                                 <button type="button" class="btn btn-success" onclick="addMoreZip()">add mode</button>
                                 <button type="button" class="btn btn-danger" onclick="removeZip()">remove</button>
-
 
                             </div>
 
@@ -397,16 +378,19 @@
 
 
         newTextBoxDiv.after().html(
-        '<div class="form-group"> ' +
-        '<div class="col-sm-3"><input type="text" class=" form-control zip  t" name="zip[]" placeholder="enter your zip code" required> ' +
-        '</div> ' +
-        '<div class="col-sm-3"><input type="number" class="form-control t" name="deliveryFee[]" placeholder="enter delivery fee" required> ' +
-        '</div> ' +
-        '<div class="col-sm-6"><select class="t form-control " name="zipCity[]" required> ' +
-        '<option value="">Select City</option>'+countries+
-        '</select> ' +
-        '</div> ' +
-        '</div>');
+            '<div class="form-group"> ' +
+            '<div class="col-sm-3"><input type="text" class=" form-control zip  t" name="zip[]" placeholder="enter your zip code" required> ' +
+            '</div> ' +
+            '<div class="col-sm-3"><input type="number" class="form-control t" name="deliveryFee[]" placeholder="enter delivery fee" required> ' +
+            '</div> ' +
+            '<div class="col-sm-3"><select class="t form-control " name="zipCity[]" required> ' +
+            '<option value="">Select City</option>'+countries+
+            '</select> ' +
+            '</div>' +
+            '<div class="col-sm-3"> ' +
+            '<input type="number" class="form-control t" name="minOrder[]" placeholder="Min Order(€)" required>' +
+            '</div>'+
+            '</div>');
         newTextBoxDiv.appendTo("#zipDiv");
 //        console.log(counter);
 

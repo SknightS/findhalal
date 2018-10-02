@@ -30,7 +30,6 @@ class RestaurantController extends Controller
             'name' => 'required|max:45',
             'status' => 'required|max:10',
             'details' => 'required|max:1100',
-            'minOrder' => 'required|max:11',
 //            'delfee'=>'required|max:20',
             'address'=>'required|max:1000',
             'city'=>'required|max:45',
@@ -43,7 +42,7 @@ class RestaurantController extends Controller
         $restaurant=new Resturant;
         $restaurant->name=$r->name;
         $restaurant->details=$r->details;
-        $restaurant->minOrder=$r->minOrder;
+//        $restaurant->minOrder=$r->minOrder;
 //        $restaurant->image=$r->image;
 //        $restaurant->delfee=$r->delfee;
         $restaurant->status=$r->status;
@@ -67,6 +66,7 @@ class RestaurantController extends Controller
             $zip->zip=$r->zip[$i];
             $zip->delfee=$r->deliveryFee[$i];
             $zip->fkcityId=$r->zipCity[$i];
+            $zip->minOrder=$r->minOrder[$i];
             $zip->fkresturantId=$restaurant->resturantId;
             $zip->save();
         }
@@ -241,10 +241,11 @@ class RestaurantController extends Controller
     }
 
     public function update(Request $r){
+
         $restaurant=Resturant::findOrFail($r->id);
         $restaurant->name=$r->name;
         $restaurant->details=$r->details;
-        $restaurant->minOrder=$r->minOrder;
+//        $restaurant->minOrder=$r->minOrder;
 //        $restaurant->delfee=$r->delfee;
         $restaurant->status=$r->status;
         $restaurant->address=$r->address;
@@ -270,6 +271,7 @@ class RestaurantController extends Controller
             $zip->zip=$r->zip[$i];
             $zip->delfee=$r->deliveryFee[$i];
             $zip->fkcityId=$r->zipCity[$i];
+            $zip->minOrder=$r->minOrder[$i];
             $zip->fkresturantId=$restaurant->resturantId;
             $zip->save();
         }

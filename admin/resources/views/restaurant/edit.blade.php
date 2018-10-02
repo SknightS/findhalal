@@ -55,30 +55,19 @@
                         </div>
 
 
-                        <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Min Order(€)</label>
-                            <div class="col-sm-5">
-                                <input type="number" min="0" class="form-control" id="field-1" name="minOrder" value="{{$restaurant->minOrder}}" placeholder="min order">
-                                @if ($errors->has('minOrder'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('minOrder') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-
                         {{--<div class="form-group">--}}
-                            {{--<label for="field-1" class="col-sm-3 control-label">Delivery Fee(€)</label>--}}
+                            {{--<label for="field-1" class="col-sm-3 control-label">Min Order(€)</label>--}}
                             {{--<div class="col-sm-5">--}}
-                                {{--<input type="number" min="0" class="form-control" id="field-1" name="delfee" value="{{$restaurant->delfee}}" placeholder="insert fee">--}}
-                                {{--@if ($errors->has('delfee'))--}}
+                                {{--<input type="number" min="0" class="form-control" id="field-1" name="minOrder" value="{{$restaurant->minOrder}}" placeholder="min order">--}}
+                                {{--@if ($errors->has('minOrder'))--}}
                                     {{--<span class="invalid-feedback">--}}
-                                        {{--<strong>{{ $errors->first('delfee') }}</strong>--}}
+                                        {{--<strong>{{ $errors->first('minOrder') }}</strong>--}}
                                     {{--</span>--}}
                                 {{--@endif--}}
                             {{--</div>--}}
                         {{--</div>--}}
+
+
 
 
                         <div class="form-group">
@@ -108,54 +97,31 @@
                         </div>
 
 
-                        {{--<div class="form-group">--}}
-                            {{--<label for="field-1" class="col-sm-3 control-label">City</label>--}}
-                            {{--<div class="col-sm-5">--}}
-                                {{--<input type="text" class="form-control" id="city" name="city" value="{{$restaurant->city}}" placeholder="Enter Restaurant Name">--}}
-                                {{--@if ($errors->has('city'))--}}
-                                    {{--<span class="invalid-feedback">--}}
-                                        {{--<strong>{{ $errors->first('city') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
 
-
-                        {{--<div class="form-group">--}}
-                            {{--<label for="field-1" class="col-sm-3 control-label">Zip</label>--}}
-                            {{--<div class="col-sm-5">--}}
-                                {{--<input type="text" class="form-control" id="zip" value="{{$restaurant->zip}}" name="zip" placeholder="Enter Restaurant Name">--}}
-                                {{--@if ($errors->has('zip'))--}}
-                                    {{--<span class="invalid-feedback">--}}
-                                        {{--<strong>{{ $errors->first('zip') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
 
                         <div class="form-group">
                             <label for="field-1" class="col-sm-3 control-label">Zip</label>
-                            <div class="col-sm-5" id="zipDiv">
+                            <div class="col-sm-9" id="zipDiv">
                                 @php($temp=0)
                                @foreach($zip as $zipcode)
                                    <div id="TextBoxDiv{{++$temp}}">
-                                {{--<div class="row">--}}
-                                    {{--<input type="text" class="col-sm-5 zip" name="zip[]" value="{{$zipcode->zip}}" placeholder="enter your zip code" required>--}}
-                                    {{--<input type="number" class="col-sm-5" name="deliveryFee[]" value="{{$zipcode->delfee}}" placeholder="enter delivery fee" required>--}}
-                                {{--</div>--}}
                                        <div class="form-group">
                                            <div class="col-sm-3"><input type="text" class=" form-control zip  t" value="{{$zipcode->zip}}" name="zip[]" placeholder="enter your zip code" required>
                                            </div>
                                            <div class="col-sm-3"><input type="number" class="form-control t" name="deliveryFee[]" value="{{$zipcode->delfee}}" placeholder="enter delivery fee" required>
                                            </div>
-                                           <div class="col-sm-6">
+                                           <div class="col-sm-3">
                                                <select class="t form-control " name="zipCity[]" required>
                                                    <option value="">Select City</option>
                                                    @foreach($cities as $city)
                                                        <option value="{{$city->cityId}}" @if($city->cityId == $zipcode->fkcityId) selected @endif>{{$city->cityName}}</option>
 
                                                    @endforeach
-                                               </select></div>
+                                               </select>
+                                           </div>
+                                           <div class="col-sm-3">
+                                               <input type="number" class="form-control t" name="minOrder[]" value="{{$zipcode->minOrder}}" placeholder="Min Order(€)" required>
+                                           </div>
 
 
                                        </div>
@@ -168,9 +134,14 @@
 
 
                             </div>
-                            <button type="button" class="btn btn-success" onclick="addMoreZip()">add mode</button>
-                            <button type="button" class="btn btn-danger" onclick="removeZip()">remove</button>
+                            <div class="col-md-12" style="text-align: center">
+                                <button type="button" class="btn btn-success" onclick="addMoreZip()">add mode</button>
+                                <button type="button" class="btn btn-danger" onclick="removeZip()">remove</button>
+                            </div>
+
                         </div>
+
+
 
 
 
@@ -414,10 +385,13 @@
                 '</div> ' +
                 '<div class="col-sm-3"><input type="number" class="form-control t" name="deliveryFee[]" placeholder="enter delivery fee" required> ' +
                 '</div> ' +
-                '<div class="col-sm-6"><select class="t form-control " name="zipCity[]" required> ' +
+                '<div class="col-sm-3"><select class="t form-control " name="zipCity[]" required> ' +
                 '<option value="">Select City</option>'+countries+
                 '</select> ' +
-                '</div> ' +
+                '</div>' +
+                '<div class="col-sm-3"> ' +
+                '<input type="number" class="form-control t" name="minOrder[]" placeholder="Min Order(€)" required>' +
+                '</div>'+
                 '</div>');
             newTextBoxDiv.appendTo("#zipDiv");
 

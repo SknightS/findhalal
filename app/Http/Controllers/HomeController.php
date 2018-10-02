@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Purchase;
 use App\Rating;
-use DB;
 
 
 class HomeController extends Controller
