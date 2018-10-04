@@ -25,7 +25,9 @@ Route::view('/registration','registration')->name('registration');
 //Route::view('/checkout','checkout')->name('checkout');
 
 Route::post('/restaurants/result','RestaurantController@Restaurants')->name('restaurant.result');
+Route::post('restaurants/resZip','RestaurantController@RestaurantAllZip')->name('restaurant.resZip');
 Route::get('/restaurants/viewmenu/{resid}/{zipcode}','RestaurantController@ViewMenu')->name('restaurant.viewmenu');
+//Route::post('/restaurants/viewmenu/{resid}','RestaurantController@ViewMenu1')->name('restaurant.viewmenu1');
 
 Route::post('/restaurants/getItem','RestaurantController@getItem')->name('restaurant.getItem');
 Route::post('/restaurants/getItemByCategory','RestaurantController@getItemByCategory')->name('restaurant.getItemByCategory');

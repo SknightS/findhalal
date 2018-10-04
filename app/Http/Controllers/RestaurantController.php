@@ -76,6 +76,47 @@ class RestaurantController extends Controller
             ->with('zipcode', $zipcode)
             ->with('cartitem', $cartCollection);
     }
+    public function ViewMenu1($resid, Request $r){
+        $zipcode=$r->Zip;
+        $restaurant = Resturant::select('*')
+            ->where('resturantId',$resid)
+            ->get();
+        $resttime = Resturanttime::select('*')
+            ->where('fkresturantId' , $resid)
+            ->where('day' , date('l'))
+            ->first();
+        $open= date('H.i',strtotime($resttime->opentime));
+        $close= date('H.i',strtotime($resttime->closetime));
+        $now=date('H.i');
+        // 13 <now <23.00
+        if($open <$now && $close >$now ){
+            $restaurantStatus= "Open";
+        }
+        else{
+            $restaurantStatus= "Close";
+        }
+
+        $resRating=Rating::select(DB::raw('COUNT(ratingId) as totalRating'),DB::raw('AVG(rating) as avgRating'))->where('restaurantId',$resid)->groupBy('restaurantId')->get();
+
+        $catagory = Category::select('*')
+            ->where('fkresturantId', $resid)
+            ->get();
+        $itemsize = Itemsize::select('*')
+            ->where('status', 'Active')
+            ->get();
+        $cartCollection = Cart::getContent();
+
+
+        return view('restaurants.profile')
+            ->with('category', $catagory)
+            ->with('restaurant', $restaurant)
+            ->with('resid', $resid)
+            ->with('itemsize', $itemsize)
+            ->with('restaurantRating', $resRating)
+            ->with('restaurantStatus', $restaurantStatus)
+            ->with('zipcode', $zipcode)
+            ->with('cartitem', $cartCollection);
+    }
 
     public function getItem(Request $r){
         $resid = $r->resid;
@@ -526,7 +567,7 @@ class RestaurantController extends Controller
             return 1;
 
         }catch (\Exception $ex) {
-           // return $ex;
+
             return 0;
         }
     }
@@ -549,6 +590,22 @@ class RestaurantController extends Controller
         }
 
     }
+    public function RestaurantAllZip(Request $r){
+
+        $resId=$r->id;
+        $getAllZipForRes=ZipCode::select('zip')->where('fkresturantId',$resId)->get();
+
+
+
+        if ($getAllZipForRes->isEmpty()){
+            return 0;
+        }else{
+            return view('resturantAllZip',compact('getAllZipForRes','resId'));
+        }
+
+
+    }
+
     public function takeout(){
         Session::put('ordertype', "Takeout");
     }

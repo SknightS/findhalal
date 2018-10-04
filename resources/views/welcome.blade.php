@@ -128,7 +128,10 @@
                             <h5><a href="{{ route('restaurant.viewmenu', [$restaurant->resturantId ,$restaurant->zipcodeZip ] ) }}">{{$restaurant->name}}</a></h5>
 
                             <div class="product-name">{{$restaurant->address}}</div>
-                            <div class="price-btn-block"> <span class="price"></span> <a href="{{ route('restaurant.viewmenu', [$restaurant->resturantId,$restaurant->zipcodeZip]) }}" class="btn theme-btn-dash pull-right">Order Now</a> </div>
+                            <div class="price-btn-block"> <span class="price"></span>
+{{--                                <a href="{{ route('restaurant.viewmenu', [$restaurant->resturantId,$restaurant->zipcodeZip]) }}" class="btn theme-btn-dash pull-right">Order Now</a> --}}
+                                <a data-panel-id="{{$restaurant->resturantId}}" onclick="showResZip(this)" class="btn theme-btn-dash pull-right">Order Now</a>
+                            </div>
                         </div>
 
 
@@ -363,6 +366,44 @@
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
    <script>
+
+       function showResZip(x) {
+           var resId=$(x).data('panel-id');
+
+           $.ajax({
+               type: "POST",
+               url: '{{route('restaurant.resZip')}}',
+               data: {id:resId,_token:"{{csrf_token()}}"},
+               success: function(data){
+
+                   console.log(data);
+                   if (data==0){
+
+                       $.alert({
+                           title: 'Error!',
+                           type: 'red',
+                           content: 'Error',
+                           buttons: {
+                               tryAgain: {
+                                   text: 'Ok',
+                                   btnClass: 'btn-red',
+                                   action: function () {
+                                   }
+                               }
+                           }
+                       });
+                   }
+                   else {
+                       $('.modal-body').html(data);
+                       $('#myModalLabel').html("Restaurant's Delivary Available");
+                       $('#myModal').modal({show:true});
+                   }
+
+               },
+           });
+
+
+       }
     $( function() {
     var availableTags = [
         "Altstadt",

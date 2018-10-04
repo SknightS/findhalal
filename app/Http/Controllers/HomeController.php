@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Item;
+use App\ZipCode;
 use Illuminate\Http\Request;
 use App\Resturant;
 
@@ -58,13 +59,16 @@ class HomeController extends Controller
         $topRestaurants=Resturant::select('resturantId','name','image','address','zipcode.zip as zipcodeZip', 'zipcode.delfee as zipcodeDelfee')
             ->leftjoin('zipcode','fkresturantId','resturantId')
             ->leftjoin('city','fkcityId','cityId')
+            ->groupBy('resturantId')
             ->whereIn('resturantId',$resID)
             ->get();
 
 
         $resRating=Rating::select('restaurantId',DB::raw('COUNT(ratingId) as totalRating'),DB::raw('AVG(rating) as avgRating'))->groupBy('restaurantId')->get();
 
-       // return $resRating ;
+        //return $topRestaurants ;
+
+        $zip=ZipCode::select('zip')->get();
 
 
 //       End Top sellers
@@ -75,6 +79,7 @@ class HomeController extends Controller
             ->with('resCategory',$resCategory)
             ->with('featuredResCategory',$featuredResCategory)
             ->with('restaurantRating', $resRating)
+            ->with('allZip', $zip)
             ->with('featuredRes',$featuredRes);
 
 
