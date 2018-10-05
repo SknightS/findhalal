@@ -125,12 +125,15 @@
 
                         </div>
                         <div class="content">
-                            <h5><a href="{{ route('restaurant.viewmenu', [$restaurant->resturantId ,$restaurant->zipcodeZip ] ) }}">{{$restaurant->name}}</a></h5>
+                            <h5>
+                                <a data-panel-id="{{$restaurant->resturantId}}" onclick="showResZip(this)">{{$restaurant->name}}</a>
+                            </h5>
 
                             <div class="product-name">{{$restaurant->address}}</div>
                             <div class="price-btn-block"> <span class="price"></span>
 {{--                                <a href="{{ route('restaurant.viewmenu', [$restaurant->resturantId,$restaurant->zipcodeZip]) }}" class="btn theme-btn-dash pull-right">Order Now</a> --}}
                                 <a data-panel-id="{{$restaurant->resturantId}}" onclick="showResZip(this)" class="btn theme-btn-dash pull-right">Order Now</a>
+
                             </div>
                         </div>
 
@@ -256,14 +259,19 @@
                                 @if($featuredResturant->image == null)
                                 <a class="restaurant-logo" href="#"> <img src="http://placehold.it/95x95" alt="Restaurant logo"> </a>
                                 @else
-                                    <a class="restaurant-logo" href="{{route('restaurant.viewmenu', [$featuredResturant->resturantId , $featuredResturant->zipcodeZip])}}">
+
+
+                                    <a class="restaurant-logo" data-panel-id="{{$featuredResturant->resturantId}}" onclick="showResZip(this)">
                                         <img src="{{url('admin/public/RestaurantImages')."/".$featuredResturant->image}}" alt="Restaurant logo">
                                     </a>
                                 @endif
                             </div>
                             <!--end:col -->
                             <div class="col-xs-12 col-sm-9 col-md-12 col-lg-9">
-                                <h5><a href="{{route('restaurant.viewmenu', [$featuredResturant->resturantId ,$featuredResturant->zipcodeZip ])}}">{{$featuredResturant->name}}</a></h5>
+                                <h5>
+                                    {{--<a href="{{route('restaurant.viewmenu', [$featuredResturant->resturantId ,$featuredResturant->zipcodeZip ])}}">{{$featuredResturant->name}}</a>--}}
+                                    <a data-panel-id="{{$featuredResturant->resturantId}}" onclick="showResZip(this)">{{$featuredResturant->name}}</a>
+                                </h5>
                                 {{--@foreach($resItems as $resItemss)--}}
                                 {{--@if($featuredResturant->resturantId ==$resItemss->fkresturantId)--}}
                                 {{--<span>{{$resItemss->itemNames}}</span>--}}
@@ -327,7 +335,10 @@
                                     @endforeach
                                         </span> </div>
 
-                                    <div class="price-btn-block"> <span class="price"></span> <a href="{{route('restaurant.viewmenu', [$featuredResturant->resturantId ,$featuredResturant->zipcodeZip])}}" class="btn theme-btn-dash pull-right">Order Now</a> </div>
+                                    <div class="price-btn-block"> <span class="price"></span>
+                                        {{--<a href="{{route('restaurant.viewmenu', [$featuredResturant->resturantId ,$featuredResturant->zipcodeZip])}}" class="btn theme-btn-dash pull-right">Order Now</a> --}}
+                                        <a data-panel-id="{{$featuredResturant->resturantId}}" onclick="showResZip(this)" class="btn theme-btn-dash pull-right">Order Now</a>
+                                    </div>
 
                                 </div>
                             </div>
@@ -376,13 +387,13 @@
                data: {id:resId,_token:"{{csrf_token()}}"},
                success: function(data){
 
-                   console.log(data);
+                 //  console.log(data);
                    if (data==0){
 
                        $.alert({
                            title: 'Error!',
                            type: 'red',
-                           content: 'Error',
+                           content: 'No Delivery Zip available',
                            buttons: {
                                tryAgain: {
                                    text: 'Ok',

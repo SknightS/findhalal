@@ -22,6 +22,7 @@ use Darryldecode\Cart\Facades\CartFacade as Cart;
 class RestaurantController extends Controller
 {
     public function Restaurants(Request $r){
+
         $searchresult = Resturant::select('*', 'zipcode.zip as zipcodeZip', 'zipcode.delfee as zipcodeDelfee')
          ->leftjoin('zipcode','fkresturantId','resturantId')
             ->leftjoin('city','fkcityId','cityId')
@@ -32,8 +33,10 @@ class RestaurantController extends Controller
             })
             ->get();
 
-        return view('restaurants.index')
+        $resRating=Rating::select('restaurantId',DB::raw('COUNT(ratingId) as totalRating'),DB::raw('AVG(rating) as avgRating'))->groupBy('restaurantId')->get();
 
+        return view('restaurants.index')
+            ->with('restaurantRating', $resRating)
             ->with('resturant',$searchresult);
     }
     public function ViewMenu($resid, $zipcode){

@@ -19,9 +19,11 @@ class HomeController extends Controller
     //
 
     public function index(){
+
         $featuredRes = Resturant::select('resturantId','name','image', 'zipcode.zip as zipcodeZip', 'zipcode.delfee as zipcodeDelfee')
             ->leftjoin('zipcode','fkresturantId','resturantId')
             ->leftjoin('city','fkcityId','cityId')
+            ->groupBy('resturantId')
             ->where('featureResturant', "1")
             ->where('status',Status[0])
             ->get();
@@ -31,12 +33,12 @@ class HomeController extends Controller
             ->where('category.status',Status[0])
             ->groupBy('fkresturantId')->get();
 
-        $featuredResCategory=Category::select('category.name')
-            ->leftJoin('resturant', 'resturant.resturantId', '=', 'category.fkresturantId')
-            ->where('resturant.featureResturant',"1")
-            ->where('resturant.status',Status[0])
-            ->where('category.status',Status[0])
-            ->groupBy('category.name')->get();
+//        $featuredResCategory=Category::select('category.name')
+//            ->leftJoin('resturant', 'resturant.resturantId', '=', 'category.fkresturantId')
+//            ->where('resturant.featureResturant',"1")
+//            ->where('resturant.status',Status[0])
+//            ->where('category.status',Status[0])
+//            ->groupBy('category.name')->get();
 
         //return $featuredRes;
 
@@ -77,7 +79,7 @@ class HomeController extends Controller
             ->with('topRestaurants',$topRestaurants)
 //            ->with('resItems',$resItem)
             ->with('resCategory',$resCategory)
-            ->with('featuredResCategory',$featuredResCategory)
+//            ->with('featuredResCategory',$featuredResCategory)
             ->with('restaurantRating', $resRating)
             ->with('allZip', $zip)
             ->with('featuredRes',$featuredRes);

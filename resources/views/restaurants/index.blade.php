@@ -54,9 +54,12 @@
                                     </div>
                                     <!-- end:Logo -->
                                     <div class="entry-dscr">
-                                        <h5><a href="{{ route('restaurant.viewmenu', [$res->resturantId, $res->zipcodeZip]) }}">{{$res->name}}</a></h5> <span>{{$res->details}} <a href="#">...</a></span>
+                                        <h5>
+{{--                                            <a href="{{ route('restaurant.viewmenu', [$res->resturantId, $res->zipcodeZip]) }}">{{$res->name}}</a>--}}
+                                            <a data-panel-id="{{$res->resturantId}}" onclick="showResZip(this)">{{$res->name}}</a>
+                                        </h5> <span>{{$res->details}} <a href="#">...</a></span>
                                         <ul class="list-inline">
-                                            <li class="list-inline-item"><i class="fa fa-check"></i> Min € {{$res->minOrder}}</li>
+                                            {{--<li class="list-inline-item"><i class="fa fa-check"></i> Min € {{$res->minOrder}}</li>--}}
                                            {{$res->address}}
                                         </ul>
                                     </div>
@@ -65,8 +68,65 @@
                                 <div class="col-sm-12 col-md-12 col-lg-4 text-xs-center">
                                     <div class="right-content bg-white">
                                         <div class="right-review">
-                                            <div class="rating-block"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
-                                            <p> 245 Reviews</p> <a href="{{ route('restaurant.viewmenu', [$res->resturantId , $res->zipcodeZip]) }}" class="btn theme-btn-dash">View Menu</a> </div>
+                                            <div class="rating-block">
+
+                                                @foreach($restaurantRating as $rating)
+                                                    @if($res->resturantId == $rating->restaurantId)
+                                                        <div class="rating pull-left">
+                                                            @if(round($rating->avgRating) == '0')
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            @endif
+                                                            @if(round($rating->avgRating) == '1')
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            @endif
+                                                            @if(round($rating->avgRating) == '2')
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            @endif
+                                                            @if(round($rating->avgRating) == '3')
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            @endif
+                                                            @if(round($rating->avgRating) == '4')
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            @endif
+                                                            @if(round($rating->avgRating) == '5')
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            @endif
+                                                        </div>
+
+                                                        <div class="review pull-right"><span style="color: red">{{$rating->totalRating}} Ratings</span> </div>
+                                                    @endif
+
+                                                @endforeach
+
+                                            </div>
+                                            {{--<p> 245 Reviews</p>--}}
+{{--                                            <a href="{{ route('restaurant.viewmenu', [$res->resturantId , $res->zipcodeZip]) }}" class="btn theme-btn-dash">View Menu</a> --}}
+                                            <a style="margin-top: 10px" data-panel-id="{{$res->resturantId}}" onclick="showResZip(this)" class="btn theme-btn-dash">View Menu</a>
+                                        </div>
                                     </div>
                                     <!-- end:right info -->
                                 </div>
@@ -81,3 +141,44 @@
         </section>
     </div>
 @endsection
+@section('foot-js')
+    <script>
+        function showResZip(x) {
+            var resId=$(x).data('panel-id');
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('restaurant.resZip')}}',
+                data: {id:resId,_token:"{{csrf_token()}}"},
+                success: function(data){
+
+                    //  console.log(data);
+                    if (data==0){
+
+                        $.alert({
+                            title: 'Error!',
+                            type: 'red',
+                            content: 'No Delivery Zip available',
+                            buttons: {
+                                tryAgain: {
+                                    text: 'Ok',
+                                    btnClass: 'btn-red',
+                                    action: function () {
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        $('.modal-body').html(data);
+                        $('#myModalLabel').html("Restaurant's Delivary Available");
+                        $('#myModal').modal({show:true});
+                    }
+
+                },
+            });
+
+
+        }
+    </script>
+    @endsection

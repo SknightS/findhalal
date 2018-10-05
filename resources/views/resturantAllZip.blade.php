@@ -1,20 +1,13 @@
+<div class="container-fluid">
 
-@foreach($getAllZipForRes as $zip)
+<div class="from-group">
 
+        @foreach($getAllZipForRes as $zip)
+                <a href="{{route('restaurant.viewmenu',[$resId,$zip->zip]) }}" class="btn btn-md btn-success">{{$zip->zip}}</a>
+        @endforeach
 
-{{--{{$resId}}{{$zip->zip}}--}}
-
-            {{--<input type="radio" id="a25" value="{{$zip->zip}}" name="Zip" />--}}
-            {{--<label for="a25">{{$zip->zip}}</label>--}}
-
-        <a href="{{route('restaurant.viewmenu',[$resId,$zip->zip]) }}" class="btn btn-sm btn-success">{{$zip->zip}}</a>
-
-
+</div>
+</div>
 
 
-
-@endforeach
-
-{{--<button class="btn btn-success btn-sm" type="submit">Submit</button>--}}
-{{--</form>--}}
 
